@@ -1,0 +1,47 @@
+{
+ "fw": "V1.6.131",
+ "fwDatei": "firmware/Core_V1.6.131.bin",
+ "fwGroesse": 1668880,
+ "fwMd5": "e39e386ac3d0c2aa5bdd4f605fd476d1",
+ "dateien": [
+  {
+   "p": "/player.html.gz",
+   "url": "sd/player.html.gz",
+   "s": 77202,
+   "md5": "f0123b4c68a0e846e2a7ad8f6a0d3629"
+  },
+  {
+   "p": "/sounds/system/warn_akku.mp3",
+   "url": "sd/sounds/system/warn_akku.mp3",
+   "s": 37610,
+   "md5": "9912b96b095333e9511287f87c282895"
+  },
+  {
+   "p": "/sounds/system/warn_temp1.mp3",
+   "url": "sd/sounds/system/warn_temp1.mp3",
+   "s": 36357,
+   "md5": "cc74d82b778b353584eed69e29bdbe97"
+  },
+  {
+   "p": "/sounds/system/warn_temp2.mp3",
+   "url": "sd/sounds/system/warn_temp2.mp3",
+   "s": 35521,
+   "md5": "af2ce112becc419ba5769e49bbfc25a6"
+  },
+  {
+   "p": "/sounds/system/warn_temp3.mp3",
+   "url": "sd/sounds/system/warn_temp3.mp3",
+   "s": 62270,
+   "md5": "31afc5b72ed9f869c6db9d68d96cb2e5"
+  },
+  {
+   "p": "/sounds/system/warn_wasser.mp3",
+   "url": "sd/sounds/system/warn_wasser.mp3",
+   "s": 67286,
+   "md5": "13e1d16e66c8e44d4e7e5def2d44721d"
+  }
+ ],
+ "loeschen": [
+  "/player.html"
+ ]
+}
