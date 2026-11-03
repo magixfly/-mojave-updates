@@ -1,8 +1,8 @@
 {
- "fw": "V1.6.145",
- "fwDatei": "firmware/Core_V1.6.145.bin",
- "fwGroesse": 1687680,
- "fwMd5": "2bc7d06210a26e78ca354c448d49b836",
+ "fw": "V1.6.146",
+ "fwDatei": "firmware/Core_V1.6.146.bin",
+ "fwGroesse": 1692928,
+ "fwMd5": "5358488a2d4ab187c1b0e726af074f57",
  "dateien": [
   {
    "p": "/player.html.gz",
