@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.19",
- "fwDatei": "firmware/Core_V1.7.19.bin",
- "fwGroesse": 1629008,
- "fwMd5": "e867ecc73be733aab993d107e1bf701b",
+ "fw": "V1.7.20",
+ "fwDatei": "firmware/Core_V1.7.20.bin",
+ "fwGroesse": 1629280,
+ "fwMd5": "b7c5d11f57696c9b6c9caef52b69a59e",
  "dateien": [
   {
    "p": "/player.html.gz",
