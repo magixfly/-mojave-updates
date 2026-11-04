@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.63",
- "fwDatei": "firmware/Core_V1.7.63.bin",
- "fwGroesse": 1649504,
- "fwMd5": "3ffbb28c2f509d6e3ecce4fdf7c5c790",
+ "fw": "V1.7.64",
+ "fwDatei": "firmware/Core_V1.7.64.bin",
+ "fwGroesse": 1649936,
+ "fwMd5": "711a7d8bfc5e3c3016bf7a2e74801790",
  "dateien": [
   {
    "p": "/player.html.gz",
