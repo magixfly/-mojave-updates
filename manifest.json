@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.77",
- "fwDatei": "firmware/Core_V1.7.77.bin",
- "fwGroesse": 1668464,
- "fwMd5": "570e0e23d07ce3fb57257765a5bb2f26",
+ "fw": "V1.7.78",
+ "fwDatei": "firmware/Core_V1.7.78.bin",
+ "fwGroesse": 1668736,
+ "fwMd5": "c848155089408e86f3058e613f337b55",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.78",
+   "t": [
+    "Online update is locked while the car is armed"
+   ]
+  },
   {
    "v": "V1.7.77",
    "t": [
@@ -134,13 +140,6 @@
    "v": "V1.7.64",
    "t": [
     "Hold a photo (or right-click) to show it large"
-   ]
-  },
-  {
-   "v": "V1.7.63",
-   "t": [
-    "Tap a photo or 'No photo' to add or replace it",
-    "Camera button removed"
    ]
   }
  ]
