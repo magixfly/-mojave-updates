@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.82",
+  "t": [
+   "PC: fields sit right next to their labels"
+  ]
+ },
+ {
   "v": "V1.7.81",
   "t": [
    "Settings pages back to one column"

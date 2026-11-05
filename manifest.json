@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.81",
- "fwDatei": "firmware/Core_V1.7.81.bin",
- "fwGroesse": 1671024,
- "fwMd5": "21a1289f14373f044ac7ebf40c8ed8b7",
+ "fw": "V1.7.82",
+ "fwDatei": "firmware/Core_V1.7.82.bin",
+ "fwGroesse": 1671216,
+ "fwMd5": "93b18b20127132fc0f09327227f6f143",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.82",
+   "t": [
+    "PC: fields sit right next to their labels"
+   ]
+  },
   {
    "v": "V1.7.81",
    "t": [
@@ -134,12 +140,6 @@
    "t": [
     "New value: Armed today",
     "Button to reset armed total"
-   ]
-  },
-  {
-   "v": "V1.7.67",
-   "t": [
-    "Long values wrap to a second line instead of being cut off"
    ]
   }
  ]
