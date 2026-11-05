@@ -1,5 +1,14 @@
 [
  {
+  "v": "V1.7.83",
+  "t": [
+   "Blue channel fields on the Buttons page",
+   "Narrower settings pages on PC, OSD cards one below the other",
+   "Sensors: each value on its own row",
+   "Map download pause text only when a download runs"
+  ]
+ },
+ {
   "v": "V1.7.82",
   "t": [
    "PC: fields sit right next to their labels"

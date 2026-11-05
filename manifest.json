@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.82",
- "fwDatei": "firmware/Core_V1.7.82.bin",
- "fwGroesse": 1671216,
- "fwMd5": "93b18b20127132fc0f09327227f6f143",
+ "fw": "V1.7.83",
+ "fwDatei": "firmware/Core_V1.7.83.bin",
+ "fwGroesse": 1671376,
+ "fwMd5": "a427cfb506e1a69668daadefe063450d",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,15 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.83",
+   "t": [
+    "Blue channel fields on the Buttons page",
+    "Narrower settings pages on PC, OSD cards one below the other",
+    "Sensors: each value on its own row",
+    "Map download pause text only when a download runs"
+   ]
+  },
   {
    "v": "V1.7.82",
    "t": [
@@ -133,13 +142,6 @@
    "t": [
     "Wider page on PC with two columns",
     "Wi-Fi: signal in dBm next to the rating, channel on its own row"
-   ]
-  },
-  {
-   "v": "V1.7.68",
-   "t": [
-    "New value: Armed today",
-    "Button to reset armed total"
    ]
   }
  ]
