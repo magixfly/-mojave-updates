@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.76",
- "fwDatei": "firmware/Core_V1.7.76.bin",
+ "fw": "V1.7.77",
+ "fwDatei": "firmware/Core_V1.7.77.bin",
  "fwGroesse": 1668464,
- "fwMd5": "85e6e65ee9f28604ce425f7dd065ee06",
+ "fwMd5": "570e0e23d07ce3fb57257765a5bb2f26",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.77",
+   "t": [
+    "Maps: Coordinates or map link now sits directly above its input field"
+   ]
+  },
   {
    "v": "V1.7.76",
    "t": [
@@ -135,12 +141,6 @@
    "t": [
     "Tap a photo or 'No photo' to add or replace it",
     "Camera button removed"
-   ]
-  },
-  {
-   "v": "V1.7.62",
-   "t": [
-    "Empty space at the bottom of every page, so the phone keyboard covers nothing"
    ]
   }
  ]

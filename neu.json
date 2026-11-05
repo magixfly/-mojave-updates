@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.77",
+  "t": [
+   "Maps: Coordinates or map link now sits directly above its input field"
+  ]
+ },
+ {
   "v": "V1.7.76",
   "t": [
    "OSD: new switch Positions from INAV, the Core then sends texts only"
