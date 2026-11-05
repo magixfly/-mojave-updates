@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.90",
+  "t": [
+   "Double click flashes high beam, long press turns it off and back to the last level"
+  ]
+ },
+ {
   "v": "V1.7.89",
   "t": [
    "4S test batteries are no longer logged or counted"

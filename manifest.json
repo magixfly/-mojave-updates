@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.89",
- "fwDatei": "firmware/Core_V1.7.89.bin",
- "fwGroesse": 1677744,
- "fwMd5": "0c614b55c56f79de72f6a052d7fd18aa",
+ "fw": "V1.7.90",
+ "fwDatei": "firmware/Core_V1.7.90.bin",
+ "fwGroesse": 1678112,
+ "fwMd5": "5360f08cb3b00a8db62279c3c822d9e9",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.90",
+   "t": [
+    "Double click flashes high beam, long press turns it off and back to the last level"
+   ]
+  },
   {
    "v": "V1.7.89",
    "t": [
@@ -136,12 +142,6 @@
    "v": "V1.7.76",
    "t": [
     "OSD: new switch Positions from INAV, the Core then sends texts only"
-   ]
-  },
-  {
-   "v": "V1.7.75",
-   "t": [
-    "OSD preview uses the real 53 x 20 grid of INAV with DJI native"
    ]
   }
  ]
