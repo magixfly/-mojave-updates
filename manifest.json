@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.86",
- "fwDatei": "firmware/Core_V1.7.86.bin",
+ "fw": "V1.7.87",
+ "fwDatei": "firmware/Core_V1.7.87.bin",
  "fwGroesse": 1676816,
- "fwMd5": "0082d55c9dae8d1cf9890c30fde757cb",
+ "fwMd5": "0cdd45af6ccb9ee00197bb8874ee57e8",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.87",
+   "t": [
+    "Learning starts after 30 s disarmed instead of 60 s"
+   ]
+  },
   {
    "v": "V1.7.86",
    "t": [
@@ -136,13 +142,6 @@
    "v": "V1.7.73",
    "t": [
     "OSD: each temperature can be switched on or off by itself"
-   ]
-  },
-  {
-   "v": "V1.7.72",
-   "t": [
-    "OSD page rebuilt: compact switches, position with pictures, preview next to settings",
-    "REC text removed from the OSD"
    ]
   }
  ]
