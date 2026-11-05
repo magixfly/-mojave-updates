@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.72",
+  "t": [
+   "OSD page rebuilt: compact switches, position with pictures, preview next to settings",
+   "REC text removed from the OSD"
+  ]
+ },
+ {
   "v": "V1.7.71",
   "t": [
    "Menu order: drag the tabs instead of using arrows"

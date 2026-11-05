@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.71",
- "fwDatei": "firmware/Core_V1.7.71.bin",
- "fwGroesse": 1664368,
- "fwMd5": "5db4f7a3919366e061b7874775da58fa",
+ "fw": "V1.7.72",
+ "fwDatei": "firmware/Core_V1.7.72.bin",
+ "fwGroesse": 1666480,
+ "fwMd5": "cda782b5d410c7ff484c40c34c411f4c",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.72",
+   "t": [
+    "OSD page rebuilt: compact switches, position with pictures, preview next to settings",
+    "REC text removed from the OSD"
+   ]
+  },
   {
    "v": "V1.7.71",
    "t": [
