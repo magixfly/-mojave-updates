@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.69",
+  "t": [
+   "Wider page on PC with two columns",
+   "Wi-Fi: signal in dBm next to the rating, channel on its own row"
+  ]
+ },
+ {
   "v": "V1.7.68",
   "t": [
    "New value: Armed today",

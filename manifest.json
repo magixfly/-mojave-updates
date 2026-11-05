@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.68",
- "fwDatei": "firmware/Core_V1.7.68.bin",
- "fwGroesse": 1663136,
- "fwMd5": "5f8559d5f1c0c3f3427bf168c9a0550e",
+ "fw": "V1.7.69",
+ "fwDatei": "firmware/Core_V1.7.69.bin",
+ "fwGroesse": 1663264,
+ "fwMd5": "d642e87451dbc970ad73f8a92a2a2c6c",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.69",
+   "t": [
+    "Wider page on PC with two columns",
+    "Wi-Fi: signal in dBm next to the rating, channel on its own row"
+   ]
+  },
   {
    "v": "V1.7.68",
    "t": [
