@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.78",
- "fwDatei": "firmware/Core_V1.7.78.bin",
- "fwGroesse": 1668736,
- "fwMd5": "c848155089408e86f3058e613f337b55",
+ "fw": "V1.7.79",
+ "fwDatei": "firmware/Core_V1.7.79.bin",
+ "fwGroesse": 1668784,
+ "fwMd5": "0a7ab7d12678daafb4e7ece8188929c9",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.79",
+   "t": [
+    "Buttons: channel field of the switches on the right, same as the buttons"
+   ]
+  },
   {
    "v": "V1.7.78",
    "t": [
@@ -134,12 +140,6 @@
     "Coordinates button checks that copying worked",
     "All coordinates with 6 decimals",
     "'recognized' only shown for links"
-   ]
-  },
-  {
-   "v": "V1.7.64",
-   "t": [
-    "Hold a photo (or right-click) to show it large"
    ]
   }
  ]

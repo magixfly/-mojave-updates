@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.79",
+  "t": [
+   "Buttons: channel field of the switches on the right, same as the buttons"
+  ]
+ },
+ {
   "v": "V1.7.78",
   "t": [
    "Online update is locked while the car is armed"
