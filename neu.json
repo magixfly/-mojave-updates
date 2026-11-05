@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.67",
+  "t": [
+   "Long values wrap to a second line instead of being cut off"
+  ]
+ },
+ {
   "v": "V1.7.66",
   "t": [
    "Online update shows what's new before you update"

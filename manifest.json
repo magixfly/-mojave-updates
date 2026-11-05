@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.66",
- "fwDatei": "firmware/Core_V1.7.66.bin",
- "fwGroesse": 1662336,
- "fwMd5": "879c3b3688cbec04847128a9b9e1fc20",
+ "fw": "V1.7.67",
+ "fwDatei": "firmware/Core_V1.7.67.bin",
+ "fwGroesse": 1662528,
+ "fwMd5": "af025b3d94ee9eb65228683efb6152b3",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.67",
+   "t": [
+    "Long values wrap to a second line instead of being cut off"
+   ]
+  },
   {
    "v": "V1.7.66",
    "t": [
