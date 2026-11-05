@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.88",
+  "t": [
+   "Battery page: summary per battery, numbered by order of the day"
+  ]
+ },
+ {
   "v": "V1.7.87",
   "t": [
    "Learning starts after 30 s disarmed instead of 60 s"

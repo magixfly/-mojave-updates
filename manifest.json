@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.87",
- "fwDatei": "firmware/Core_V1.7.87.bin",
- "fwGroesse": 1676816,
- "fwMd5": "0cdd45af6ccb9ee00197bb8874ee57e8",
+ "fw": "V1.7.88",
+ "fwDatei": "firmware/Core_V1.7.88.bin",
+ "fwGroesse": 1677712,
+ "fwMd5": "bf85b8ecb0bb512a46f54af5dad9b9c9",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.88",
+   "t": [
+    "Battery page: summary per battery, numbered by order of the day"
+   ]
+  },
   {
    "v": "V1.7.87",
    "t": [
@@ -136,12 +142,6 @@
    "v": "V1.7.74",
    "t": [
     "OSD: drag each text in the preview to place it, like in INAV"
-   ]
-  },
-  {
-   "v": "V1.7.73",
-   "t": [
-    "OSD: each temperature can be switched on or off by itself"
    ]
   }
  ]
