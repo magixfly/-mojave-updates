@@ -1,5 +1,18 @@
 [
  {
+  "v": "V1.7.86",
+  "t": [
+   "New Battery page: battery now, what the Core learned, list of batteries used",
+   "Resistance is learned separately for 4S and 6S"
+  ]
+ },
+ {
+  "v": "V1.7.85",
+  "t": [
+   "Current estimate learns only when disarmed, after 60 s at rest"
+  ]
+ },
+ {
   "v": "V1.7.84",
   "t": [
    "Amps without a current sensor: estimated from voltage sag, learns per battery",

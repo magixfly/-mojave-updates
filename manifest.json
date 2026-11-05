@@ -1,14 +1,14 @@
 {
- "fw": "V1.7.84",
- "fwDatei": "firmware/Core_V1.7.84.bin",
- "fwGroesse": 1672704,
- "fwMd5": "0c36c484c23d956254dc6eeef7fd05ea",
+ "fw": "V1.7.86",
+ "fwDatei": "firmware/Core_V1.7.86.bin",
+ "fwGroesse": 1676816,
+ "fwMd5": "0082d55c9dae8d1cf9890c30fde757cb",
  "dateien": [
   {
    "p": "/player.html.gz",
    "url": "sd/player.html.gz",
    "s": 95867,
-   "md5": "362e38d13c6f3210680b7793de0aeb32"
+   "md5": "7460c8ff95cc6012f3f810fda55100f9"
   },
   {
    "p": "/sounds/system/warn_akku.mp3",
@@ -45,6 +45,19 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.86",
+   "t": [
+    "New Battery page: battery now, what the Core learned, list of batteries used",
+    "Resistance is learned separately for 4S and 6S"
+   ]
+  },
+  {
+   "v": "V1.7.85",
+   "t": [
+    "Current estimate learns only when disarmed, after 60 s at rest"
+   ]
+  },
   {
    "v": "V1.7.84",
    "t": [
@@ -130,19 +143,6 @@
    "t": [
     "OSD page rebuilt: compact switches, position with pictures, preview next to settings",
     "REC text removed from the OSD"
-   ]
-  },
-  {
-   "v": "V1.7.71",
-   "t": [
-    "Menu order: drag the tabs instead of using arrows"
-   ]
-  },
-  {
-   "v": "V1.7.70",
-   "t": [
-    "Phone: values in one column, no line breaks",
-    "Phone: memory bars show their full text"
    ]
   }
  ]
