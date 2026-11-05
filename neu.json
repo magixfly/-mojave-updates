@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.89",
+  "t": [
+   "4S test batteries are no longer logged or counted"
+  ]
+ },
+ {
   "v": "V1.7.88",
   "t": [
    "Battery page: summary per battery, numbered by order of the day"
