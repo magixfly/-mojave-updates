@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.75",
+  "t": [
+   "OSD preview uses the real 53 x 20 grid of INAV with DJI native"
+  ]
+ },
+ {
   "v": "V1.7.74",
   "t": [
    "OSD: drag each text in the preview to place it, like in INAV"

@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.74",
- "fwDatei": "firmware/Core_V1.7.74.bin",
- "fwGroesse": 1666432,
- "fwMd5": "d238919821d88e5de68df6aaa4b9991e",
+ "fw": "V1.7.75",
+ "fwDatei": "firmware/Core_V1.7.75.bin",
+ "fwGroesse": 1666256,
+ "fwMd5": "8a24b83020c429d96cbcdb1b17cd3dfc",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.75",
+   "t": [
+    "OSD preview uses the real 53 x 20 grid of INAV with DJI native"
+   ]
+  },
   {
    "v": "V1.7.74",
    "t": [
@@ -135,12 +141,6 @@
    "v": "V1.7.61",
    "t": [
     "Ride list: places always on one line"
-   ]
-  },
-  {
-   "v": "V1.7.60",
-   "t": [
-    "Rides: export selected as ZIP"
    ]
   }
  ]
