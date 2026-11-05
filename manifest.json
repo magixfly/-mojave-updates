@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.72",
- "fwDatei": "firmware/Core_V1.7.72.bin",
- "fwGroesse": 1666480,
- "fwMd5": "cda782b5d410c7ff484c40c34c411f4c",
+ "fw": "V1.7.73",
+ "fwDatei": "firmware/Core_V1.7.73.bin",
+ "fwGroesse": 1667088,
+ "fwMd5": "c9d6534739533783d9f6eefac7cc2e78",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.73",
+   "t": [
+    "OSD: each temperature can be switched on or off by itself"
+   ]
+  },
   {
    "v": "V1.7.72",
    "t": [

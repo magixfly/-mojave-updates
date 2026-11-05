@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.73",
+  "t": [
+   "OSD: each temperature can be switched on or off by itself"
+  ]
+ },
+ {
   "v": "V1.7.72",
   "t": [
    "OSD page rebuilt: compact switches, position with pictures, preview next to settings",
