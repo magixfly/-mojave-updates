@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.68",
+  "t": [
+   "New value: Armed today",
+   "Button to reset armed total"
+  ]
+ },
+ {
   "v": "V1.7.67",
   "t": [
    "Long values wrap to a second line instead of being cut off"

@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.67",
- "fwDatei": "firmware/Core_V1.7.67.bin",
- "fwGroesse": 1662528,
- "fwMd5": "af025b3d94ee9eb65228683efb6152b3",
+ "fw": "V1.7.68",
+ "fwDatei": "firmware/Core_V1.7.68.bin",
+ "fwGroesse": 1663136,
+ "fwMd5": "5f8559d5f1c0c3f3427bf168c9a0550e",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.68",
+   "t": [
+    "New value: Armed today",
+    "Button to reset armed total"
+   ]
+  },
   {
    "v": "V1.7.67",
    "t": [
