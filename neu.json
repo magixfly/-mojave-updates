@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.70",
+  "t": [
+   "Phone: values in one column, no line breaks",
+   "Phone: memory bars show their full text"
+  ]
+ },
+ {
   "v": "V1.7.69",
   "t": [
    "Wider page on PC with two columns",

@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.69",
- "fwDatei": "firmware/Core_V1.7.69.bin",
- "fwGroesse": 1663264,
- "fwMd5": "d642e87451dbc970ad73f8a92a2a2c6c",
+ "fw": "V1.7.70",
+ "fwDatei": "firmware/Core_V1.7.70.bin",
+ "fwGroesse": 1663584,
+ "fwMd5": "7ae16d2e1a58f1c624da17ef48c0e4e5",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.70",
+   "t": [
+    "Phone: values in one column, no line breaks",
+    "Phone: memory bars show their full text"
+   ]
+  },
   {
    "v": "V1.7.69",
    "t": [
