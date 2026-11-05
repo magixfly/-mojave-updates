@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.83",
- "fwDatei": "firmware/Core_V1.7.83.bin",
- "fwGroesse": 1671376,
- "fwMd5": "a427cfb506e1a69668daadefe063450d",
+ "fw": "V1.7.84",
+ "fwDatei": "firmware/Core_V1.7.84.bin",
+ "fwGroesse": 1672704,
+ "fwMd5": "0c36c484c23d956254dc6eeef7fd05ea",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,14 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.84",
+   "t": [
+    "Amps without a current sensor: estimated from voltage sag, learns per battery",
+    "Amps shown in the OSD and saved in rides",
+    "Battery percent follows a LiPo curve, no longer a straight line"
+   ]
+  },
   {
    "v": "V1.7.83",
    "t": [
@@ -135,13 +143,6 @@
    "t": [
     "Phone: values in one column, no line breaks",
     "Phone: memory bars show their full text"
-   ]
-  },
-  {
-   "v": "V1.7.69",
-   "t": [
-    "Wider page on PC with two columns",
-    "Wi-Fi: signal in dBm next to the rating, channel on its own row"
    ]
   }
  ]

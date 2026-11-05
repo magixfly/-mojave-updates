@@ -1,5 +1,13 @@
 [
  {
+  "v": "V1.7.84",
+  "t": [
+   "Amps without a current sensor: estimated from voltage sag, learns per battery",
+   "Amps shown in the OSD and saved in rides",
+   "Battery percent follows a LiPo curve, no longer a straight line"
+  ]
+ },
+ {
   "v": "V1.7.83",
   "t": [
    "Blue channel fields on the Buttons page",
