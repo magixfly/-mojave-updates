@@ -1,5 +1,14 @@
 [
  {
+  "v": "V1.7.80",
+  "t": [
+   "New layout: settings pages in two columns on PC",
+   "Telemetry sections fold open and closed with a short summary",
+   "Explanations moved behind an info button",
+   "Same on/off look everywhere"
+  ]
+ },
+ {
   "v": "V1.7.79",
   "t": [
    "Buttons: channel field of the switches on the right, same as the buttons"

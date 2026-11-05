@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.79",
- "fwDatei": "firmware/Core_V1.7.79.bin",
- "fwGroesse": 1668784,
- "fwMd5": "0a7ab7d12678daafb4e7ece8188929c9",
+ "fw": "V1.7.80",
+ "fwDatei": "firmware/Core_V1.7.80.bin",
+ "fwGroesse": 1671184,
+ "fwMd5": "86bfe0f7530109f8fffaa561edb1ca80",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,15 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.80",
+   "t": [
+    "New layout: settings pages in two columns on PC",
+    "Telemetry sections fold open and closed with a short summary",
+    "Explanations moved behind an info button",
+    "Same on/off look everywhere"
+   ]
+  },
   {
    "v": "V1.7.79",
    "t": [
@@ -131,15 +140,6 @@
    "v": "V1.7.66",
    "t": [
     "Online update shows what's new before you update"
-   ]
-  },
-  {
-   "v": "V1.7.65",
-   "t": [
-    "GPS coordinates in Loaded areas",
-    "Coordinates button checks that copying worked",
-    "All coordinates with 6 decimals",
-    "'recognized' only shown for links"
    ]
   }
  ]
