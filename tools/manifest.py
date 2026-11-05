@@ -12,5 +12,8 @@ for wurzel, _, dateien in os.walk(os.path.join(R, "sd")):
         p = os.path.join(wurzel, n); rel = os.path.relpath(p, R).replace(os.sep, "/")
         m["dateien"].append({"p": "/" + rel[3:], "url": rel, "s": os.path.getsize(p), "md5": md5(p)})
 m["dateien"].sort(key=lambda d: d["p"])
+# Was ist neu: neu.json (neueste zuerst), Core zeigt beim Update-Check alles nach der laufenden Version
+pn = os.path.join(R, "neu.json")
+if os.path.exists(pn): m["neu"] = json.load(open(pn, encoding="utf8"))[:15]
 json.dump(m, open(os.path.join(R, "manifest.json"), "w"), indent=1, ensure_ascii=False)
 print(json.dumps(m, indent=1)[:1500])
