@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.74",
+  "t": [
+   "OSD: drag each text in the preview to place it, like in INAV"
+  ]
+ },
+ {
   "v": "V1.7.73",
   "t": [
    "OSD: each temperature can be switched on or off by itself"

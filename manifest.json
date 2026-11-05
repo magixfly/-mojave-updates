@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.73",
- "fwDatei": "firmware/Core_V1.7.73.bin",
- "fwGroesse": 1667088,
- "fwMd5": "c9d6534739533783d9f6eefac7cc2e78",
+ "fw": "V1.7.74",
+ "fwDatei": "firmware/Core_V1.7.74.bin",
+ "fwGroesse": 1666432,
+ "fwMd5": "d238919821d88e5de68df6aaa4b9991e",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.74",
+   "t": [
+    "OSD: drag each text in the preview to place it, like in INAV"
+   ]
+  },
   {
    "v": "V1.7.73",
    "t": [
