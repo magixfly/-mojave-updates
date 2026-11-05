@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.76",
+  "t": [
+   "OSD: new switch Positions from INAV, the Core then sends texts only"
+  ]
+ },
+ {
   "v": "V1.7.75",
   "t": [
    "OSD preview uses the real 53 x 20 grid of INAV with DJI native"
