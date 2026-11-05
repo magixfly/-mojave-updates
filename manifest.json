@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.70",
- "fwDatei": "firmware/Core_V1.7.70.bin",
- "fwGroesse": 1663584,
- "fwMd5": "7ae16d2e1a58f1c624da17ef48c0e4e5",
+ "fw": "V1.7.71",
+ "fwDatei": "firmware/Core_V1.7.71.bin",
+ "fwGroesse": 1664368,
+ "fwMd5": "5db4f7a3919366e061b7874775da58fa",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.71",
+   "t": [
+    "Menu order: drag the tabs instead of using arrows"
+   ]
+  },
   {
    "v": "V1.7.70",
    "t": [

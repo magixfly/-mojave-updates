@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.71",
+  "t": [
+   "Menu order: drag the tabs instead of using arrows"
+  ]
+ },
+ {
   "v": "V1.7.70",
   "t": [
    "Phone: values in one column, no line breaks",
