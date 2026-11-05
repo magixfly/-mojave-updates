@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.90",
- "fwDatei": "firmware/Core_V1.7.90.bin",
- "fwGroesse": 1678112,
- "fwMd5": "5360f08cb3b00a8db62279c3c822d9e9",
+ "fw": "V1.7.91",
+ "fwDatei": "firmware/Core_V1.7.91.bin",
+ "fwGroesse": 1678128,
+ "fwMd5": "f345dd3c698fb6f5ca041d930134243a",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.91",
+   "t": [
+    "High beam flash fixed, now flashes 3 times"
+   ]
+  },
   {
    "v": "V1.7.90",
    "t": [
@@ -136,12 +142,6 @@
    "v": "V1.7.77",
    "t": [
     "Maps: Coordinates or map link now sits directly above its input field"
-   ]
-  },
-  {
-   "v": "V1.7.76",
-   "t": [
-    "OSD: new switch Positions from INAV, the Core then sends texts only"
    ]
   }
  ]

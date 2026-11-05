@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.91",
+  "t": [
+   "High beam flash fixed, now flashes 3 times"
+  ]
+ },
+ {
   "v": "V1.7.90",
   "t": [
    "Double click flashes high beam, long press turns it off and back to the last level"
