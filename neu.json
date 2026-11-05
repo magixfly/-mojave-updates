@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.81",
+  "t": [
+   "Settings pages back to one column"
+  ]
+ },
+ {
   "v": "V1.7.80",
   "t": [
    "New layout: settings pages in two columns on PC",

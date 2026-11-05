@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.80",
- "fwDatei": "firmware/Core_V1.7.80.bin",
- "fwGroesse": 1671184,
- "fwMd5": "86bfe0f7530109f8fffaa561edb1ca80",
+ "fw": "V1.7.81",
+ "fwDatei": "firmware/Core_V1.7.81.bin",
+ "fwGroesse": 1671024,
+ "fwMd5": "21a1289f14373f044ac7ebf40c8ed8b7",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.81",
+   "t": [
+    "Settings pages back to one column"
+   ]
+  },
   {
    "v": "V1.7.80",
    "t": [
@@ -134,12 +140,6 @@
    "v": "V1.7.67",
    "t": [
     "Long values wrap to a second line instead of being cut off"
-   ]
-  },
-  {
-   "v": "V1.7.66",
-   "t": [
-    "Online update shows what's new before you update"
    ]
   }
  ]
