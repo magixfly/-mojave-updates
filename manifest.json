@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.92",
- "fwDatei": "firmware/Core_V1.7.92.bin",
- "fwGroesse": 1678704,
- "fwMd5": "852368d76006003c6c8c400ae1f29c5b",
+ "fw": "V1.7.93",
+ "fwDatei": "firmware/Core_V1.7.93.bin",
+ "fwGroesse": 1680288,
+ "fwMd5": "bfdba5322e03ea099346dcd80473c455",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.93",
+   "t": [
+    "System: save settings to file and restore from file or SD card"
+   ]
+  },
   {
    "v": "V1.7.92",
    "t": [
@@ -136,12 +142,6 @@
    "v": "V1.7.79",
    "t": [
     "Buttons: channel field of the switches on the right, same as the buttons"
-   ]
-  },
-  {
-   "v": "V1.7.78",
-   "t": [
-    "Online update is locked while the car is armed"
    ]
   }
  ]

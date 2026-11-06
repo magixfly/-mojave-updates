@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.93",
+  "t": [
+   "System: save settings to file and restore from file or SD card"
+  ]
+ },
+ {
   "v": "V1.7.92",
   "t": [
    "Random hotspot password is shown on USB for boards without display"
