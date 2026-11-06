@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.110",
- "fwDatei": "firmware/Core_V1.7.110.bin",
- "fwGroesse": 1718176,
- "fwMd5": "b881af450c4320acae9a42092c9e1794",
+ "fw": "V1.7.111",
+ "fwDatei": "firmware/Core_V1.7.111.bin",
+ "fwGroesse": 1724592,
+ "fwMd5": "547381512bcce5a7295bfef702df49ee",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.111",
+   "t": [
+    "System: PC backup status (last run, result, folder, PC)"
+   ]
+  },
   {
    "v": "V1.7.110",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.97",
    "t": [
     "Standstill current from FC plus extra load"
-   ]
-  },
-  {
-   "v": "V1.7.96",
-   "t": [
-    "Battery number: select by transmitter channel, shown in OSD and display"
    ]
   }
  ]
