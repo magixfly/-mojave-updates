@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.104",
+  "t": [
+   "Reset history per battery"
+  ]
+ },
+ {
   "v": "V1.7.103",
   "t": [
    "My batteries shows only the set number of batteries"

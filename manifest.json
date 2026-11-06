@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.103",
- "fwDatei": "firmware/Core_V1.7.103.bin",
- "fwGroesse": 1687440,
- "fwMd5": "5b5204c41a9c43aed231c5e6123de430",
+ "fw": "V1.7.104",
+ "fwDatei": "firmware/Core_V1.7.104.bin",
+ "fwGroesse": 1689456,
+ "fwMd5": "029ce9e6628486d9d13325285ea9ebeb",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.104",
+   "t": [
+    "Reset history per battery"
+   ]
+  },
   {
    "v": "V1.7.103",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.90",
    "t": [
     "Double click flashes high beam, long press turns it off and back to the last level"
-   ]
-  },
-  {
-   "v": "V1.7.89",
-   "t": [
-    "4S test batteries are no longer logged or counted"
    ]
   }
  ]
