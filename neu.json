@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.109",
+  "t": [
+   "Phone hotspot first, search every 4 s"
+  ]
+ },
+ {
   "v": "V1.7.108",
   "t": [
    "Faster connect to phone hotspot: looks for available networks first"
