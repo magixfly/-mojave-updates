@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.105",
- "fwDatei": "firmware/Core_V1.7.105.bin",
- "fwGroesse": 1689600,
- "fwMd5": "2c510f151303b83bc74c19671bea286a",
+ "fw": "V1.7.106",
+ "fwDatei": "firmware/Core_V1.7.106.bin",
+ "fwGroesse": 1689920,
+ "fwMd5": "e718b01c7268fb65e511e28a50a8a980",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.106",
+   "t": [
+    "Clock on display, NO TIME shown until the clock is set"
+   ]
+  },
   {
    "v": "V1.7.105",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.92",
    "t": [
     "Random hotspot password is shown on USB for boards without display"
-   ]
-  },
-  {
-   "v": "V1.7.91",
-   "t": [
-    "High beam flash fixed, now flashes 3 times"
    ]
   }
  ]

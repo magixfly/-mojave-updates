@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.106",
+  "t": [
+   "Clock on display, NO TIME shown until the clock is set"
+  ]
+ },
+ {
   "v": "V1.7.105",
   "t": [
    "Date and time from FC GPS, works without internet"
