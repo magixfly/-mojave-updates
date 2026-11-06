@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.106",
- "fwDatei": "firmware/Core_V1.7.106.bin",
- "fwGroesse": 1689920,
- "fwMd5": "e718b01c7268fb65e511e28a50a8a980",
+ "fw": "V1.7.107",
+ "fwDatei": "firmware/Core_V1.7.107.bin",
+ "fwGroesse": 1693040,
+ "fwMd5": "4c514a22d53f4bd0683b258d292f34d9",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.107",
+   "t": [
+    "Rides without time get date and name as soon as the clock is set"
+   ]
+  },
   {
    "v": "V1.7.106",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.93",
    "t": [
     "System: save settings to file and restore from file or SD card"
-   ]
-  },
-  {
-   "v": "V1.7.92",
-   "t": [
-    "Random hotspot password is shown on USB for boards without display"
    ]
   }
  ]
