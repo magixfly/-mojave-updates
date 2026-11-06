@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.110",
+  "t": [
+   "Virtual rides: draw on the map, laid onto paths, own list"
+  ]
+ },
+ {
   "v": "V1.7.109",
   "t": [
    "Phone hotspot first, search every 4 s"
