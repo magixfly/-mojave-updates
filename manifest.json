@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.96",
- "fwDatei": "firmware/Core_V1.7.96.bin",
- "fwGroesse": 1683920,
- "fwMd5": "c868f5a8eb8c975a614a6195da7ae84e",
+ "fw": "V1.7.97",
+ "fwDatei": "firmware/Core_V1.7.97.bin",
+ "fwGroesse": 1684208,
+ "fwMd5": "c3ae772c605440f80b55dd287d933cf8",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.97",
+   "t": [
+    "Standstill current from FC plus extra load"
+   ]
+  },
   {
    "v": "V1.7.96",
    "t": [
@@ -133,12 +139,6 @@
     "Narrower settings pages on PC, OSD cards one below the other",
     "Sensors: each value on its own row",
     "Map download pause text only when a download runs"
-   ]
-  },
-  {
-   "v": "V1.7.82",
-   "t": [
-    "PC: fields sit right next to their labels"
    ]
   }
  ]

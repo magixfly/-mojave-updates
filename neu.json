@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.97",
+  "t": [
+   "Standstill current from FC plus extra load"
+  ]
+ },
+ {
   "v": "V1.7.96",
   "t": [
    "Battery number: select by transmitter channel, shown in OSD and display"
