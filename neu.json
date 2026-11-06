@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.100",
+  "t": [
+   "Battery list: number of batteries, description and capacity per battery"
+  ]
+ },
+ {
   "v": "V1.7.99",
   "t": [
    "Undervoltage in two stages: early OSD warning every 3 s, then full alarm"

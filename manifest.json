@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.99",
- "fwDatei": "firmware/Core_V1.7.99.bin",
- "fwGroesse": 1684544,
- "fwMd5": "fad6d78d5d0016dfa0e69a4e15d93c0f",
+ "fw": "V1.7.100",
+ "fwDatei": "firmware/Core_V1.7.100.bin",
+ "fwGroesse": 1686912,
+ "fwMd5": "47e32a4560f2e1782c02486c6bbd24f2",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.100",
+   "t": [
+    "Battery list: number of batteries, description and capacity per battery"
+   ]
+  },
   {
    "v": "V1.7.99",
    "t": [
@@ -128,12 +134,6 @@
    "t": [
     "New Battery page: battery now, what the Core learned, list of batteries used",
     "Resistance is learned separately for 4S and 6S"
-   ]
-  },
-  {
-   "v": "V1.7.85",
-   "t": [
-    "Current estimate learns only when disarmed, after 60 s at rest"
    ]
   }
  ]
