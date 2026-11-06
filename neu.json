@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.96",
+  "t": [
+   "Battery number: select by transmitter channel, shown in OSD and display"
+  ]
+ },
+ {
   "v": "V1.7.95",
   "t": [
    "Same width for switches and number fields"

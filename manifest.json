@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.95",
- "fwDatei": "firmware/Core_V1.7.95.bin",
- "fwGroesse": 1688528,
- "fwMd5": "156e8694f909763af8fcda18b22fbfcf",
+ "fw": "V1.7.96",
+ "fwDatei": "firmware/Core_V1.7.96.bin",
+ "fwGroesse": 1683920,
+ "fwMd5": "c868f5a8eb8c975a614a6195da7ae84e",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.96",
+   "t": [
+    "Battery number: select by transmitter channel, shown in OSD and display"
+   ]
+  },
   {
    "v": "V1.7.95",
    "t": [
@@ -133,12 +139,6 @@
    "v": "V1.7.82",
    "t": [
     "PC: fields sit right next to their labels"
-   ]
-  },
-  {
-   "v": "V1.7.81",
-   "t": [
-    "Settings pages back to one column"
    ]
   }
  ]
