@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.100",
- "fwDatei": "firmware/Core_V1.7.100.bin",
- "fwGroesse": 1686912,
- "fwMd5": "47e32a4560f2e1782c02486c6bbd24f2",
+ "fw": "V1.7.101",
+ "fwDatei": "firmware/Core_V1.7.101.bin",
+ "fwGroesse": 1686928,
+ "fwMd5": "0e0470d671ed2228b5d219cac9e9486a",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.101",
+   "t": [
+    "Clearer label for the battery number channel"
+   ]
+  },
   {
    "v": "V1.7.100",
    "t": [
@@ -127,13 +133,6 @@
    "v": "V1.7.87",
    "t": [
     "Learning starts after 30 s disarmed instead of 60 s"
-   ]
-  },
-  {
-   "v": "V1.7.86",
-   "t": [
-    "New Battery page: battery now, what the Core learned, list of batteries used",
-    "Resistance is learned separately for 4S and 6S"
    ]
   }
  ]
