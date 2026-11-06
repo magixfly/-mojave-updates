@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.95",
+  "t": [
+   "Same width for switches and number fields"
+  ]
+ },
+ {
   "v": "V1.7.94",
   "t": [
    "FC mounting reduced to Attitude = level"

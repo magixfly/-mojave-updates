@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.94",
- "fwDatei": "firmware/Core_V1.7.94.bin",
- "fwGroesse": 1688480,
- "fwMd5": "b981fd870a33271a228af7ea47b18037",
+ "fw": "V1.7.95",
+ "fwDatei": "firmware/Core_V1.7.95.bin",
+ "fwGroesse": 1688528,
+ "fwMd5": "156e8694f909763af8fcda18b22fbfcf",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.95",
+   "t": [
+    "Same width for switches and number fields"
+   ]
+  },
   {
    "v": "V1.7.94",
    "t": [
@@ -133,15 +139,6 @@
    "v": "V1.7.81",
    "t": [
     "Settings pages back to one column"
-   ]
-  },
-  {
-   "v": "V1.7.80",
-   "t": [
-    "New layout: settings pages in two columns on PC",
-    "Telemetry sections fold open and closed with a short summary",
-    "Explanations moved behind an info button",
-    "Same on/off look everywhere"
    ]
   }
  ]
