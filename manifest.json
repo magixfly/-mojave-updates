@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.93",
- "fwDatei": "firmware/Core_V1.7.93.bin",
- "fwGroesse": 1680288,
- "fwMd5": "bfdba5322e03ea099346dcd80473c455",
+ "fw": "V1.7.94",
+ "fwDatei": "firmware/Core_V1.7.94.bin",
+ "fwGroesse": 1688480,
+ "fwMd5": "b981fd870a33271a228af7ea47b18037",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.94",
+   "t": [
+    "FC mounting reduced to Attitude = level"
+   ]
+  },
   {
    "v": "V1.7.93",
    "t": [
@@ -136,12 +142,6 @@
     "Telemetry sections fold open and closed with a short summary",
     "Explanations moved behind an info button",
     "Same on/off look everywhere"
-   ]
-  },
-  {
-   "v": "V1.7.79",
-   "t": [
-    "Buttons: channel field of the switches on the right, same as the buttons"
    ]
   }
  ]

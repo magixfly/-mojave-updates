@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.94",
+  "t": [
+   "FC mounting reduced to Attitude = level"
+  ]
+ },
+ {
   "v": "V1.7.93",
   "t": [
    "System: save settings to file and restore from file or SD card"
