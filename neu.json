@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.102",
+  "t": [
+   "Battery number channel moved to Buttons"
+  ]
+ },
+ {
   "v": "V1.7.101",
   "t": [
    "Clearer label for the battery number channel"

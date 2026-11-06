@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.101",
- "fwDatei": "firmware/Core_V1.7.101.bin",
- "fwGroesse": 1686928,
- "fwMd5": "0e0470d671ed2228b5d219cac9e9486a",
+ "fw": "V1.7.102",
+ "fwDatei": "firmware/Core_V1.7.102.bin",
+ "fwGroesse": 1687184,
+ "fwMd5": "3508231aa60adcfd4839d07ffaa38651",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.102",
+   "t": [
+    "Battery number channel moved to Buttons"
+   ]
+  },
   {
    "v": "V1.7.101",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.88",
    "t": [
     "Battery page: summary per battery, numbered by order of the day"
-   ]
-  },
-  {
-   "v": "V1.7.87",
-   "t": [
-    "Learning starts after 30 s disarmed instead of 60 s"
    ]
   }
  ]
