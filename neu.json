@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.99",
+  "t": [
+   "Undervoltage in two stages: early OSD warning every 3 s, then full alarm"
+  ]
+ },
+ {
   "v": "V1.7.98",
   "t": [
    "Amps: real FC current plus calculated ESC current"

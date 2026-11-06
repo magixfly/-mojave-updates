@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.98",
- "fwDatei": "firmware/Core_V1.7.98.bin",
- "fwGroesse": 1683776,
- "fwMd5": "f60edbf5b937fe9c79e12b1196384a06",
+ "fw": "V1.7.99",
+ "fwDatei": "firmware/Core_V1.7.99.bin",
+ "fwGroesse": 1684544,
+ "fwMd5": "fad6d78d5d0016dfa0e69a4e15d93c0f",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.99",
+   "t": [
+    "Undervoltage in two stages: early OSD warning every 3 s, then full alarm"
+   ]
+  },
   {
    "v": "V1.7.98",
    "t": [
@@ -128,14 +134,6 @@
    "v": "V1.7.85",
    "t": [
     "Current estimate learns only when disarmed, after 60 s at rest"
-   ]
-  },
-  {
-   "v": "V1.7.84",
-   "t": [
-    "Amps without a current sensor: estimated from voltage sag, learns per battery",
-    "Amps shown in the OSD and saved in rides",
-    "Battery percent follows a LiPo curve, no longer a straight line"
    ]
   }
  ]
