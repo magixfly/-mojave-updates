@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.102",
- "fwDatei": "firmware/Core_V1.7.102.bin",
- "fwGroesse": 1687184,
- "fwMd5": "3508231aa60adcfd4839d07ffaa38651",
+ "fw": "V1.7.103",
+ "fwDatei": "firmware/Core_V1.7.103.bin",
+ "fwGroesse": 1687440,
+ "fwMd5": "5b5204c41a9c43aed231c5e6123de430",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.103",
+   "t": [
+    "My batteries shows only the set number of batteries"
+   ]
+  },
   {
    "v": "V1.7.102",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.89",
    "t": [
     "4S test batteries are no longer logged or counted"
-   ]
-  },
-  {
-   "v": "V1.7.88",
-   "t": [
-    "Battery page: summary per battery, numbered by order of the day"
    ]
   }
  ]

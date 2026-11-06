@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.103",
+  "t": [
+   "My batteries shows only the set number of batteries"
+  ]
+ },
+ {
   "v": "V1.7.102",
   "t": [
    "Battery number channel moved to Buttons"
