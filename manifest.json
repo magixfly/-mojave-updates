@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.107",
- "fwDatei": "firmware/Core_V1.7.107.bin",
- "fwGroesse": 1693040,
- "fwMd5": "4c514a22d53f4bd0683b258d292f34d9",
+ "fw": "V1.7.108",
+ "fwDatei": "firmware/Core_V1.7.108.bin",
+ "fwGroesse": 1693872,
+ "fwMd5": "c7be17a628091498e1bed59f3c57fbdf",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.108",
+   "t": [
+    "Faster connect to phone hotspot: looks for available networks first"
+   ]
+  },
   {
    "v": "V1.7.107",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.94",
    "t": [
     "FC mounting reduced to Attitude = level"
-   ]
-  },
-  {
-   "v": "V1.7.93",
-   "t": [
-    "System: save settings to file and restore from file or SD card"
    ]
   }
  ]

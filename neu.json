@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.108",
+  "t": [
+   "Faster connect to phone hotspot: looks for available networks first"
+  ]
+ },
+ {
   "v": "V1.7.107",
   "t": [
    "Rides without time get date and name as soon as the clock is set"
