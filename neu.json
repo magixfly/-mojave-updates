@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.98",
+  "t": [
+   "Amps: real FC current plus calculated ESC current"
+  ]
+ },
+ {
   "v": "V1.7.97",
   "t": [
    "Standstill current from FC plus extra load"

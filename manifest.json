@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.97",
- "fwDatei": "firmware/Core_V1.7.97.bin",
- "fwGroesse": 1684208,
- "fwMd5": "c3ae772c605440f80b55dd287d933cf8",
+ "fw": "V1.7.98",
+ "fwDatei": "firmware/Core_V1.7.98.bin",
+ "fwGroesse": 1683776,
+ "fwMd5": "f60edbf5b937fe9c79e12b1196384a06",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.98",
+   "t": [
+    "Amps: real FC current plus calculated ESC current"
+   ]
+  },
   {
    "v": "V1.7.97",
    "t": [
@@ -130,15 +136,6 @@
     "Amps without a current sensor: estimated from voltage sag, learns per battery",
     "Amps shown in the OSD and saved in rides",
     "Battery percent follows a LiPo curve, no longer a straight line"
-   ]
-  },
-  {
-   "v": "V1.7.83",
-   "t": [
-    "Blue channel fields on the Buttons page",
-    "Narrower settings pages on PC, OSD cards one below the other",
-    "Sensors: each value on its own row",
-    "Map download pause text only when a download runs"
    ]
   }
  ]
