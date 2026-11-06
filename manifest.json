@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.104",
- "fwDatei": "firmware/Core_V1.7.104.bin",
- "fwGroesse": 1689456,
- "fwMd5": "029ce9e6628486d9d13325285ea9ebeb",
+ "fw": "V1.7.105",
+ "fwDatei": "firmware/Core_V1.7.105.bin",
+ "fwGroesse": 1689600,
+ "fwMd5": "2c510f151303b83bc74c19671bea286a",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.105",
+   "t": [
+    "Date and time from FC GPS, works without internet"
+   ]
+  },
   {
    "v": "V1.7.104",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.91",
    "t": [
     "High beam flash fixed, now flashes 3 times"
-   ]
-  },
-  {
-   "v": "V1.7.90",
-   "t": [
-    "Double click flashes high beam, long press turns it off and back to the last level"
    ]
   }
  ]

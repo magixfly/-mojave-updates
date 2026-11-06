@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.105",
+  "t": [
+   "Date and time from FC GPS, works without internet"
+  ]
+ },
+ {
   "v": "V1.7.104",
   "t": [
    "Reset history per battery"
