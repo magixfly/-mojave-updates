@@ -1,14 +1,14 @@
 {
- "fw": "V1.7.111",
- "fwDatei": "firmware/Core_V1.7.111.bin",
- "fwGroesse": 1724592,
- "fwMd5": "547381512bcce5a7295bfef702df49ee",
+ "fw": "V1.7.112",
+ "fwDatei": "firmware/Core_V1.7.112.bin",
+ "fwGroesse": 1736816,
+ "fwMd5": "87437735adc178ab9162a5d39b130eac",
  "dateien": [
   {
    "p": "/player.html.gz",
    "url": "sd/player.html.gz",
-   "s": 96069,
-   "md5": "512db63999d8a3ddd0e9dac44cafe2cf"
+   "s": 97181,
+   "md5": "881a916aa5399ade28d68a5ff06c07f5"
   },
   {
    "p": "/sounds/system/warn_akku.mp3",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.112",
+   "t": [
+    "Drift detection in rides, MSP RC override (autonomous, test mode)"
+   ]
+  },
   {
    "v": "V1.7.111",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.98",
    "t": [
     "Amps: real FC current plus calculated ESC current"
-   ]
-  },
-  {
-   "v": "V1.7.97",
-   "t": [
-    "Standstill current from FC plus extra load"
    ]
   }
  ]

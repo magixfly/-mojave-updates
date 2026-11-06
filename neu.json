@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.112",
+  "t": [
+   "Drift detection in rides, MSP RC override (autonomous, test mode)"
+  ]
+ },
+ {
   "v": "V1.7.111",
   "t": [
    "System: PC backup status (last run, result, folder, PC)"
