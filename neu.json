@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.92",
+  "t": [
+   "Random hotspot password is shown on USB for boards without display"
+  ]
+ },
+ {
   "v": "V1.7.91",
   "t": [
    "High beam flash fixed, now flashes 3 times"
