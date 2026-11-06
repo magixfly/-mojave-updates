@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.113",
+  "t": [
+   "Wi-Fi fix (connects even if the scan fails), roaming to a stronger access point, own pages Wi-Fi (networks around) and Drift & Auto, virtual rides: saving fixed, buttons at the bottom, Cancel, browser back"
+  ]
+ },
+ {
   "v": "V1.7.112",
   "t": [
    "Drift detection in rides, MSP RC override (autonomous, test mode)"
