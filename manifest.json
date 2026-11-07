@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.114",
- "fwDatei": "firmware/Core_V1.7.114.bin",
- "fwGroesse": 1762288,
- "fwMd5": "68fff677d565c5a4e833b081807b4961",
+ "fw": "V1.7.115",
+ "fwDatei": "firmware/Core_V1.7.115.bin",
+ "fwGroesse": 1767552,
+ "fwMd5": "187823665eea2b56604032f5ba8f0d1d",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.115",
+   "t": [
+    "Saved guest Wi-Fi networks with passwords in the settings backup (Core Backup / file), import ride CSV (optionally as demo, never counted)"
+   ]
+  },
   {
    "v": "V1.7.114",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.101",
    "t": [
     "Clearer label for the battery number channel"
-   ]
-  },
-  {
-   "v": "V1.7.100",
-   "t": [
-    "Battery list: number of batteries, description and capacity per battery"
    ]
   }
  ]

@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.115",
+  "t": [
+   "Saved guest Wi-Fi networks with passwords in the settings backup (Core Backup / file), import ride CSV (optionally as demo, never counted)"
+  ]
+ },
+ {
   "v": "V1.7.114",
   "t": [
    "Wi-Fi page: tap a network to connect until switched off (friend, restaurant), saved networks; battery/undervoltage card moved to Battery"
