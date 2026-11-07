@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.139",
+  "t": [
+   "Fan and LiDAR pins are fixed as in the wiring plan (fan GPIO 3, LiDAR GPIO 17) – no input fields any more"
+  ]
+ },
+ {
   "v": "V1.7.138",
   "t": [
    "Outputs → High beam: flash settings (number, brightness, speed), Flash now and Off / last level buttons, and which transmitter buttons are set to high beam",
