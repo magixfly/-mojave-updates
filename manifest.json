@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.113",
- "fwDatei": "firmware/Core_V1.7.113.bin",
- "fwGroesse": 1755008,
- "fwMd5": "f75986317247ba9519bef25a8b523d26",
+ "fw": "V1.7.114",
+ "fwDatei": "firmware/Core_V1.7.114.bin",
+ "fwGroesse": 1762288,
+ "fwMd5": "68fff677d565c5a4e833b081807b4961",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.114",
+   "t": [
+    "Wi-Fi page: tap a network to connect until switched off (friend, restaurant), saved networks; battery/undervoltage card moved to Battery"
+   ]
+  },
   {
    "v": "V1.7.113",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.100",
    "t": [
     "Battery list: number of batteries, description and capacity per battery"
-   ]
-  },
-  {
-   "v": "V1.7.99",
-   "t": [
-    "Undervoltage in two stages: early OSD warning every 3 s, then full alarm"
    ]
   }
  ]

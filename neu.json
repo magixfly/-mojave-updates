@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.114",
+  "t": [
+   "Wi-Fi page: tap a network to connect until switched off (friend, restaurant), saved networks; battery/undervoltage card moved to Battery"
+  ]
+ },
+ {
   "v": "V1.7.113",
   "t": [
    "Wi-Fi fix (connects even if the scan fails), roaming to a stronger access point, own pages Wi-Fi (networks around) and Drift & Auto, virtual rides: saving fixed, buttons at the bottom, Cancel, browser back"
