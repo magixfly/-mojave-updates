@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.116",
- "fwDatei": "firmware/Core_V1.7.116.bin",
- "fwGroesse": 1771424,
- "fwMd5": "be11ec74e00dfd8d080180262d974288",
+ "fw": "V1.7.117",
+ "fwDatei": "firmware/Core_V1.7.117.bin",
+ "fwGroesse": 1774272,
+ "fwMd5": "c12631e38f3fac59edf13335ee0439e8",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.117",
+   "t": [
+    "Buttons: channel overview incl. INAV modes read from the FC (Arm, AUTO, ...) and the msp_override_channels value"
+   ]
+  },
   {
    "v": "V1.7.116",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.103",
    "t": [
     "My batteries shows only the set number of batteries"
-   ]
-  },
-  {
-   "v": "V1.7.102",
-   "t": [
-    "Battery number channel moved to Buttons"
    ]
   }
  ]

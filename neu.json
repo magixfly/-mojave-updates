@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.117",
+  "t": [
+   "Buttons: channel overview incl. INAV modes read from the FC (Arm, AUTO, ...) and the msp_override_channels value"
+  ]
+ },
+ {
   "v": "V1.7.116",
   "t": [
    "Tab bar: tap pencil to drag tabs into a new order and hide pages, hidden pages under the dots button"
