@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.01",
+  "t": [
+   "Sensors → Fan: the three sensor switches (Motor/ESC, LED, O4) are now separate rows, lined up with the other fields"
+  ]
+ },
+ {
   "v": "V2.00",
   "t": [
    "New version numbering: Core and web page are now V2.00 (next: V2.01, V2.02 …)"

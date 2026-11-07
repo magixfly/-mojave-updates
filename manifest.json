@@ -1,14 +1,14 @@
 {
- "fw": "V2.00",
- "fwDatei": "firmware/Core_V2.00.bin",
- "fwGroesse": 1908352,
- "fwMd5": "50ce4488ab70bc432246ec5a225fdc3d",
+ "fw": "V2.01",
+ "fwDatei": "firmware/Core_V2.01.bin",
+ "fwGroesse": 1908448,
+ "fwMd5": "a3caedd6a09dc42ec8f87369871d72de",
  "dateien": [
   {
    "p": "/player.html.gz",
    "url": "sd/player.html.gz",
    "s": 97467,
-   "md5": "a88625c6453243b862711ca199075e60"
+   "md5": "be4c2c35105b92902a0c1a1389f7540c"
   },
   {
    "p": "/sounds/system/warn_akku.mp3",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.01",
+   "t": [
+    "Sensors → Fan: the three sensor switches (Motor/ESC, LED, O4) are now separate rows, lined up with the other fields"
+   ]
+  },
   {
    "v": "V2.00",
    "t": [
@@ -130,13 +136,6 @@
    "v": "V1.7.128",
    "t": [
     "Update button top right now reads New V1.7.x"
-   ]
-  },
-  {
-   "v": "V1.7.127",
-   "t": [
-    "System: Update history – every installed version with date, from → to and what was new",
-    "Update progress no longer jumps back to the page after a few seconds while the update is still loading"
    ]
   }
  ]
