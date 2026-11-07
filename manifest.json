@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.127",
- "fwDatei": "firmware/Core_V1.7.127.bin",
- "fwGroesse": 1820736,
- "fwMd5": "002be550fdf1ba94db2a80abc5e228e0",
+ "fw": "V1.7.128",
+ "fwDatei": "firmware/Core_V1.7.128.bin",
+ "fwGroesse": 1820816,
+ "fwMd5": "bd43fe5727d4d252377032c0cebb4ae1",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.128",
+   "t": [
+    "Update button top right now reads New V1.7.x"
+   ]
+  },
   {
    "v": "V1.7.127",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V1.7.114",
    "t": [
     "Wi-Fi page: tap a network to connect until switched off (friend, restaurant), saved networks; battery/undervoltage card moved to Battery"
-   ]
-  },
-  {
-   "v": "V1.7.113",
-   "t": [
-    "Wi-Fi fix (connects even if the scan fails), roaming to a stronger access point, own pages Wi-Fi (networks around) and Drift & Auto, virtual rides: saving fixed, buttons at the bottom, Cancel, browser back"
    ]
   }
  ]

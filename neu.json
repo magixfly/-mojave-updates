@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.128",
+  "t": [
+   "Update button top right now reads New V1.7.x"
+  ]
+ },
+ {
   "v": "V1.7.127",
   "t": [
    "System: Update history – every installed version with date, from → to and what was new",
