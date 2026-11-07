@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.120",
- "fwDatei": "firmware/Core_V1.7.120.bin",
- "fwGroesse": 1777168,
- "fwMd5": "6552223e1c872d08389a238bb1951b38",
+ "fw": "V1.7.121",
+ "fwDatei": "firmware/Core_V1.7.121.bin",
+ "fwGroesse": 1777344,
+ "fwMd5": "09d70d5727290f15a9b9c0b56d69022f",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.121",
+   "t": [
+    "Virtual rides: smooth track without jitter or zig-zag, car stands still when stopped, smoother attitude"
+   ]
+  },
   {
    "v": "V1.7.120",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.107",
    "t": [
     "Rides without time get date and name as soon as the clock is set"
-   ]
-  },
-  {
-   "v": "V1.7.106",
-   "t": [
-    "Clock on display, NO TIME shown until the clock is set"
    ]
   }
  ]
