@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.118",
- "fwDatei": "firmware/Core_V1.7.118.bin",
+ "fw": "V1.7.119",
+ "fwDatei": "firmware/Core_V1.7.119.bin",
  "fwGroesse": 1775520,
- "fwMd5": "99f022458ea44c4649439639d80d823e",
+ "fwMd5": "a548eedcd8506f2e3db53fbbbc647b65",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.119",
+   "t": [
+    "Drift page shows only rides with drift data"
+   ]
+  },
   {
    "v": "V1.7.118",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.105",
    "t": [
     "Date and time from FC GPS, works without internet"
-   ]
-  },
-  {
-   "v": "V1.7.104",
-   "t": [
-    "Reset history per battery"
    ]
   }
  ]
