@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.130",
+  "t": [
+   "Update history: notes were missing (no notes) – fixed, older entries are filled in from the update list"
+  ]
+ },
+ {
   "v": "V1.7.129",
   "t": [
    "Update history collapsed – tap the title to open it"

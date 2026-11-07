@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.129",
- "fwDatei": "firmware/Core_V1.7.129.bin",
- "fwGroesse": 1821392,
- "fwMd5": "b1bd9ac89966c9ce8ddbca01baadd5bb",
+ "fw": "V1.7.130",
+ "fwDatei": "firmware/Core_V1.7.130.bin",
+ "fwGroesse": 1822528,
+ "fwMd5": "d2e4ccb78a0a5c8d6e049b504a081205",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.130",
+   "t": [
+    "Update history: notes were missing (no notes) – fixed, older entries are filled in from the update list"
+   ]
+  },
   {
    "v": "V1.7.129",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V1.7.116",
    "t": [
     "Tab bar: tap pencil to drag tabs into a new order and hide pages, hidden pages under the dots button"
-   ]
-  },
-  {
-   "v": "V1.7.115",
-   "t": [
-    "Saved guest Wi-Fi networks with passwords in the settings backup (Core Backup / file), import ride CSV (optionally as demo, never counted)"
    ]
   }
  ]
