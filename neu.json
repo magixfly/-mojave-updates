@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.03",
+  "t": [
+   "Update while armed: button top right turns orange with a lock, the big update card turns red and Update now is greyed out",
+   "Update card in System refreshes by itself when a newer version appears"
+  ]
+ },
+ {
   "v": "V2.02",
   "t": [
    "Channels live (Buttons and FC tabs): values now update about 7 times per second instead of every 2 s"

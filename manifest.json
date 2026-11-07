@@ -1,8 +1,8 @@
 {
- "fw": "V2.02",
- "fwDatei": "firmware/Core_V2.02.bin",
- "fwGroesse": 1909520,
- "fwMd5": "a542532b41a2dc070aa357e3e9eb8611",
+ "fw": "V2.03",
+ "fwDatei": "firmware/Core_V2.03.bin",
+ "fwGroesse": 1911376,
+ "fwMd5": "f0f5ee9db78475b6665d60df3837a0cc",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.03",
+   "t": [
+    "Update while armed: button top right turns orange with a lock, the big update card turns red and Update now is greyed out",
+    "Update card in System refreshes by itself when a newer version appears"
+   ]
+  },
   {
    "v": "V2.02",
    "t": [
@@ -130,12 +137,6 @@
    "v": "V1.7.130",
    "t": [
     "Update history: notes were missing (no notes) – fixed, older entries are filled in from the update list"
-   ]
-  },
-  {
-   "v": "V1.7.129",
-   "t": [
-    "Update history collapsed – tap the title to open it"
    ]
   }
  ]
