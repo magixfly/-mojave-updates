@@ -1,14 +1,14 @@
 {
- "fw": "V1.7.117",
- "fwDatei": "firmware/Core_V1.7.117.bin",
- "fwGroesse": 1774272,
- "fwMd5": "c12631e38f3fac59edf13335ee0439e8",
+ "fw": "V1.7.118",
+ "fwDatei": "firmware/Core_V1.7.118.bin",
+ "fwGroesse": 1775520,
+ "fwMd5": "99f022458ea44c4649439639d80d823e",
  "dateien": [
   {
    "p": "/player.html.gz",
    "url": "sd/player.html.gz",
-   "s": 97181,
-   "md5": "881a916aa5399ade28d68a5ff06c07f5"
+   "s": 97261,
+   "md5": "13597a197a5902fa0a7df797a1701380"
   },
   {
    "p": "/sounds/system/warn_akku.mp3",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.118",
+   "t": [
+    "Player: Web page button returns to the page you came from, page remembers the open tab, Drift page skips old rides without drift data"
+   ]
+  },
   {
    "v": "V1.7.117",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.104",
    "t": [
     "Reset history per battery"
-   ]
-  },
-  {
-   "v": "V1.7.103",
-   "t": [
-    "My batteries shows only the set number of batteries"
    ]
   }
  ]
