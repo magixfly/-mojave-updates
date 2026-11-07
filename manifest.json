@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.126",
- "fwDatei": "firmware/Core_V1.7.126.bin",
- "fwGroesse": 1816576,
- "fwMd5": "1133f8ce4bf2342c5e81f9b8395a55d3",
+ "fw": "V1.7.127",
+ "fwDatei": "firmware/Core_V1.7.127.bin",
+ "fwGroesse": 1820736,
+ "fwMd5": "002be550fdf1ba94db2a80abc5e228e0",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.127",
+   "t": [
+    "System: Update history – every installed version with date, from → to and what was new",
+    "Update progress no longer jumps back to the page after a few seconds while the update is still loading"
+   ]
+  },
   {
    "v": "V1.7.126",
    "t": [
@@ -130,12 +137,6 @@
    "v": "V1.7.113",
    "t": [
     "Wi-Fi fix (connects even if the scan fails), roaming to a stronger access point, own pages Wi-Fi (networks around) and Drift & Auto, virtual rides: saving fixed, buttons at the bottom, Cancel, browser back"
-   ]
-  },
-  {
-   "v": "V1.7.112",
-   "t": [
-    "Drift detection in rides, MSP RC override (autonomous, test mode)"
    ]
   }
  ]

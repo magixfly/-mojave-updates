@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.127",
+  "t": [
+   "System: Update history – every installed version with date, from → to and what was new",
+   "Update progress no longer jumps back to the page after a few seconds while the update is still loading"
+  ]
+ },
+ {
   "v": "V1.7.126",
   "t": [
    "Core checks for updates every minute when not armed (can be switched off under System → Online update)"
