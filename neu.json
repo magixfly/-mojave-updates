@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.135",
+  "t": [
+   "New gear button top right: opens System from every page",
+   "Tab bar keeps the open page visible"
+  ]
+ },
+ {
   "v": "V1.7.134",
   "t": [
    "Sensors: Fan control (LR7843 module, GPIO 3) – off by default, the pin is only used when you tick Fan connected; speed follows the warmest real temperature, test button",

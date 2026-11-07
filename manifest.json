@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.134",
- "fwDatei": "firmware/Core_V1.7.134.bin",
- "fwGroesse": 1828080,
- "fwMd5": "950ff66c1d06721a89255ed1f90212d6",
+ "fw": "V1.7.135",
+ "fwDatei": "firmware/Core_V1.7.135.bin",
+ "fwGroesse": 1828656,
+ "fwMd5": "06839855da2c303b5349cda11966df35",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.135",
+   "t": [
+    "New gear button top right: opens System from every page",
+    "Tab bar keeps the open page visible"
+   ]
+  },
   {
    "v": "V1.7.134",
    "t": [
@@ -132,12 +139,6 @@
    "v": "V1.7.121",
    "t": [
     "Virtual rides: smooth track without jitter or zig-zag, car stands still when stopped, smoother attitude"
-   ]
-  },
-  {
-   "v": "V1.7.120",
-   "t": [
-    "Virtual rides faster and adjustable: top speed, corner speed, acceleration, styles gentle/normal/wild/custom, average speed shown; Close button left"
    ]
   }
  ]
