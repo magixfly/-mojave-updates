@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.04",
+  "t": [
+   "Warning line under the menu (ARMED etc.) keeps its space when empty – the page no longer jumps up and down"
+  ]
+ },
+ {
   "v": "V2.03",
   "t": [
    "Update while armed: button top right turns orange with a lock, the big update card turns red and Update now is greyed out",

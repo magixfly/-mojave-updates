@@ -1,8 +1,8 @@
 {
- "fw": "V2.03",
- "fwDatei": "firmware/Core_V2.03.bin",
- "fwGroesse": 1911376,
- "fwMd5": "f0f5ee9db78475b6665d60df3837a0cc",
+ "fw": "V2.04",
+ "fwDatei": "firmware/Core_V2.04.bin",
+ "fwGroesse": 1911504,
+ "fwMd5": "9d099a0c1e1b14fb8a670b58b8d9f51a",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.04",
+   "t": [
+    "Warning line under the menu (ARMED etc.) keeps its space when empty – the page no longer jumps up and down"
+   ]
+  },
   {
    "v": "V2.03",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V1.7.131",
    "t": [
     "Update history: opening it shows all entries with their notes at once (tap an entry to fold it)"
-   ]
-  },
-  {
-   "v": "V1.7.130",
-   "t": [
-    "Update history: notes were missing (no notes) – fixed, older entries are filled in from the update list"
    ]
   }
  ]
