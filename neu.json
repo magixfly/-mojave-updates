@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.00",
+  "t": [
+   "New version numbering: Core and web page are now V2.00 (next: V2.01, V2.02 …)"
+  ]
+ },
+ {
   "v": "V1.7.140",
   "t": [
    "Buttons: only 1x short, 2x short and long hold – 3x short removed, 2x now reacts right away"

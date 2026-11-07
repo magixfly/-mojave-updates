@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.140",
- "fwDatei": "firmware/Core_V1.7.140.bin",
- "fwGroesse": 1908256,
- "fwMd5": "c93c302012cbc122fe5509ee4608d57b",
+ "fw": "V2.00",
+ "fwDatei": "firmware/Core_V2.00.bin",
+ "fwGroesse": 1908352,
+ "fwMd5": "50ce4488ab70bc432246ec5a225fdc3d",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.00",
+   "t": [
+    "New version numbering: Core and web page are now V2.00 (next: V2.01, V2.02 …)"
+   ]
+  },
   {
    "v": "V1.7.140",
    "t": [
@@ -131,12 +137,6 @@
    "t": [
     "System: Update history – every installed version with date, from → to and what was new",
     "Update progress no longer jumps back to the page after a few seconds while the update is still loading"
-   ]
-  },
-  {
-   "v": "V1.7.126",
-   "t": [
-    "Core checks for updates every minute when not armed (can be switched off under System → Online update)"
    ]
   }
  ]
