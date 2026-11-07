@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.125",
- "fwDatei": "firmware/Core_V1.7.125.bin",
- "fwGroesse": 1815264,
- "fwMd5": "652e4b5df469a800d2eb2cc1e9924317",
+ "fw": "V1.7.126",
+ "fwDatei": "firmware/Core_V1.7.126.bin",
+ "fwGroesse": 1816576,
+ "fwMd5": "1133f8ce4bf2342c5e81f9b8395a55d3",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.126",
+   "t": [
+    "Core checks for updates every minute when not armed (can be switched off under System → Online update)"
+   ]
+  },
   {
    "v": "V1.7.125",
    "t": [
@@ -130,12 +136,6 @@
    "v": "V1.7.112",
    "t": [
     "Drift detection in rides, MSP RC override (autonomous, test mode)"
-   ]
-  },
-  {
-   "v": "V1.7.111",
-   "t": [
-    "System: PC backup status (last run, result, folder, PC)"
    ]
   }
  ]

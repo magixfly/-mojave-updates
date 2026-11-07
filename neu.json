@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.126",
+  "t": [
+   "Core checks for updates every minute when not armed (can be switched off under System → Online update)"
+  ]
+ },
+ {
   "v": "V1.7.125",
   "t": [
    "Core checks for updates by itself (1 min after Wi-Fi connects, then every 6 h, never while armed)",
