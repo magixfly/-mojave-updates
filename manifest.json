@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.115",
- "fwDatei": "firmware/Core_V1.7.115.bin",
- "fwGroesse": 1767552,
- "fwMd5": "187823665eea2b56604032f5ba8f0d1d",
+ "fw": "V1.7.116",
+ "fwDatei": "firmware/Core_V1.7.116.bin",
+ "fwGroesse": 1771424,
+ "fwMd5": "be11ec74e00dfd8d080180262d974288",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.116",
+   "t": [
+    "Tab bar: tap pencil to drag tabs into a new order and hide pages, hidden pages under the dots button"
+   ]
+  },
   {
    "v": "V1.7.115",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.102",
    "t": [
     "Battery number channel moved to Buttons"
-   ]
-  },
-  {
-   "v": "V1.7.101",
-   "t": [
-    "Clearer label for the battery number channel"
    ]
   }
  ]

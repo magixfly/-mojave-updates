@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.116",
+  "t": [
+   "Tab bar: tap pencil to drag tabs into a new order and hide pages, hidden pages under the dots button"
+  ]
+ },
+ {
   "v": "V1.7.115",
   "t": [
    "Saved guest Wi-Fi networks with passwords in the settings backup (Core Backup / file), import ride CSV (optionally as demo, never counted)"
