@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.137",
+  "t": [
+   "System: card Menu order removed – default order is now the ↺ button while editing the tab bar (✎)"
+  ]
+ },
+ {
   "v": "V1.7.136",
   "t": [
    "Web page loads about 3x faster (sent packed) and is only loaded again after an update – much better over VPN and mobile data"
