@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.124",
- "fwDatei": "firmware/Core_V1.7.124.bin",
- "fwGroesse": 1812160,
- "fwMd5": "1c29d90091586e5d29b9450a0ba8828d",
+ "fw": "V1.7.125",
+ "fwDatei": "firmware/Core_V1.7.125.bin",
+ "fwGroesse": 1815264,
+ "fwMd5": "652e4b5df469a800d2eb2cc1e9924317",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,14 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.125",
+   "t": [
+    "Core checks for updates by itself (1 min after Wi-Fi connects, then every 6 h, never while armed)",
+    "New update: green button top right and green dot on System, big green card at the top of System with what is new and Update now",
+    "Info about the last update only under System: green until OK, then grey"
+   ]
+  },
   {
    "v": "V1.7.124",
    "t": [
@@ -128,12 +136,6 @@
    "v": "V1.7.111",
    "t": [
     "System: PC backup status (last run, result, folder, PC)"
-   ]
-  },
-  {
-   "v": "V1.7.110",
-   "t": [
-    "Virtual rides: draw on the map, laid onto paths, own list"
    ]
   }
  ]

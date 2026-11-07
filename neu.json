@@ -1,5 +1,13 @@
 [
  {
+  "v": "V1.7.125",
+  "t": [
+   "Core checks for updates by itself (1 min after Wi-Fi connects, then every 6 h, never while armed)",
+   "New update: green button top right and green dot on System, big green card at the top of System with what is new and Update now",
+   "Info about the last update only under System: green until OK, then grey"
+  ]
+ },
+ {
   "v": "V1.7.124",
   "t": [
    "After an update, the latest changes stay visible as info: green banner at the top until you tap OK, and always under System → Update"
