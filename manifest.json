@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.128",
- "fwDatei": "firmware/Core_V1.7.128.bin",
- "fwGroesse": 1820816,
- "fwMd5": "bd43fe5727d4d252377032c0cebb4ae1",
+ "fw": "V1.7.129",
+ "fwDatei": "firmware/Core_V1.7.129.bin",
+ "fwGroesse": 1821392,
+ "fwMd5": "b1bd9ac89966c9ce8ddbca01baadd5bb",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.129",
+   "t": [
+    "Update history collapsed – tap the title to open it"
+   ]
+  },
   {
    "v": "V1.7.128",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V1.7.115",
    "t": [
     "Saved guest Wi-Fi networks with passwords in the settings backup (Core Backup / file), import ride CSV (optionally as demo, never counted)"
-   ]
-  },
-  {
-   "v": "V1.7.114",
-   "t": [
-    "Wi-Fi page: tap a network to connect until switched off (friend, restaurant), saved networks; battery/undervoltage card moved to Battery"
    ]
   }
  ]
