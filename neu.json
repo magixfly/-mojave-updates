@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.05",
+  "t": [
+   "Everything you do on the transmitter (lights, high beam level, blue lights, hazard, O4, buttons, armed, battery number, volume) now shows on every page within about 0.2 s instead of up to 2 s"
+  ]
+ },
+ {
   "v": "V2.04",
   "t": [
    "Warning line under the menu (ARMED etc.) keeps its space when empty – the page no longer jumps up and down"
