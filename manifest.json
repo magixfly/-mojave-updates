@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.137",
- "fwDatei": "firmware/Core_V1.7.137.bin",
- "fwGroesse": 1905856,
- "fwMd5": "467f38e4aea95029a5665f35f6597d00",
+ "fw": "V1.7.138",
+ "fwDatei": "firmware/Core_V1.7.138.bin",
+ "fwGroesse": 1908416,
+ "fwMd5": "5b6cdb1b3ca5fdbfa807957e612eddd8",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.138",
+   "t": [
+    "Outputs → High beam: flash settings (number, brightness, speed), Flash now and Off / last level buttons, and which transmitter buttons are set to high beam",
+    "System: Wi-Fi signal now at the very top"
+   ]
+  },
   {
    "v": "V1.7.137",
    "t": [
@@ -132,12 +139,6 @@
    "v": "V1.7.124",
    "t": [
     "After an update, the latest changes stay visible as info: green banner at the top until you tap OK, and always under System → Update"
-   ]
-  },
-  {
-   "v": "V1.7.123",
-   "t": [
-    "Ride player: new tiles LiDAR distance and AUTO steering/throttle (what the Core steers when following or in shadow mode)"
    ]
   }
  ]

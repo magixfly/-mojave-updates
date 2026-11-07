@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.138",
+  "t": [
+   "Outputs → High beam: flash settings (number, brightness, speed), Flash now and Off / last level buttons, and which transmitter buttons are set to high beam",
+   "System: Wi-Fi signal now at the very top"
+  ]
+ },
+ {
   "v": "V1.7.137",
   "t": [
    "System: card Menu order removed – default order is now the ↺ button while editing the tab bar (✎)"
