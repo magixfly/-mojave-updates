@@ -1,14 +1,14 @@
 {
- "fw": "V1.7.122",
- "fwDatei": "firmware/Core_V1.7.122.bin",
+ "fw": "V1.7.123",
+ "fwDatei": "firmware/Core_V1.7.123.bin",
  "fwGroesse": 1807408,
- "fwMd5": "9569e3039e0a752f9cf9681bf32eb818",
+ "fwMd5": "1a816606daa0e4e6d91fe33f73e125d4",
  "dateien": [
   {
    "p": "/player.html.gz",
    "url": "sd/player.html.gz",
-   "s": 97261,
-   "md5": "13597a197a5902fa0a7df797a1701380"
+   "s": 97467,
+   "md5": "a88625c6453243b862711ca199075e60"
   },
   {
    "p": "/sounds/system/warn_akku.mp3",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.123",
+   "t": [
+    "Ride player: new tiles LiDAR distance and AUTO steering/throttle (what the Core steers when following or in shadow mode)"
+   ]
+  },
   {
    "v": "V1.7.122",
    "t": [
@@ -128,12 +134,6 @@
    "v": "V1.7.109",
    "t": [
     "Phone hotspot first, search every 4 s"
-   ]
-  },
-  {
-   "v": "V1.7.108",
-   "t": [
-    "Faster connect to phone hotspot: looks for available networks first"
    ]
   }
  ]

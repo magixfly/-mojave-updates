@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.123",
+  "t": [
+   "Ride player: new tiles LiDAR distance and AUTO steering/throttle (what the Core steers when following or in shadow mode)"
+  ]
+ },
+ {
   "v": "V1.7.122",
   "t": [
    "Drift & Auto: Follow a ride – the Core drives a recorded or virtual ride by itself (MSP RC Override), with shadow mode",
