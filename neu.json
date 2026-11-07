@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.133",
+  "t": [
+   "Maps & rides → Center: shows VGPS or GPS, and why there is no fix (e.g. FC not connected)"
+  ]
+ },
+ {
   "v": "V1.7.132",
   "t": [
    "Maps & rides: Internet line left-aligned, same font as the network name"

@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.132",
- "fwDatei": "firmware/Core_V1.7.132.bin",
- "fwGroesse": 1822800,
- "fwMd5": "8dd19f2d0de48c34e6531806c1ba97eb",
+ "fw": "V1.7.133",
+ "fwDatei": "firmware/Core_V1.7.133.bin",
+ "fwGroesse": 1823120,
+ "fwMd5": "14578541f64bae2917e54da4569da790",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.133",
+   "t": [
+    "Maps & rides → Center: shows VGPS or GPS, and why there is no fix (e.g. FC not connected)"
+   ]
+  },
   {
    "v": "V1.7.132",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V1.7.119",
    "t": [
     "Drift page shows only rides with drift data"
-   ]
-  },
-  {
-   "v": "V1.7.118",
-   "t": [
-    "Player: Web page button returns to the page you came from, page remembers the open tab, Drift page skips old rides without drift data"
    ]
   }
  ]
