@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.132",
+  "t": [
+   "Maps & rides: Internet line left-aligned, same font as the network name"
+  ]
+ },
+ {
   "v": "V1.7.131",
   "t": [
    "Update history: opening it shows all entries with their notes at once (tap an entry to fold it)"
