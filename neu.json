@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.02",
+  "t": [
+   "Channels live (Buttons and FC tabs): values now update about 7 times per second instead of every 2 s"
+  ]
+ },
+ {
   "v": "V2.01",
   "t": [
    "Sensors → Fan: the three sensor switches (Motor/ESC, LED, O4) are now separate rows, lined up with the other fields"

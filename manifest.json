@@ -1,8 +1,8 @@
 {
- "fw": "V2.01",
- "fwDatei": "firmware/Core_V2.01.bin",
- "fwGroesse": 1908448,
- "fwMd5": "a3caedd6a09dc42ec8f87369871d72de",
+ "fw": "V2.02",
+ "fwDatei": "firmware/Core_V2.02.bin",
+ "fwGroesse": 1909520,
+ "fwMd5": "a542532b41a2dc070aa357e3e9eb8611",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.02",
+   "t": [
+    "Channels live (Buttons and FC tabs): values now update about 7 times per second instead of every 2 s"
+   ]
+  },
   {
    "v": "V2.01",
    "t": [
@@ -130,12 +136,6 @@
    "v": "V1.7.129",
    "t": [
     "Update history collapsed – tap the title to open it"
-   ]
-  },
-  {
-   "v": "V1.7.128",
-   "t": [
-    "Update button top right now reads New V1.7.x"
    ]
   }
  ]
