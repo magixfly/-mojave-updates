@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.139",
- "fwDatei": "firmware/Core_V1.7.139.bin",
- "fwGroesse": 1908144,
- "fwMd5": "7f8f4b3a982859a5c856e64c2c252412",
+ "fw": "V1.7.140",
+ "fwDatei": "firmware/Core_V1.7.140.bin",
+ "fwGroesse": 1908256,
+ "fwMd5": "c93c302012cbc122fe5509ee4608d57b",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.140",
+   "t": [
+    "Buttons: only 1x short, 2x short and long hold – 3x short removed, 2x now reacts right away"
+   ]
+  },
   {
    "v": "V1.7.139",
    "t": [
@@ -131,14 +137,6 @@
    "v": "V1.7.126",
    "t": [
     "Core checks for updates every minute when not armed (can be switched off under System → Online update)"
-   ]
-  },
-  {
-   "v": "V1.7.125",
-   "t": [
-    "Core checks for updates by itself (1 min after Wi-Fi connects, then every 6 h, never while armed)",
-    "New update: green button top right and green dot on System, big green card at the top of System with what is new and Update now",
-    "Info about the last update only under System: green until OK, then grey"
    ]
   }
  ]

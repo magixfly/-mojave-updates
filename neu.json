@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.140",
+  "t": [
+   "Buttons: only 1x short, 2x short and long hold – 3x short removed, 2x now reacts right away"
+  ]
+ },
+ {
   "v": "V1.7.139",
   "t": [
    "Fan and LiDAR pins are fixed as in the wiring plan (fan GPIO 3, LiDAR GPIO 17) – no input fields any more"
