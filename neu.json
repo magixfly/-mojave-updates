@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.120",
+  "t": [
+   "Virtual rides faster and adjustable: top speed, corner speed, acceleration, styles gentle/normal/wild/custom, average speed shown; Close button left"
+  ]
+ },
+ {
   "v": "V1.7.119",
   "t": [
    "Drift page shows only rides with drift data"

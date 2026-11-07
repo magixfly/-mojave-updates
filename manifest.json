@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.119",
- "fwDatei": "firmware/Core_V1.7.119.bin",
- "fwGroesse": 1775520,
- "fwMd5": "a548eedcd8506f2e3db53fbbbc647b65",
+ "fw": "V1.7.120",
+ "fwDatei": "firmware/Core_V1.7.120.bin",
+ "fwGroesse": 1777168,
+ "fwMd5": "6552223e1c872d08389a238bb1951b38",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.120",
+   "t": [
+    "Virtual rides faster and adjustable: top speed, corner speed, acceleration, styles gentle/normal/wild/custom, average speed shown; Close button left"
+   ]
+  },
   {
    "v": "V1.7.119",
    "t": [
@@ -127,12 +133,6 @@
    "v": "V1.7.106",
    "t": [
     "Clock on display, NO TIME shown until the clock is set"
-   ]
-  },
-  {
-   "v": "V1.7.105",
-   "t": [
-    "Date and time from FC GPS, works without internet"
    ]
   }
  ]
