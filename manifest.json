@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.130",
- "fwDatei": "firmware/Core_V1.7.130.bin",
- "fwGroesse": 1822528,
- "fwMd5": "d2e4ccb78a0a5c8d6e049b504a081205",
+ "fw": "V1.7.131",
+ "fwDatei": "firmware/Core_V1.7.131.bin",
+ "fwGroesse": 1822640,
+ "fwMd5": "449f3b0b681e568e5d465315023523a9",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.131",
+   "t": [
+    "Update history: opening it shows all entries with their notes at once (tap an entry to fold it)"
+   ]
+  },
   {
    "v": "V1.7.130",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V1.7.117",
    "t": [
     "Buttons: channel overview incl. INAV modes read from the FC (Arm, AUTO, ...) and the msp_override_channels value"
-   ]
-  },
-  {
-   "v": "V1.7.116",
-   "t": [
-    "Tab bar: tap pencil to drag tabs into a new order and hide pages, hidden pages under the dots button"
    ]
   }
  ]

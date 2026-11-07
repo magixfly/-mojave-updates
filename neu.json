@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.131",
+  "t": [
+   "Update history: opening it shows all entries with their notes at once (tap an entry to fold it)"
+  ]
+ },
+ {
   "v": "V1.7.130",
   "t": [
    "Update history: notes were missing (no notes) – fixed, older entries are filled in from the update list"
