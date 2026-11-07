@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.133",
- "fwDatei": "firmware/Core_V1.7.133.bin",
- "fwGroesse": 1823120,
- "fwMd5": "14578541f64bae2917e54da4569da790",
+ "fw": "V1.7.134",
+ "fwDatei": "firmware/Core_V1.7.134.bin",
+ "fwGroesse": 1828080,
+ "fwMd5": "950ff66c1d06721a89255ed1f90212d6",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.134",
+   "t": [
+    "Sensors: Fan control (LR7843 module, GPIO 3) – off by default, the pin is only used when you tick Fan connected; speed follows the warmest real temperature, test button",
+    "LiDAR and fan can never use the same pin"
+   ]
+  },
   {
    "v": "V1.7.133",
    "t": [
@@ -131,12 +138,6 @@
    "v": "V1.7.120",
    "t": [
     "Virtual rides faster and adjustable: top speed, corner speed, acceleration, styles gentle/normal/wild/custom, average speed shown; Close button left"
-   ]
-  },
-  {
-   "v": "V1.7.119",
-   "t": [
-    "Drift page shows only rides with drift data"
    ]
   }
  ]

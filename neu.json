@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.134",
+  "t": [
+   "Sensors: Fan control (LR7843 module, GPIO 3) – off by default, the pin is only used when you tick Fan connected; speed follows the warmest real temperature, test button",
+   "LiDAR and fan can never use the same pin"
+  ]
+ },
+ {
   "v": "V1.7.133",
   "t": [
    "Maps & rides → Center: shows VGPS or GPS, and why there is no fix (e.g. FC not connected)"
