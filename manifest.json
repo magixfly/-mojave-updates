@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.121",
- "fwDatei": "firmware/Core_V1.7.121.bin",
- "fwGroesse": 1777344,
- "fwMd5": "09d70d5727290f15a9b9c0b56d69022f",
+ "fw": "V1.7.122",
+ "fwDatei": "firmware/Core_V1.7.122.bin",
+ "fwGroesse": 1807408,
+ "fwMd5": "9569e3039e0a752f9cf9681bf32eb818",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.122",
+   "t": [
+    "Drift & Auto: Follow a ride – the Core drives a recorded or virtual ride by itself (MSP RC Override), with shadow mode",
+    "Optional LiDAR distance sensor (e.g. MicoAir MT-15): brakes in AUTO, distance saved in every ride"
+   ]
+  },
   {
    "v": "V1.7.121",
    "t": [
@@ -127,12 +134,6 @@
    "v": "V1.7.108",
    "t": [
     "Faster connect to phone hotspot: looks for available networks first"
-   ]
-  },
-  {
-   "v": "V1.7.107",
-   "t": [
-    "Rides without time get date and name as soon as the clock is set"
    ]
   }
  ]

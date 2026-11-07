@@ -1,5 +1,12 @@
 [
  {
+  "v": "V1.7.122",
+  "t": [
+   "Drift & Auto: Follow a ride – the Core drives a recorded or virtual ride by itself (MSP RC Override), with shadow mode",
+   "Optional LiDAR distance sensor (e.g. MicoAir MT-15): brakes in AUTO, distance saved in every ride"
+  ]
+ },
+ {
   "v": "V1.7.121",
   "t": [
    "Virtual rides: smooth track without jitter or zig-zag, car stands still when stopped, smoother attitude"
