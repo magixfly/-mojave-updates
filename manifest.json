@@ -1,8 +1,8 @@
 {
- "fw": "V1.7.135",
- "fwDatei": "firmware/Core_V1.7.135.bin",
- "fwGroesse": 1828656,
- "fwMd5": "06839855da2c303b5349cda11966df35",
+ "fw": "V1.7.136",
+ "fwDatei": "firmware/Core_V1.7.136.bin",
+ "fwGroesse": 1906064,
+ "fwMd5": "c71a90ecabe4d0946328f2ed7db027d3",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V1.7.136",
+   "t": [
+    "Web page loads about 3x faster (sent packed) and is only loaded again after an update – much better over VPN and mobile data"
+   ]
+  },
   {
    "v": "V1.7.135",
    "t": [
@@ -133,12 +139,6 @@
    "t": [
     "Drift & Auto: Follow a ride – the Core drives a recorded or virtual ride by itself (MSP RC Override), with shadow mode",
     "Optional LiDAR distance sensor (e.g. MicoAir MT-15): brakes in AUTO, distance saved in every ride"
-   ]
-  },
-  {
-   "v": "V1.7.121",
-   "t": [
-    "Virtual rides: smooth track without jitter or zig-zag, car stands still when stopped, smoother attitude"
    ]
   }
  ]

@@ -1,5 +1,11 @@
 [
  {
+  "v": "V1.7.136",
+  "t": [
+   "Web page loads about 3x faster (sent packed) and is only loaded again after an update – much better over VPN and mobile data"
+  ]
+ },
+ {
   "v": "V1.7.135",
   "t": [
    "New gear button top right: opens System from every page",
