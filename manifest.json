@@ -1,8 +1,8 @@
 {
- "fw": "V2.05",
- "fwDatei": "firmware/Core_V2.05.bin",
- "fwGroesse": 1912768,
- "fwMd5": "1d5d4556f669d022102f1bd85ead87b1",
+ "fw": "V2.06",
+ "fwDatei": "firmware/Core_V2.06.bin",
+ "fwGroesse": 1913024,
+ "fwMd5": "46e501d119751b06e145ca85ab0414d8",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.06",
+   "t": [
+    "Transmitter button messages now show in the warning line under the menu instead of top right"
+   ]
+  },
   {
    "v": "V2.05",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V1.7.133",
    "t": [
     "Maps & rides → Center: shows VGPS or GPS, and why there is no fix (e.g. FC not connected)"
-   ]
-  },
-  {
-   "v": "V1.7.132",
-   "t": [
-    "Maps & rides: Internet line left-aligned, same font as the network name"
    ]
   }
  ]

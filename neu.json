@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.06",
+  "t": [
+   "Transmitter button messages now show in the warning line under the menu instead of top right"
+  ]
+ },
+ {
   "v": "V2.05",
   "t": [
    "Everything you do on the transmitter (lights, high beam level, blue lights, hazard, O4, buttons, armed, battery number, volume) now shows on every page within about 0.2 s instead of up to 2 s"
