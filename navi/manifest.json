@@ -1,0 +1,9 @@
+{
+ "fw": "V1.00",
+ "datei": "Navi_update.bin",
+ "groesse": 1053616,
+ "md5": "5dd09de9ec5af1933cc75abcc4401c88",
+ "neu": [
+  "First version: moving map from basemap.at, maps load automatically (from the Core or the internet), settings and updates on the Core web page"
+ ]
+}
