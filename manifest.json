@@ -1,8 +1,8 @@
 {
- "fw": "V2.15",
- "fwDatei": "firmware/Core_V2.15.bin",
- "fwGroesse": 1934144,
- "fwMd5": "df2eedce24056798a536e48b03d6c89b",
+ "fw": "V2.16",
+ "fwDatei": "firmware/Core_V2.16.bin",
+ "fwGroesse": 1943920,
+ "fwMd5": "b4a79569273d0fd03640fee7766ef87b",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.16",
+   "t": [
+    "Devil eyes: new Eye style Reptile – yellow snake eyes, slit pupil opens and closes, scales, side blink"
+   ]
+  },
   {
    "v": "V2.15",
    "t": [
@@ -134,12 +140,6 @@
    "v": "V2.02",
    "t": [
     "Channels live (Buttons and FC tabs): values now update about 7 times per second instead of every 2 s"
-   ]
-  },
-  {
-   "v": "V2.01",
-   "t": [
-    "Sensors → Fan: the three sensor switches (Motor/ESC, LED, O4) are now separate rows, lined up with the other fields"
    ]
   }
  ]
