@@ -1,8 +1,8 @@
 {
- "fw": "V2.49",
- "fwDatei": "firmware/Core_V2.49.bin",
- "fwGroesse": 1998672,
- "fwMd5": "ce276cce5a1acab550029977c01aa029",
+ "fw": "V2.50",
+ "fwDatei": "firmware/Core_V2.50.bin",
+ "fwGroesse": 1999616,
+ "fwMd5": "4b93bed35787ff5c4c508bf693a70586",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.50",
+   "t": [
+    "Online update: while loading, the card with the new version and what is new stays visible (blue); the old Updated box is hidden meanwhile"
+   ]
+  },
   {
    "v": "V2.49",
    "t": [
@@ -129,13 +135,6 @@
    "v": "V2.36",
    "t": [
     "Web page: firmware version and reload button sit right after the last menu button instead of at the far right"
-   ]
-  },
-  {
-   "v": "V2.35",
-   "t": [
-    "Channels live: tap a free channel to give it your own note (e.g. Gimbal on receiver) – saved in the settings and config.txt",
-    "Channels live: free channels used for a mode in INAV are marked"
    ]
   }
  ]

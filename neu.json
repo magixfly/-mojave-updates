@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.50",
+  "t": [
+   "Online update: while loading, the card with the new version and what is new stays visible (blue); the old Updated box is hidden meanwhile"
+  ]
+ },
+ {
   "v": "V2.49",
   "t": [
    "Channel bars half as long again, and the same length on all pages (Transmitter → Channel overview and FC → Channels live)"
