@@ -1,8 +1,8 @@
 {
- "fw": "V2.41",
- "fwDatei": "firmware/Core_V2.41.bin",
- "fwGroesse": 1997280,
- "fwMd5": "cab9b2ee00be123c71e77c08bf16caa8",
+ "fw": "V2.42",
+ "fwDatei": "firmware/Core_V2.42.bin",
+ "fwGroesse": 1997600,
+ "fwMd5": "908a0f22b31265bac00477ac110d8d90",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.42",
+   "t": [
+    "Transmitter buttons: 2× short (e.g. high beam flash) detected more reliably – channels read 50× per second and short pauses between two presses are no longer lost",
+    "Transmitter buttons: 3× short is back as its own action (e.g. put the high beam flash there). If 3× is not used, 2× still reacts right away"
+   ]
+  },
   {
    "v": "V2.41",
    "t": [
@@ -129,12 +136,6 @@
    "v": "V2.28",
    "t": [
     "FC tab (Channels live, Connection to FC): only one column, also on a wide screen"
-   ]
-  },
-  {
-   "v": "V2.27",
-   "t": [
-    "High beam is always off after power-on or an update (it no longer comes back at the last level)"
    ]
   }
  ]
