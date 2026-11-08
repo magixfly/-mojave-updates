@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.12",
+  "t": [
+   "Navi: second display with moving map via ESP-NOW, Navi card on Display tab, Navi tile"
+  ]
+ },
+ {
   "v": "V2.23",
   "t": [
    "Display cockpit: Pitch is only shown when the car lies on its roof (no more red band for small tilt)"

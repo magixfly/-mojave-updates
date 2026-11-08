@@ -1,14 +1,14 @@
 {
- "fw": "V2.23",
- "fwDatei": "firmware/Core_V2.23.bin",
- "fwGroesse": 1960608,
- "fwMd5": "4698a78938dba9c6dc23384ee047494c",
+ "fw": "V2.12",
+ "fwDatei": "firmware/Core_V2.12.bin",
+ "fwGroesse": 1943744,
+ "fwMd5": "432f3a31a429556b6fca0ab3979f243c",
  "dateien": [
   {
    "p": "/player.html.gz",
    "url": "sd/player.html.gz",
    "s": 97467,
-   "md5": "e5a4cb173cd6cbd6117baf8d16a0e50d"
+   "md5": "be4c2c35105b92902a0c1a1389f7540c"
   },
   {
    "p": "/sounds/system/warn_akku.mp3",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.12",
+   "t": [
+    "Navi: second display with moving map via ESP-NOW, Navi card on Display tab, Navi tile"
+   ]
+  },
   {
    "v": "V2.23",
    "t": [
@@ -135,12 +141,6 @@
    "v": "V2.10",
    "t": [
     "Arm animation (non-blocking), After-arm display mode, tile messages in footer"
-   ]
-  },
-  {
-   "v": "V2.09",
-   "t": [
-    "Display no longer flickers while the web page is open: an open web page does not pause the display any more (only the ride player still does)"
    ]
   }
  ]
