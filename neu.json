@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.28",
+  "t": [
+   "FC tab (Channels live, Connection to FC): only one column, also on a wide screen"
+  ]
+ },
+ {
   "v": "V2.27",
   "t": [
    "High beam is always off after power-on or an update (it no longer comes back at the last level)"

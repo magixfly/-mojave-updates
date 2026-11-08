@@ -1,8 +1,8 @@
 {
- "fw": "V2.27",
- "fwDatei": "firmware/Core_V2.27.bin",
- "fwGroesse": 1986112,
- "fwMd5": "3651e943c3a4ae3897df1e1ac31ff6a1",
+ "fw": "V2.28",
+ "fwDatei": "firmware/Core_V2.28.bin",
+ "fwGroesse": 1986288,
+ "fwMd5": "6c6a4348f339adaf41486160c23f86d6",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.28",
+   "t": [
+    "FC tab (Channels live, Connection to FC): only one column, also on a wide screen"
+   ]
+  },
   {
    "v": "V2.27",
    "t": [
@@ -135,13 +141,6 @@
    "v": "V2.14",
    "t": [
     "System → Online update: field Update address removed – the Core always uses the standard update address"
-   ]
-  },
-  {
-   "v": "V2.13",
-   "t": [
-    "Display → After arm: new choice Devil eyes – while armed the display shows only two angry eyes (no values)",
-    "Eye color, eye speed and Test eyes (12 s) in Display settings"
    ]
   }
  ]
