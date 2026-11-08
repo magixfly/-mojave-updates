@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.29",
+  "t": [
+   "All lights (LEDs and high beam) go off while an online update is loading"
+  ]
+ },
+ {
   "v": "V2.28",
   "t": [
    "FC tab (Channels live, Connection to FC): only one column, also on a wide screen"
