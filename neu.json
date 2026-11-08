@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.46",
+  "t": [
+   "Transmitter → Channel overview: value stands right next to the bar"
+  ]
+ },
+ {
   "v": "V2.45",
   "t": [
    "Outputs → High beam: new Max. when disarmed (%) – while disarmed the high beam (and the flash) is at most this bright, 0 % = off. Armed: normal levels"

@@ -1,8 +1,8 @@
 {
- "fw": "V2.45",
- "fwDatei": "firmware/Core_V2.45.bin",
- "fwGroesse": 1998752,
- "fwMd5": "c79a01236a09ef76d6c0fd6c7c761893",
+ "fw": "V2.46",
+ "fwDatei": "firmware/Core_V2.46.bin",
+ "fwGroesse": 1998896,
+ "fwMd5": "3519b7d18224394131986ba97ba416a7",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.46",
+   "t": [
+    "Transmitter → Channel overview: value stands right next to the bar"
+   ]
+  },
   {
    "v": "V2.45",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V2.32",
    "t": [
     "Channels live: channel badge (CH1, CH2 …) in front of each name, free channels shown as free"
-   ]
-  },
-  {
-   "v": "V2.31",
-   "t": [
-    "Web page: dot next to Mojave shows the connection to the Core – green connected, orange slow, red no connection"
    ]
   }
  ]
