@@ -1,8 +1,8 @@
 {
- "fw": "V2.42",
- "fwDatei": "firmware/Core_V2.42.bin",
- "fwGroesse": 1997600,
- "fwMd5": "908a0f22b31265bac00477ac110d8d90",
+ "fw": "V2.43",
+ "fwDatei": "firmware/Core_V2.43.bin",
+ "fwGroesse": 1997696,
+ "fwMd5": "eaf9370be590cfff72638072b487a7d6",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.43",
+   "t": [
+    "Transmitter → Channel overview: bars half as long"
+   ]
+  },
   {
    "v": "V2.42",
    "t": [
@@ -130,12 +136,6 @@
    "v": "V2.29",
    "t": [
     "All lights (LEDs and high beam) go off while an online update is loading"
-   ]
-  },
-  {
-   "v": "V2.28",
-   "t": [
-    "FC tab (Channels live, Connection to FC): only one column, also on a wide screen"
    ]
   }
  ]

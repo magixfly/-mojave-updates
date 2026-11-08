@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.43",
+  "t": [
+   "Transmitter → Channel overview: bars half as long"
+  ]
+ },
+ {
   "v": "V2.42",
   "t": [
    "Transmitter buttons: 2× short (e.g. high beam flash) detected more reliably – channels read 50× per second and short pauses between two presses are no longer lost",
