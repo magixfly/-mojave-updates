@@ -1,8 +1,8 @@
 {
- "fw": "V2.16",
- "fwDatei": "firmware/Core_V2.16.bin",
- "fwGroesse": 1943920,
- "fwMd5": "b4a79569273d0fd03640fee7766ef87b",
+ "fw": "V2.17",
+ "fwDatei": "firmware/Core_V2.17.bin",
+ "fwGroesse": 1944496,
+ "fwMd5": "8332c4f9c94d564c03d1feae3aeb8c1b",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.17",
+   "t": [
+    "Display tile Battery shows only the cell voltage (bigger)",
+    "New display tile Battery % (choose it in Display → Tiles, e.g. instead of Used mAh)"
+   ]
+  },
   {
    "v": "V2.16",
    "t": [
@@ -134,12 +141,6 @@
    "t": [
     "Update while armed: button top right turns orange with a lock, the big update card turns red and Update now is greyed out",
     "Update card in System refreshes by itself when a newer version appears"
-   ]
-  },
-  {
-   "v": "V2.02",
-   "t": [
-    "Channels live (Buttons and FC tabs): values now update about 7 times per second instead of every 2 s"
    ]
   }
  ]

@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.17",
+  "t": [
+   "Display tile Battery shows only the cell voltage (bigger)",
+   "New display tile Battery % (choose it in Display → Tiles, e.g. instead of Used mAh)"
+  ]
+ },
+ {
   "v": "V2.16",
   "t": [
    "Devil eyes: new Eye style Reptile – yellow snake eyes, slit pupil opens and closes, scales, side blink"
