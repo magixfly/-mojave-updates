@@ -1,8 +1,8 @@
 {
- "fw": "V2.50",
- "fwDatei": "firmware/Core_V2.50.bin",
- "fwGroesse": 1999616,
- "fwMd5": "4b93bed35787ff5c4c508bf693a70586",
+ "fw": "V2.51",
+ "fwDatei": "firmware/Core_V2.51.bin",
+ "fwGroesse": 2014640,
+ "fwMd5": "0991b2392f92e40d597bff330133a25a",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,14 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.51",
+   "t": [
+    "Display during an online update: new design – MOJAVE, glowing UPDATE, version pill, blue gradient progress bar",
+    "Faster back after an update: the Core connects straight to the last Wi-Fi access point (no search) and the web page checks every 0.5 s",
+    "System → Wi-Fi line shows how many seconds after start the Wi-Fi was connected"
+   ]
+  },
   {
    "v": "V2.50",
    "t": [
@@ -129,12 +137,6 @@
    "v": "V2.37",
    "t": [
     "Display during an online update: UPDATE, version, progress bar and % – all in Mojave blue"
-   ]
-  },
-  {
-   "v": "V2.36",
-   "t": [
-    "Web page: firmware version and reload button sit right after the last menu button instead of at the far right"
    ]
   }
  ]

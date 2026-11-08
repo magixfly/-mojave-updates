@@ -1,5 +1,13 @@
 [
  {
+  "v": "V2.51",
+  "t": [
+   "Display during an online update: new design – MOJAVE, glowing UPDATE, version pill, blue gradient progress bar",
+   "Faster back after an update: the Core connects straight to the last Wi-Fi access point (no search) and the web page checks every 0.5 s",
+   "System → Wi-Fi line shows how many seconds after start the Wi-Fi was connected"
+  ]
+ },
+ {
   "v": "V2.50",
   "t": [
    "Online update: while loading, the card with the new version and what is new stays visible (blue); the old Updated box is hidden meanwhile"
