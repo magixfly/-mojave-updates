@@ -1,8 +1,8 @@
 {
- "fw": "V2.34",
- "fwDatei": "firmware/Core_V2.34.bin",
- "fwGroesse": 1991936,
- "fwMd5": "2c614d5af81046d7e8cdb2d407d90a78",
+ "fw": "V2.35",
+ "fwDatei": "firmware/Core_V2.35.bin",
+ "fwGroesse": 1993984,
+ "fwMd5": "06cf695fbf2e94986dad1178c1e931c8",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.35",
+   "t": [
+    "Channels live: tap a free channel to give it your own note (e.g. Gimbal on receiver) – saved in the settings and config.txt",
+    "Channels live: free channels used for a mode in INAV are marked"
+   ]
+  },
   {
    "v": "V2.34",
    "t": [
@@ -131,13 +138,6 @@
    "v": "V2.21",
    "t": [
     "Web page: Core IP now in the Wi-Fi line after the network name (IP: …), removed next to Mojave"
-   ]
-  },
-  {
-   "v": "V2.20",
-   "t": [
-    "Display tiles: titles bigger, shrink only so far that they never touch the edge",
-    "Tile Battery: title shows only the cell count (e.g. BATT 4S), no total voltage"
    ]
   }
  ]

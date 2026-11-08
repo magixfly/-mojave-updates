@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.35",
+  "t": [
+   "Channels live: tap a free channel to give it your own note (e.g. Gimbal on receiver) – saved in the settings and config.txt",
+   "Channels live: free channels used for a mode in INAV are marked"
+  ]
+ },
+ {
   "v": "V2.34",
   "t": [
    "Channels live: under each used channel the Core shows what it expects (e.g. 2000 = throttle, 1000 = brake / reverse, 1000 = left, button pressed above 1700, switch positions with their action) – the current range is bold"
