@@ -1,8 +1,8 @@
 {
- "fw": "V2.23",
- "fwDatei": "firmware/Core_V2.23.bin",
- "fwGroesse": 1960608,
- "fwMd5": "4698a78938dba9c6dc23384ee047494c",
+ "fw": "V2.24",
+ "fwDatei": "firmware/Core_V2.24.bin",
+ "fwGroesse": 1984368,
+ "fwMd5": "527631cb70a3ce6c717ee6af7bcfcad0",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.24",
+   "t": [
+    "New: Navi – second display with a moving map (aerial photo or street map), connected by radio (ESP-NOW)",
+    "Settings, status and Navi update under Display → Navi, new tile Navi status"
+   ]
+  },
   {
    "v": "V2.23",
    "t": [
@@ -135,12 +142,6 @@
    "v": "V2.10",
    "t": [
     "Arm animation (non-blocking), After-arm display mode, tile messages in footer"
-   ]
-  },
-  {
-   "v": "V2.09",
-   "t": [
-    "Display no longer flickers while the web page is open: an open web page does not pause the display any more (only the ride player still does)"
    ]
   }
  ]

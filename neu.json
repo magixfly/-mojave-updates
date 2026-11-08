@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.24",
+  "t": [
+   "New: Navi – second display with a moving map (aerial photo or street map), connected by radio (ESP-NOW)",
+   "Settings, status and Navi update under Display → Navi, new tile Navi status"
+  ]
+ },
+ {
   "v": "V2.23",
   "t": [
    "Display cockpit: Pitch is only shown when the car lies on its roof (no more red band for small tilt)"
