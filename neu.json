@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.47",
+  "t": [
+   "High beam when disarmed: always the set % (Outputs → High beam → When disarmed, 0 % = off). High beam button 1× short switches it off / back on. When you arm, the last driving level comes back"
+  ]
+ },
+ {
   "v": "V2.46",
   "t": [
    "Transmitter → Channel overview: value stands right next to the bar"

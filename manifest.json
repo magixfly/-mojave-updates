@@ -1,8 +1,8 @@
 {
- "fw": "V2.46",
- "fwDatei": "firmware/Core_V2.46.bin",
- "fwGroesse": 1998896,
- "fwMd5": "3519b7d18224394131986ba97ba416a7",
+ "fw": "V2.47",
+ "fwDatei": "firmware/Core_V2.47.bin",
+ "fwGroesse": 1999376,
+ "fwMd5": "32f8ac46f905f55dfd6a9a89e82c5205",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.47",
+   "t": [
+    "High beam when disarmed: always the set % (Outputs → High beam → When disarmed, 0 % = off). High beam button 1× short switches it off / back on. When you arm, the last driving level comes back"
+   ]
+  },
   {
    "v": "V2.46",
    "t": [
@@ -131,12 +137,6 @@
    "t": [
     "Fix: display during an online update now also shows the new version under UPDATE",
     "Web page: update button and reload button moved up into the menu row (right side), ⚙ button removed – System is in the menu"
-   ]
-  },
-  {
-   "v": "V2.32",
-   "t": [
-    "Channels live: channel badge (CH1, CH2 …) in front of each name, free channels shown as free"
    ]
   }
  ]
