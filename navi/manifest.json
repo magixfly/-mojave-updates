@@ -1,9 +1,11 @@
 {
- "fw": "V1.00",
+ "fw": "V1.01",
  "datei": "Navi_update.bin",
- "groesse": 1053616,
- "md5": "5dd09de9ec5af1933cc75abcc4401c88",
+ "groesse": 1080080,
+ "md5": "c2438902e067e7e073b3ccb54acd148b",
  "neu": [
+  "Optional own GPS (GP5/GP6): without the Core the Navi runs on its own and loads maps over the last known Wi-Fi",
+  "Clock in the header now shows local time (Vienna)",
   "First version: moving map from basemap.at, maps load automatically (from the Core or the internet), settings and updates on the Core web page"
  ]
 }
