@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.26",
+  "t": [
+   "Wi-Fi: tap one of your own access points in Networks around the Core to switch to exactly that one",
+   "Wi-Fi: every 3 min (disarmed) the Core checks for a much stronger access point of your home Wi-Fi and switches"
+  ]
+ },
+ {
   "v": "V2.25",
   "t": [
    "High beam no longer flashes when the battery is plugged in (pin is set off right after the bootloader)"

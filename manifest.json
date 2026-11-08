@@ -1,8 +1,8 @@
 {
- "fw": "V2.25",
- "fwDatei": "firmware/Core_V2.25.bin",
- "fwGroesse": 1984576,
- "fwMd5": "f2e8eff0ccff54e94fe07e81e3816ea5",
+ "fw": "V2.26",
+ "fwDatei": "firmware/Core_V2.26.bin",
+ "fwGroesse": 1986000,
+ "fwMd5": "a12a609b0030e64ccc3e8e857c5e8309",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.26",
+   "t": [
+    "Wi-Fi: tap one of your own access points in Networks around the Core to switch to exactly that one",
+    "Wi-Fi: every 3 min (disarmed) the Core checks for a much stronger access point of your home Wi-Fi and switches"
+   ]
+  },
   {
    "v": "V2.25",
    "t": [
@@ -136,12 +143,6 @@
    "t": [
     "Display: the arm block message (e.g. Throttle not low) now stays steady instead of pulsing",
     "Fix: display tile FC showed the speed instead of FC status and RSSI"
-   ]
-  },
-  {
-   "v": "V2.11",
-   "t": [
-    "Fix arm animation, double press 500 ms, battery tile cell count, Indicators line removed"
    ]
   }
  ]
