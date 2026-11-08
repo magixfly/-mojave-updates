@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.45",
+  "t": [
+   "Outputs → High beam: new Max. when disarmed (%) – while disarmed the high beam (and the flash) is at most this bright, 0 % = off. Armed: normal levels"
+  ]
+ },
+ {
   "v": "V2.44",
   "t": [
    "Transmitter buttons: \"just now\" shows only once per row (it was doubled when pressed again within 3 s)",
