@@ -1,8 +1,8 @@
 {
- "fw": "V2.18",
- "fwDatei": "firmware/Core_V2.18.bin",
- "fwGroesse": 1959712,
- "fwMd5": "b0ae12d2822ccf6a9174402ee71cb102",
+ "fw": "V2.19",
+ "fwDatei": "firmware/Core_V2.19.bin",
+ "fwGroesse": 1959840,
+ "fwMd5": "677338de948a8c95b43068cec2093783",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.19",
+   "t": [
+    "Display: last German words replaced – tiles now show on / off / ready instead of an / aus / bereit"
+   ]
+  },
   {
    "v": "V2.18",
    "t": [
@@ -135,12 +141,6 @@
    "v": "V2.05",
    "t": [
     "Everything you do on the transmitter (lights, high beam level, blue lights, hazard, O4, buttons, armed, battery number, volume) now shows on every page within about 0.2 s instead of up to 2 s"
-   ]
-  },
-  {
-   "v": "V2.04",
-   "t": [
-    "Warning line under the menu (ARMED etc.) keeps its space when empty – the page no longer jumps up and down"
    ]
   }
  ]

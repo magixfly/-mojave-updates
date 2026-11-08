@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.19",
+  "t": [
+   "Display: last German words replaced – tiles now show on / off / ready instead of an / aus / bereit"
+  ]
+ },
+ {
   "v": "V2.18",
   "t": [
    "Display → Layout: new Big values – 1 to 3 values as big as possible (choose them in the Big values card)",
