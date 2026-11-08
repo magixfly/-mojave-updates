@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.37",
+  "t": [
+   "Display during an online update: UPDATE, version, progress bar and % – all in Mojave blue"
+  ]
+ },
+ {
   "v": "V2.36",
   "t": [
    "Web page: firmware version and reload button sit right after the last menu button instead of at the far right"

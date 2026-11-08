@@ -1,8 +1,8 @@
 {
- "fw": "V2.36",
- "fwDatei": "firmware/Core_V2.36.bin",
- "fwGroesse": 1994112,
- "fwMd5": "bb01241041e99ea949be390e9a523562",
+ "fw": "V2.37",
+ "fwDatei": "firmware/Core_V2.37.bin",
+ "fwGroesse": 1994624,
+ "fwMd5": "33c510da8684808d9bfa7923fb5ae067",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.37",
+   "t": [
+    "Display during an online update: UPDATE, version, progress bar and % – all in Mojave blue"
+   ]
+  },
   {
    "v": "V2.36",
    "t": [
@@ -131,13 +137,6 @@
    "v": "V2.23",
    "t": [
     "Display cockpit: Pitch is only shown when the car lies on its roof (no more red band for small tilt)"
-   ]
-  },
-  {
-   "v": "V2.22",
-   "t": [
-    "Display tile GPS: shows only the number of satellites (no Fix)",
-    "Web display preview: Big values without footer line, like on the display"
    ]
   }
  ]
