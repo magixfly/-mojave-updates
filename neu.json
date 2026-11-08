@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.36",
+  "t": [
+   "Web page: firmware version and reload button sit right after the last menu button instead of at the far right"
+  ]
+ },
+ {
   "v": "V2.35",
   "t": [
    "Channels live: tap a free channel to give it your own note (e.g. Gimbal on receiver) – saved in the settings and config.txt",
