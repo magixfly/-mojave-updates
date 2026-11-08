@@ -1,8 +1,8 @@
 {
- "fw": "V2.30",
- "fwDatei": "firmware/Core_V2.30.bin",
- "fwGroesse": 1987504,
- "fwMd5": "7c065a7552af4306badc328269bd9d0f",
+ "fw": "V2.31",
+ "fwDatei": "firmware/Core_V2.31.bin",
+ "fwGroesse": 1988368,
+ "fwMd5": "741e2a94cabc2a701282e1db43373563",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.31",
+   "t": [
+    "Web page: dot next to Mojave shows the connection to the Core – green connected, orange slow, red no connection"
+   ]
+  },
   {
    "v": "V2.30",
    "t": [
@@ -133,12 +139,6 @@
    "t": [
     "Display tile Battery shows only the cell voltage (bigger)",
     "New display tile Battery % (choose it in Display → Tiles, e.g. instead of Used mAh)"
-   ]
-  },
-  {
-   "v": "V2.16",
-   "t": [
-    "Devil eyes: new Eye style Reptile – yellow snake eyes, slit pupil opens and closes, scales, side blink"
    ]
   }
  ]
