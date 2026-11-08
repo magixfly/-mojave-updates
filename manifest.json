@@ -1,8 +1,8 @@
 {
- "fw": "V2.33",
- "fwDatei": "firmware/Core_V2.33.bin",
- "fwGroesse": 1989312,
- "fwMd5": "ec1badc0ae3a723df1986efbddeeed5a",
+ "fw": "V2.34",
+ "fwDatei": "firmware/Core_V2.34.bin",
+ "fwGroesse": 1991936,
+ "fwMd5": "2c614d5af81046d7e8cdb2d407d90a78",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.34",
+   "t": [
+    "Channels live: under each used channel the Core shows what it expects (e.g. 2000 = throttle, 1000 = brake / reverse, 1000 = left, button pressed above 1700, switch positions with their action) – the current range is bold"
+   ]
+  },
   {
    "v": "V2.33",
    "t": [
@@ -132,12 +138,6 @@
    "t": [
     "Display tiles: titles bigger, shrink only so far that they never touch the edge",
     "Tile Battery: title shows only the cell count (e.g. BATT 4S), no total voltage"
-   ]
-  },
-  {
-   "v": "V2.19",
-   "t": [
-    "Display: last German words replaced – tiles now show on / off / ready instead of an / aus / bereit"
    ]
   }
  ]

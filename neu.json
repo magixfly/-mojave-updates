@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.34",
+  "t": [
+   "Channels live: under each used channel the Core shows what it expects (e.g. 2000 = throttle, 1000 = brake / reverse, 1000 = left, button pressed above 1700, switch positions with their action) – the current range is bold"
+  ]
+ },
+ {
   "v": "V2.33",
   "t": [
    "Fix: display during an online update now also shows the new version under UPDATE",
