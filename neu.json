@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.08",
+  "t": [
+   "Transmitter → Channel overview now lists all channels (also free ones) with live bar and value; the separate Channels live card on this tab is gone"
+  ]
+ },
+ {
   "v": "V2.07",
   "t": [
    "Tab Buttons is now called Transmitter",

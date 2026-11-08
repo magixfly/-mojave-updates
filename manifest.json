@@ -1,8 +1,8 @@
 {
- "fw": "V2.07",
- "fwDatei": "firmware/Core_V2.07.bin",
- "fwGroesse": 1913664,
- "fwMd5": "09d84406a696468aa50883fc39443998",
+ "fw": "V2.08",
+ "fwDatei": "firmware/Core_V2.08.bin",
+ "fwGroesse": 1914992,
+ "fwMd5": "009279fe6e390a728626727d1eb2427b",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.08",
+   "t": [
+    "Transmitter → Channel overview now lists all channels (also free ones) with live bar and value; the separate Channels live card on this tab is gone"
+   ]
+  },
   {
    "v": "V2.07",
    "t": [
@@ -132,13 +138,6 @@
    "t": [
     "New gear button top right: opens System from every page",
     "Tab bar keeps the open page visible"
-   ]
-  },
-  {
-   "v": "V1.7.134",
-   "t": [
-    "Sensors: Fan control (LR7843 module, GPIO 3) – off by default, the pin is only used when you tick Fan connected; speed follows the warmest real temperature, test button",
-    "LiDAR and fan can never use the same pin"
    ]
   }
  ]
