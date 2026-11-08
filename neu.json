@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.10",
+  "t": [
+   "Arm animation (non-blocking), After-arm display mode, tile messages in footer"
+  ]
+ },
+ {
   "v": "V2.09",
   "t": [
    "Display no longer flickers while the web page is open: an open web page does not pause the display any more (only the ride player still does)"

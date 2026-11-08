@@ -1,8 +1,8 @@
 {
- "fw": "V2.09",
- "fwDatei": "firmware/Core_V2.09.bin",
- "fwGroesse": 1915136,
- "fwMd5": "8a07b9f8477d82661c2de3fd65a797f4",
+ "fw": "V2.10",
+ "fwDatei": "firmware/Core_V2.10.bin",
+ "fwGroesse": 1919216,
+ "fwMd5": "dfca7491480ece52a2965977fc88a34a",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.10",
+   "t": [
+    "Arm animation (non-blocking), After-arm display mode, tile messages in footer"
+   ]
+  },
   {
    "v": "V2.09",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V1.7.137",
    "t": [
     "System: card Menu order removed – default order is now the ↺ button while editing the tab bar (✎)"
-   ]
-  },
-  {
-   "v": "V1.7.136",
-   "t": [
-    "Web page loads about 3x faster (sent packed) and is only loaded again after an update – much better over VPN and mobile data"
    ]
   }
  ]
