@@ -1,5 +1,13 @@
 [
  {
+  "v": "V2.15",
+  "t": [
+   "Devil eyes are now much scarier: bloodshot eyes with veins, glowing slit pupils, twitching looks, flicker and blood tears",
+   "Display: new setting Brightness (%) – needs the display BLK wire on GPIO 20 (see new wiring plan)",
+   "Display backlight is switched off when the display is off"
+  ]
+ },
+ {
   "v": "V2.14",
   "t": [
    "System → Online update: field Update address removed – the Core always uses the standard update address"

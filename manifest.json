@@ -1,8 +1,8 @@
 {
- "fw": "V2.14",
- "fwDatei": "firmware/Core_V2.14.bin",
- "fwGroesse": 1928032,
- "fwMd5": "4084f9683a1782a0977becd7fea3a396",
+ "fw": "V2.15",
+ "fwDatei": "firmware/Core_V2.15.bin",
+ "fwGroesse": 1934144,
+ "fwMd5": "df2eedce24056798a536e48b03d6c89b",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,14 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.15",
+   "t": [
+    "Devil eyes are now much scarier: bloodshot eyes with veins, glowing slit pupils, twitching looks, flicker and blood tears",
+    "Display: new setting Brightness (%) – needs the display BLK wire on GPIO 20 (see new wiring plan)",
+    "Display backlight is switched off when the display is off"
+   ]
+  },
   {
    "v": "V2.14",
    "t": [
@@ -132,12 +140,6 @@
    "v": "V2.01",
    "t": [
     "Sensors → Fan: the three sensor switches (Motor/ESC, LED, O4) are now separate rows, lined up with the other fields"
-   ]
-  },
-  {
-   "v": "V2.00",
-   "t": [
-    "New version numbering: Core and web page are now V2.00 (next: V2.01, V2.02 …)"
    ]
   }
  ]
