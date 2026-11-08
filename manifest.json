@@ -1,8 +1,8 @@
 {
- "fw": "V2.19",
- "fwDatei": "firmware/Core_V2.19.bin",
- "fwGroesse": 1959840,
- "fwMd5": "677338de948a8c95b43068cec2093783",
+ "fw": "V2.20",
+ "fwDatei": "firmware/Core_V2.20.bin",
+ "fwGroesse": 1960368,
+ "fwMd5": "4fd31812267a48580e56cabde03f2fa0",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.20",
+   "t": [
+    "Display tiles: titles bigger, shrink only so far that they never touch the edge",
+    "Tile Battery: title shows only the cell count (e.g. BATT 4S), no total voltage"
+   ]
+  },
   {
    "v": "V2.19",
    "t": [
@@ -135,12 +142,6 @@
    "v": "V2.06",
    "t": [
     "Transmitter button messages now show in the warning line under the menu instead of top right"
-   ]
-  },
-  {
-   "v": "V2.05",
-   "t": [
-    "Everything you do on the transmitter (lights, high beam level, blue lights, hazard, O4, buttons, armed, battery number, volume) now shows on every page within about 0.2 s instead of up to 2 s"
    ]
   }
  ]

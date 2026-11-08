@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.20",
+  "t": [
+   "Display tiles: titles bigger, shrink only so far that they never touch the edge",
+   "Tile Battery: title shows only the cell count (e.g. BATT 4S), no total voltage"
+  ]
+ },
+ {
   "v": "V2.19",
   "t": [
    "Display: last German words replaced – tiles now show on / off / ready instead of an / aus / bereit"
