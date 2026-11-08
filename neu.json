@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.30",
+  "t": [
+   "Display shows only a big UPDATE and the new version while an online update is loading; after the restart as usual"
+  ]
+ },
+ {
   "v": "V2.29",
   "t": [
    "All lights (LEDs and high beam) go off while an online update is loading"
