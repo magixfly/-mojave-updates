@@ -1,8 +1,8 @@
 {
- "fw": "V2.47",
- "fwDatei": "firmware/Core_V2.47.bin",
- "fwGroesse": 1999376,
- "fwMd5": "32f8ac46f905f55dfd6a9a89e82c5205",
+ "fw": "V2.48",
+ "fwDatei": "firmware/Core_V2.48.bin",
+ "fwGroesse": 1998544,
+ "fwMd5": "914f95c6b13050379478e6ad948ec972",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.48",
+   "t": [
+    "High beam flash removed completely (button action, Flash now and its settings). Buttons that had flash now do nothing"
+   ]
+  },
   {
    "v": "V2.47",
    "t": [
@@ -130,13 +136,6 @@
    "v": "V2.34",
    "t": [
     "Channels live: under each used channel the Core shows what it expects (e.g. 2000 = throttle, 1000 = brake / reverse, 1000 = left, button pressed above 1700, switch positions with their action) – the current range is bold"
-   ]
-  },
-  {
-   "v": "V2.33",
-   "t": [
-    "Fix: display during an online update now also shows the new version under UPDATE",
-    "Web page: update button and reload button moved up into the menu row (right side), ⚙ button removed – System is in the menu"
    ]
   }
  ]
