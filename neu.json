@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.23",
+  "t": [
+   "Display cockpit: Pitch is only shown when the car lies on its roof (no more red band for small tilt)"
+  ]
+ },
+ {
   "v": "V2.22",
   "t": [
    "Display tile GPS: shows only the number of satellites (no Fix)",

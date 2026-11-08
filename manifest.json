@@ -1,8 +1,8 @@
 {
- "fw": "V2.22",
- "fwDatei": "firmware/Core_V2.22.bin",
- "fwGroesse": 1960480,
- "fwMd5": "7a87c4fd0f7e9d48239be8724ce01da0",
+ "fw": "V2.23",
+ "fwDatei": "firmware/Core_V2.23.bin",
+ "fwGroesse": 1960608,
+ "fwMd5": "4698a78938dba9c6dc23384ee047494c",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.23",
+   "t": [
+    "Display cockpit: Pitch is only shown when the car lies on its roof (no more red band for small tilt)"
+   ]
+  },
   {
    "v": "V2.22",
    "t": [
@@ -135,12 +141,6 @@
    "v": "V2.09",
    "t": [
     "Display no longer flickers while the web page is open: an open web page does not pause the display any more (only the ride player still does)"
-   ]
-  },
-  {
-   "v": "V2.08",
-   "t": [
-    "Transmitter → Channel overview now lists all channels (also free ones) with live bar and value; the separate Channels live card on this tab is gone"
    ]
   }
  ]
