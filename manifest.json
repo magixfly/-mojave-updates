@@ -1,8 +1,8 @@
 {
- "fw": "V2.48",
- "fwDatei": "firmware/Core_V2.48.bin",
- "fwGroesse": 1998544,
- "fwMd5": "914f95c6b13050379478e6ad948ec972",
+ "fw": "V2.49",
+ "fwDatei": "firmware/Core_V2.49.bin",
+ "fwGroesse": 1998672,
+ "fwMd5": "ce276cce5a1acab550029977c01aa029",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.49",
+   "t": [
+    "Channel bars half as long again, and the same length on all pages (Transmitter → Channel overview and FC → Channels live)"
+   ]
+  },
   {
    "v": "V2.48",
    "t": [
@@ -130,12 +136,6 @@
    "t": [
     "Channels live: tap a free channel to give it your own note (e.g. Gimbal on receiver) – saved in the settings and config.txt",
     "Channels live: free channels used for a mode in INAV are marked"
-   ]
-  },
-  {
-   "v": "V2.34",
-   "t": [
-    "Channels live: under each used channel the Core shows what it expects (e.g. 2000 = throttle, 1000 = brake / reverse, 1000 = left, button pressed above 1700, switch positions with their action) – the current range is bold"
    ]
   }
  ]

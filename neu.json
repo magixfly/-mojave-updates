@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.49",
+  "t": [
+   "Channel bars half as long again, and the same length on all pages (Transmitter → Channel overview and FC → Channels live)"
+  ]
+ },
+ {
   "v": "V2.48",
   "t": [
    "High beam flash removed completely (button action, Flash now and its settings). Buttons that had flash now do nothing"
