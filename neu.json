@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.41",
+  "t": [
+   "Transmitter → Channel overview: bars start right after the longest name and use the rest of the width"
+  ]
+ },
+ {
   "v": "V2.40",
   "t": [
    "Channel numbers now match the transmitter: INAV swaps the first 4 channels (channel map, e.g. AETR) – the Core now sorts them back. Your settings on CH1–CH4 (e.g. Throttle) are moved once to the transmitter number automatically"
