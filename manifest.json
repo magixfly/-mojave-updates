@@ -1,8 +1,8 @@
 {
- "fw": "V2.12",
- "fwDatei": "firmware/Core_V2.12.bin",
- "fwGroesse": 1919856,
- "fwMd5": "529bf7852c59f9a6e7617c5196f5a4ef",
+ "fw": "V2.13",
+ "fwDatei": "firmware/Core_V2.13.bin",
+ "fwGroesse": 1928208,
+ "fwMd5": "68f43fdd4d55f117ff7ffa61f6411dca",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.13",
+   "t": [
+    "Display → After arm: new choice Devil eyes – while armed the display shows only two angry eyes (no values)",
+    "Eye color, eye speed and Test eyes (12 s) in Display settings"
+   ]
+  },
   {
    "v": "V2.12",
    "t": [
@@ -131,12 +138,6 @@
    "v": "V1.7.140",
    "t": [
     "Buttons: only 1x short, 2x short and long hold – 3x short removed, 2x now reacts right away"
-   ]
-  },
-  {
-   "v": "V1.7.139",
-   "t": [
-    "Fan and LiDAR pins are fixed as in the wiring plan (fan GPIO 3, LiDAR GPIO 17) – no input fields any more"
    ]
   }
  ]

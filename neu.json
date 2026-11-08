@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.13",
+  "t": [
+   "Display → After arm: new choice Devil eyes – while armed the display shows only two angry eyes (no values)",
+   "Eye color, eye speed and Test eyes (12 s) in Display settings"
+  ]
+ },
+ {
   "v": "V2.12",
   "t": [
    "Display: the arm block message (e.g. Throttle not low) now stays steady instead of pulsing",
