@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.22",
+  "t": [
+   "Display tile GPS: shows only the number of satellites (no Fix)",
+   "Web display preview: Big values without footer line, like on the display"
+  ]
+ },
+ {
   "v": "V2.21",
   "t": [
    "Web page: Core IP now in the Wi-Fi line after the network name (IP: …), removed next to Mojave"

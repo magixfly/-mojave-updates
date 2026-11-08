@@ -1,8 +1,8 @@
 {
- "fw": "V2.21",
- "fwDatei": "firmware/Core_V2.21.bin",
- "fwGroesse": 1960336,
- "fwMd5": "bb4a47c52284411e60be42b060f0477f",
+ "fw": "V2.22",
+ "fwDatei": "firmware/Core_V2.22.bin",
+ "fwGroesse": 1960480,
+ "fwMd5": "7a87c4fd0f7e9d48239be8724ce01da0",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.22",
+   "t": [
+    "Display tile GPS: shows only the number of satellites (no Fix)",
+    "Web display preview: Big values without footer line, like on the display"
+   ]
+  },
   {
    "v": "V2.21",
    "t": [
@@ -134,14 +141,6 @@
    "v": "V2.08",
    "t": [
     "Transmitter → Channel overview now lists all channels (also free ones) with live bar and value; the separate Channels live card on this tab is gone"
-   ]
-  },
-  {
-   "v": "V2.07",
-   "t": [
-    "Tab Buttons is now called Transmitter",
-    "Assign channels moved to Transmitter, with Throttle reverse and Steering reverse right there",
-    "Outputs → Indicators & brake: new switch Swap left/right indicators – only swaps which LEDs blink"
    ]
   }
  ]
