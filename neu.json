@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.52",
+  "t": [
+   "Transmitter: Switches and Button assignment in one column (Switch 2 under Switch 1, Button 2 under Button 1)"
+  ]
+ },
+ {
   "v": "V2.51",
   "t": [
    "Display during an online update: new design – MOJAVE, glowing UPDATE, version pill, blue gradient progress bar",

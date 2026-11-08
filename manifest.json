@@ -1,8 +1,8 @@
 {
- "fw": "V2.51",
- "fwDatei": "firmware/Core_V2.51.bin",
- "fwGroesse": 2014640,
- "fwMd5": "0991b2392f92e40d597bff330133a25a",
+ "fw": "V2.52",
+ "fwDatei": "firmware/Core_V2.52.bin",
+ "fwGroesse": 2014784,
+ "fwMd5": "372a6d45b9c81cdf3f20daebfd881cc0",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.52",
+   "t": [
+    "Transmitter: Switches and Button assignment in one column (Switch 2 under Switch 1, Button 2 under Button 1)"
+   ]
+  },
   {
    "v": "V2.51",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V2.38",
    "t": [
     "Web page: firmware version and reload button end exactly at the right edge of the cards below"
-   ]
-  },
-  {
-   "v": "V2.37",
-   "t": [
-    "Display during an online update: UPDATE, version, progress bar and % – all in Mojave blue"
    ]
   }
  ]
