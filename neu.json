@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.44",
+  "t": [
+   "Transmitter buttons: \"just now\" shows only once per row (it was doubled when pressed again within 3 s)",
+   "High beam flash: the output is only written when the flash changes on/off"
+  ]
+ },
+ {
   "v": "V2.43",
   "t": [
    "Transmitter → Channel overview: bars half as long"

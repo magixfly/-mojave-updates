@@ -1,8 +1,8 @@
 {
- "fw": "V2.43",
- "fwDatei": "firmware/Core_V2.43.bin",
- "fwGroesse": 1997696,
- "fwMd5": "eaf9370be590cfff72638072b487a7d6",
+ "fw": "V2.44",
+ "fwDatei": "firmware/Core_V2.44.bin",
+ "fwGroesse": 1998048,
+ "fwMd5": "f91897734b4af2336c8bb4cd4e23d9fe",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.44",
+   "t": [
+    "Transmitter buttons: \"just now\" shows only once per row (it was doubled when pressed again within 3 s)",
+    "High beam flash: the output is only written when the flash changes on/off"
+   ]
+  },
   {
    "v": "V2.43",
    "t": [
@@ -130,12 +137,6 @@
    "v": "V2.30",
    "t": [
     "Display shows only a big UPDATE and the new version while an online update is loading; after the restart as usual"
-   ]
-  },
-  {
-   "v": "V2.29",
-   "t": [
-    "All lights (LEDs and high beam) go off while an online update is loading"
    ]
   }
  ]
