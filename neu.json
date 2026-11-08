@@ -1,5 +1,13 @@
 [
  {
+  "v": "V2.07",
+  "t": [
+   "Tab Buttons is now called Transmitter",
+   "Assign channels moved to Transmitter, with Throttle reverse and Steering reverse right there",
+   "Outputs → Indicators & brake: new switch Swap left/right indicators – only swaps which LEDs blink"
+  ]
+ },
+ {
   "v": "V2.06",
   "t": [
    "Transmitter button messages now show in the warning line under the menu instead of top right"

@@ -1,8 +1,8 @@
 {
- "fw": "V2.06",
- "fwDatei": "firmware/Core_V2.06.bin",
- "fwGroesse": 1913024,
- "fwMd5": "46e501d119751b06e145ca85ab0414d8",
+ "fw": "V2.07",
+ "fwDatei": "firmware/Core_V2.07.bin",
+ "fwGroesse": 1913664,
+ "fwMd5": "09d84406a696468aa50883fc39443998",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,14 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.07",
+   "t": [
+    "Tab Buttons is now called Transmitter",
+    "Assign channels moved to Transmitter, with Throttle reverse and Steering reverse right there",
+    "Outputs → Indicators & brake: new switch Swap left/right indicators – only swaps which LEDs blink"
+   ]
+  },
   {
    "v": "V2.06",
    "t": [
@@ -131,12 +139,6 @@
    "t": [
     "Sensors: Fan control (LR7843 module, GPIO 3) – off by default, the pin is only used when you tick Fan connected; speed follows the warmest real temperature, test button",
     "LiDAR and fan can never use the same pin"
-   ]
-  },
-  {
-   "v": "V1.7.133",
-   "t": [
-    "Maps & rides → Center: shows VGPS or GPS, and why there is no fix (e.g. FC not connected)"
    ]
   }
  ]
