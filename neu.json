@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.40",
+  "t": [
+   "Channel numbers now match the transmitter: INAV swaps the first 4 channels (channel map, e.g. AETR) – the Core now sorts them back. Your settings on CH1–CH4 (e.g. Throttle) are moved once to the transmitter number automatically"
+  ]
+ },
+ {
   "v": "V2.39",
   "t": [
    "Channels live: all rows the same height again – what the Core detects is a short word in its own column (e.g. straight, neutral, released); hover or tap it for all ranges"

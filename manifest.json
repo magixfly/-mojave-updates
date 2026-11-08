@@ -1,8 +1,8 @@
 {
- "fw": "V2.39",
- "fwDatei": "firmware/Core_V2.39.bin",
- "fwGroesse": 1995968,
- "fwMd5": "b350a5f9a3a37cf1062bc1d50ac5c0ac",
+ "fw": "V2.40",
+ "fwDatei": "firmware/Core_V2.40.bin",
+ "fwGroesse": 1997024,
+ "fwMd5": "c3573556c1e7e15df945e32cf6b27c6e",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.40",
+   "t": [
+    "Channel numbers now match the transmitter: INAV swaps the first 4 channels (channel map, e.g. AETR) – the Core now sorts them back. Your settings on CH1–CH4 (e.g. Throttle) are moved once to the transmitter number automatically"
+   ]
+  },
   {
    "v": "V2.39",
    "t": [
@@ -130,12 +136,6 @@
    "t": [
     "Wi-Fi: tap one of your own access points in Networks around the Core to switch to exactly that one",
     "Wi-Fi: every 3 min (disarmed) the Core checks for a much stronger access point of your home Wi-Fi and switches"
-   ]
-  },
-  {
-   "v": "V2.25",
-   "t": [
-    "High beam no longer flashes when the battery is plugged in (pin is set off right after the bootloader)"
    ]
   }
  ]
