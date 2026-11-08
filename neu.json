@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.39",
+  "t": [
+   "Channels live: all rows the same height again – what the Core detects is a short word in its own column (e.g. straight, neutral, released); hover or tap it for all ranges"
+  ]
+ },
+ {
   "v": "V2.38",
   "t": [
    "Web page: firmware version and reload button end exactly at the right edge of the cards below"

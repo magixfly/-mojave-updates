@@ -1,8 +1,8 @@
 {
- "fw": "V2.38",
- "fwDatei": "firmware/Core_V2.38.bin",
- "fwGroesse": 1995376,
- "fwMd5": "739f78e86a564ddcc8e1c7f6f9955d45",
+ "fw": "V2.39",
+ "fwDatei": "firmware/Core_V2.39.bin",
+ "fwGroesse": 1995968,
+ "fwMd5": "b350a5f9a3a37cf1062bc1d50ac5c0ac",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.39",
+   "t": [
+    "Channels live: all rows the same height again – what the Core detects is a short word in its own column (e.g. straight, neutral, released); hover or tap it for all ranges"
+   ]
+  },
   {
    "v": "V2.38",
    "t": [
@@ -130,13 +136,6 @@
    "v": "V2.25",
    "t": [
     "High beam no longer flashes when the battery is plugged in (pin is set off right after the bootloader)"
-   ]
-  },
-  {
-   "v": "V2.24",
-   "t": [
-    "New: Navi – second display with a moving map (aerial photo or street map), connected by radio (ESP-NOW)",
-    "Settings, status and Navi update under Display → Navi, new tile Navi status"
    ]
   }
  ]
