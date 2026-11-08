@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.11",
+  "t": [
+   "Fix arm animation, double press 500 ms, battery tile cell count, Indicators line removed"
+  ]
+ },
+ {
   "v": "V2.10",
   "t": [
    "Arm animation (non-blocking), After-arm display mode, tile messages in footer"

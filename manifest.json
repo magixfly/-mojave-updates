@@ -1,8 +1,8 @@
 {
- "fw": "V2.10",
- "fwDatei": "firmware/Core_V2.10.bin",
- "fwGroesse": 1919216,
- "fwMd5": "dfca7491480ece52a2965977fc88a34a",
+ "fw": "V2.11",
+ "fwDatei": "firmware/Core_V2.11.bin",
+ "fwGroesse": 1919520,
+ "fwMd5": "1ceb4418c50214b4e56ba45e2ef6c9ae",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.11",
+   "t": [
+    "Fix arm animation, double press 500 ms, battery tile cell count, Indicators line removed"
+   ]
+  },
   {
    "v": "V2.10",
    "t": [
@@ -131,12 +137,6 @@
    "t": [
     "Outputs → High beam: flash settings (number, brightness, speed), Flash now and Off / last level buttons, and which transmitter buttons are set to high beam",
     "System: Wi-Fi signal now at the very top"
-   ]
-  },
-  {
-   "v": "V1.7.137",
-   "t": [
-    "System: card Menu order removed – default order is now the ↺ button while editing the tab bar (✎)"
    ]
   }
  ]
