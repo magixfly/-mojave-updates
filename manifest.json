@@ -1,8 +1,8 @@
 {
- "fw": "V2.31",
- "fwDatei": "firmware/Core_V2.31.bin",
- "fwGroesse": 1988368,
- "fwMd5": "741e2a94cabc2a701282e1db43373563",
+ "fw": "V2.32",
+ "fwDatei": "firmware/Core_V2.32.bin",
+ "fwGroesse": 1988928,
+ "fwMd5": "712b6e68ce20cc7fb9b1151b2901ee38",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.32",
+   "t": [
+    "Channels live: channel badge (CH1, CH2 …) in front of each name, free channels shown as free"
+   ]
+  },
   {
    "v": "V2.31",
    "t": [
@@ -132,13 +138,6 @@
    "t": [
     "Display → Layout: new Big values – 1 to 3 values as big as possible (choose them in the Big values card)",
     "Web page: Core IP address shown at the top next to Mojave"
-   ]
-  },
-  {
-   "v": "V2.17",
-   "t": [
-    "Display tile Battery shows only the cell voltage (bigger)",
-    "New display tile Battery % (choose it in Display → Tiles, e.g. instead of Used mAh)"
    ]
   }
  ]

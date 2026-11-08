@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.32",
+  "t": [
+   "Channels live: channel badge (CH1, CH2 …) in front of each name, free channels shown as free"
+  ]
+ },
+ {
   "v": "V2.31",
   "t": [
    "Web page: dot next to Mojave shows the connection to the Core – green connected, orange slow, red no connection"
