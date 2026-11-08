@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.38",
+  "t": [
+   "Web page: firmware version and reload button end exactly at the right edge of the cards below"
+  ]
+ },
+ {
   "v": "V2.37",
   "t": [
    "Display during an online update: UPDATE, version, progress bar and % – all in Mojave blue"

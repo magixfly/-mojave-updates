@@ -1,8 +1,8 @@
 {
- "fw": "V2.37",
- "fwDatei": "firmware/Core_V2.37.bin",
- "fwGroesse": 1994624,
- "fwMd5": "33c510da8684808d9bfa7923fb5ae067",
+ "fw": "V2.38",
+ "fwDatei": "firmware/Core_V2.38.bin",
+ "fwGroesse": 1995376,
+ "fwMd5": "739f78e86a564ddcc8e1c7f6f9955d45",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.38",
+   "t": [
+    "Web page: firmware version and reload button end exactly at the right edge of the cards below"
+   ]
+  },
   {
    "v": "V2.37",
    "t": [
@@ -131,12 +137,6 @@
    "t": [
     "New: Navi – second display with a moving map (aerial photo or street map), connected by radio (ESP-NOW)",
     "Settings, status and Navi update under Display → Navi, new tile Navi status"
-   ]
-  },
-  {
-   "v": "V2.23",
-   "t": [
-    "Display cockpit: Pitch is only shown when the car lies on its roof (no more red band for small tilt)"
    ]
   }
  ]
