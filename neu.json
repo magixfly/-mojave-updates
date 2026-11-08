@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.18",
+  "t": [
+   "Display → Layout: new Big values – 1 to 3 values as big as possible (choose them in the Big values card)",
+   "Web page: Core IP address shown at the top next to Mojave"
+  ]
+ },
+ {
   "v": "V2.17",
   "t": [
    "Display tile Battery shows only the cell voltage (bigger)",

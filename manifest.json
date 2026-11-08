@@ -1,8 +1,8 @@
 {
- "fw": "V2.17",
- "fwDatei": "firmware/Core_V2.17.bin",
- "fwGroesse": 1944496,
- "fwMd5": "8332c4f9c94d564c03d1feae3aeb8c1b",
+ "fw": "V2.18",
+ "fwDatei": "firmware/Core_V2.18.bin",
+ "fwGroesse": 1959712,
+ "fwMd5": "b0ae12d2822ccf6a9174402ee71cb102",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.18",
+   "t": [
+    "Display → Layout: new Big values – 1 to 3 values as big as possible (choose them in the Big values card)",
+    "Web page: Core IP address shown at the top next to Mojave"
+   ]
+  },
   {
    "v": "V2.17",
    "t": [
@@ -134,13 +141,6 @@
    "v": "V2.04",
    "t": [
     "Warning line under the menu (ARMED etc.) keeps its space when empty – the page no longer jumps up and down"
-   ]
-  },
-  {
-   "v": "V2.03",
-   "t": [
-    "Update while armed: button top right turns orange with a lock, the big update card turns red and Update now is greyed out",
-    "Update card in System refreshes by itself when a newer version appears"
    ]
   }
  ]
