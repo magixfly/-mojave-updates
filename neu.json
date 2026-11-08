@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.33",
+  "t": [
+   "Fix: display during an online update now also shows the new version under UPDATE",
+   "Web page: update button and reload button moved up into the menu row (right side), ⚙ button removed – System is in the menu"
+  ]
+ },
+ {
   "v": "V2.32",
   "t": [
    "Channels live: channel badge (CH1, CH2 …) in front of each name, free channels shown as free"

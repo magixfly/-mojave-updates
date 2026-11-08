@@ -1,8 +1,8 @@
 {
- "fw": "V2.32",
- "fwDatei": "firmware/Core_V2.32.bin",
- "fwGroesse": 1988928,
- "fwMd5": "712b6e68ce20cc7fb9b1151b2901ee38",
+ "fw": "V2.33",
+ "fwDatei": "firmware/Core_V2.33.bin",
+ "fwGroesse": 1989312,
+ "fwMd5": "ec1badc0ae3a723df1986efbddeeed5a",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.33",
+   "t": [
+    "Fix: display during an online update now also shows the new version under UPDATE",
+    "Web page: update button and reload button moved up into the menu row (right side), ⚙ button removed – System is in the menu"
+   ]
+  },
   {
    "v": "V2.32",
    "t": [
@@ -131,13 +138,6 @@
    "v": "V2.19",
    "t": [
     "Display: last German words replaced – tiles now show on / off / ready instead of an / aus / bereit"
-   ]
-  },
-  {
-   "v": "V2.18",
-   "t": [
-    "Display → Layout: new Big values – 1 to 3 values as big as possible (choose them in the Big values card)",
-    "Web page: Core IP address shown at the top next to Mojave"
    ]
   }
  ]
