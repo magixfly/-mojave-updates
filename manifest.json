@@ -1,8 +1,8 @@
 {
- "fw": "V2.26",
- "fwDatei": "firmware/Core_V2.26.bin",
- "fwGroesse": 1986000,
- "fwMd5": "a12a609b0030e64ccc3e8e857c5e8309",
+ "fw": "V2.27",
+ "fwDatei": "firmware/Core_V2.27.bin",
+ "fwGroesse": 1986112,
+ "fwMd5": "3651e943c3a4ae3897df1e1ac31ff6a1",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.27",
+   "t": [
+    "High beam is always off after power-on or an update (it no longer comes back at the last level)"
+   ]
+  },
   {
    "v": "V2.26",
    "t": [
@@ -136,13 +142,6 @@
    "t": [
     "Display → After arm: new choice Devil eyes – while armed the display shows only two angry eyes (no values)",
     "Eye color, eye speed and Test eyes (12 s) in Display settings"
-   ]
-  },
-  {
-   "v": "V2.12",
-   "t": [
-    "Display: the arm block message (e.g. Throttle not low) now stays steady instead of pulsing",
-    "Fix: display tile FC showed the speed instead of FC status and RSSI"
    ]
   }
  ]
