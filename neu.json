@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.12",
+  "t": [
+   "Display: the arm block message (e.g. Throttle not low) now stays steady instead of pulsing",
+   "Fix: display tile FC showed the speed instead of FC status and RSSI"
+  ]
+ },
+ {
   "v": "V2.11",
   "t": [
    "Fix arm animation, double press 500 ms, battery tile cell count, Indicators line removed"
