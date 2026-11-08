@@ -1,8 +1,8 @@
 {
- "fw": "V2.20",
- "fwDatei": "firmware/Core_V2.20.bin",
- "fwGroesse": 1960368,
- "fwMd5": "4fd31812267a48580e56cabde03f2fa0",
+ "fw": "V2.21",
+ "fwDatei": "firmware/Core_V2.21.bin",
+ "fwGroesse": 1960336,
+ "fwMd5": "bb4a47c52284411e60be42b060f0477f",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.21",
+   "t": [
+    "Web page: Core IP now in the Wi-Fi line after the network name (IP: …), removed next to Mojave"
+   ]
+  },
   {
    "v": "V2.20",
    "t": [
@@ -136,12 +142,6 @@
     "Tab Buttons is now called Transmitter",
     "Assign channels moved to Transmitter, with Throttle reverse and Steering reverse right there",
     "Outputs → Indicators & brake: new switch Swap left/right indicators – only swaps which LEDs blink"
-   ]
-  },
-  {
-   "v": "V2.06",
-   "t": [
-    "Transmitter button messages now show in the warning line under the menu instead of top right"
    ]
   }
  ]
