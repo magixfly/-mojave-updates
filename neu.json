@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.25",
+  "t": [
+   "High beam no longer flashes when the battery is plugged in (pin is set off right after the bootloader)"
+  ]
+ },
+ {
   "v": "V2.24",
   "t": [
    "New: Navi – second display with a moving map (aerial photo or street map), connected by radio (ESP-NOW)",
