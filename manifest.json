@@ -1,8 +1,8 @@
 {
- "fw": "V2.13",
- "fwDatei": "firmware/Core_V2.13.bin",
- "fwGroesse": 1928208,
- "fwMd5": "68f43fdd4d55f117ff7ffa61f6411dca",
+ "fw": "V2.14",
+ "fwDatei": "firmware/Core_V2.14.bin",
+ "fwGroesse": 1928032,
+ "fwMd5": "4084f9683a1782a0977becd7fea3a396",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.14",
+   "t": [
+    "System → Online update: field Update address removed – the Core always uses the standard update address"
+   ]
+  },
   {
    "v": "V2.13",
    "t": [
@@ -132,12 +138,6 @@
    "v": "V2.00",
    "t": [
     "New version numbering: Core and web page are now V2.00 (next: V2.01, V2.02 …)"
-   ]
-  },
-  {
-   "v": "V1.7.140",
-   "t": [
-    "Buttons: only 1x short, 2x short and long hold – 3x short removed, 2x now reacts right away"
    ]
   }
  ]

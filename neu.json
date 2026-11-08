@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.14",
+  "t": [
+   "System → Online update: field Update address removed – the Core always uses the standard update address"
+  ]
+ },
+ {
   "v": "V2.13",
   "t": [
    "Display → After arm: new choice Devil eyes – while armed the display shows only two angry eyes (no values)",
