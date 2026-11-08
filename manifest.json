@@ -1,8 +1,8 @@
 {
- "fw": "V2.08",
- "fwDatei": "firmware/Core_V2.08.bin",
- "fwGroesse": 1914992,
- "fwMd5": "009279fe6e390a728626727d1eb2427b",
+ "fw": "V2.09",
+ "fwDatei": "firmware/Core_V2.09.bin",
+ "fwGroesse": 1915136,
+ "fwMd5": "8a07b9f8477d82661c2de3fd65a797f4",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.09",
+   "t": [
+    "Display no longer flickers while the web page is open: an open web page does not pause the display any more (only the ride player still does)"
+   ]
+  },
   {
    "v": "V2.08",
    "t": [
@@ -131,13 +137,6 @@
    "v": "V1.7.136",
    "t": [
     "Web page loads about 3x faster (sent packed) and is only loaded again after an update – much better over VPN and mobile data"
-   ]
-  },
-  {
-   "v": "V1.7.135",
-   "t": [
-    "New gear button top right: opens System from every page",
-    "Tab bar keeps the open page visible"
    ]
   }
  ]
