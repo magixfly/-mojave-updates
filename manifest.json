@@ -1,8 +1,8 @@
 {
- "fw": "V2.61",
- "fwDatei": "firmware/Core_V2.61.bin",
- "fwGroesse": 2026336,
- "fwMd5": "bbc0a64e0b9bb097c013603e47e7a47a",
+ "fw": "V2.62",
+ "fwDatei": "firmware/Core_V2.62.bin",
+ "fwGroesse": 2026832,
+ "fwMd5": "7c68acd9faeb358289961eff61c5e3b7",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.62",
+   "t": [
+    "Wi-Fi → Home Wi-Fi: new switch Test GPS (VGPS) at home – off = the Core never shows the test position, only the real GPS"
+   ]
+  },
   {
    "v": "V2.61",
    "t": [
@@ -178,12 +184,6 @@
    "v": "V2.48",
    "t": [
     "High beam flash removed completely (button action, Flash now and its settings). Buttons that had flash now do nothing"
-   ]
-  },
-  {
-   "v": "V2.47",
-   "t": [
-    "High beam when disarmed: always the set % (Outputs → High beam → When disarmed, 0 % = off). High beam button 1× short switches it off / back on. When you arm, the last driving level comes back"
    ]
   }
  ]
