@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.59",
+  "t": [
+   "Fix: Display → Test update screen now really shows the update picture for 6 s"
+  ]
+ },
+ {
   "v": "V2.58",
   "t": [
    "Display → Test update screen (6 s): shows the update picture on the display with a running bar, without updating"
