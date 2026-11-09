@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.63",
+  "t": [
+   "New page GPS: module, fix, satellites, HDOP, position, VGPS switch; communication FC ↔ GPS (packets per second, errors and timeouts per minute); chart of the last 5 minutes. The GPS card moved from Telemetry to this page"
+  ]
+ },
+ {
   "v": "V2.62",
   "t": [
    "Wi-Fi → Home Wi-Fi: new switch Test GPS (VGPS) at home – off = the Core never shows the test position, only the real GPS"

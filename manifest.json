@@ -1,8 +1,8 @@
 {
- "fw": "V2.62",
- "fwDatei": "firmware/Core_V2.62.bin",
- "fwGroesse": 2026832,
- "fwMd5": "7c68acd9faeb358289961eff61c5e3b7",
+ "fw": "V2.63",
+ "fwDatei": "firmware/Core_V2.63.bin",
+ "fwGroesse": 2033328,
+ "fwMd5": "cc54fa201c16c2244cad6dbc7a08abab",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.63",
+   "t": [
+    "New page GPS: module, fix, satellites, HDOP, position, VGPS switch; communication FC ↔ GPS (packets per second, errors and timeouts per minute); chart of the last 5 minutes. The GPS card moved from Telemetry to this page"
+   ]
+  },
   {
    "v": "V2.62",
    "t": [
@@ -178,12 +184,6 @@
    "v": "V2.49",
    "t": [
     "Channel bars half as long again, and the same length on all pages (Transmitter → Channel overview and FC → Channels live)"
-   ]
-  },
-  {
-   "v": "V2.48",
-   "t": [
-    "High beam flash removed completely (button action, Flash now and its settings). Buttons that had flash now do nothing"
    ]
   }
  ]
