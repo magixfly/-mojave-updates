@@ -1,8 +1,8 @@
 {
- "fw": "V2.64",
- "fwDatei": "firmware/Core_V2.64.bin",
- "fwGroesse": 2033488,
- "fwMd5": "6b72fa42ec391a905a6bb8d3f4fe6568",
+ "fw": "V2.65",
+ "fwDatei": "firmware/Core_V2.65.bin",
+ "fwGroesse": 2035616,
+ "fwMd5": "899363589fbe502ffb0fb1343d8e4d08",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.65",
+   "t": [
+    "Maps & rides → Load maps → Coordinates or map link: plus codes work too (e.g. 5JM6+QFJ St. Pölten from Apple or Google Maps)"
+   ]
+  },
   {
    "v": "V2.64",
    "t": [
@@ -179,12 +185,6 @@
     "Display during an online update: new design – MOJAVE, glowing UPDATE, version pill, blue gradient progress bar",
     "Faster back after an update: the Core connects straight to the last Wi-Fi access point (no search) and the web page checks every 0.5 s",
     "System → Wi-Fi line shows how many seconds after start the Wi-Fi was connected"
-   ]
-  },
-  {
-   "v": "V2.50",
-   "t": [
-    "Online update: while loading, the card with the new version and what is new stays visible (blue); the old Updated box is hidden meanwhile"
    ]
   }
  ]
