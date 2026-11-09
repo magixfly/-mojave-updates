@@ -1,8 +1,8 @@
 {
- "fw": "V2.65",
- "fwDatei": "firmware/Core_V2.65.bin",
- "fwGroesse": 2035616,
- "fwMd5": "899363589fbe502ffb0fb1343d8e4d08",
+ "fw": "V2.66",
+ "fwDatei": "firmware/Core_V2.66.bin",
+ "fwGroesse": 2035696,
+ "fwMd5": "97dd908006613210f09c8d504237a2fb",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.66",
+   "t": [
+    "Test GPS (VGPS) and the home position of the maps now sit exactly on the house"
+   ]
+  },
   {
    "v": "V2.65",
    "t": [
@@ -177,14 +183,6 @@
    "v": "V2.52",
    "t": [
     "Transmitter: Switches and Button assignment in one column (Switch 2 under Switch 1, Button 2 under Button 1)"
-   ]
-  },
-  {
-   "v": "V2.51",
-   "t": [
-    "Display during an online update: new design – MOJAVE, glowing UPDATE, version pill, blue gradient progress bar",
-    "Faster back after an update: the Core connects straight to the last Wi-Fi access point (no search) and the web page checks every 0.5 s",
-    "System → Wi-Fi line shows how many seconds after start the Wi-Fi was connected"
    ]
   }
  ]

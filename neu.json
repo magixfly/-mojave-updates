@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.66",
+  "t": [
+   "Test GPS (VGPS) and the home position of the maps now sit exactly on the house"
+  ]
+ },
+ {
   "v": "V2.65",
   "t": [
    "Maps & rides → Load maps → Coordinates or map link: plus codes work too (e.g. 5JM6+QFJ St. Pölten from Apple or Google Maps)"
