@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.60",
+  "t": [
+   "Display → After arm: new choice Animation from SD card – plays an animation from /anim/ on the SD card in a loop while armed (with Test animation 12 s)",
+   "7 new animations come with this update onto the SD card: Demon eyes, Neon eyes, Shadow at the window, Radar, Hyperspace, Heartbeat, Glitch logo"
+  ]
+ },
+ {
   "v": "V2.59",
   "t": [
    "Fix: Display → Test update screen now really shows the update picture for 6 s"

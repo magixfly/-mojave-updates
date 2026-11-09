@@ -1,8 +1,8 @@
 {
- "fw": "V2.59",
- "fwDatei": "firmware/Core_V2.59.bin",
- "fwGroesse": 2022976,
- "fwMd5": "47855ee0d5a5db833e2ae5042b275def",
+ "fw": "V2.60",
+ "fwDatei": "firmware/Core_V2.60.bin",
+ "fwGroesse": 2026112,
+ "fwMd5": "2bb15c02c297031b46909aab2d1ab495",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.60",
+   "t": [
+    "Display → After arm: new choice Animation from SD card – plays an animation from /anim/ on the SD card in a loop while armed (with Test animation 12 s)",
+    "7 new animations come with this update onto the SD card: Demon eyes, Neon eyes, Shadow at the window, Radar, Hyperspace, Heartbeat, Glitch logo"
+   ]
+  },
   {
    "v": "V2.59",
    "t": [
@@ -177,12 +184,6 @@
    "v": "V2.46",
    "t": [
     "Transmitter → Channel overview: value stands right next to the bar"
-   ]
-  },
-  {
-   "v": "V2.45",
-   "t": [
-    "Outputs → High beam: new Max. when disarmed (%) – while disarmed the high beam (and the flash) is at most this bright, 0 % = off. Armed: normal levels"
    ]
   }
  ]
