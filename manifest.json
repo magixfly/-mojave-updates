@@ -5,6 +5,48 @@
  "fwMd5": "47855ee0d5a5db833e2ae5042b275def",
  "dateien": [
   {
+   "p": "/anim/demon_eyes.mjv",
+   "url": "sd/anim/demon_eyes.mjv",
+   "s": 1138545,
+   "md5": "ba38bb68ce5f7b3065c9a1093195a63e"
+  },
+  {
+   "p": "/anim/glitch_logo.mjv",
+   "url": "sd/anim/glitch_logo.mjv",
+   "s": 739474,
+   "md5": "25765615d981d053a76c29d875b5e20b"
+  },
+  {
+   "p": "/anim/heartbeat.mjv",
+   "url": "sd/anim/heartbeat.mjv",
+   "s": 499708,
+   "md5": "ba913b64c115ccffb20455cf2fd85678"
+  },
+  {
+   "p": "/anim/hyperspace.mjv",
+   "url": "sd/anim/hyperspace.mjv",
+   "s": 721133,
+   "md5": "1c5b348e6b53c5defb2bc6b891d777d7"
+  },
+  {
+   "p": "/anim/neon_eyes.mjv",
+   "url": "sd/anim/neon_eyes.mjv",
+   "s": 905231,
+   "md5": "f8664343a5f3f8ec6fa52ee759135bcb"
+  },
+  {
+   "p": "/anim/radar.mjv",
+   "url": "sd/anim/radar.mjv",
+   "s": 677862,
+   "md5": "4cc06615da4c6efa57cb29a7bf648d81"
+  },
+  {
+   "p": "/anim/shadow_window.mjv",
+   "url": "sd/anim/shadow_window.mjv",
+   "s": 1182351,
+   "md5": "864802a31aa37029660a1861c40000a5"
+  },
+  {
    "p": "/player.html.gz",
    "url": "sd/player.html.gz",
    "s": 97467,
