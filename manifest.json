@@ -1,8 +1,8 @@
 {
- "fw": "V2.55",
- "fwDatei": "firmware/Core_V2.55.bin",
- "fwGroesse": 2005200,
- "fwMd5": "bf8a508b30a1c6fa9eb0f7f1fef2b778",
+ "fw": "V2.56",
+ "fwDatei": "firmware/Core_V2.56.bin",
+ "fwGroesse": 2006096,
+ "fwMd5": "2b5ec0a09f72c3439bd18326df9bd04c",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.56",
+   "t": [
+    "Maps & rides → Load maps → Coordinates or map link: button Open Google Maps (opens at the entered coordinates, otherwise at the car) – find a place, copy the link and paste it into the field"
+   ]
+  },
   {
    "v": "V2.55",
    "t": [
@@ -132,12 +138,6 @@
    "t": [
     "Transmitter buttons: 2× short (e.g. high beam flash) detected more reliably – channels read 50× per second and short pauses between two presses are no longer lost",
     "Transmitter buttons: 3× short is back as its own action (e.g. put the high beam flash there). If 3× is not used, 2× still reacts right away"
-   ]
-  },
-  {
-   "v": "V2.41",
-   "t": [
-    "Transmitter → Channel overview: bars start right after the longest name and use the rest of the width"
    ]
   }
  ]

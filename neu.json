@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.56",
+  "t": [
+   "Maps & rides → Load maps → Coordinates or map link: button Open Google Maps (opens at the entered coordinates, otherwise at the car) – find a place, copy the link and paste it into the field"
+  ]
+ },
+ {
   "v": "V2.55",
   "t": [
    "Files on the SD card: free space shown in GB (e.g. 29.6 GB free of 29.7 GB)"
