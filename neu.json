@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.55",
+  "t": [
+   "Files on the SD card: free space shown in GB (e.g. 29.6 GB free of 29.7 GB)"
+  ]
+ },
+ {
   "v": "V2.54",
   "t": [
    "Display during an online update: design C – card like the start screen with MOJAVE CORE, blue UPDATE, old → new version and progress bar",

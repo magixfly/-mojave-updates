@@ -1,8 +1,8 @@
 {
- "fw": "V2.54",
- "fwDatei": "firmware/Core_V2.54.bin",
- "fwGroesse": 2005056,
- "fwMd5": "97c0bfada4ec858e8f63a4c9a578758e",
+ "fw": "V2.55",
+ "fwDatei": "firmware/Core_V2.55.bin",
+ "fwGroesse": 2005200,
+ "fwMd5": "bf8a508b30a1c6fa9eb0f7f1fef2b778",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.55",
+   "t": [
+    "Files on the SD card: free space shown in GB (e.g. 29.6 GB free of 29.7 GB)"
+   ]
+  },
   {
    "v": "V2.54",
    "t": [
@@ -132,12 +138,6 @@
    "v": "V2.41",
    "t": [
     "Transmitter → Channel overview: bars start right after the longest name and use the rest of the width"
-   ]
-  },
-  {
-   "v": "V2.40",
-   "t": [
-    "Channel numbers now match the transmitter: INAV swaps the first 4 channels (channel map, e.g. AETR) – the Core now sorts them back. Your settings on CH1–CH4 (e.g. Throttle) are moved once to the transmitter number automatically"
    ]
   }
  ]
