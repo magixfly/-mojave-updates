@@ -1,8 +1,8 @@
 {
- "fw": "V2.57",
- "fwDatei": "firmware/Core_V2.57.bin",
- "fwGroesse": 2022576,
- "fwMd5": "e39cb7e39478290beeda87ac6ab7cf8f",
+ "fw": "V2.58",
+ "fwDatei": "firmware/Core_V2.58.bin",
+ "fwGroesse": 2022800,
+ "fwMd5": "d401157816b4d52105c52739b6f84f2f",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.58",
+   "t": [
+    "Display → Test update screen (6 s): shows the update picture on the display with a running bar, without updating"
+   ]
+  },
   {
    "v": "V2.57",
    "t": [
@@ -136,12 +142,6 @@
    "t": [
     "Transmitter buttons: \"just now\" shows only once per row (it was doubled when pressed again within 3 s)",
     "High beam flash: the output is only written when the flash changes on/off"
-   ]
-  },
-  {
-   "v": "V2.43",
-   "t": [
-    "Transmitter → Channel overview: bars half as long"
    ]
   }
  ]

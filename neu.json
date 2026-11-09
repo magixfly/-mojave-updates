@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.58",
+  "t": [
+   "Display → Test update screen (6 s): shows the update picture on the display with a running bar, without updating"
+  ]
+ },
+ {
   "v": "V2.57",
   "t": [
    "Display during an online update: smooth, anti-aliased font (DejaVu Sans Bold) instead of the jagged pixel font",
