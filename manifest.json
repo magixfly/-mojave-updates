@@ -1,8 +1,8 @@
 {
- "fw": "V2.63",
- "fwDatei": "firmware/Core_V2.63.bin",
- "fwGroesse": 2033328,
- "fwMd5": "cc54fa201c16c2244cad6dbc7a08abab",
+ "fw": "V2.64",
+ "fwDatei": "firmware/Core_V2.64.bin",
+ "fwGroesse": 2033488,
+ "fwMd5": "6b72fa42ec391a905a6bb8d3f4fe6568",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.64",
+   "t": [
+    "Fix: GPS → Packets per second sometimes showed 0 /s (or double) – now calculated each time the FC reports a new packet count",
+    "Switch Test GPS (VGPS) at home is now only on the GPS page (removed from Wi-Fi)"
+   ]
+  },
   {
    "v": "V2.63",
    "t": [
@@ -178,12 +185,6 @@
    "v": "V2.50",
    "t": [
     "Online update: while loading, the card with the new version and what is new stays visible (blue); the old Updated box is hidden meanwhile"
-   ]
-  },
-  {
-   "v": "V2.49",
-   "t": [
-    "Channel bars half as long again, and the same length on all pages (Transmitter → Channel overview and FC → Channels live)"
    ]
   }
  ]

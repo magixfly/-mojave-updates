@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.64",
+  "t": [
+   "Fix: GPS → Packets per second sometimes showed 0 /s (or double) – now calculated each time the FC reports a new packet count",
+   "Switch Test GPS (VGPS) at home is now only on the GPS page (removed from Wi-Fi)"
+  ]
+ },
+ {
   "v": "V2.63",
   "t": [
    "New page GPS: module, fix, satellites, HDOP, position, VGPS switch; communication FC ↔ GPS (packets per second, errors and timeouts per minute); chart of the last 5 minutes. The GPS card moved from Telemetry to this page"
