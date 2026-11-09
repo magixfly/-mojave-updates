@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.53",
+  "t": [
+   "FC and Transmitter tabs: all cards the same width and centered, content fills the card"
+  ]
+ },
+ {
   "v": "V2.52",
   "t": [
    "Transmitter: Switches and Button assignment in one column (Switch 2 under Switch 1, Button 2 under Button 1)"

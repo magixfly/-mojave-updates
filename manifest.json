@@ -1,8 +1,8 @@
 {
- "fw": "V2.52",
- "fwDatei": "firmware/Core_V2.52.bin",
- "fwGroesse": 2014784,
- "fwMd5": "372a6d45b9c81cdf3f20daebfd881cc0",
+ "fw": "V2.53",
+ "fwDatei": "firmware/Core_V2.53.bin",
+ "fwGroesse": 2015056,
+ "fwMd5": "ca5d1c579fc6708282e75cbe87999422",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.53",
+   "t": [
+    "FC and Transmitter tabs: all cards the same width and centered, content fills the card"
+   ]
+  },
   {
    "v": "V2.52",
    "t": [
@@ -131,12 +137,6 @@
    "v": "V2.39",
    "t": [
     "Channels live: all rows the same height again – what the Core detects is a short word in its own column (e.g. straight, neutral, released); hover or tap it for all ranges"
-   ]
-  },
-  {
-   "v": "V2.38",
-   "t": [
-    "Web page: firmware version and reload button end exactly at the right edge of the cards below"
    ]
   }
  ]
