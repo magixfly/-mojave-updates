@@ -1,8 +1,8 @@
 {
- "fw": "V2.56",
- "fwDatei": "firmware/Core_V2.56.bin",
- "fwGroesse": 2006096,
- "fwMd5": "2b5ec0a09f72c3439bd18326df9bd04c",
+ "fw": "V2.57",
+ "fwDatei": "firmware/Core_V2.57.bin",
+ "fwGroesse": 2022576,
+ "fwMd5": "e39cb7e39478290beeda87ac6ab7cf8f",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,17 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.57",
+   "t": [
+    "Display during an online update: smooth, anti-aliased font (DejaVu Sans Bold) instead of the jagged pixel font",
+    "Web page checked page by page: all cards same width and centered, all values in one column (no two-column lists any more)",
+    "Transmitter: channel fields of all switches and buttons at the same position, dropdowns aligned",
+    "Outputs → High beam: sliders and values of the levels line up with the other rows",
+    "Menu bar wraps into a second row on a wide screen instead of hiding tabs",
+    "Drift & Auto: msp_override_channels shows steering + throttle channel (no false red warning)"
+   ]
+  },
   {
    "v": "V2.56",
    "t": [
@@ -131,13 +142,6 @@
    "v": "V2.43",
    "t": [
     "Transmitter → Channel overview: bars half as long"
-   ]
-  },
-  {
-   "v": "V2.42",
-   "t": [
-    "Transmitter buttons: 2× short (e.g. high beam flash) detected more reliably – channels read 50× per second and short pauses between two presses are no longer lost",
-    "Transmitter buttons: 3× short is back as its own action (e.g. put the high beam flash there). If 3× is not used, 2× still reacts right away"
    ]
   }
  ]
