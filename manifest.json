@@ -1,8 +1,8 @@
 {
- "fw": "V2.53",
- "fwDatei": "firmware/Core_V2.53.bin",
- "fwGroesse": 2015056,
- "fwMd5": "ca5d1c579fc6708282e75cbe87999422",
+ "fw": "V2.54",
+ "fwDatei": "firmware/Core_V2.54.bin",
+ "fwGroesse": 2005056,
+ "fwMd5": "97c0bfada4ec858e8f63a4c9a578758e",
  "dateien": [
   {
    "p": "/player.html.gz",
@@ -45,6 +45,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.54",
+   "t": [
+    "Display during an online update: design C – card like the start screen with MOJAVE CORE, blue UPDATE, old → new version and progress bar",
+    "Transmitter: channel field of each switch and button sits right above the end of its dropdowns"
+   ]
+  },
   {
    "v": "V2.53",
    "t": [
@@ -131,12 +138,6 @@
    "v": "V2.40",
    "t": [
     "Channel numbers now match the transmitter: INAV swaps the first 4 channels (channel map, e.g. AETR) – the Core now sorts them back. Your settings on CH1–CH4 (e.g. Throttle) are moved once to the transmitter number automatically"
-   ]
-  },
-  {
-   "v": "V2.39",
-   "t": [
-    "Channels live: all rows the same height again – what the Core detects is a short word in its own column (e.g. straight, neutral, released); hover or tap it for all ranges"
    ]
   }
  ]
