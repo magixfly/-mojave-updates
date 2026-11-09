@@ -1,8 +1,8 @@
 {
- "fw": "V2.60",
- "fwDatei": "firmware/Core_V2.60.bin",
- "fwGroesse": 2026112,
- "fwMd5": "2bb15c02c297031b46909aab2d1ab495",
+ "fw": "V2.61",
+ "fwDatei": "firmware/Core_V2.61.bin",
+ "fwGroesse": 2026336,
+ "fwMd5": "bbc0a64e0b9bb097c013603e47e7a47a",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.61",
+   "t": [
+    "High beam is always off while the transmitter is off (no receiver signal / failsafe). With signal: as before"
+   ]
+  },
   {
    "v": "V2.60",
    "t": [
@@ -178,12 +184,6 @@
    "v": "V2.47",
    "t": [
     "High beam when disarmed: always the set % (Outputs → High beam → When disarmed, 0 % = off). High beam button 1× short switches it off / back on. When you arm, the last driving level comes back"
-   ]
-  },
-  {
-   "v": "V2.46",
-   "t": [
-    "Transmitter → Channel overview: value stands right next to the bar"
    ]
   }
  ]
