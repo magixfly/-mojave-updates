@@ -1,8 +1,8 @@
 {
- "fw": "V2.69",
- "fwDatei": "firmware/Core_V2.69.bin",
- "fwGroesse": 2037648,
- "fwMd5": "de915d747cb4e7e69f6c0bb9850780a4",
+ "fw": "V2.70",
+ "fwDatei": "firmware/Core_V2.70.bin",
+ "fwGroesse": 2038432,
+ "fwMd5": "d83c48bb7b7fdc04810d261432445dae",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.70",
+   "t": [
+    "LQ warning: only sensible values (0 = off or 20–90 %, delay 0–10 s) plus a short note which value fits"
+   ]
+  },
   {
    "v": "V2.69",
    "t": [
@@ -176,12 +182,6 @@
    "v": "V2.56",
    "t": [
     "Maps & rides → Load maps → Coordinates or map link: button Open Google Maps (opens at the entered coordinates, otherwise at the car) – find a place, copy the link and paste it into the field"
-   ]
-  },
-  {
-   "v": "V2.55",
-   "t": [
-    "Files on the SD card: free space shown in GB (e.g. 29.6 GB free of 29.7 GB)"
    ]
   }
  ]
