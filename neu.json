@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.76",
+  "t": [
+   "New system log on the SD card (/log/sys.log): every start with its reason (power on, crash, watchdog, undervoltage …), Wi-Fi drop-outs with the reason code from the router, ESP-NOW restarts and a sign of life every 10 min. System → System log shows the last 80 lines"
+  ]
+ },
+ {
   "v": "V2.75",
   "t": [
    "System → Online update: the status (e.g. All up to date) now sits next to the update buttons in the same look, green when up to date"
