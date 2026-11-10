@@ -1,8 +1,8 @@
 {
- "fw": "V2.74",
- "fwDatei": "firmware/Core_V2.74.bin",
- "fwGroesse": 2041232,
- "fwMd5": "8f7233734dbf42f40fc82afd36ba6d6f",
+ "fw": "V2.75",
+ "fwDatei": "firmware/Core_V2.75.bin",
+ "fwGroesse": 2041552,
+ "fwMd5": "1ea3e00b86873d93111df21cb9c2bac0",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,12 @@
  ],
  "neu": [
   {
+   "v": "V2.75",
+   "t": [
+    "System → Online update: the status (e.g. All up to date) now sits next to the update buttons in the same look, green when up to date"
+   ]
+  },
+  {
    "v": "V2.74",
    "t": [
     "Menu bar: “Firmware V2.xx” removed (version is shown under System). The green “New V2.xx” button still appears there when an update is ready"
@@ -171,13 +177,6 @@
    "v": "V2.61",
    "t": [
     "High beam is always off while the transmitter is off (no receiver signal / failsafe). With signal: as before"
-   ]
-  },
-  {
-   "v": "V2.60",
-   "t": [
-    "Display → After arm: new choice Animation from SD card – plays an animation from /anim/ on the SD card in a loop while armed (with Test animation 12 s)",
-    "7 new animations come with this update onto the SD card: Demon eyes, Neon eyes, Shadow at the window, Radar, Hyperspace, Heartbeat, Glitch logo"
    ]
   }
  ]

@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.75",
+  "t": [
+   "System → Online update: the status (e.g. All up to date) now sits next to the update buttons in the same look, green when up to date"
+  ]
+ },
+ {
   "v": "V2.74",
   "t": [
    "Menu bar: “Firmware V2.xx” removed (version is shown under System). The green “New V2.xx” button still appears there when an update is ready"
