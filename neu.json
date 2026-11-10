@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.68",
+  "t": [
+   "Link quality warning moved to Telemetry → Radio link (ELRS), next to the live LQ. The LQ tile turns red below this threshold"
+  ]
+ },
+ {
   "v": "V2.67",
   "t": [
    "Battery page: new setting Link quality warning below … % (default 50 %, 0 = off). If the receiver LQ stays below it for the set time: WEAK LINK x % on OSD and display. Also in config.txt and /api/cfg (lqWarnPct) for the Pi ground station"

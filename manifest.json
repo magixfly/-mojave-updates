@@ -1,8 +1,8 @@
 {
- "fw": "V2.67",
- "fwDatei": "firmware/Core_V2.67.bin",
- "fwGroesse": 2037024,
- "fwMd5": "e78d38a7c330d2ab246730b1222c435c",
+ "fw": "V2.68",
+ "fwDatei": "firmware/Core_V2.68.bin",
+ "fwGroesse": 2037216,
+ "fwMd5": "2f97e7d1884de71d5f6dc3f772f4e067",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.68",
+   "t": [
+    "Link quality warning moved to Telemetry → Radio link (ELRS), next to the live LQ. The LQ tile turns red below this threshold"
+   ]
+  },
   {
    "v": "V2.67",
    "t": [
@@ -177,12 +183,6 @@
    "t": [
     "Display during an online update: design C – card like the start screen with MOJAVE CORE, blue UPDATE, old → new version and progress bar",
     "Transmitter: channel field of each switch and button sits right above the end of its dropdowns"
-   ]
-  },
-  {
-   "v": "V2.53",
-   "t": [
-    "FC and Transmitter tabs: all cards the same width and centered, content fills the card"
    ]
   }
  ]
