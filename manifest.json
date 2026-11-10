@@ -1,8 +1,8 @@
 {
- "fw": "V2.66",
- "fwDatei": "firmware/Core_V2.66.bin",
- "fwGroesse": 2035696,
- "fwMd5": "97dd908006613210f09c8d504237a2fb",
+ "fw": "V2.67",
+ "fwDatei": "firmware/Core_V2.67.bin",
+ "fwGroesse": 2037024,
+ "fwMd5": "e78d38a7c330d2ab246730b1222c435c",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.67",
+   "t": [
+    "Battery page: new setting Link quality warning below … % (default 50 %, 0 = off). If the receiver LQ stays below it for the set time: WEAK LINK x % on OSD and display. Also in config.txt and /api/cfg (lqWarnPct) for the Pi ground station"
+   ]
+  },
   {
    "v": "V2.66",
    "t": [
@@ -177,12 +183,6 @@
    "v": "V2.53",
    "t": [
     "FC and Transmitter tabs: all cards the same width and centered, content fills the card"
-   ]
-  },
-  {
-   "v": "V2.52",
-   "t": [
-    "Transmitter: Switches and Button assignment in one column (Switch 2 under Switch 1, Button 2 under Button 1)"
    ]
   }
  ]
