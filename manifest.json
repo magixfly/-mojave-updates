@@ -1,8 +1,8 @@
 {
- "fw": "V2.71",
- "fwDatei": "firmware/Core_V2.71.bin",
- "fwGroesse": 2038704,
- "fwMd5": "1d63f2dc7449a5245f053e361668deff",
+ "fw": "V2.72",
+ "fwDatei": "firmware/Core_V2.72.bin",
+ "fwGroesse": 2039584,
+ "fwMd5": "787481364fefeb3c7811a60dbfbeee79",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,12 @@
  ],
  "neu": [
   {
+   "v": "V2.72",
+   "t": [
+    "Pi ground station without Wi-Fi: the Core sends battery, temperatures, wet sensor and warning limits twice per second by radio (ESP-NOW broadcast) – the ground station hears it directly, no pairing, the Navi is not affected"
+   ]
+  },
+  {
    "v": "V2.71",
    "t": [
     "Header bar: LQ (link quality) next to RSSI – green, red below the LQ warning threshold"
@@ -171,17 +177,6 @@
    "v": "V2.58",
    "t": [
     "Display → Test update screen (6 s): shows the update picture on the display with a running bar, without updating"
-   ]
-  },
-  {
-   "v": "V2.57",
-   "t": [
-    "Display during an online update: smooth, anti-aliased font (DejaVu Sans Bold) instead of the jagged pixel font",
-    "Web page checked page by page: all cards same width and centered, all values in one column (no two-column lists any more)",
-    "Transmitter: channel fields of all switches and buttons at the same position, dropdowns aligned",
-    "Outputs → High beam: sliders and values of the levels line up with the other rows",
-    "Menu bar wraps into a second row on a wide screen instead of hiding tabs",
-    "Drift & Auto: msp_override_channels shows steering + throttle channel (no false red warning)"
    ]
   }
  ]

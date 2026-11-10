@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.72",
+  "t": [
+   "Pi ground station without Wi-Fi: the Core sends battery, temperatures, wet sensor and warning limits twice per second by radio (ESP-NOW broadcast) – the ground station hears it directly, no pairing, the Navi is not affected"
+  ]
+ },
+ {
   "v": "V2.71",
   "t": [
    "Header bar: LQ (link quality) next to RSSI – green, red below the LQ warning threshold"
