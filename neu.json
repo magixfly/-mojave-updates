@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.73",
+  "t": [
+   "Radio for the Pi ground station / Navi restarts by itself when sending fails or the Wi-Fi mode changes (e.g. car hotspot switched off after joining home Wi-Fi)",
+   "System info: radio counters (sent, errors, restarts) for checking the ground station link"
+  ]
+ },
+ {
   "v": "V2.72",
   "t": [
    "Pi ground station without Wi-Fi: the Core sends battery, temperatures, wet sensor and warning limits twice per second by radio (ESP-NOW broadcast) – the ground station hears it directly, no pairing, the Navi is not affected"

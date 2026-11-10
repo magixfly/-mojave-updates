@@ -1,8 +1,8 @@
 {
- "fw": "V2.72",
- "fwDatei": "firmware/Core_V2.72.bin",
- "fwGroesse": 2039584,
- "fwMd5": "787481364fefeb3c7811a60dbfbeee79",
+ "fw": "V2.73",
+ "fwDatei": "firmware/Core_V2.73.bin",
+ "fwGroesse": 2040944,
+ "fwMd5": "661c8de0920056ae3a17f8451b3e1d13",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -50,7 +50,7 @@
    "p": "/player.html.gz",
    "url": "sd/player.html.gz",
    "s": 97467,
-   "md5": "e5a4cb173cd6cbd6117baf8d16a0e50d"
+   "md5": "7bfb08a8584f2c041b29d0ede85e1de2"
   },
   {
    "p": "/sounds/system/warn_akku.mp3",
@@ -87,6 +87,13 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.73",
+   "t": [
+    "Radio for the Pi ground station / Navi restarts by itself when sending fails or the Wi-Fi mode changes (e.g. car hotspot switched off after joining home Wi-Fi)",
+    "System info: radio counters (sent, errors, restarts) for checking the ground station link"
+   ]
+  },
   {
    "v": "V2.72",
    "t": [
@@ -171,12 +178,6 @@
    "v": "V2.59",
    "t": [
     "Fix: Display → Test update screen now really shows the update picture for 6 s"
-   ]
-  },
-  {
-   "v": "V2.58",
-   "t": [
-    "Display → Test update screen (6 s): shows the update picture on the display with a running bar, without updating"
    ]
   }
  ]
