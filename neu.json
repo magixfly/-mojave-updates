@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.69",
+  "t": [
+   "Link quality warning has its own delay: Telemetry → Radio link → Must stay below for at least (s), default 1 s, 0 = immediately (no longer the battery time). In /api/cfg and config.txt as lqWarnSek"
+  ]
+ },
+ {
   "v": "V2.68",
   "t": [
    "Link quality warning moved to Telemetry → Radio link (ELRS), next to the live LQ. The LQ tile turns red below this threshold"
