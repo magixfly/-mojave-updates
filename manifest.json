@@ -1,8 +1,8 @@
 {
- "fw": "V2.70",
- "fwDatei": "firmware/Core_V2.70.bin",
- "fwGroesse": 2038432,
- "fwMd5": "d83c48bb7b7fdc04810d261432445dae",
+ "fw": "V2.71",
+ "fwDatei": "firmware/Core_V2.71.bin",
+ "fwGroesse": 2038704,
+ "fwMd5": "1d63f2dc7449a5245f053e361668deff",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.71",
+   "t": [
+    "Header bar: LQ (link quality) next to RSSI – green, red below the LQ warning threshold"
+   ]
+  },
   {
    "v": "V2.70",
    "t": [
@@ -176,12 +182,6 @@
     "Outputs → High beam: sliders and values of the levels line up with the other rows",
     "Menu bar wraps into a second row on a wide screen instead of hiding tabs",
     "Drift & Auto: msp_override_channels shows steering + throttle channel (no false red warning)"
-   ]
-  },
-  {
-   "v": "V2.56",
-   "t": [
-    "Maps & rides → Load maps → Coordinates or map link: button Open Google Maps (opens at the entered coordinates, otherwise at the car) – find a place, copy the link and paste it into the field"
    ]
   }
  ]
