@@ -1,10 +1,12 @@
 {
- "fw": "V1.17",
+ "fw": "V1.18",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1183984,
- "md5": "b2b2c27f1ae2e2011dff0ad6946a5793",
+ "groesse": 1184752,
+ "md5": "a54eed1aad34017395b483f54c2d05b6",
  "neu": [
+  "Cell voltage from the Core next to the battery %",
+  "Radio quality measured against the Core's real send rate; Core counts as lost only after 5 s; Wi-Fi power save always off",
   "GPS status moved to the bottom right; battery % from the Core in the header",
   "Auto zoom by scale bar: 20 m standing, 50 m at 50 km/h, 100 m from 80 km/h (adjustable on the Navi page)",
   "Auto zoom by speed, smooth (also when playing a ride): close when standing, wider when fast – can be switched off on the Navi page",
