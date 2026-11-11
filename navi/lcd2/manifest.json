@@ -1,10 +1,11 @@
 {
- "fw": "V1.19",
+ "fw": "V1.20",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1185072,
- "md5": "88c13c2373e55b05caf4b86728a5db2d",
+ "groesse": 1185120,
+ "md5": "46150def0ced8c83afc9697e6fb8fcd7",
  "neu": [
+  "Fix: 'Core not found' / red GPS / maps stopping – the Core counted as lost when a packet arrived during drawing (timer overflow)",
   "Map stays still when standing (ignores GPS jitter under 8 m below 3 km/h); fixed separator between battery % and voltage",
   "Cell voltage from the Core next to the battery %",
   "Radio quality measured against the Core's real send rate; Core counts as lost only after 5 s; Wi-Fi power save always off",
