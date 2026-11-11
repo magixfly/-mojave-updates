@@ -1,10 +1,11 @@
 {
- "fw": "V1.09",
+ "fw": "V1.10",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1178288,
- "md5": "cdf47e34c62dab504f7caa89cc04b960",
+ "groesse": 1178784,
+ "md5": "916314ad778545108e62cdef5291f925",
  "neu": [
+  "Fix: Navi switches to the Core's radio channel right away (stayed on a neighbour channel before); status text on the Core page is up to date",
   "Play a ride on the Navi from its web page (navi.local): built-in demo, rides and virtual rides from the Core, speed 1-8x, repeat",
   "Own settings page http://navi.local (works without the Core): status with progress bar, edit all config.txt settings",
   "Maps load with two downloads at the same time (also when copying from the Core)",
