@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.83",
+  "t": [
+   "Navi: the Core now also sends the cell voltage with every position (for Navi versions that show it; older Navis are not affected)"
+  ]
+ },
+ {
   "v": "V2.82",
   "t": [
    "Fix: the button “Update Navi to …” was always visible (now only with a real new version)",
