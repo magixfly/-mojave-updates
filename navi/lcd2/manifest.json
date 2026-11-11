@@ -1,10 +1,11 @@
 {
- "fw": "V1.06",
+ "fw": "V1.07",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1086224,
- "md5": "67300c04e3ce807f49bb068bb27d647a",
+ "groesse": 1087280,
+ "md5": "6d061f5714ffafba32f62c798dd8ec2a",
  "neu": [
+  "Landscape display (320x240) – default on the 2\" board, config.txt quer: 0 for portrait",
   "SD card: exFAT now works too (64 GB cards as they come), start screen shows size and format",
   "Two own Wi-Fi networks in config.txt (wlan, wlan2) – tried in turn when the Core is off",
   "Without GPS fix: last Core position, otherwise VGPS home position – map shows and maps load right away",
