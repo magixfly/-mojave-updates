@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.81",
+  "t": [
+   "Display → Navi: the button “Update Navi to …” only appears with a real new version number (before it sometimes showed without a version)"
+  ]
+ },
+ {
   "v": "V2.80",
   "t": [
    "Navi: map scale follows the speed (Navi page: Zoom (standard), “Zoom out with speed”, from 20 km/h one step farther, from 45 km/h two steps – both adjustable). Back to the standard only 5 km/h below and after 3 s, so it does not jump"

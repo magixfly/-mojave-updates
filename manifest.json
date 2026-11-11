@@ -1,8 +1,8 @@
 {
- "fw": "V2.80",
- "fwDatei": "firmware/Core_V2.80.bin",
- "fwGroesse": 2032912,
- "fwMd5": "973710173114c1820798fe5b12f74319",
+ "fw": "V2.81",
+ "fwDatei": "firmware/Core_V2.81.bin",
+ "fwGroesse": 2033168,
+ "fwMd5": "8dc1912692569e7760387ddcae42ccd4",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,12 @@
  ],
  "neu": [
   {
+   "v": "V2.81",
+   "t": [
+    "Display → Navi: the button “Update Navi to …” only appears with a real new version number (before it sometimes showed without a version)"
+   ]
+  },
+  {
    "v": "V2.80",
    "t": [
     "Navi: map scale follows the speed (Navi page: Zoom (standard), “Zoom out with speed”, from 20 km/h one step farther, from 45 km/h two steps – both adjustable). Back to the standard only 5 km/h below and after 3 s, so it does not jump"
@@ -170,12 +176,6 @@
    "v": "V2.67",
    "t": [
     "Battery page: new setting Link quality warning below … % (default 50 %, 0 = off). If the receiver LQ stays below it for the set time: WEAK LINK x % on OSD and display. Also in config.txt and /api/cfg (lqWarnPct) for the Pi ground station"
-   ]
-  },
-  {
-   "v": "V2.66",
-   "t": [
-    "Test GPS (VGPS) and the home position of the maps now sit exactly on the house"
    ]
   }
  ]
