@@ -1,8 +1,8 @@
 {
- "fw": "V2.83",
- "fwDatei": "firmware/Core_V2.83.bin",
- "fwGroesse": 2034032,
- "fwMd5": "a961b0e31dcccdc1fbead8dc025d441e",
+ "fw": "V2.84",
+ "fwDatei": "firmware/Core_V2.84.bin",
+ "fwGroesse": 2034688,
+ "fwMd5": "a022643c6359002930735dd1cffd1c9e",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,12 @@
  ],
  "neu": [
   {
+   "v": "V2.84",
+   "t": [
+    "Display → Navi: new line Online – how long the Navi has been connected without a break (min:sec, from 1 hour h:mm:ss)"
+   ]
+  },
+  {
    "v": "V2.83",
    "t": [
     "Navi: the Core now also sends the cell voltage with every position (for Navi versions that show it; older Navis are not affected)"
@@ -171,12 +177,6 @@
    "v": "V2.70",
    "t": [
     "LQ warning: only sensible values (0 = off or 20–90 %, delay 0–10 s) plus a short note which value fits"
-   ]
-  },
-  {
-   "v": "V2.69",
-   "t": [
-    "Link quality warning has its own delay: Telemetry → Radio link → Must stay below for at least (s), default 1 s, 0 = immediately (no longer the battery time). In /api/cfg and config.txt as lqWarnSek"
    ]
   }
  ]

@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.84",
+  "t": [
+   "Display → Navi: new line Online – how long the Navi has been connected without a break (min:sec, from 1 hour h:mm:ss)"
+  ]
+ },
+ {
   "v": "V2.83",
   "t": [
    "Navi: the Core now also sends the cell voltage with every position (for Navi versions that show it; older Navis are not affected)"
