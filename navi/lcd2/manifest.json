@@ -1,0 +1,12 @@
+{
+ "fw": "V1.02",
+ "board": "ESP32-S3-Touch-LCD-2",
+ "datei": "Navi_update.bin",
+ "groesse": 1089072,
+ "md5": "550a5f7ae358d863fd0086d6aec1b886",
+ "neu": [
+  "First version for the Waveshare 2\" touch board (240x320): touch to zoom (left/right), switch aerial/street map (middle), long press for heading/north up",
+  "Built-in SD card, more memory for map tiles, own update channel (navi/lcd2)",
+  "Optional own GPS on IO18/IO17"
+ ]
+}
