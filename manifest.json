@@ -1,8 +1,8 @@
 {
- "fw": "V2.77",
- "fwDatei": "firmware/Core_V2.77.bin",
- "fwGroesse": 2031296,
- "fwMd5": "9c56fb0212c6d2fc1d7bd6352617daa2",
+ "fw": "V2.78",
+ "fwDatei": "firmware/Core_V2.78.bin",
+ "fwGroesse": 2031440,
+ "fwMd5": "929943bf460fd2659dc4e528e6b5e854",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,12 @@
  ],
  "neu": [
   {
+   "v": "V2.78",
+   "t": [
+    "High beam is always off after switching on (new battery). Button turns it on (set % while disarmed); after arming as before"
+   ]
+  },
+  {
    "v": "V2.77",
    "t": [
     "Fix: the first line of the system log (start) showed the time 1 hour too early – now local time right away"
@@ -171,12 +177,6 @@
    "t": [
     "Fix: GPS → Packets per second sometimes showed 0 /s (or double) – now calculated each time the FC reports a new packet count",
     "Switch Test GPS (VGPS) at home is now only on the GPS page (removed from Wi-Fi)"
-   ]
-  },
-  {
-   "v": "V2.63",
-   "t": [
-    "New page GPS: module, fix, satellites, HDOP, position, VGPS switch; communication FC ↔ GPS (packets per second, errors and timeouts per minute); chart of the last 5 minutes. The GPS card moved from Telemetry to this page"
    ]
   }
  ]

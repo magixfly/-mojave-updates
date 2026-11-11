@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.78",
+  "t": [
+   "High beam is always off after switching on (new battery). Button turns it on (set % while disarmed); after arming as before"
+  ]
+ },
+ {
   "v": "V2.77",
   "t": [
    "Fix: the first line of the system log (start) showed the time 1 hour too early – now local time right away"
