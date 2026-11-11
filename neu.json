@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.77",
+  "t": [
+   "Fix: the first line of the system log (start) showed the time 1 hour too early – now local time right away"
+  ]
+ },
+ {
   "v": "V2.76",
   "t": [
    "New system log on the SD card (/log/sys.log): every start with its reason (power on, crash, watchdog, undervoltage …), Wi-Fi drop-outs with the reason code from the router, ESP-NOW restarts and a sign of life every 10 min. System → System log shows the last 80 lines"

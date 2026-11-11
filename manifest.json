@@ -1,8 +1,8 @@
 {
- "fw": "V2.76",
- "fwDatei": "firmware/Core_V2.76.bin",
- "fwGroesse": 2031136,
- "fwMd5": "dce93eaf95a87d34525b872d3085a559",
+ "fw": "V2.77",
+ "fwDatei": "firmware/Core_V2.77.bin",
+ "fwGroesse": 2031296,
+ "fwMd5": "9c56fb0212c6d2fc1d7bd6352617daa2",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,12 @@
  ],
  "neu": [
   {
+   "v": "V2.77",
+   "t": [
+    "Fix: the first line of the system log (start) showed the time 1 hour too early – now local time right away"
+   ]
+  },
+  {
    "v": "V2.76",
    "t": [
     "New system log on the SD card (/log/sys.log): every start with its reason (power on, crash, watchdog, undervoltage …), Wi-Fi drop-outs with the reason code from the router, ESP-NOW restarts and a sign of life every 10 min. System → System log shows the last 80 lines"
@@ -171,12 +177,6 @@
    "v": "V2.63",
    "t": [
     "New page GPS: module, fix, satellites, HDOP, position, VGPS switch; communication FC ↔ GPS (packets per second, errors and timeouts per minute); chart of the last 5 minutes. The GPS card moved from Telemetry to this page"
-   ]
-  },
-  {
-   "v": "V2.62",
-   "t": [
-    "Wi-Fi → Home Wi-Fi: new switch Test GPS (VGPS) at home – off = the Core never shows the test position, only the real GPS"
    ]
   }
  ]
