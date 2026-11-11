@@ -1,10 +1,11 @@
 {
- "fw": "V1.14",
+ "fw": "V1.15",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1179456,
- "md5": "eac2d3487d649f2741db30731bb84a86",
+ "groesse": 1182384,
+ "md5": "e98084cdda1ac7027128678727f1a805",
  "neu": [
+  "Auto zoom by speed, smooth (also when playing a ride): close when standing, wider when fast – can be switched off on the Navi page",
   "Fix: rides from the Core play on the Navi (were 'ride not found')",
   "Fix: 'Check for update' works right away, also while maps are loading",
   "Navi shows its IP address in the Navi status on the Core page (for VPN), name in the router: mojave-navi",
