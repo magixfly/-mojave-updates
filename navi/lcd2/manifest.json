@@ -1,10 +1,13 @@
 {
- "fw": "V1.03",
+ "fw": "V1.04",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1089424,
- "md5": "d51fa717ba42e38cf1396c75e0f5a612",
+ "groesse": 1096464,
+ "md5": "a43f2edca5d899718d6eb9288f3950d5",
  "neu": [
+  "Without GPS fix: last Core position, otherwise VGPS home position – map shows and maps load right away",
+  "Copies all map tiles from the Core (aerial + street map, zoom 13-18) on first contact, then every 30 min",
+  "Own Wi-Fi for maps without the Core (config.txt wlan/wlanPass); config.txt is created at first start",
   "Fix: \"No SD card\" on the 2\" board – the display no longer blocks the shared SPI bus; SD card can also be inserted later",
   "First version for the Waveshare 2\" touch board (240x320): touch to zoom (left/right), switch aerial/street map (middle), long press for heading/north up",
   "Built-in SD card, more memory for map tiles, own update channel (navi/lcd2)",
