@@ -1,8 +1,8 @@
 {
- "fw": "V2.78",
- "fwDatei": "firmware/Core_V2.78.bin",
- "fwGroesse": 2031440,
- "fwMd5": "929943bf460fd2659dc4e528e6b5e854",
+ "fw": "V2.79",
+ "fwDatei": "firmware/Core_V2.79.bin",
+ "fwGroesse": 2031584,
+ "fwMd5": "693ce5d2fa468f6589125bae0255c58a",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,12 @@
  ],
  "neu": [
   {
+   "v": "V2.79",
+   "t": [
+    "High beam also switches off by itself when disarming. Arming brings back the last level; while disarmed the button turns it on (set %)"
+   ]
+  },
+  {
    "v": "V2.78",
    "t": [
     "High beam is always off after switching on (new battery). Button turns it on (set % while disarmed); after arming as before"
@@ -170,13 +176,6 @@
    "v": "V2.65",
    "t": [
     "Maps & rides → Load maps → Coordinates or map link: plus codes work too (e.g. 5JM6+QFJ St. Pölten from Apple or Google Maps)"
-   ]
-  },
-  {
-   "v": "V2.64",
-   "t": [
-    "Fix: GPS → Packets per second sometimes showed 0 /s (or double) – now calculated each time the FC reports a new packet count",
-    "Switch Test GPS (VGPS) at home is now only on the GPS page (removed from Wi-Fi)"
    ]
   }
  ]

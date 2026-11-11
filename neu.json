@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.79",
+  "t": [
+   "High beam also switches off by itself when disarming. Arming brings back the last level; while disarmed the button turns it on (set %)"
+  ]
+ },
+ {
   "v": "V2.78",
   "t": [
    "High beam is always off after switching on (new battery). Button turns it on (set % while disarmed); after arming as before"
