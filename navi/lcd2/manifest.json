@@ -1,10 +1,11 @@
 {
- "fw": "V1.08",
+ "fw": "V1.09",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1152768,
- "md5": "e28c7ed6cf0b56cf29a63db0e0618ac8",
+ "groesse": 1178288,
+ "md5": "cdf47e34c62dab504f7caa89cc04b960",
  "neu": [
+  "Play a ride on the Navi from its web page (navi.local): built-in demo, rides and virtual rides from the Core, speed 1-8x, repeat",
   "Own settings page http://navi.local (works without the Core): status with progress bar, edit all config.txt settings",
   "Maps load with two downloads at the same time (also when copying from the Core)",
   "Landscape display (320x240) – default on the 2\" board, config.txt quer: 0 for portrait",
