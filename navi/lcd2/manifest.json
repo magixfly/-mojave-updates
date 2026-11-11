@@ -1,10 +1,11 @@
 {
- "fw": "V1.11",
+ "fw": "V1.12",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1179216,
- "md5": "4aa0f9c14ab2db4d661bc77700e13ddb",
+ "groesse": 1179248,
+ "md5": "9dd454027468360c104e785dec2f7d94",
  "neu": [
+  "Navi shows its IP address in the Navi status on the Core page (for VPN), name in the router: mojave-navi",
   "Fix: the Core stays reachable while the Navi copies maps or rides (only one request to the Core at a time, no kept-open connections)",
   "Fix: Navi switches to the Core's radio channel right away (stayed on a neighbour channel before); status text on the Core page is up to date",
   "Play a ride on the Navi from its web page (navi.local): built-in demo, rides and virtual rides from the Core, speed 1-8x, repeat",
