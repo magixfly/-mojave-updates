@@ -1,10 +1,12 @@
 {
- "fw": "V1.07",
+ "fw": "V1.08",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1087280,
- "md5": "6d061f5714ffafba32f62c798dd8ec2a",
+ "groesse": 1152768,
+ "md5": "e28c7ed6cf0b56cf29a63db0e0618ac8",
  "neu": [
+  "Own settings page http://navi.local (works without the Core): status with progress bar, edit all config.txt settings",
+  "Maps load with two downloads at the same time (also when copying from the Core)",
   "Landscape display (320x240) – default on the 2\" board, config.txt quer: 0 for portrait",
   "SD card: exFAT now works too (64 GB cards as they come), start screen shows size and format",
   "Two own Wi-Fi networks in config.txt (wlan, wlan2) – tried in turn when the Core is off",
