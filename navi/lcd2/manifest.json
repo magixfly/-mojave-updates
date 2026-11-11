@@ -1,10 +1,11 @@
 {
- "fw": "V1.15",
+ "fw": "V1.16",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1182384,
- "md5": "e98084cdda1ac7027128678727f1a805",
+ "groesse": 1183632,
+ "md5": "577830cfa5cfcb9e42640aa1a8d17bc7",
  "neu": [
+  "Auto zoom by scale bar: 20 m standing, 50 m at 50 km/h, 100 m from 80 km/h (adjustable on the Navi page)",
   "Auto zoom by speed, smooth (also when playing a ride): close when standing, wider when fast – can be switched off on the Navi page",
   "Fix: rides from the Core play on the Navi (were 'ride not found')",
   "Fix: 'Check for update' works right away, also while maps are loading",
