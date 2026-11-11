@@ -1,10 +1,11 @@
 {
- "fw": "V1.26",
+ "fw": "V1.27",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1189296,
- "md5": "2e3186b0a790283b3d14b4d4665efda8",
+ "groesse": 1189616,
+ "md5": "0e98c7c43fc267c782a886b580265b39",
  "neu": [
+  "Map loading no longer restarts every 10 min for the update check or on short Wi-Fi drops; the map counter no longer jumps back",
   "Map loading no longer restarts when the Core resends the same area list; Navi page shows why loading restarted ('Map restarts')",
   "Fix: map type no longer switches to street map by itself – touch is off by default (phantom taps), settings always follow the Core",
   "Header shows the battery as 'Bat: 3,93V 76%'",
