@@ -1,8 +1,8 @@
 {
- "fw": "V2.79",
- "fwDatei": "firmware/Core_V2.79.bin",
- "fwGroesse": 2031584,
- "fwMd5": "693ce5d2fa468f6589125bae0255c58a",
+ "fw": "V2.80",
+ "fwDatei": "firmware/Core_V2.80.bin",
+ "fwGroesse": 2032912,
+ "fwMd5": "973710173114c1820798fe5b12f74319",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,12 @@
  ],
  "neu": [
   {
+   "v": "V2.80",
+   "t": [
+    "Navi: map scale follows the speed (Navi page: Zoom (standard), “Zoom out with speed”, from 20 km/h one step farther, from 45 km/h two steps – both adjustable). Back to the standard only 5 km/h below and after 3 s, so it does not jump"
+   ]
+  },
+  {
    "v": "V2.79",
    "t": [
     "High beam also switches off by itself when disarming. Arming brings back the last level; while disarmed the button turns it on (set %)"
@@ -170,12 +176,6 @@
    "v": "V2.66",
    "t": [
     "Test GPS (VGPS) and the home position of the maps now sit exactly on the house"
-   ]
-  },
-  {
-   "v": "V2.65",
-   "t": [
-    "Maps & rides → Load maps → Coordinates or map link: plus codes work too (e.g. 5JM6+QFJ St. Pölten from Apple or Google Maps)"
    ]
   }
  ]
