@@ -1,10 +1,11 @@
 {
- "fw": "V1.30",
+ "fw": "V1.31",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1195152,
- "md5": "9d0cdeb8e2f00bcdac798df4a2933198",
+ "groesse": 1195600,
+ "md5": "a368d494b5e0b382b7bdfbe4254e21da",
  "neu": [
+  "Fix: Navi restarted when checking for an update during map loading; Navi page shows running time and why it last started",
   "Navi page: full area names and a pin to open each area in Google Maps",
   "Reload button at the top right of the Navi page; the page is no longer cached by the browser",
   "Map areas from the Core are saved on the SD card and keep loading from the internet without the Core; progress per area on the Navi page and in the footer; no more Wi-Fi drops every 90 s in the home Wi-Fi",
