@@ -1,21 +1,21 @@
 {
- "ver": "2.0.26",
+ "ver": "2.0.27",
  "neu": [
-  "Online update from GitHub (menu SOFTWARE UPDATE)",
+  "Runs on Windows 10/11 too (ESP32 receiver on a COM port)",
   "Track button on the map: length / clear (closes after 3 s)",
-  "Battery: Mojave from Core, planes from iNav, other cars no mAh",
-  "English only"
+  "Online update from GitHub (menu SOFTWARE UPDATE)",
+  "Battery: Mojave from Core, planes from iNav, other cars no mAh"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 106874,
-   "md5": "660d4160849dd4bdf91d186ce5b642a1"
+   "s": 109716,
+   "md5": "f68154329b70e46f30c53409418a156f"
   },
   {
    "p": "web/index.html",
-   "s": 127491,
-   "md5": "9bdfc79f1b93b23c2d513041bec588df"
+   "s": 127670,
+   "md5": "9f912c08844900116514387d1540413f"
   }
  ]
 }

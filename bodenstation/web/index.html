@@ -123,6 +123,7 @@ border-radius:18px;padding:12px 16px;display:none;z-index:4;text-align:center}
 body.two #side2{display:flex}body.two #side{display:none}
 body.two #map{left:270px;width:calc(100% - 270px)}
 body.two #core{left:286px}
+body.win .noWin{display:none!important}   /* V2.0.27: Windows - no Pi-only settings */
 /* V2.0.26: small track button on the map - tap = track length / clear */
 #trB{position:absolute;left:246px;top:64px;width:54px;height:54px;border-radius:14px;background:rgba(0,0,0,.55);border:1px solid var(--line);
   color:var(--acc);font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center;z-index:3;cursor:pointer}
@@ -256,8 +257,8 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <div id="ridesT" style="display:none;gap:8px"><button class="mb" id="rSel" style="flex:1">Select</button><button class="mb" id="rDel" style="flex:1.4;display:none;color:var(--red)"></button></div>
     <div id="rides"></div>
   </div>
-  <h3>WI-FI</h3>
-  <div class="row">
+  <h3 class="noWin">WI-FI</h3>
+  <div class="row noWin">
     <div id="wifiList"></div>
     <div class="bar" id="wifiBar" style="display:none"><i></i><span></span></div>
     <div id="wifiMsg" style="font-size:15px;color:var(--mut)"></div>
@@ -275,11 +276,11 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <button class="mb" id="mSnd">Senders ✎</button>
   </div>
   <button class="mb" id="mCfg">All settings (config.txt) ✎</button>
-  <button class="mb" id="mStart">Start menu (other programs)</button>
+  <button class="mb noWin" id="mStart">Start menu (other programs)</button>
   <h3>DISPLAY &amp; SOUND</h3>
   <div class="row">
-    <label>Brightness</label>
-    <div class="seg" id="sBright"><b data-v="20">20 %</b><b data-v="40">40 %</b><b data-v="70">70 %</b><b data-v="100">100 %</b></div>
+    <label class="noWin">Brightness</label>
+    <div class="seg noWin" id="sBright"><b data-v="20">20 %</b><b data-v="40">40 %</b><b data-v="70">70 %</b><b data-v="100">100 %</b></div>
     <label>Track length (live + replay) · how much of the line stays visible</label>
     <div style="display:flex;gap:10px;align-items:center"><button class="mb" id="mTlM" style="width:90px;font-size:30px">−</button><b id="mTl" style="flex:1;text-align:center;font-size:26px"></b><button class="mb" id="mTlP" style="width:90px;font-size:30px">+</button></div>
     <button class="mb" id="mNight">Night mode: off</button>
@@ -1024,7 +1025,7 @@ async function init(){
   resize();
   try{V.head=localStorage.ori==='h'}catch(e){}
   try{const c=await j('/api/config');Object.assign(C,{max_zoom:+c.max_zoom,start_zoom:+c.start_zoom,orientation:c.orientation,cell_warn:+c.cell_warn,car_size:+c.car_size||1,auto_zoom:+c.auto_zoom,auto_zoom_out:+c.auto_zoom_out,auto_zoom_kmh:+c.auto_zoom_kmh||60});
-    V.lat=+c.test_lat;V.lon=+c.test_lon;C.cfg=c;   // V2.0.24: English only (German removed)
+    V.lat=+c.test_lat;V.lon=+c.test_lon;C.cfg=c;document.body.classList.toggle('win',!!c.win);   // V2.0.24: English only (German removed)
     $('pRad').value=c.preload_radius_m;$('pZ').value=c.preload_zmax;
     try{if(!localStorage.ori)V.head=c.orientation==='heading'}catch(e){V.head=c.orientation==='heading'}}
   catch(e){DEMO=true;C.max_zoom=19;demoInit()}

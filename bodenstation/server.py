@@ -10,8 +10,9 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.26"
+VERSION = "2.0.27"
 BASE = os.path.dirname(os.path.abspath(__file__))
+WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
 
 # ---------------------------------------------------------------- config.txt
@@ -201,6 +202,11 @@ def devices_scan():
         except Exception:
             pass
         hn = socket.gethostname()
+        if not ips:
+            try:
+                s0 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); s0.connect(("8.8.8.8", 80)); ips.append(["net", s0.getsockname()[0]]); s0.close()
+            except Exception:
+                pass
         out["tracker"] = {"ok": True, "host": hn + ".local", "ips": ips, "ssid": ssid, "ver": VERSION}
         DEVS["prog"] = 20
         # Core: addresses from config.txt (core_hosts), the one that answered last first
@@ -1067,11 +1073,34 @@ def log_row():
 # ---------------------------------------------------------------- V2.0.2: CPU / RAM / temperature of the Pi
 SYS = {"t": 0.0, "d": None, "cpu": None}
 
+def sys_load_win(d):
+    import ctypes
+    class MS(ctypes.Structure):
+        _fields_ = [("l", ctypes.c_ulong), ("load", ctypes.c_ulong), ("tot", ctypes.c_ulonglong), ("av", ctypes.c_ulonglong),
+                    ("a", ctypes.c_ulonglong), ("b", ctypes.c_ulonglong), ("c", ctypes.c_ulonglong), ("e", ctypes.c_ulonglong), ("f", ctypes.c_ulonglong)]
+    m = MS(); m.l = ctypes.sizeof(MS)
+    if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m)):
+        d["ram"] = int(m.load); d["ram_mb"] = round((m.tot - m.av) / 1048576); d["ram_tot"] = round(m.tot / 1048576)
+    ft = [ctypes.c_ulonglong() for _ in range(3)]
+    if ctypes.windll.kernel32.GetSystemTimes(*[ctypes.byref(x) for x in ft]):
+        idle, k, u = (x.value for x in ft)
+        if SYS["cpu"]:
+            di, dt = idle - SYS["cpu"][0], (k + u) - SYS["cpu"][1]
+            d["cpu"] = round(100.0 * (1 - di / dt)) if dt > 0 else 0
+        SYS["cpu"] = (idle, k + u)
+
 def sys_load():
     now = time.time()
     if SYS["d"] and now - SYS["t"] < 2.0:
         return SYS["d"]
     d = {}
+    if WIN:
+        try:
+            sys_load_win(d)
+        except Exception:
+            pass
+        SYS["d"], SYS["t"] = d, now
+        return d
     try:
         with open("/proc/stat") as f:
             v = [int(x) for x in f.readline().split()[1:]]
@@ -1382,7 +1411,26 @@ class Crsf:
                 S["esp"] = {"rssi": r if r else None, "pps": p[1], "bad": p[2], "t": time.time()}
 
 # ---------------------------------------------------------------- serial reader
+def find_dev_win():
+    """Windows: COM port of the ESP32 receiver (Espressif USB VID 303A first, then other USB serial adapters)"""
+    try:
+        from serial.tools import list_ports
+    except Exception:
+        return None
+    if CFG["serial"] != "auto":
+        return CFG["serial"]
+    ps = list(list_ports.comports())
+    for p in ps:
+        if p.vid == 0x303A:
+            return p.device
+    for p in ps:
+        if p.vid in (0x10C4, 0x1A86, 0x0403):    # CP210x, CH340, FTDI
+            return p.device
+    return None
+
 def find_dev():
+    if WIN:
+        return find_dev_win()
     if CFG["serial"] != "auto":
         return CFG["serial"] if os.path.exists(CFG["serial"]) else None
     for pat in ("/dev/ttyACM*", "/dev/ttyUSB*"):
@@ -1403,6 +1451,33 @@ def open_serial(dev, baud):
     termios.tcsetattr(fd, termios.TCSANOW, a)
     return fd
 
+def serial_win(dev):
+    try:
+        import serial
+        sp = serial.Serial(dev, ci("baud"), timeout=1.0)
+    except Exception as e:
+        print("serial open failed", dev, e)
+        time.sleep(2)
+        return
+    print("serial open", dev)
+    with LOCK:
+        S["dev"] = dev
+    p = Crsf("USB")
+    try:
+        while True:
+            d = sp.read(sp.in_waiting or 1)
+            if d:
+                p.feed(d)
+    except Exception as e:
+        print("serial lost", e)
+    try:
+        sp.close()
+    except Exception:
+        pass
+    with LOCK:
+        S["dev"] = ""
+    time.sleep(1)
+
 def serial_thread():
     while True:
         dev = find_dev()
@@ -1410,6 +1485,9 @@ def serial_thread():
             with LOCK:
                 S["dev"] = ""
             time.sleep(2); continue
+        if WIN:
+            serial_win(dev)
+            continue
         try:
             fd = open_serial(dev, ci("baud"))
         except Exception as e:
@@ -2013,6 +2091,7 @@ class H(BaseHTTPRequestHandler):
             return self.send(200, {"items": [{"k": k, "v": CFG.get(k, ""), "d": d, "c": c} for k, d, c in DEFAULTS]})
         if p == "/api/config":
             c = {k: CFG[k] for k, _, _ in DEFAULTS}
+            c["win"] = WIN                          # V2.0.27: page hides Pi-only parts (Wi-Fi, brightness, start menu)
             du = shutil.disk_usage(BASE)
             c["free_mb"] = du.free // 1048576
             c["total_mb"] = du.total // 1048576       # V1.9.13: SD card size for the menu
@@ -2219,14 +2298,16 @@ def main():
         _ipv4_only()
     threading.Thread(target=serial_thread, daemon=True).start()
     threading.Thread(target=test_thread, daemon=True).start()
-    threading.Thread(target=wifi_thread, daemon=True).start()
+    if not WIN:
+        threading.Thread(target=wifi_thread, daemon=True).start()
     threading.Thread(target=core_thread, daemon=True).start()
     threading.Thread(target=upd_thread, daemon=True).start()
     for _ in range(6):
         threading.Thread(target=dl_worker, daemon=True).start()
     threading.Thread(target=core_live_thread, daemon=True).start()
-    set_bright(ci("bright"))
-    threading.Thread(target=usb_thread, daemon=True).start()
+    if not WIN:
+        set_bright(ci("bright"))
+        threading.Thread(target=usb_thread, daemon=True).start()
     port = ci("port")
     srv = ThreadingHTTPServer(("0.0.0.0", port), H)
     srv.daemon_threads = True
