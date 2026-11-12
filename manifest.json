@@ -1,8 +1,8 @@
 {
- "fw": "V2.84",
- "fwDatei": "firmware/Core_V2.84.bin",
- "fwGroesse": 2034688,
- "fwMd5": "a022643c6359002930735dd1cffd1c9e",
+ "fw": "V2.85",
+ "fwDatei": "firmware/Core_V2.85.bin",
+ "fwGroesse": 2035696,
+ "fwMd5": "16ca197a6992f9da61baacb208c25d24",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -88,6 +88,14 @@
  ],
  "neu": [
   {
+   "v": "V2.85",
+   "t": [
+    "Battery: current and used mAh now come from the FC (its sensor measures the whole battery) – before the Core estimated them from the voltage drop and showed far too much",
+    "A battery that is not full only continues the last count if its voltage fits; otherwise a new count starts",
+    "Without FC current the estimate can no longer climb clearly above what the voltage shows as used"
+   ]
+  },
+  {
    "v": "V2.84",
    "t": [
     "Display → Navi: new line Online – how long the Navi has been connected without a break (min:sec, from 1 hour h:mm:ss)"
@@ -171,12 +179,6 @@
    "v": "V2.71",
    "t": [
     "Header bar: LQ (link quality) next to RSSI – green, red below the LQ warning threshold"
-   ]
-  },
-  {
-   "v": "V2.70",
-   "t": [
-    "LQ warning: only sensible values (0 = off or 20–90 %, delay 0–10 s) plus a short note which value fits"
    ]
   }
  ]

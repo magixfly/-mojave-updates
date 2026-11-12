@@ -1,5 +1,13 @@
 [
  {
+  "v": "V2.85",
+  "t": [
+   "Battery: current and used mAh now come from the FC (its sensor measures the whole battery) – before the Core estimated them from the voltage drop and showed far too much",
+   "A battery that is not full only continues the last count if its voltage fits; otherwise a new count starts",
+   "Without FC current the estimate can no longer climb clearly above what the voltage shows as used"
+  ]
+ },
+ {
   "v": "V2.84",
   "t": [
    "Display → Navi: new line Online – how long the Navi has been connected without a break (min:sec, from 1 hour h:mm:ss)"
