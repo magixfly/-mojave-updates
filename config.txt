@@ -1,0 +1,9 @@
+# Carlin-Bridge Einstellungen (wird bei jedem Durchlauf neu eingelesen)
+# IP der Carlin-Box im iPhone-Hotspot
+BOX_IP=172.20.10.14
+# fester ADB-Port (wird nach Neustart der Box automatisch wieder gesetzt)
+BOX_PORT=5555
+# Lebenszeichen alle X Minuten nach GitHub schreiben (0 = aus)
+HEARTBEAT_MIN=30
+# max. Laufzeit eines Befehls in Sekunden
+CMD_TIMEOUT=600
