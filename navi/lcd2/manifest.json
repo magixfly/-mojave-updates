@@ -1,10 +1,11 @@
 {
- "fw": "V1.41",
+ "fw": "V1.42",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1212096,
- "md5": "eb6d9c5e28534eefa984bfd233a64e1d",
+ "groesse": 1212704,
+ "md5": "850c9d48a4b7120310291dd54cbefc27",
  "neu": [
+  "Bigger compass needle: red tip and N point north, white tip south",
   "Display shows 'CGPS' when the position comes from the Core, 'GPS' for the own GPS module",
   "Play ride: default speed 2x",
   "New setting Own GPS 'only own (ignore Core)': Navi works fully on its own (maps from SD and internet)",
