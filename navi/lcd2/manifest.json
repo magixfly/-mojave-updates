@@ -1,10 +1,11 @@
 {
- "fw": "V1.39",
+ "fw": "V1.40",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
  "groesse": 1212160,
- "md5": "7ae82bb18af5253b1ce44f9f58852ccc",
+ "md5": "adb5bdcb1028fc9c46571e70356da746",
  "neu": [
+  "Play ride: default speed 2x",
   "New setting Own GPS 'only own (ignore Core)': Navi works fully on its own (maps from SD and internet)",
   "Navi page shows what's new in the online version (Update card)",
   "Satellite count steady (updated every 10 s); Navi page: 'Open Core' link",
