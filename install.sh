@@ -11,5 +11,5 @@ exec bash bridge.sh
 R
 chmod +x "$HOME/carlin-run.sh"
 L='* * * * * flock -n /tmp/carlin.lock $HOME/carlin-run.sh >/dev/null 2>&1'
-( crontab -l 2>/dev/null | grep -v carlin-run.sh; echo "$L" ) | crontab -
+{ crontab -l 2>/dev/null | grep -v carlin-run.sh || true; echo "$L"; } | crontab -
 echo "Carlin-Bridge installiert:"; crontab -l | grep carlin
