@@ -1,0 +1,7 @@
+### 003_djifly_play  –  2026-11-12 22:40:02
+### Box: verbunden (172.20.10.14:5555)
+
+DJI Fly fehlt – öffne Play Store
+Starting: Intent { act=android.intent.action.VIEW dat=market://details/... }
+
+### Exit-Code: 0
