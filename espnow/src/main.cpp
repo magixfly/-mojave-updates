@@ -234,11 +234,11 @@ static int csState = CS_IDLE, csCh = 0, csFail = 0;
 static uint32_t csT = 0, csNextScan = 0, csNextPoll = 0;
 
 static uint32_t chErr = 0, polls = 0, pollOk = 0, scans = 0;
-static int chErrLast = 0;
+static int chErrLast = 0, chErrCh = 0;
 static void setCh(uint8_t ch) {
   if (curCh == ch) return;
   esp_err_t e = esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE);
-  if (e == ESP_OK) curCh = ch; else { chErr++; chErrLast = e; }
+  if (e == ESP_OK) curCh = ch; else { chErr++; chErrLast = e; chErrCh = ch; }
 }
 #define CS_WAIT 200   // ms on a foreign channel waiting for the Core (it may answer only at its next beacon)
 
@@ -396,8 +396,9 @@ static void printStatus(Print& o) {
              s.mac[5], s.rssi, (unsigned long)s.n, (unsigned long)((now - s.last) / 1000));
   o.printf("# other espnow=%lu last %02X:%02X:%02X:%02X:%02X:%02X ch=%d rssi=%d bytes %02X %02X %02X %02X\n", (unsigned long)other,
            otherMac[0], otherMac[1], otherMac[2], otherMac[3], otherMac[4], otherMac[5], otherCh, otherRssi, otherB[0], otherB[1], otherB[2], otherB[3]);
-  o.printf("# search scans=%lu polls=%lu ok=%lu chErr=%lu (%d) now_ch=%d\n", (unsigned long)scans, (unsigned long)polls,
-           (unsigned long)pollOk, (unsigned long)chErr, chErrLast, curCh);
+  o.printf("# search scans=%lu polls=%lu ok=%lu chErr=%lu (%d at ch %d) now_ch=%d state=%d csCh=%d fail=%d next_poll=%lds next_scan=%lds allowed=%d\n",
+           (unsigned long)scans, (unsigned long)polls, (unsigned long)pollOk, (unsigned long)chErr, chErrLast, chErrCh, curCh, csState, csCh, csFail,
+           (long)((int32_t)(csNextPoll - now) / 1000), (long)((int32_t)(csNextScan - now) / 1000), scanAllowed());
   o.printf("# car ap=%d ssid=%s active=%d stations=%d pages=%d  heap=%u\n", C.ap, C.ap_ssid.c_str(), carActive(), carClients(),
            carWsClients(), (unsigned)ESP.getFreeHeap());
 }
