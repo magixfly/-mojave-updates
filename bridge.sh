@@ -40,7 +40,7 @@ for f in inbox/*.sh; do
   if ! is_dev; then log "$n wartet – Box nicht erreichbar"; break; fi
   log "starte $n"
   { echo "### $n  –  $(date '+%F %T')"; echo "### Box: $ST"; echo;
-    cd "$D" && timeout "$CMD_TIMEOUT" bash "$f" 2>&1; echo; echo "### Exit-Code: $?"; } > "outbox/$n.log"
+    cd "$D"; timeout "$CMD_TIMEOUT" bash "$f" 2>&1; rc=$?; echo; echo "### Exit-Code: $rc"; } > "outbox/$n.log"
   if grep -q '^#screenshot' "$f"; then
     adb exec-out screencap -p > "outbox/$n.png" 2>/dev/null || rm -f "outbox/$n.png"
   fi
