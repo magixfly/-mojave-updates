@@ -366,6 +366,9 @@ static void gpsLoop() {
 }
 
 // ---------------------------------------------------------------- LED
+// Waveshare S3-Zero: the LED takes red and green swapped compared to rgbLedWrite (GRB) -> swap here
+static void led(uint8_t r, uint8_t g, uint8_t b) { rgbLedWrite(LED_PIN, g, r, b); }
+
 // green blink = backpack telemetry, blue blink = Core only, dim red = nothing (like 1.3)
 static void ledLoop() {
   static uint32_t t = 0, onAt = 0, offAt = 0;
@@ -374,7 +377,7 @@ static void ledLoop() {
   uint32_t now = millis();
   if (now - t < 10) return;
   t = now;
-  if (!C.led) { rgbLedWrite(LED_PIN, 0, 0, 0); return; }
+  if (!C.led) { led(0, 0, 0); return; }
   bool data = lastPk && now - lastPk < 3000, core = coreLast && now - coreLast < 3000;
   bool lit = onAt && now - onAt < 60;
   if (!lit && now - offAt >= 140) {                      // new packet since last blink -> short flash (max ~5/s)
@@ -383,9 +386,9 @@ static void ledLoop() {
   }
   if (lit) offAt = now;
   int k = C.led;
-  if (lit) rgbLedWrite(LED_PIN, r * k / 255, g * k / 255, b * k / 255);
-  else if (!data && !core) rgbLedWrite(LED_PIN, k / 4, 0, 0);   // nothing received: dim red
-  else rgbLedWrite(LED_PIN, 0, 0, 0);
+  if (lit) led(r * k / 255, g * k / 255, b * k / 255);
+  else if (!data && !core) led(k / 4, 0, 0);   // nothing received: dim red
+  else led(0, 0, 0);
 }
 
 // ---------------------------------------------------------------- USB commands: config, status, set k=v, save, reboot
