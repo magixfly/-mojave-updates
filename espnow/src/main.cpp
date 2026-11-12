@@ -155,7 +155,8 @@ static volatile int32_t rssiSum = 0, rssiN = 0;
 static volatile uint32_t other = 0, coreN = 0, coreLast = 0;
 static uint8_t otherMac[6], otherCh, otherB[4];
 static int8_t otherRssi, coreRssi;
-static volatile uint8_t coreCh = 0, curCh = 1;
+static volatile uint8_t coreCh = 0, curCh = 1, coreHeardCh = 0;
+static volatile int8_t bestRssi[16];
 static uint8_t uid[6];
 
 static void noteSender(const uint8_t* m, int8_t r) {
@@ -192,8 +193,8 @@ static void handlePacket(const uint8_t* src, int8_t rssi, const uint8_t* d, int 
   }
   // Mojave Core broadcast (navi_proto.h NaviBoden): magic 0x564E little endian, typ 20
   if (len >= 4 && d[0] == 0x4E && d[1] == 0x56 && d[2] == 20) {
-    coreN++; coreLast = millis(); coreRssi = rssi;
-    coreCh = (len > 45 && d[45] >= 1 && d[45] <= 13) ? d[45] : curCh;   // NaviBoden carries the Core's own channel (neighbour channels are heard too)
+    coreN++; coreLast = millis(); coreRssi = rssi; coreHeardCh = curCh;
+    if (rssi > bestRssi[curCh & 15]) bestRssi[curCh & 15] = rssi;   // channel search: neighbour channels are heard too -> take the strongest
     if (C.core) {
       uint8_t t[60]; memcpy(t, src, 6); t[6] = (uint8_t)rssi;
       int n = min(len, 53);
@@ -253,7 +254,7 @@ static void coreSearch() {
   switch (csState) {
     case CS_IDLE:
       if (!scanAllowed()) return;
-      if (fresh && coreCh == C.channel) return;              // Core is on our channel, nothing to do
+      if (fresh && coreHeardCh == C.channel) { coreCh = C.channel; return; }   // Core is on our channel, nothing to do
       if (!fresh && coreCh == C.channel) coreCh = 0;         // Core left our channel -> search again
       if (coreCh && coreCh != C.channel && now >= csNextPoll) {          // known channel: short visit
         csState = CS_POLL; csCh = coreCh; csT = now; polls++; setCh(csCh); esp_now_send(BCAST, ASK, sizeof(ASK));
@@ -268,13 +269,17 @@ static void coreSearch() {
         if (++csFail >= 3) { csFail = 0; coreCh = 0; csNextScan = now; }
       }
       return;
-    case CS_SCAN:
-      if (csT && coreLast >= csT && coreCh == csCh) {          // found
-        setCh(C.channel); csState = CS_IDLE; csFail = 0; csNextPoll = now + C.core_poll * 1000; return;
-      }
+    case CS_SCAN:                                            // full sweep, the channel with the strongest Core signal wins
       if (csT && now - csT < CS_WAIT) return;
+      if (!csT) for (int i = 0; i < 16; i++) bestRssi[i] = -128;
       do csCh++; while (csCh == C.channel);
-      if (csCh > 13) { setCh(C.channel); csState = CS_IDLE; csNextScan = now + 15000; return; }
+      if (csCh > 13) {
+        int b = 0;
+        for (int i = 1; i <= 13; i++) if (bestRssi[i] > -128 && (!b || bestRssi[i] > bestRssi[b])) b = i;
+        setCh(C.channel); csState = CS_IDLE; csFail = 0;
+        if (b) { coreCh = b; csNextPoll = now + C.core_poll * 1000; } else csNextScan = now + 15000;
+        return;
+      }
       setCh(csCh); csT = now; esp_now_send(BCAST, ASK, sizeof(ASK));
       return;
   }
