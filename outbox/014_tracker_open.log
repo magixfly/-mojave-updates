@@ -1,0 +1,7 @@
+### 014_tracker_open  –  2026-11-13 00:20:03
+### Box: verbunden (172.20.10.14:5555)
+
+Pi-Webseite: HTTP 200
+Starting: Intent { act=android.intent.action.VIEW dat=http://172.20.10.2:8080/... pkg=com.android.chrome }
+
+### Exit-Code: 0
