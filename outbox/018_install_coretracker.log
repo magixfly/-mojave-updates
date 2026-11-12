@@ -1,0 +1,7 @@
+### 018_install_coretracker  –  2026-11-13 00:40:03
+### Box: verbunden (172.20.10.14:5555)
+
+adb: failed to install apk/CoreTracker.apk: Failure [INSTALL_FAILED_VERIFICATION_FAILURE: Install not allowed for file:///data/app/vmdl11145973.tmp]
+Performing Streamed Install
+
+### Exit-Code: 0
