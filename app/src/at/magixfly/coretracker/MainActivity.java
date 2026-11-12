@@ -54,6 +54,10 @@ public class MainActivity extends Activity {
         s.setJavaScriptEnabled(true);
         s.setDomStorageEnabled(true);
         s.setMediaPlaybackRequiresUserGesture(false);
+        s.setUseWideViewPort(true);          // Seite so breit wie in Chrome darstellen
+        s.setLoadWithOverviewMode(true);
+        s.setTextZoom(100);                  // Schriftgröße wie in Chrome
+        s.setCacheMode(-1);                  // Standard-Cache (Kartenkacheln bleiben gespeichert)
         web.setBackgroundColor(0xFF0B0F14);
         web.setWebViewClient(new Client(this));
         root.addView(web, new FrameLayout.LayoutParams(-1, -1, 17));
