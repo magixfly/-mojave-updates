@@ -1,0 +1,29 @@
+### 007_dji_diag  –  2026-11-12 22:57:02
+### Box: verbunden (172.20.10.14:5555)
+
+BT an: 1
+Standort-Modus: 3
+true
+      android.permission.ACCESS_BACKGROUND_LOCATION
+        android.permission.ACCESS_BACKGROUND_LOCATION: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|RESTRICTION_INSTALLER_EXEMPT]
+      android.permission.ACCESS_COARSE_LOCATION
+        android.permission.ACCESS_COARSE_LOCATION: granted=true, flags=[ USER_SET|REVOKE_WHEN_REQUESTED|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+      android.permission.ACCESS_FINE_LOCATION
+        android.permission.ACCESS_FINE_LOCATION: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|524288]
+      android.permission.BLUETOOTH_CONNECT
+        android.permission.BLUETOOTH_CONNECT: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+      android.permission.BLUETOOTH_SCAN
+        android.permission.BLUETOOTH_SCAN: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+      android.permission.NEARBY_WIFI_DEVICES
+        android.permission.NEARBY_WIFI_DEVICES: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+  enabled: true
+  state: ON
+  time since enabled: 01:44:26.635
+	[■]: apiGetConnectionStateUsingIdentityAddress              api_get_connection_state_using_identity_address
+  ConnectionState: STATE_DISCONNECTED
+  State: ON
+mWifiInfo SSID: "XVII", BSSID: 76:e0:61:9a:0b:94, MAC: b0:5a:44:75:3e:33, IP: /172.20.10.14, Security type: 2, Supplicant state: COMPLETED, Wi-Fi standard: 11n, RSSI: -26, Link speed: 144Mbps, Tx Link speed: 144Mbps, Max Supported Tx Link speed: 144Mbps, Rx Link speed: 144Mbps, Max Supported Rx Link speed: 144Mbps, Frequency: 2437MHz, Net ID: 2, Metered hint: true, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none>"XVII"wpa2-pskMLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>
+startTime=11-12 21:12:45.218, SSID="XVII", BSSID=76:e0:61:9a:0b:94, durationMillis=4877, roamType=ROAM_UNRELATED, connectionResult=1, level2FailureCode=NONE, connectivityLevelFailureCode=NONE, signalStrength=-34, wifiState=WIFI_DISCONNECTED, screenOn=true, mRouterFingerprint=mConnectionEvent.roamType=0, mChannelInfo=2437, mDtim=0, mAuthentication=2, mHidden=false, mRouterTechnology=7, mSupportsIpv6=false, mEapMethod=0, mAuthPhase2Method=0, mOcspType=0, mPmkCache=false, mMaxSupportedTxLinkSpeedMbps=144, mMaxSupportedRxLinkSpeedMbps=144, mIsFrameworkInitiatedRoaming=false, mIsIncorrectlyConfiguredAsHidden=false, mWifiStandard=6, mIs11bSupported=false, mIsMboSupported=false, mIsOceSupported=false, mIsFilsSupported=false, mIsIndividualTwtSupported=false, mIsBroadcastTwtSupported=false, mIsRestrictedTwtSupported=false, mIsTwtRequired=false, mIs11mcSupported=false, mIs11azSupported=false, mApType6Ghz=AP_TYPE_6GHZ_UNKNOWN, mIsEcpsPriorityAccessSupported=false, mHsRelease=null, mChannelWidth0, useRandomizedMac=true, useAggressiveMac=false, connectionNominator=NOMINATOR_SAVED, networkSelectorExperimentId=42330058, numBssidInBlocklist=0, level2FailureReason=FAILURE_REASON_UNKNOWN, networkType=TYPE_WPA2, networkCreator=CREATOR_USER, numConsecutiveConnectionFailure=0, isOsuProvisioned=false interfaceName=wlan0 interfaceRole=ROLE_CLIENT_PRIMARY, isFirstConnectionAfterBoot=true, isCarrierWifi=false, isOobPseudonymEnabled=false, uid=1010
+11-12 21:12:49.024 CMD_ASSOCIATED_BSSID screenOn=true cellularData=true adaptiveConnectivity=true, supplicantStateChangeEvents: { ASSOCIATING ASSOCIATED } mobileTxBytes=68585 mobileRxBytes=54621 totalTxBytes=1605374 totalRxBytes=281917 interfaceName=wlan0 interfaceRole=ROLE_CLIENT_PRIMARY
+
+### Exit-Code: 0
