@@ -1,5 +1,13 @@
 [
  {
+  "v": "V2.86",
+  "t": [
+   "Battery: correction of V2.85 – the FC measures everything except the motor. Base current = FC value (no extra any more), motor current while armed again from the voltage drop",
+   "The used mAh can no longer climb clearly above what the voltage shows as used",
+   "A battery that is not full only continues the last count if its voltage fits; otherwise a new count starts"
+  ]
+ },
+ {
   "v": "V2.85",
   "t": [
    "Battery: current and used mAh now come from the FC (its sensor measures the whole battery) – before the Core estimated them from the voltage drop and showed far too much",

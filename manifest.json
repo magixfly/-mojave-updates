@@ -1,8 +1,8 @@
 {
- "fw": "V2.85",
- "fwDatei": "firmware/Core_V2.85.bin",
- "fwGroesse": 2035696,
- "fwMd5": "16ca197a6992f9da61baacb208c25d24",
+ "fw": "V2.86",
+ "fwDatei": "firmware/Core_V2.86.bin",
+ "fwGroesse": 2035584,
+ "fwMd5": "d8f25b73dc04ca4c51ef7932b63bfa26",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,14 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.86",
+   "t": [
+    "Battery: correction of V2.85 – the FC measures everything except the motor. Base current = FC value (no extra any more), motor current while armed again from the voltage drop",
+    "The used mAh can no longer climb clearly above what the voltage shows as used",
+    "A battery that is not full only continues the last count if its voltage fits; otherwise a new count starts"
+   ]
+  },
   {
    "v": "V2.85",
    "t": [
@@ -173,12 +181,6 @@
    "v": "V2.72",
    "t": [
     "Pi ground station without Wi-Fi: the Core sends battery, temperatures, wet sensor and warning limits twice per second by radio (ESP-NOW broadcast) – the ground station hears it directly, no pairing, the Navi is not affected"
-   ]
-  },
-  {
-   "v": "V2.71",
-   "t": [
-    "Header bar: LQ (link quality) next to RSSI – green, red below the LQ warning threshold"
    ]
   }
  ]
