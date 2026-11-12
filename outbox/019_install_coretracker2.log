@@ -1,0 +1,6 @@
+### 019_install_coretracker2  –  2026-11-13 00:45:02
+### Box: verbunden (172.20.10.14:5555)
+
+Failure [INSTALL_FAILED_VERIFICATION_FAILURE: Install not allowed for file:///data/app/vmdl595589007.tmp]
+
+### Exit-Code: 0
