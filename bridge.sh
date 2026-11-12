@@ -8,6 +8,8 @@ cd "$D" || exit 1
 exec 2>>"$HOME/carlin-bridge.err"; echo "--- $(date '+%F %T') run" >&2
 export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/carlin_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
 export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"; . "$HOME/adbx/env.sh"
+# ADB-Server ohne geerbte Dateien starten – sonst hält er die Cron-Sperre (flock) für immer fest
+( for f in /proc/self/fd/*; do n=${f##*/}; [ "$n" -gt 2 ] 2>/dev/null && eval "exec $n>&-"; done; adb start-server >/dev/null 2>&1 )
 CFG_BOX_IP=172.20.10.14; BOX_PORT=5555; HEARTBEAT_MIN=30; CMD_TIMEOUT=600
 BOX_IP=$CFG_BOX_IP
 [ -f config.txt ] && . ./config.txt
