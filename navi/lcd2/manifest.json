@@ -1,10 +1,11 @@
 {
- "fw": "V1.32",
+ "fw": "V1.33",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1198032,
- "md5": "cf2b35440599bbb11ef7f90f8a32d974",
+ "groesse": 1198160,
+ "md5": "6036450eceda07bfcb08866ca0d4e77f",
  "neu": [
+  "Map areas are saved as complete as soon as their last tile is loaded; Navi page shows 'complete · saved'",
   "Complete map areas are remembered on the SD card and no longer checked tile by tile",
   "Fix: Navi restarted when checking for an update during map loading; Navi page shows running time and why it last started",
   "Navi page: full area names and a pin to open each area in Google Maps",
