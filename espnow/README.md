@@ -1,11 +1,10 @@
-# ESP-NOW receiver (Core Tracker) – firmware sources
+# Core Tracker ESP-NOW receiver – V1.4
 
-Waveshare ESP32-S3-Zero, pioarduino 55.03.30 (Arduino-ESP32 3.3.0).
+Waveshare ESP32-S3-Zero, pioarduino 55.03.30 (Arduino-ESP32 3.3.0), partitions default 4 MB (LittleFS at 0x290000 keeps config.txt).
 
-## car/ – Car mode (V1.4, in progress)
-- `src/car.h`, `src/car.cpp`: own Wi-Fi access point on the ESP-NOW channel (1), web server, WebSocket `/ws` with the raw CRSF frames that also go to the Pi over USB.
-- `web/car.html`: car display page (CarlinKit box / any browser): map, vehicles, battery, link, rides (GPX), all logic in the browser. Open the file directly = demo mode.
-- `tools/mkpage.py`: web/car.html -> src/car_page.h (gzip).
-- Still to do: merge into the receiver source 1.3 (main.cpp, not in this repo yet).
+- `src/main.cpp`: receiver (rewritten 12.11.2026, same output as 1.3): ELRS backpack telemetry (MSP v2 0x11) with 0x7D sender mark, 0x7A stats, 0x7B Core broadcast + channel search, 0x7C own GPS, USB + UART output, config.txt, USB commands `config`, `status`, `set k=v`, `save`, `reboot`.
+- `src/car.*`: car mode – own Wi-Fi `CoreTracker` on the backpack channel, page http://192.168.4.1, WebSocket `/ws` with the same CRSF frames.
+- `web/car.html`: car display page (open the file directly = demo). `tools/mkpage.py` -> `src/car_page.h`.
+- `firmware/ESPNOW_V1.4_KOMPLETT_ab_0x0.bin`: flash at 0x0 (does not touch config.txt).
 
-Binding phrase and UID are NOT in this repo – they live only in config.txt on the ESP.
+Binding phrase / UID are not in this repo – only in config.txt on the ESP.
