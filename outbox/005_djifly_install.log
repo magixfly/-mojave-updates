@@ -1,0 +1,27 @@
+### 005_djifly_install  –  2026-11-12 22:49:02
+### Box: verbunden (172.20.10.14:5555)
+
+total 726564
+-rw-rw---- 1 root everybody 743992356 2026-11-12 22:47 1793008319309-DJIFly-1.21.18.1003(3132440)-android-release-261023-sec.apk
+APK: /sdcard/Download/1793008319309-DJIFly-1.21.18.1003(3132440)-android-release-261023-sec.apk
+/system/bin/sh: syntax error: unexpected '('
+Größe: 
+
+Exception occurred while executing 'install':
+java.lang.NumberFormatException: Cannot parse null string
+	at java.lang.Long.parseLong(Long.java:707)
+	at java.lang.Long.parseLong(Long.java:869)
+	at com.android.server.pm.PackageManagerShellCommand.makeInstallParams(PackageManagerShellCommand.java:3473)
+	at com.android.server.pm.PackageManagerShellCommand.runInstall(PackageManagerShellCommand.java:1561)
+	at com.android.server.pm.PackageManagerShellCommand.onCommand(PackageManagerShellCommand.java:245)
+	at com.android.modules.utils.BasicShellCommandHandler.exec(BasicShellCommandHandler.java:97)
+	at android.os.ShellCommand.exec(ShellCommand.java:38)
+	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onShellCommand(PackageManagerService.java:6610)
+	at android.os.Binder.shellCommand(Binder.java:1230)
+	at android.os.Binder.onTransact(Binder.java:1043)
+	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:4620)
+	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onTransact(PackageManagerService.java:6594)
+	at android.os.Binder.execTransactInternal(Binder.java:1505)
+	at android.os.Binder.execTransact(Binder.java:1444)
+
+### Exit-Code: 0
