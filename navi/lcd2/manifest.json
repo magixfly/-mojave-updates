@@ -1,10 +1,11 @@
 {
- "fw": "V1.42",
+ "fw": "V1.43",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1212704,
- "md5": "850c9d48a4b7120310291dd54cbefc27",
+ "groesse": 1221216,
+ "md5": "7da4ec5715be30fbc23d85f672803380",
  "neu": [
+  "My areas: pick a place on a basemap on the Navi page (radius, zoom) – the Navi loads it like a Core area",
   "Bigger compass needle: red tip and N point north, white tip south",
   "Display shows 'CGPS' when the position comes from the Core, 'GPS' for the own GPS module",
   "Play ride: default speed 2x",
