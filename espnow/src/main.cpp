@@ -192,7 +192,8 @@ static void handlePacket(const uint8_t* src, int8_t rssi, const uint8_t* d, int 
   }
   // Mojave Core broadcast (navi_proto.h NaviBoden): magic 0x564E little endian, typ 20
   if (len >= 4 && d[0] == 0x4E && d[1] == 0x56 && d[2] == 20) {
-    coreN++; coreLast = millis(); coreCh = curCh; coreRssi = rssi;
+    coreN++; coreLast = millis(); coreRssi = rssi;
+    coreCh = (len > 45 && d[45] >= 1 && d[45] <= 13) ? d[45] : curCh;   // NaviBoden carries the Core's own channel (neighbour channels are heard too)
     if (C.core) {
       uint8_t t[60]; memcpy(t, src, 6); t[6] = (uint8_t)rssi;
       int n = min(len, 53);
