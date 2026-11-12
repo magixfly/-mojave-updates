@@ -357,8 +357,7 @@ const $=id=>document.getElementById(id);
 // V2.0.20: the screen values are written ~7x per second - writing the same text again still makes the browser lay out and paint.
 // Only write innerHTML / textContent when the content really changes.
 (()=>{for(const [P,k] of [[Element.prototype,'innerHTML'],[Node.prototype,'textContent']]){const d=Object.getOwnPropertyDescriptor(P,k);
-  Object.defineProperty(P,k,{configurable:true,enumerable:d.enumerable,get(){return d.get.call(this)},set(v){v=v==null?'':String(v);if(this.nodeType===1){const g=d.get.call(this);if(g===v||(this.__w===v&&g===this.__a))return}d.set.call(this,v);
-    if(this.nodeType===1){const e=this;e.__w=v;e.__a=undefined;setTimeout(()=>{if(e.__w===v)e.__a=d.get.call(e)},0)}}})}})();
+  Object.defineProperty(P,k,{configurable:true,enumerable:d.enumerable,get(){return d.get.call(this)},set(v){v=v==null?'':String(v);if(this.nodeType===1&&d.get.call(this)===v)return;d.set.call(this,v)}})}})();   // V2.0.29: simple again (lists were not cleared -> Wi-Fi list doubled)
 const cv=$('map'),ctx=cv.getContext('2d',{alpha:false});   // V2.0.20: opaque canvas = cheaper to put on screen
 let W=0,H=0,DPR=1;
 const C={max_zoom:21,start_zoom:17,orientation:'north',cell_warn:3.4,car_size:1,auto_zoom:1,auto_zoom_out:0.7,auto_zoom_kmh:70};
