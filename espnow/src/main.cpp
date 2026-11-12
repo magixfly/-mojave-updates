@@ -366,20 +366,26 @@ static void gpsLoop() {
 }
 
 // ---------------------------------------------------------------- LED
-static uint32_t ledFlash = 0;
+// green blink = backpack telemetry, blue blink = Core only, dim red = nothing (like 1.3)
 static void ledLoop() {
-  static uint32_t t = 0;
+  static uint32_t t = 0, onAt = 0, offAt = 0;
+  static uint32_t seenPk = 0, seenCore = 0;
+  static uint8_t r = 0, g = 0, b = 0;
   uint32_t now = millis();
-  if (now - t < 50) return;
+  if (now - t < 10) return;
   t = now;
   if (!C.led) { rgbLedWrite(LED_PIN, 0, 0, 0); return; }
-  uint8_t r = 0, g = 0, b = 0;
   bool data = lastPk && now - lastPk < 3000, core = coreLast && now - coreLast < 3000;
-  if (data) g = 255; else if (core) b = 255; else r = 255;
-  if (carClients() > 0) { b = 255; if (!data) r = 0; }                  // car display connected: cyan / blue
-  if (lastPk && now - lastPk < 60) { r = g = b = 255; }                  // flash per packet
+  bool lit = onAt && now - onAt < 60;
+  if (!lit && now - offAt >= 140) {                      // new packet since last blink -> short flash (max ~5/s)
+    if (pk != seenPk) { seenPk = pk; onAt = now; r = 0; g = 255; b = 0; lit = true; }
+    else if (coreN != seenCore) { seenCore = coreN; onAt = now; r = 0; g = 0; b = 255; lit = true; }
+  }
+  if (lit) offAt = now;
   int k = C.led;
-  rgbLedWrite(LED_PIN, r * k / 255, g * k / 255, b * k / 255);
+  if (lit) rgbLedWrite(LED_PIN, r * k / 255, g * k / 255, b * k / 255);
+  else if (!data && !core) rgbLedWrite(LED_PIN, k / 4, 0, 0);   // nothing received: dim red
+  else rgbLedWrite(LED_PIN, 0, 0, 0);
 }
 
 // ---------------------------------------------------------------- USB commands: config, status, set k=v, save, reboot
