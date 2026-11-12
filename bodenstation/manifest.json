@@ -1,0 +1,21 @@
+{
+ "ver": "2.0.26",
+ "neu": [
+  "Online update from GitHub (menu SOFTWARE UPDATE)",
+  "Track button on the map: length / clear (closes after 3 s)",
+  "Battery: Mojave from Core, planes from iNav, other cars no mAh",
+  "English only"
+ ],
+ "dateien": [
+  {
+   "p": "server.py",
+   "s": 106874,
+   "md5": "660d4160849dd4bdf91d186ce5b642a1"
+  },
+  {
+   "p": "web/index.html",
+   "s": 127491,
+   "md5": "9bdfc79f1b93b23c2d513041bec588df"
+  }
+ ]
+}
