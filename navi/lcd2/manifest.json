@@ -1,10 +1,11 @@
 {
- "fw": "V1.44",
+ "fw": "V1.45",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1222112,
- "md5": "e9ebbaf5daf5c05ab19e6c31eeba5910",
+ "groesse": 1223152,
+ "md5": "a4b4394befd1c6b0596b684d2312684d",
  "neu": [
+  "My areas: search by place name (e.g. 'Perchtoldsdorfer Heide') or coordinates, clear confirmation; no zoom-in on iPhone",
   "My areas: paste coordinates (or a Google Maps link) to set the area centre",
   "My areas: pick a place on a basemap on the Navi page (radius, zoom) – the Navi loads it like a Core area",
   "Bigger compass needle: red tip and N point north, white tip south",
