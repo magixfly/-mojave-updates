@@ -28,6 +28,9 @@ connect_box(){
   is_dev && return 0
   # mDNS findet die Box nicht immer -> offene Ports 30000-49999 absuchen (parallel, ca. 30 s)
   ping -c1 -W2 "$BOX_IP" >/dev/null 2>&1 || return 1
+  local ls; ls=$(cat "$HOME/.carlin-scan" 2>/dev/null || echo 0)
+  [ $(( $(date +%s) - ls )) -lt 300 ] && return 1   # höchstens alle 5 min suchen
+  date +%s > "$HOME/.carlin-scan"
   local p
   for p in $(seq 30000 49999 | xargs -P 300 -I{} timeout 0.4 bash -c "echo >/dev/tcp/$BOX_IP/{} && echo {}" 2>/dev/null); do
     adb connect "$BOX_IP:$p" 2>/dev/null | grep -q '^connected' || continue
