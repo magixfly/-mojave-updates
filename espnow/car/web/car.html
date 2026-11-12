@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes"><meta name="theme-color" content="#0b0f14">
+<title>Core Tracker Car</title>
+<style>
+:root{--bg:#0b0f14;--pan:#0f151d;--pan2:rgba(10,14,20,.84);--line:rgba(255,255,255,.12);--tx:#e8edf2;--mut:#8a97a6;
+--grn:#3ddc84;--org:#ffad33;--red:#ff4d4d;--acc:#4db8ff;--fs:clamp(13px,2.6vh,30px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);overflow:hidden;font-size:var(--fs);
+font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;user-select:none;touch-action:none}
+#app{display:flex;height:100%}
+#mapw{position:relative;flex:1;min-width:0}
+#map{position:absolute;inset:0;width:100%;height:100%;display:block;background:#111}
+#side{width:clamp(300px,34vw,680px);background:var(--pan);border-left:1px solid var(--line);display:flex;flex-direction:column;
+padding:.45em;gap:.45em;overflow-y:auto}
+.chip{position:absolute;display:flex;gap:.5em;align-items:center;background:var(--pan2);border:1px solid var(--line);border-radius:.7em;
+padding:.25em .6em;font-size:.8em;font-variant-numeric:tabular-nums;color:var(--mut)}
+.chip b{color:var(--tx);font-weight:600}
+#st{left:.5em;top:.5em}#st i{width:.75em;height:.75em;border-radius:50%;background:#666;display:inline-block}
+#scale{left:.5em;bottom:.5em}
+#bar{position:absolute;left:25%;right:25%;top:.5em;height:1.5em;border-radius:.75em;background:var(--pan2);border:1px solid var(--line);
+overflow:hidden;display:none}
+#bar i{position:absolute;left:0;top:0;bottom:0;background:var(--acc);opacity:.75}
+#bar span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.75em;font-weight:700}
+#btns{position:absolute;right:.5em;bottom:.5em;display:flex;flex-direction:column;gap:.4em}
+.b{min-width:3.1em;height:2.6em;padding:0 .6em;border-radius:.7em;background:var(--pan2);border:1px solid var(--line);color:var(--tx);
+font-size:.85em;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.b.on{border-color:var(--acc);color:var(--acc)}
+.card{background:#151d27;border:1px solid var(--line);border-radius:.8em;padding:.35em .6em .45em;border-left:.45em solid #888;position:relative}
+.card.old{opacity:.55}
+.hd{display:flex;align-items:baseline;gap:.5em;white-space:nowrap;overflow:hidden}
+.hd .nm{font-weight:800;font-size:1.05em}.hd .pl{color:var(--mut);font-size:.8em;overflow:hidden;text-overflow:ellipsis}
+.hd .ag{margin-left:auto;color:var(--mut);font-size:.75em;font-variant-numeric:tabular-nums}
+.big{display:flex;align-items:baseline;gap:.3em;font-variant-numeric:tabular-nums}
+.big .v{font-size:2.6em;font-weight:800;line-height:1.05}.big .u{color:var(--mut);font-size:.85em}
+.big .r{margin-left:auto;text-align:right;font-size:.85em;color:var(--mut);line-height:1.25}.big .r b{color:var(--tx);font-size:1.25em}
+.gr{display:grid;grid-template-columns:repeat(3,1fr);gap:.2em .5em;font-variant-numeric:tabular-nums;margin-top:.15em}
+.gr div{font-size:.72em;color:var(--mut);white-space:nowrap;overflow:hidden}.gr div b{display:block;color:var(--tx);font-size:1.45em;font-weight:700}
+.wr{margin-top:.3em;background:var(--red);color:#fff;font-weight:800;border-radius:.45em;padding:.15em .45em;font-size:.8em}
+.wr.o{background:var(--org);color:#111}
+#empty{color:var(--mut);text-align:center;margin:auto;font-size:.9em;line-height:1.5}
+#empty b{color:var(--tx);font-size:1.3em}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;z-index:5}
+.pn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(94vw,1100px);max-height:92vh;overflow-y:auto;
+background:var(--pan);border:1px solid var(--line);border-radius:1em;padding:.7em .9em}
+.pn h2{margin:.1em 0 .5em;font-size:1.15em;display:flex;align-items:center;gap:.5em}.pn h2 .b{margin-left:auto}
+.row{display:flex;align-items:center;gap:.5em;padding:.4em 0;border-top:1px solid var(--line);font-size:.85em;flex-wrap:wrap}
+.row .m{color:var(--mut);font-size:.8em;font-variant-numeric:tabular-nums}
+input[type=text]{background:#0b0f14;color:var(--tx);border:1px solid var(--line);border-radius:.45em;font-size:1em;padding:.3em .45em;width:8.5em}
+select{background:#0b0f14;color:var(--tx);border:1px solid var(--line);border-radius:.45em;font-size:1em;padding:.3em}
+.sw{width:1.6em;height:1.6em;border-radius:50%;border:2px solid transparent;cursor:pointer;display:inline-block}
+.sw.on{border-color:#fff}
+.sp{flex:1}
+#rinfo{left:50%;transform:translateX(-50%);top:.5em;display:none;color:var(--tx)}
+</style></head><body>
+<div id="app">
+ <div id="mapw"><canvas id="map"></canvas>
+  <div class="chip" id="st"><i id="dot"></i><b id="stT">CONNECTING</b><span id="stX"></span></div>
+  <div class="chip" id="rinfo"></div>
+  <div id="bar"><i id="barI"></i><span id="barT">0 %</span></div>
+  <div class="chip" id="scale"><span id="scT"></span></div>
+  <div id="btns">
+   <div class="b" id="bFull" title="Fullscreen">⛶</div>
+   <div class="b" id="bSet">⚙</div>
+   <div class="b" id="bRides">RIDES</div>
+   <div class="b" id="bIn">+</div><div class="b" id="bOut">−</div>
+   <div class="b on" id="bFit">FIT</div>
+  </div>
+ </div>
+ <div id="side"><div id="empty"><b>CORE TRACKER</b><br>waiting for telemetry…</div></div>
+</div>
+<div class="ov" id="ovS"><div class="pn"><h2>SETTINGS<span class="b" data-close>CLOSE</span></h2><div id="setL"></div></div></div>
+<div class="ov" id="ovR"><div class="pn"><h2>RIDES<span class="b" data-close>CLOSE</span></h2><div id="rideL"></div></div></div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const VER='1.4.0';
+const DEMO=location.protocol==='file:'||/[?&]demo/.test(location.search)||!/^192\.168\.|^10\.|^172\.|\.local$|^localhost$/.test(location.hostname)&&location.hostname!=='';
+// ------------------------------------------------ settings (stored in this browser)
+const COLS=['1a8cff','d4ff00','ff3b30','ff9500','bf5af2','00e5ff','ffffff','ff2d95'];
+const DEF={senders:{'DA:2D:E4:3C:74:6C':{name:'MOJAVE',pilot:'Thorsten',type:'car',col:'1a8cff',cells:0},
+ '14:33:5C:8B:E2:74':{name:'FUNJET',pilot:'Thorsten',type:'plane',col:'ff3b30',cells:0},
+ '06:84:A7:E2:D3:58':{name:'FUNJET',pilot:'Horst',type:'plane',col:'ff9500',cells:0}},
+ map:'sat',cellWarn:3.5,cellPre:3.65,lqWarn:50,rideMin:100};
+let CFG;try{CFG=Object.assign({},DEF,JSON.parse(localStorage.getItem('ctcar')||'{}'))}catch(e){CFG=JSON.parse(JSON.stringify(DEF))}
+function save(){try{localStorage.setItem('ctcar',JSON.stringify(CFG))}catch(e){}}
+function snd(mac){let s=CFG.senders[mac];if(!s){const used=new Set(Object.values(CFG.senders).map(x=>x.col));
+ const k=Object.keys(CFG.senders).length+1;s=CFG.senders[mac]={name:'MODEL '+k,pilot:'',type:'plane',col:COLS.find(c=>!used.has(c))||COLS[2],cells:0};save()}return s}
+// ------------------------------------------------ IndexedDB (tiles + rides)
+let DB=null;
+const dbp=new Promise(res=>{try{const r=indexedDB.open('ctcar',1);r.onupgradeneeded=()=>{const d=r.result;
+ d.createObjectStore('tiles');d.createObjectStore('rides',{keyPath:'id'})};r.onsuccess=()=>{DB=r.result;res(DB)};r.onerror=()=>res(null)}catch(e){res(null)}});
+function idb(store,mode,fn){return dbp.then(d=>d?new Promise(res=>{try{const t=d.transaction(store,mode),s=t.objectStore(store);
+ const q=fn(s);t.oncomplete=()=>res(q&&q.result);t.onerror=()=>res(null)}catch(e){res(null)}}):null)}
+// ------------------------------------------------ vehicles
+const V=new Map();           // mac -> vehicle
+let ME=null,ESP={pps:0,rssi:null,t:0},CUR='--';
+function veh(mac){let v=V.get(mac);if(!v){v={mac,t:0,lat:null,lon:null,spd:0,hdg:0,alt:null,alt0:null,sats:0,v:null,cur:null,mah:null,
+ lq:null,rssi:null,mode:'',home:null,trk:[],maxspd:0,dist:0,p0:null,p1:null,tf:0,dt:1000,ride:null,dbm:null};V.set(mac,v)}return v}
+function hav(a,b,c,d){const R=6371000,r=Math.PI/180,x=Math.sin((c-a)*r/2),y=Math.sin((d-b)*r/2);
+ return 2*R*Math.asin(Math.sqrt(x*x+Math.cos(a*r)*Math.cos(c*r)*y*y))}
+function cells(v){const s=snd(v.mac);if(s.cells)return s.cells;if(!v.v||v.v<5)return 0;
+ for(const n of [2,3,4,6,8,12])if(v.v/n<=4.38)return n;return 12}
+function onGps(mac,lat,lon,spd,hdg,alt,sats){const v=veh(mac),now=performance.now();v.t=Date.now();v.sats=sats;
+ if(!sats||(lat===0&&lon===0)){v.fix=false;return}v.fix=true;
+ if(v.lat!==null){const d=hav(v.lat,v.lon,lat,lon);if(d<500){v.dist+=d>0.5?d:0}}
+ v.p0=v.p1?dispPos(v,now):[lat,lon];v.p1=[lat,lon];v.dt=Math.max(200,Math.min(1500,now-v.tf||1000));v.tf=now;
+ v.lat=lat;v.lon=lon;v.spd=spd;v.hdg=hdg;v.alt=alt;if(v.alt0===null)v.alt0=alt;if(!v.home)v.home=[lat,lon];
+ if(spd>v.maxspd&&spd<400)v.maxspd=spd;
+ const L=v.trk[v.trk.length-1];if(!L||hav(L[0],L[1],lat,lon)>1.5){v.trk.push([lat,lon]);if(v.trk.length>6000)v.trk.splice(0,1000)}
+ rideRec(v);dirty=true}
+function dispPos(v,now){if(!v.p1)return null;if(!v.p0)return v.p1;const k=Math.min(1,(now-v.tf)/v.dt);
+ return [v.p0[0]+(v.p1[0]-v.p0[0])*k,v.p0[1]+(v.p1[1]-v.p0[1])*k]}
+// ------------------------------------------------ CRSF parser (same frames the Pi tracker reads)
+const CRC=new Uint8Array(256);for(let i=0;i<256;i++){let c=i;for(let k=0;k<8;k++)c=c&0x80?((c<<1)^0xD5)&255:(c<<1)&255;CRC[i]=c}
+let RB=new Uint8Array(0);
+function feed(u8){const b=new Uint8Array(RB.length+u8.length);b.set(RB);b.set(u8,RB.length);let i=0;
+ while(b.length-i>=2){if(![0xC8,0xEA,0xEE,0xEC].includes(b[i])){i++;continue}const n=b[i+1];if(n<2||n>62){i++;continue}
+  if(b.length-i<n+2)break;let c=0;for(let k=i+2;k<i+1+n;k++)c=CRC[c^b[k]];if(c!==b[i+1+n]){i++;continue}
+  try{frame(b[i+2],b.subarray(i+3,i+1+n))}catch(e){}i+=n+2}
+ RB=b.slice(i);if(RB.length>2048)RB=RB.slice(-256)}
+function frame(t,p){const d=new DataView(p.buffer,p.byteOffset,p.byteLength);
+ if(t===0x7D&&p.length>=7){CUR=[...p.subarray(0,6)].map(x=>x.toString(16).padStart(2,'0').toUpperCase()).join(':');veh(CUR).dbm=d.getInt8(6);return}
+ if(t===0x7A&&p.length>=3){ESP={rssi:d.getInt8(0)||null,pps:p[1],bad:p[2],t:Date.now()};return}
+ if(t===0x7C&&p.length>=17){const sats=p[14],fix=p[15];ME=fix&&sats?{lat:d.getInt32(0,true)/1e7,lon:d.getInt32(4,true)/1e7,
+  alt:d.getInt16(8,true),spd:d.getUint16(10,true)/10,sats,t:Date.now()}:{sats,t:Date.now(),lat:null};dirty=true;return}
+ if(t===0x7B)return;                                   // Core broadcast - not used in the car
+ const v=veh(CUR);
+ if(t===0x02&&p.length>=15){onGps(CUR,d.getInt32(0)/1e7,d.getInt32(4)/1e7,d.getUint16(8)/10,d.getUint16(10)/100,d.getUint16(12)-1000,p[14])}
+ else if(t===0x08&&p.length>=8){v.v=d.getUint16(0)/10;v.cur=d.getUint16(2)/10;v.mah=(p[4]<<16)|(p[5]<<8)|p[6];v.pct=p[7];v.t=Date.now()}
+ else if(t===0x14&&p.length>=10){const ant=p[4],r=(ant===0||p[1]===0)?p[0]:p[1];v.rssi=r>127?r-256:-r;v.lq=p[2];v.t=Date.now()}
+ else if(t===0x21){let s='';for(const c of p){if(!c)break;s+=String.fromCharCode(c)}v.mode=s.slice(0,16);v.t=Date.now()}}
+// ------------------------------------------------ rides (stored in the browser, GPX export)
+function rideRec(v){const now=Date.now();let r=v.ride;
+ if(!r){if(v.spd<3)return;r=v.ride={id:now+'_'+v.mac,mac:v.mac,start:now,end:now,dist:0,max:0,pts:[],still:0}}
+ const L=r.pts[r.pts.length-1];if(L)r.dist+=hav(L[1],L[2],v.lat,v.lon);
+ r.pts.push([now,+v.lat.toFixed(7),+v.lon.toFixed(7),+v.spd.toFixed(1),v.alt,v.v]);r.end=now;r.max=Math.max(r.max,v.spd);
+ r.still=v.spd<2?(r.still||now):0;if(r.still&&now-r.still>60000)rideEnd(v);
+ else if(now-(r.saved||r.start)>30000)rideSave(r,false)}
+function rideSave(r,fin){if(r.dist<CFG.rideMin)return;r.saved=Date.now();const s=snd(r.mac);
+ const o={id:r.id,mac:r.mac,name:s.name,pilot:s.pilot,type:s.type,start:r.start,end:r.end,dist:Math.round(r.dist),max:r.max,pts:r.pts};
+ idb('rides','readwrite',st=>st.put(o))}
+function rideEnd(v){if(v.ride){rideSave(v.ride,true);v.ride=null}}
+setInterval(()=>{const now=Date.now();V.forEach(v=>{if(v.ride&&now-v.t>60000)rideEnd(v)})},5000);
+function gpx(r){const e=s=>String(s).replace(/[<&>]/g,'');let x='<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Core Tracker Car" xmlns="http://www.topografix.com/GPX/1/1">\n'+
+ `<trk><name>${e(r.name)} ${e(r.pilot)} ${new Date(r.start).toISOString()}</name><trkseg>\n`;
+ for(const p of r.pts)x+=`<trkpt lat="${p[1]}" lon="${p[2]}">${p[4]!=null?'<ele>'+p[4]+'</ele>':''}<time>${new Date(p[0]).toISOString()}</time><speed>${(p[3]/3.6).toFixed(2)}</speed></trkpt>\n`;
+ x+='</trkseg></trk></gpx>\n';const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([x],{type:'application/gpx+xml'}));
+ const d=new Date(r.start),z=n=>String(n).padStart(2,'0');
+ a.download=`${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}_${z(d.getHours())}-${z(d.getMinutes())}_${r.name.replace(/\W+/g,'_')}.gpx`;
+ document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000)}
+let SHOW=null;    // ride shown on the map
+// ------------------------------------------------ map
+const cv=$('map'),cx=cv.getContext('2d');let W=0,H=0,DPR=1,dirty=true;
+let view={lat:48.1874,lon:15.6139,z:15};let follow=true;
+const TS=256,TMIN=3,TMAX=20;
+function wpx(lat,lon,z){const n=TS*Math.pow(2,z),s=Math.sin(lat*Math.PI/180);
+ return [(lon+180)/360*n,(0.5-Math.log((1+s)/(1-s))/(4*Math.PI))*n]}
+function wll(x,y,z){const n=TS*Math.pow(2,z),lon=x/n*360-180,m=Math.PI-2*Math.PI*y/n;return [180/Math.PI*Math.atan(Math.sinh(m)),lon]}
+function scr(lat,lon){const [cx0,cy0]=wpx(view.lat,view.lon,view.z),[x,y]=wpx(lat,lon,view.z);return [x-cx0+W/2,y-cy0+H/2]}
+function resize(){DPR=window.devicePixelRatio||1;W=cv.clientWidth;H=cv.clientHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);dirty=true}
+addEventListener('resize',resize);
+function turl(z,x,y){return CFG.map==='osm'?`https://tile.openstreetmap.org/${z}/${x}/${y}.png`:
+ `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`}
+const TL=new Map();let tUse=0;const LOADQ=[];let loadingN=0;
+function tile(z,x,y){const k=CFG.map+'/'+z+'/'+x+'/'+y;let t=TL.get(k);if(!t){t={st:0,k,z,x,y};TL.set(k,t);LOADQ.push(t)}t.u=tUse;return t}
+function pump(){LOADQ.sort((a,b)=>b.u-a.u);while(loadingN<6&&LOADQ.length){const t=LOADQ.shift();if(t.u<tUse-2){TL.delete(t.k);continue}load(t)}}
+async function load(t){loadingN++;t.st=1;const done=(blob,url)=>{const im=new Image();im.onload=()=>{t.img=im;t.st=2;dirty=true;fin()};
+  im.onerror=()=>{t.st=3;t.ft=Date.now();fin()};im.src=blob?URL.createObjectURL(blob):url};
+ let fdone=false;const fin=()=>{if(fdone)return;fdone=true;loadingN--;pump()};
+ const c=await idb('tiles','readonly',s=>s.get(t.k));if(c&&c.b){done(c.b);return}
+ if(DEMO&&!navigator.onLine){t.st=3;fin();return}
+ try{const ac=new AbortController(),to=setTimeout(()=>ac.abort(),12000);const r=await fetch(turl(t.z,t.x,t.y),{mode:'cors',signal:ac.signal});clearTimeout(to);
+  if(!r.ok)throw 0;const b=await r.blob();idb('tiles','readwrite',s=>s.put({b,ts:Date.now()},t.k));done(b)}
+ catch(e){done(null,turl(t.z,t.x,t.y))}}       // no CORS / offline -> plain image (browser cache)
+setInterval(()=>{TL.forEach(t=>{if(t.st===3&&Date.now()-t.ft>20000){t.st=0;LOADQ.push(t)}});
+ if(TL.size>420){[...TL.values()].sort((a,b)=>a.u-b.u).slice(0,TL.size-360).forEach(t=>{if(t.st!==1){if(t.img&&t.img.src.startsWith('blob:'))URL.revokeObjectURL(t.img.src);TL.delete(t.k)}})}},3000);
+let need=0,have=0,slowSince=0;
+function drawTiles(){tUse++;const z=Math.max(TMIN,Math.min(19,Math.round(view.z))),k=Math.pow(2,view.z-z);
+ const [cx0,cy0]=wpx(view.lat,view.lon,z),n=Math.pow(2,z),ts=TS*k;
+ const x0=Math.floor((cx0-W/2/k)/TS),x1=Math.floor((cx0+W/2/k)/TS),y0=Math.floor((cy0-H/2/k)/TS),y1=Math.floor((cy0+H/2/k)/TS);
+ need=0;have=0;
+ for(let ty=y0;ty<=y1;ty++)for(let tx=x0;tx<=x1;tx++){if(ty<0||ty>=n)continue;const wx=((tx%n)+n)%n,t=tile(z,wx,ty);need++;
+  const sx=(tx*TS-cx0)*k+W/2,sy=(ty*TS-cy0)*k+H/2;
+  if(t.st===2){have++;cx.drawImage(t.img,sx,sy,ts+.5,ts+.5);continue}
+  if(t.st===3)have++;
+  for(let d=1;d<=4;d++){const pz=z-d;if(pz<0)break;const pt=TL.get(CFG.map+'/'+pz+'/'+(wx>>d)+'/'+(ty>>d));
+   if(pt&&pt.st===2){const m=1<<d,s=TS/m;cx.drawImage(pt.img,(wx%m)*s,(ty%m)*s,s,s,sx,sy,ts+.5,ts+.5);pt.u=tUse;break}}}
+ pump();
+ const p=need?Math.round(have/need*100):100;
+ if(p<100){if(!slowSince)slowSince=Date.now()}else slowSince=0;
+ const show=slowSince&&Date.now()-slowSince>1500&&Date.now()-slowSince<15000;
+ $('bar').style.display=show?'block':'none';if(show){$('barI').style.width=p+'%';$('barT').textContent='MAP '+p+' %'}}
+function hexA(h,a){const n=parseInt(h,16);return `rgba(${n>>16},${n>>8&255},${n&255},${a})`}
+function drawTrack(pts,col,w,dash){if(pts.length<2)return;cx.beginPath();pts.forEach((p,i)=>{const [x,y]=scr(p[0],p[1]);i?cx.lineTo(x,y):cx.moveTo(x,y)});
+ cx.lineWidth=w+3;cx.strokeStyle='rgba(0,0,0,.55)';cx.setLineDash(dash||[]);cx.stroke();cx.lineWidth=w;cx.strokeStyle='#'+col;cx.stroke();cx.setLineDash([])}
+function drawCar(x,y,h,col,s){cx.save();cx.translate(x,y);cx.rotate(h*Math.PI/180);cx.beginPath();cx.arc(0,0,11*s,0,7);
+ cx.fillStyle='#'+col;cx.fill();cx.lineWidth=3*s;cx.strokeStyle='#fff';cx.stroke();
+ cx.beginPath();cx.moveTo(0,-20*s);cx.lineTo(7*s,-11*s);cx.lineTo(-7*s,-11*s);cx.closePath();cx.fillStyle='#fff';cx.fill();cx.restore()}
+function drawPlane(x,y,h,col,s){cx.save();cx.translate(x,y);cx.rotate(h*Math.PI/180);cx.scale(s,s);cx.beginPath();
+ cx.moveTo(0,-18);cx.lineTo(4,-6);cx.lineTo(18,4);cx.lineTo(18,8);cx.lineTo(4,4);cx.lineTo(3,12);cx.lineTo(8,16);cx.lineTo(8,19);
+ cx.lineTo(0,17);cx.lineTo(-8,19);cx.lineTo(-8,16);cx.lineTo(-3,12);cx.lineTo(-4,4);cx.lineTo(-18,8);cx.lineTo(-18,4);cx.lineTo(-4,-6);cx.closePath();
+ cx.fillStyle='#'+col;cx.fill();cx.lineWidth=2.2;cx.strokeStyle='#fff';cx.stroke();cx.restore()}
+function label(x,y,t,col){cx.font=`700 ${Math.round(parseFloat(getComputedStyle(document.body).fontSize)*.8)}px system-ui,sans-serif`;
+ const w=cx.measureText(t).width;cx.fillStyle='rgba(0,0,0,.65)';cx.fillRect(x-w/2-5,y,w+10,parseFloat(cx.font.split(' ')[1])+6);
+ cx.fillStyle='#'+col;cx.textAlign='center';cx.textBaseline='top';cx.fillText(t,x,y+3)}
+function live(v){return v.fix&&Date.now()-v.t<300000}
+function autoFit(){const P=[];V.forEach(v=>{if(live(v)&&v.lat!==null)P.push([v.lat,v.lon])});if(ME&&ME.lat!=null&&Date.now()-ME.t<10000)P.push([ME.lat,ME.lon]);
+ if(SHOW)SHOW.pts.forEach(p=>P.push([p[1],p[2]]));
+ if(!P.length)return;let a=90,b=180,c=-90,d=-180;P.forEach(p=>{a=Math.min(a,p[0]);c=Math.max(c,p[0]);b=Math.min(b,p[1]);d=Math.max(d,p[1])});
+ const tz=(la,lo)=>{let z=18;for(;z>TMIN;z-=.25){const [x1,y1]=wpx(c,b,z),[x2,y2]=wpx(a,d,z);if(x2-x1<W*.72&&y2-y1<H*.72)break}return z};
+ const z=P.length===1?17:Math.min(18,tz()),tl=(a+c)/2,tn=(b+d)/2;
+ view.lat+=(tl-view.lat)*.12;view.lon+=(tn-view.lon)*.12;view.z+=(z-view.z)*.08}
+let lastF=0;
+function draw(ts){requestAnimationFrame(draw);if(ts-lastF<33)return;lastF=ts;
+ if(follow)autoFit();
+ cx.setTransform(DPR,0,0,DPR,0,0);cx.fillStyle='#111';cx.fillRect(0,0,W,H);drawTiles();
+ const s=Math.max(.8,Math.min(1.6,H/420)),now=performance.now();
+ if(SHOW){drawTrack(SHOW.pts.map(p=>[p[1],p[2]]),'ffffff',4.5*s);const p0=SHOW.pts[0],p1=SHOW.pts[SHOW.pts.length-1];
+  let [x,y]=scr(p0[1],p0[2]);label(x,y+8,'START','3ddc84');[x,y]=scr(p1[1],p1[2]);label(x,y+8,'END','ff4d4d')}
+ else V.forEach(v=>{if(!v.lat)return;const sc=snd(v.mac);drawTrack(v.trk.concat(v.p1?[dispPos(v,now)]:[]),sc.col,4*s);
+  if(v.home){const [x,y]=scr(v.home[0],v.home[1]);cx.font=`800 ${14*s}px system-ui`;cx.fillStyle='#fff';cx.textAlign='center';cx.textBaseline='middle';
+   cx.beginPath();cx.arc(x,y,9*s,0,7);cx.fillStyle='rgba(0,0,0,.6)';cx.fill();cx.fillStyle='#'+sc.col;cx.fillText('H',x,y+1)}});
+ if(ME&&ME.lat!=null){const [x,y]=scr(ME.lat,ME.lon);cx.beginPath();cx.arc(x,y,9*s,0,7);cx.fillStyle='#4db8ff';cx.fill();cx.lineWidth=3*s;cx.strokeStyle='#fff';cx.stroke();label(x,y+12*s,'ME','4db8ff')}
+ if(!SHOW)V.forEach(v=>{if(!v.p1)return;const sc=snd(v.mac),p=dispPos(v,now),[x,y]=scr(p[0],p[1]);cx.globalAlpha=Date.now()-v.t>5000?.5:1;
+  (sc.type==='plane'?drawPlane:drawCar)(x,y,v.hdg,sc.col,s);label(x,y+22*s,sc.name+(sc.pilot?' · '+sc.pilot:''),sc.col);cx.globalAlpha=1});
+ // scale bar
+ const mpp=156543.03*Math.cos(view.lat*Math.PI/180)/Math.pow(2,view.z);let m=[1,2,5,10,20,50,100,200,500,1000,2000,5000,10000].find(x=>x/mpp>W*.12)||10000;
+ $('scT').textContent=(m>=1000?m/1000+' km':m+' m')+'  ·  z'+view.z.toFixed(1)}
+// ------------------------------------------------ touch / mouse
+const PT=new Map();let pinch=null;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);PT.set(e.pointerId,[e.clientX,e.clientY]);if(PT.size===2){const [a,b]=[...PT.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),z:view.z}}});
+cv.addEventListener('pointermove',e=>{const o=PT.get(e.pointerId);if(!o)return;const n=[e.clientX,e.clientY];PT.set(e.pointerId,n);
+ if(PT.size===2&&pinch){const [a,b]=[...PT.values()];setZ(pinch.z+Math.log2(Math.hypot(a[0]-b[0],a[1]-b[1])/pinch.d));return}
+ if(PT.size===1){const dx=n[0]-o[0],dy=n[1]-o[1];if(Math.abs(dx)+Math.abs(dy)<1)return;setFollow(false);
+  const [x,y]=wpx(view.lat,view.lon,view.z);[view.lat,view.lon]=wll(x-dx,y-dy,view.z)}});
+const up=e=>{PT.delete(e.pointerId);if(PT.size<2)pinch=null};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+cv.addEventListener('wheel',e=>{e.preventDefault();setZ(view.z-Math.sign(e.deltaY)*.5)},{passive:false});
+let lastTap=0;cv.addEventListener('pointerup',e=>{const t=Date.now();if(t-lastTap<300)setZ(view.z+1);lastTap=t});
+function setZ(z){view.z=Math.max(TMIN,Math.min(TMAX,z));setFollow(false)}
+function setFollow(f){follow=f;$('bFit').classList.toggle('on',f)}
+$('bIn').onclick=()=>setZ(Math.round(view.z)+1);$('bOut').onclick=()=>setZ(Math.round(view.z)-1);$('bFit').onclick=()=>setFollow(true);
+$('bFull').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>b.closest('.ov').style.display='none');
+// ------------------------------------------------ side panel
+function f(x,d){return x==null||isNaN(x)?'–':(+x).toFixed(d||0)}
+function age(ms){const s=ms/1000;return s<2?'live':s<60?Math.round(s)+' s':Math.round(s/60)+' min'}
+function side(){const L=[...V.values()].filter(v=>v.t&&Date.now()-v.t<3600000).sort((a,b)=>(snd(a.mac).name>snd(b.mac).name)?1:-1);
+ const e=$('side');if(!L.length){e.innerHTML='<div id="empty"><b>CORE TRACKER</b><br>waiting for telemetry…<br><span style="font-size:.8em">'+
+  (WSOK?'ESP connected · '+ESP.pps+' pkt/s':'no connection to the ESP')+'</span></div>';return}
+ e.innerHTML=L.map(v=>{const s=snd(v.mac),a=Date.now()-v.t,n=cells(v),cl=n&&v.v?v.v/n:null,me=ME&&ME.lat!=null&&v.lat!=null;
+  const dist=v.lat==null?null:me?hav(ME.lat,ME.lon,v.lat,v.lon):v.home?hav(v.home[0],v.home[1],v.lat,v.lon):null;
+  const ralt=v.alt!=null&&v.alt0!=null?v.alt-v.alt0:null;const W2=[];
+  if(a>3000)W2.push(['NO TELEMETRY '+age(a),'']);else if(!v.fix)W2.push(['NO GPS FIX ('+v.sats+' SATS)','']);
+  if(cl&&cl<CFG.cellWarn)W2.push(['LOW BATTERY '+cl.toFixed(2)+' V/CELL','']);else if(cl&&cl<CFG.cellPre)W2.push(['BATTERY '+cl.toFixed(2)+' V/CELL','o']);
+  if(v.lq!=null&&a<3000&&CFG.lqWarn&&v.lq<CFG.lqWarn)W2.push(['WEAK LINK '+v.lq+' %','o']);
+  const pl=s.type==='plane';
+  return `<div class="card${a>5000?' old':''}" style="border-left-color:#${s.col}"><div class="hd"><span class="nm" style="color:#${s.col}">${s.name}</span>
+  <span class="pl">${s.pilot||''}</span><span class="ag">${v.mode?v.mode+' · ':''}${age(a)}</span></div>
+  <div class="big"><span class="v">${f(v.spd)}</span><span class="u">km/h</span><span class="r">${pl?'ALT <b>'+f(ralt)+'</b> m':'MAX <b>'+f(v.maxspd)+'</b>'}<br>${me?'TO ME':'HOME'} <b>${dist==null?'–':dist<1000?f(dist)+' m':(dist/1000).toFixed(2)+' km'}</b></span></div>
+  <div class="gr"><div>BATTERY<b>${f(v.v,1)} V</b></div><div>CELL${n?' '+n+'S':''}<b>${cl?cl.toFixed(2):'–'}</b></div><div>USED<b>${v.mah!=null?v.mah+' mAh':'–'}</b></div>
+  <div>LINK<b>${v.lq!=null?v.lq+' %':'–'}</b></div><div>RSSI<b>${v.rssi!=null?v.rssi+' dBm':'–'}</b></div><div>SATS<b>${v.sats||0}</b></div>
+  <div>${pl?'MAX':'TRIP'}<b>${pl?f(v.maxspd)+' km/h':(v.dist/1000).toFixed(2)+' km'}</b></div><div>CURRENT<b>${v.cur!=null?f(v.cur,1)+' A':'–'}</b></div><div>ESP<b>${v.dbm!=null?v.dbm+' dBm':'–'}</b></div></div>
+  ${W2.map(w=>`<div class="wr ${w[1]}">${w[0]}</div>`).join('')}</div>`}).join('')}
+// ------------------------------------------------ status line
+function status(){const ok=WSOK||DEMO,fresh=Date.now()-ESP.t<3000;$('dot').style.background=!ok?'#ff4d4d':fresh&&ESP.pps?'#3ddc84':'#ffad33';
+ $('stT').textContent=DEMO?'DEMO':WSOK?'ESP':'NO ESP';
+ $('stX').textContent=(WSOK||DEMO?`${ESP.pps||0} pkt/s`:'reconnecting…')+(ME&&ME.sats!=null&&Date.now()-ME.t<5000?` · GPS ${ME.sats} sats`:'')}
+setInterval(()=>{side();status()},500);
+// ------------------------------------------------ settings panel
+function setPanel(){const L=$('setL');const macs=[...new Set(Object.keys(CFG.senders).concat([...V.keys()].filter(m=>m!=='--')))];
+ L.innerHTML=`<div class="row"><b>Senders</b><span class="m">heard senders appear automatically</span></div>`+macs.map(m=>{const s=snd(m),v=V.get(m);
+  return `<div class="row" data-mac="${m}"><span class="m" style="width:10.5em">${m}<br>${v&&v.t?age(Date.now()-v.t)+(v.dbm!=null?' · '+v.dbm+' dBm':''):'not heard'}</span>
+  <input type="text" data-k="name" value="${s.name}" maxlength="14"><input type="text" data-k="pilot" value="${s.pilot||''}" placeholder="pilot" maxlength="14">
+  <select data-k="type"><option value="car"${s.type==='car'?' selected':''}>car</option><option value="plane"${s.type==='plane'?' selected':''}>plane</option></select>
+  <select data-k="cells"><option value="0">cells auto</option>${[2,3,4,6,8,12].map(n=>`<option value="${n}"${s.cells==n?' selected':''}>${n}S</option>`).join('')}</select>
+  ${COLS.map(c=>`<span class="sw${s.col===c?' on':''}" data-col="${c}" style="background:#${c}"></span>`).join('')}</div>`}).join('')+
+ `<div class="row"><b>Map</b><span class="sp"></span><select id="sMap"><option value="sat"${CFG.map==='sat'?' selected':''}>satellite</option><option value="osm"${CFG.map==='osm'?' selected':''}>streets (OSM)</option></select>
+  <span class="b" id="sClr">CLEAR MAP CACHE</span><span class="m" id="sCnt"></span></div>
+ <div class="row"><b>Warnings</b><span class="sp"></span>cell red <input type="text" id="sCw" value="${CFG.cellWarn}" style="width:4em"> orange <input type="text" id="sCp" value="${CFG.cellPre}" style="width:4em"> link % <input type="text" id="sLq" value="${CFG.lqWarn}" style="width:3.5em"></div>
+ <div class="row"><span class="m">Page ${VER} · ESP <span id="sEsp">–</span> · data stays in this browser</span></div>`;
+ L.querySelectorAll('[data-mac]').forEach(r=>{const s=snd(r.dataset.mac);r.querySelectorAll('[data-k]').forEach(i=>i.onchange=()=>{const k=i.dataset.k;
+  s[k]=k==='cells'?+i.value:k==='name'?i.value.toUpperCase().trim()||'MODEL':i.value.trim();save()});
+  r.querySelectorAll('[data-col]').forEach(c=>c.onclick=()=>{s.col=c.dataset.col;save();setPanel()})});
+ $('sMap').onchange=e=>{CFG.map=e.target.value;save();dirty=true};
+ const num=(id,k)=>{$(id).onchange=e=>{const x=parseFloat(e.target.value);if(!isNaN(x)){CFG[k]=x;save()}}};num('sCw','cellWarn');num('sCp','cellPre');num('sLq','lqWarn');
+ $('sClr').onclick=()=>idb('tiles','readwrite',s=>s.clear()).then(()=>{TL.clear();cnt()});
+ const cnt=()=>idb('tiles','readonly',s=>s.count()).then(n=>{$('sCnt').textContent=(n||0)+' tiles saved'});cnt();
+ if(!DEMO)fetch('/api/info').then(r=>r.json()).then(j=>{$('sEsp').textContent=j.ver+' · '+j.ssid+' · ch '+j.ch+' · '+j.cl+' client(s)'}).catch(()=>{})}
+$('bSet').onclick=()=>{setPanel();$('ovS').style.display='block'};
+// ------------------------------------------------ rides panel
+function ridePanel(){idb('rides','readonly',s=>s.getAll()).then(a=>{a=(a||[]).sort((x,y)=>y.start-x.start);const z=n=>String(n).padStart(2,'0');
+ $('rideL').innerHTML=a.length?a.map(r=>{const d=new Date(r.start),m=Math.round((r.end-r.start)/60000);const s=CFG.senders[r.mac]||{};
+  return `<div class="row"><span class="sw" style="background:#${s.col||'888'};cursor:default"></span><b>${z(d.getDate())}.${z(d.getMonth()+1)}. ${z(d.getHours())}:${z(d.getMinutes())}</b>
+  ${r.name} <span class="m">${r.pilot||''} · ${(r.dist/1000).toFixed(2)} km · ${m} min · max ${Math.round(r.max)} km/h</span><span class="sp"></span>
+  <span class="b" data-a="show" data-id="${r.id}">SHOW</span><span class="b" data-a="gpx" data-id="${r.id}">GPX</span><span class="b" data-a="del" data-id="${r.id}">DELETE</span></div>`}).join('')
+  :'<div class="row m">No rides yet. Rides are saved automatically (min. '+CFG.rideMin+' m).</div>';
+ $('rideL').querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const r=a.find(x=>x.id===b.dataset.id);if(!r)return;
+  if(b.dataset.a==='gpx')gpx(r);else if(b.dataset.a==='show'){SHOW=r;setFollow(true);$('ovR').style.display='none';
+   const d=new Date(r.start);$('rinfo').style.display='flex';$('rinfo').innerHTML=`<b>${r.name}</b> ${d.toLocaleString()} · ${(r.dist/1000).toFixed(2)} km · max ${Math.round(r.max)} km/h <span class="b" id="rX">CLOSE</span>`;
+   $('rX').onclick=()=>{SHOW=null;$('rinfo').style.display='none';setFollow(true)}}
+  else if(b.dataset.a==='del'&&b.classList.contains('on'))idb('rides','readwrite',s=>s.delete(r.id)).then(ridePanel);
+  else if(b.dataset.a==='del'){b.classList.add('on');b.textContent='SURE?'}})})}
+$('bRides').onclick=()=>{ridePanel();$('ovR').style.display='block'};
+// ------------------------------------------------ connection to the ESP (WebSocket with raw CRSF frames)
+let WS=null,WSOK=false;
+function connect(){try{WS=new WebSocket(`ws://${location.host}/ws`);WS.binaryType='arraybuffer';
+ WS.onopen=()=>{WSOK=true};WS.onmessage=e=>{if(e.data instanceof ArrayBuffer)feed(new Uint8Array(e.data))};
+ WS.onclose=()=>{WSOK=false;setTimeout(connect,2000)};WS.onerror=()=>{try{WS.close()}catch(e){}}}catch(e){setTimeout(connect,2000)}}
+// ------------------------------------------------ demo (opened without the ESP): simulated car + plane
+function demo(){const c=[48.1874,15.6139];let t=0;const mk=(type,len,pay)=>{const b=[0xC8,len+2,type,...pay];let x=0;for(const v of b.slice(2))x=CRC[x^v];b.push(x);return b};
+ const i32=v=>[(v>>24)&255,(v>>16)&255,(v>>8)&255,v&255],u16=v=>[(v>>8)&255,v&255];
+ ME={lat:c[0]-.0006,lon:c[1]-.0012,sats:14,t:Date.now()};
+ setInterval(()=>{t+=.7;ME.t=Date.now();const out=[];
+  [['DA:2D:E4:3C:74:6C',0.0016,0.0024,.11,48,22.8],['14:33:5C:8B:E2:74',0.0045,0.006,.05,92,15.4]].forEach(([mac,ry,rx,w,sp,v],k)=>{
+   const a=t*w,lat=c[0]+Math.sin(a)*ry,lon=c[1]+Math.cos(a)*rx,h=(Math.atan2(Math.cos(a)*ry,-Math.sin(a)*rx*Math.cos(c[0]*Math.PI/180))*180/Math.PI+360)%360;
+   out.push(...mk(0x7D,7,[...mac.split(':').map(x=>parseInt(x,16)),256-55-k*8]));
+   out.push(...mk(0x02,15,[...i32(Math.round(lat*1e7)),...i32(Math.round(lon*1e7)),...u16(Math.round((sp+Math.sin(t)*8)*10)),...u16(Math.round(h*100)),...u16(1000+(k?60+Math.round(Math.sin(t/3)*25):0)+290),14]));
+   out.push(...mk(0x7D,7,[...mac.split(':').map(x=>parseInt(x,16)),256-55-k*8]));
+   out.push(...mk(0x08,8,[...u16(Math.round((v-t*.004)*10)),...u16(k?182:96),0,(Math.round(t*9)>>8)&255,Math.round(t*9)&255,80]));
+   out.push(...mk(0x7D,7,[...mac.split(':').map(x=>parseInt(x,16)),256-55-k*8]));
+   out.push(...mk(0x14,10,[60+k*12,0,99-k*6,9,0,0,3,0,0,0]))});
+  out.push(...mk(0x7A,3,[256-52,17,0]));feed(new Uint8Array(out))},700)}
+resize();requestAnimationFrame(draw);
+if(DEMO)demo();else connect();
+</script></body></html>
