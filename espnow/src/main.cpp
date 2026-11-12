@@ -142,8 +142,8 @@ static void queueRaw(const uint8_t* f, uint8_t n) {
 }
 
 static void writeOut(const uint8_t* d, size_t n) {
-  Serial.write(d, n);                           // tx timeout 0: no host reading -> dropped, loop never blocks
-  if (C.uart) Serial0.write(d, n);
+  if (Serial.availableForWrite() >= (int)n) Serial.write(d, n);   // nobody reading USB (car, Pi program stopped) -> drop, never block
+  if (C.uart && Serial0.availableForWrite() >= (int)n) Serial0.write(d, n);
   carFrame(d, n);
 }
 
@@ -442,8 +442,8 @@ static void calcUid() {
 }
 
 void setup() {
-  Serial.setTxTimeoutMs(0);
   Serial.begin(115200);
+  Serial.setTxTimeoutMs(0);                     // after begin: never wait for a USB host that does not read
   outQ = xQueueCreate(96, sizeof(Out));
   LittleFS.begin(true);
   cfgLoad();
