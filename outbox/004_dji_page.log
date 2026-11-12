@@ -1,0 +1,6 @@
+### 004_dji_page  –  2026-11-12 22:41:03
+### Box: verbunden (172.20.10.14:5555)
+
+Starting: Intent { act=android.intent.action.VIEW dat=https://www.dji.com/... pkg=com.android.chrome }
+
+### Exit-Code: 0
