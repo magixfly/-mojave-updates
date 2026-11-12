@@ -232,10 +232,14 @@ enum { CS_IDLE, CS_SCAN, CS_POLL };
 static int csState = CS_IDLE, csCh = 0, csFail = 0;
 static uint32_t csT = 0, csNextScan = 0, csNextPoll = 0;
 
+static uint32_t chErr = 0, polls = 0, pollOk = 0, scans = 0;
+static int chErrLast = 0;
 static void setCh(uint8_t ch) {
   if (curCh == ch) return;
-  if (esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE) == ESP_OK) curCh = ch;
+  esp_err_t e = esp_wifi_set_channel(ch, WIFI_SECOND_CHAN_NONE);
+  if (e == ESP_OK) curCh = ch; else { chErr++; chErrLast = e; }
 }
+#define CS_WAIT 200   // ms on a foreign channel waiting for the Core (it may answer only at its next beacon)
 
 static bool scanAllowed() {
   if (!C.core || !C.core_scan) return false;
@@ -252,14 +256,14 @@ static void coreSearch() {
       if (fresh && coreCh == C.channel) return;              // Core is on our channel, nothing to do
       if (!fresh && coreCh == C.channel) coreCh = 0;         // Core left our channel -> search again
       if (coreCh && coreCh != C.channel && now >= csNextPoll) {          // known channel: short visit
-        csState = CS_POLL; csCh = coreCh; csT = now; setCh(csCh); esp_now_send(BCAST, ASK, sizeof(ASK));
+        csState = CS_POLL; csCh = coreCh; csT = now; polls++; setCh(csCh); esp_now_send(BCAST, ASK, sizeof(ASK));
         return;
       }
-      if (!coreCh && !fresh && now >= csNextScan) { csState = CS_SCAN; csCh = 0; csT = 0; }
+      if (!coreCh && !fresh && now >= csNextScan) { csState = CS_SCAN; csCh = 0; csT = 0; scans++; }
       return;
     case CS_POLL:
-      if (coreLast >= csT && coreLast) { csFail = 0; setCh(C.channel); csState = CS_IDLE; csNextPoll = now + C.core_poll * 1000; return; }
-      if (now - csT >= 120) {
+      if (coreLast >= csT && coreLast) { pollOk++; csFail = 0; setCh(C.channel); csState = CS_IDLE; csNextPoll = now + C.core_poll * 1000; return; }
+      if (now - csT >= CS_WAIT) {
         setCh(C.channel); csState = CS_IDLE; csNextPoll = now + C.core_poll * 1000;
         if (++csFail >= 3) { csFail = 0; coreCh = 0; csNextScan = now; }
       }
@@ -268,7 +272,7 @@ static void coreSearch() {
       if (csT && coreLast >= csT && coreCh == csCh) {          // found
         setCh(C.channel); csState = CS_IDLE; csFail = 0; csNextPoll = now + C.core_poll * 1000; return;
       }
-      if (csT && now - csT < 120) return;
+      if (csT && now - csT < CS_WAIT) return;
       do csCh++; while (csCh == C.channel);
       if (csCh > 13) { setCh(C.channel); csState = CS_IDLE; csNextScan = now + 15000; return; }
       setCh(csCh); csT = now; esp_now_send(BCAST, ASK, sizeof(ASK));
@@ -387,6 +391,8 @@ static void printStatus(Print& o) {
              s.mac[5], s.rssi, (unsigned long)s.n, (unsigned long)((now - s.last) / 1000));
   o.printf("# other espnow=%lu last %02X:%02X:%02X:%02X:%02X:%02X ch=%d rssi=%d bytes %02X %02X %02X %02X\n", (unsigned long)other,
            otherMac[0], otherMac[1], otherMac[2], otherMac[3], otherMac[4], otherMac[5], otherCh, otherRssi, otherB[0], otherB[1], otherB[2], otherB[3]);
+  o.printf("# search scans=%lu polls=%lu ok=%lu chErr=%lu (%d) now_ch=%d\n", (unsigned long)scans, (unsigned long)polls,
+           (unsigned long)pollOk, (unsigned long)chErr, chErrLast, curCh);
   o.printf("# car ap=%d ssid=%s active=%d stations=%d pages=%d  heap=%u\n", C.ap, C.ap_ssid.c_str(), carActive(), carClients(),
            carWsClients(), (unsigned)ESP.getFreeHeap());
 }
