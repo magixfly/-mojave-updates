@@ -1,21 +1,18 @@
 {
- "ver": "2.0.27",
+ "ver": "2.0.28",
  "neu": [
-  "Runs on Windows 10/11 too (ESP32 receiver on a COM port)",
-  "Track button on the map: length / clear (closes after 3 s)",
-  "Online update from GitHub (menu SOFTWARE UPDATE)",
-  "Battery: Mojave from Core, planes from iNav, other cars no mAh"
+  "Small CLAUDE badge in the top bar while Claude is connected remotely"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 109716,
-   "md5": "f68154329b70e46f30c53409418a156f"
+   "s": 110015,
+   "md5": "4481fc31bc2e25313ec490be1af4250a"
   },
   {
    "p": "web/index.html",
-   "s": 127670,
-   "md5": "9f912c08844900116514387d1540413f"
+   "s": 128131,
+   "md5": "7bcda8dd8a3153f6e300e1d9c18b1d2f"
   }
  ]
 }

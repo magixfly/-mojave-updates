@@ -19,6 +19,8 @@ background:var(--pan);border-bottom:1px solid var(--line);font-size:19px}
 #dot{width:16px;height:16px;border-radius:50%;background:#666;flex:none}
 #top .sp{flex:1}
 #src{color:var(--mut);font-size:17px}
+#cl{display:none;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#d97757;border:1px solid #d97757;border-radius:9px;padding:1px 8px}
+#cl i{width:9px;height:9px;border-radius:50%;background:#d97757;animation:clp 1.6s infinite}@keyframes clp{50%{opacity:.25}}
 #esp,#wifi{font-size:17px;font-variant-numeric:tabular-nums;color:var(--mut)}
 #snd{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}#snd svg{width:24px;height:24px}
 #clock{font-variant-numeric:tabular-nums;font-weight:700;font-size:22px}
@@ -206,7 +208,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
 <canvas id="map"></canvas>
 
 <div id="top"><span id="dot"></span><b>CORE TRACKER</b><span id="ver" style="color:var(--mut);font-size:17px"></span><span id="src"></span><span id="chips"></span><span id="dlst" style="color:var(--acc);font-size:17px;font-weight:700;font-variant-numeric:tabular-nums"></span>
-<span class="sp"></span><span id="sys" title="Pi: CPU / RAM / temperature"></span><span id="esp"></span><span id="wifi"></span><span id="snd" title="Warning sound on/off"></span><span id="clock"></span></div>
+<span class="sp"></span><span id="cl" title="Claude is connected remotely (Pi Connect)"><i></i>CLAUDE</span><span id="sys" title="Pi: CPU / RAM / temperature"></span><span id="esp"></span><span id="wifi"></span><span id="snd" title="Warning sound on/off"></span><span id="clock"></span></div>
 <div id="warn"></div>
 
 <div id="rideSide"></div>
@@ -839,6 +841,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
    else if(x.age>3||!x.pps){e.textContent='ESP no data';e.style.color='#ff453a'}
    else{const r=x.rssi;e.textContent='ESP '+(r!=null?r+' dBm · ':'')+x.pps+'/s';
      e.style.color=r==null?'var(--mut)':r>=-70?'#30d158':r>=-82?'#ff9f0a':'#ff453a'}}
+  $('cl').style.display=st.claude&&!DEMO?'inline-flex':'none';   // V2.0.28: Claude connected remotely
   {const y=st.sys,e=$('sys');   // V2.0.2: load of the Pi (1 GB RAM - watch it)
    if(!y||DEMO){e.innerHTML=''}else{const col=v=>v==null?'var(--mut)':v>=85?'#ff453a':v>=70?'#ff9f0a':'#30d158';
      const bar=(l,v)=>`<b style="color:${col(v)}">${l} ${v??'–'}%<i><u style="width:${Math.min(100,v||0)}%;background:${col(v)}"></u></i></b>`;

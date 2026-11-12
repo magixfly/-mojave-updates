@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.27"
+VERSION = "2.0.28"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1213,6 +1213,13 @@ def batt_view(d, sc, cl, mah, fc_pct):
         d["mah_used"] = None
         d["left"] = None
 
+def claude_remote():
+    """V2.0.28: Claude works on the Pi remotely (Pi Connect shell) -> it touches /tmp/claude_remote every 30 s"""
+    try:
+        return time.time() - os.path.getmtime("/tmp/claude_remote") < 90
+    except Exception:
+        return False
+
 def snapshot():
     with LOCK:
         for n in list(DIS):                      # V2.0.10: close a disarmed ride also when no more GPS comes
@@ -1220,6 +1227,7 @@ def snapshot():
         ride_gap()
         d = dict(S)
         d["age"] = round(time.time() - LAST_RX, 1) if LAST_RX else 99.0
+        d["claude"] = claude_remote()
         if TEST["on"] and PLAY["pause"]:
             d["age"] = 0.0                     # paused demo is not a lost link
         d["test"] = TEST["on"]
