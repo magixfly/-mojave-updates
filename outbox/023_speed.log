@@ -1,0 +1,16 @@
+### 023_speed  –  2026-11-13 00:55:02
+### Box: verbunden (172.20.10.14:5555)
+
+Ping Pi->Box:
+10 packets transmitted, 10 received, 0% packet loss, time 2708ms
+rtt min/avg/max/mdev = 11.150/38.615/91.190/22.995 ms
+Ping Box->Pi:
+10 packets transmitted, 10 received, 0% packet loss, time 2714ms
+rtt min/avg/max/mdev = 8.568/24.536/60.398/14.376 ms
+/system/bin/curl
+/system/bin/toybox
+Upload 3 MB Pi->Box:
+/tmp/t.bin: 1 file pushed, 0 skipped. 3.2 MB/s (3145728 bytes in 0.930s)
+3.737295609 s
+
+### Exit-Code: 0
