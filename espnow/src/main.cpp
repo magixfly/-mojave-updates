@@ -23,7 +23,7 @@
 // ---------------------------------------------------------------- settings (config.txt in LittleFS)
 struct Cfg {
   String phrase, uid;
-  int channel = 1, led = 20, any_sender = 1, core = 1, core_scan = 1, core_poll = 2, gps = 1;
+  int channel = 1, led = 20, led_blink = 2000, any_sender = 1, core = 1, core_scan = 1, core_poll = 2, gps = 1;
   long gps_baud = 0;
   int mac_tag = 1, uart = 1;
   long uart_baud = 115200;
@@ -38,6 +38,7 @@ static void cfgSet(const String& k, const String& v) {
   if (k == "phrase") C.phrase = v; else if (k == "uid") C.uid = v;
   else if (k == "channel") C.channel = constrain(v.toInt(), 1, 13);
   else if (k == "led") C.led = constrain(v.toInt(), 0, 255);
+  else if (k == "led_blink") C.led_blink = constrain(v.toInt(), 100, 10000);
   else if (k == "any_sender") C.any_sender = v.toInt();
   else if (k == "core") C.core = v.toInt();
   else if (k == "core_scan") C.core_scan = v.toInt();
@@ -64,6 +65,7 @@ static String cfgText() {
   s += "uid=" + C.uid + "   # leer = aus phrase berechnen; sonst 6 Bytes z.B. 12,34,56,78,9A,BC\n";
   s += "channel=" + String(C.channel) + "   # WLAN-Kanal des Backpacks (ELRS Backpack sendet auf 1)\n";
   s += "led=" + String(C.led) + "   # Helligkeit der Status-LED 0..255 (0 = aus)\n";
+  s += "led_blink=" + String(C.led_blink) + "   # ms zwischen zwei Blinkern (gruen = Telemetrie, blau = nur Core), 100..10000\n";
   s += "any_sender=" + String(C.any_sender) + "   # 1 = alle Backpack-Pakete auf dem Kanal annehmen (Mithoeren)\n";
   s += "core=" + String(C.core) + "   # 1 = Rundruf des Mojave Core (ab V2.72) an den Pi weiterreichen\n";
   s += "core_scan=" + String(C.core_scan) + "   # 1 = Core auf allen Kanaelen suchen, wenn er nicht auf channel ist\n";
@@ -92,7 +94,7 @@ static bool cfgSave() {
 }
 
 static void cfgLoad() {
-  static const char* keys[] = {"phrase", "uid", "channel", "led", "any_sender", "core", "core_scan", "core_poll", "gps", "gps_baud",
+  static const char* keys[] = {"phrase", "uid", "channel", "led", "led_blink", "any_sender", "core", "core_scan", "core_poll", "gps", "gps_baud",
                                "mac_tag", "uart", "uart_baud", "uart_tx", "uart_rx", "ap", "ap_ssid", "ap_pass", "ap_hidden", "ap_scan_stop"};
   bool seen[sizeof(keys) / sizeof(keys[0])] = {};
   File f = LittleFS.open(CFG_PATH, "r");
@@ -379,8 +381,8 @@ static void ledLoop() {
   t = now;
   if (!C.led) { led(0, 0, 0); return; }
   bool data = lastPk && now - lastPk < 3000, core = coreLast && now - coreLast < 3000;
-  bool lit = onAt && now - onAt < 60;
-  if (!lit && now - offAt >= 140) {                      // new packet since last blink -> short flash (max ~5/s)
+  bool lit = onAt && now - onAt < 80;
+  if (!lit && now - offAt >= (uint32_t)C.led_blink) {   // data since the last blink -> one short flash every led_blink ms
     if (pk != seenPk) { seenPk = pk; onAt = now; r = 0; g = 255; b = 0; lit = true; }
     else if (coreN != seenCore) { seenCore = coreN; onAt = now; r = 0; g = 0; b = 255; lit = true; }
   }
