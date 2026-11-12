@@ -1,10 +1,11 @@
 {
- "fw": "V1.38",
+ "fw": "V1.39",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1212032,
- "md5": "58db47f381b5fea822a2420700b6a564",
+ "groesse": 1212160,
+ "md5": "7ae82bb18af5253b1ce44f9f58852ccc",
  "neu": [
+  "New setting Own GPS 'only own (ignore Core)': Navi works fully on its own (maps from SD and internet)",
   "Navi page shows what's new in the online version (Update card)",
   "Satellite count steady (updated every 10 s); Navi page: 'Open Core' link",
   "GPS status on the map only shown when standing",
