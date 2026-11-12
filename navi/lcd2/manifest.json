@@ -1,10 +1,11 @@
 {
- "fw": "V1.36",
+ "fw": "V1.37",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1211040,
- "md5": "358195ccc2cd139a97dbb9b05dca01b6",
+ "groesse": 1211296,
+ "md5": "000b0b53276d5cdf69cd193132b90c72",
  "neu": [
+  "Satellite count steady (updated every 10 s); Navi page: 'Open Core' link",
   "GPS status on the map only shown when standing",
   "Speed stays at 0 when standing; map tiles that basemap.at does not have are retried only once a day (area shows 'complete · n n/a')",
   "No more short Wi-Fi drops every 90 s in the phone hotspot (Core search only without Wi-Fi)",
