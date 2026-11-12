@@ -1,0 +1,8 @@
+### 017_buildtools  –  2026-11-13 00:35:02
+### Box: verbunden (172.20.10.14:5555)
+
+-rw-rw-r-- 1 user1 user1 61224257 Nov 13 00:35 bt.zip
+-rw-r--r-- 1 user1 user1 14929869 Jan  1  2008 ./android-14/lib/d8.jar
+-rw-r--r-- 1 user1 user1 1034092 Jan  1  2008 ./android-14/lib/apksigner.jar
+
+### Exit-Code: 0
