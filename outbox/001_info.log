@@ -1,0 +1,41 @@
+### 001_info  –  2026-11-12 22:03:19
+### Box: verbunden (172.20.10.14:5555)
+
+Lito for arm64
+15
+Physical size: 1920x720
+package:ai.metaverselabs.obdandroid
+package:com.netflix.mediaclient
+package:com.cleevio.ionity.android.app
+package:com.waze
+package:cloud.shelly.smartcontrol
+package:at.radio.android
+package:com.google.android.apps.youtube.music
+package:at.tmobile.android.magentatv
+package:at.simplitv.ott
+package:com.mautilus.servus
+package:com.whatsapp
+package:com.enbw.ev
+package:io.homeassistant.companion.android
+package:com.dazn
+package:net.easypark.android
+package:net.easyconn
+package:com.estrongs.android.pop
+package:com.spotify.music
+package:de.wetteronline.wetterapp
+package:com.chargemap_beta.android
+package:com.openai.chatgpt
+package:org.videolan.vlc
+package:com.google.android.apps.bard
+package:com.vialsoft.radarbot_free
+package:com.deyesolar
+package:com.audible.application
+package:at.zappn
+package:com.chartcross.gpstestplus
+package:com.google.android.youtube
+package:com.amazon.avod.thirdpartyclient
+package:com.iternio.abrpapp
+package:com.nousguide.android.orftvthek
+package:com.apkpure.aegon
+
+### Exit-Code: 0
