@@ -1,10 +1,11 @@
 {
- "fw": "V1.40",
+ "fw": "V1.41",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1212160,
- "md5": "adb5bdcb1028fc9c46571e70356da746",
+ "groesse": 1212096,
+ "md5": "eb6d9c5e28534eefa984bfd233a64e1d",
  "neu": [
+  "Display shows 'CGPS' when the position comes from the Core, 'GPS' for the own GPS module",
   "Play ride: default speed 2x",
   "New setting Own GPS 'only own (ignore Core)': Navi works fully on its own (maps from SD and internet)",
   "Navi page shows what's new in the online version (Update card)",
