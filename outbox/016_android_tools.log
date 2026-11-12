@@ -1,0 +1,24 @@
+### 016_android_tools  –  2026-11-13 00:34:02
+### Box: verbunden (172.20.10.14:5555)
+
+== dalvik-exchange: 
+== d8: 
+== r8: 
+== apksigner:   Installed: (none)
+== android-sdk-platform-23:   Installed: (none)
+== libandroid-23-java:   Installed: (none)
+== android-libdx-java: 
+E: Unable to locate package dalvik-exchange
+E: Can't select candidate version from package android-sdk-platform-23 as it has no candidate
+ |Depends: default-jre
+ |Depends: <java8-runtime>
+ |Depends: <java9-runtime>
+ |Depends: <java10-runtime>
+  Depends: <java11-runtime>
+  Depends: libapksig-java
+total 0
+drwxrwxr-x  2 user1 user1  40 Nov 13 00:34 .
+drwxrwxrwt 13 root  root  360 Nov 13 00:34 ..
+4.0K	/home/user1/carlin-bridge/outbox/tools
+
+### Exit-Code: 0
