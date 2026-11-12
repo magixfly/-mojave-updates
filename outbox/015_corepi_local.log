@@ -1,0 +1,7 @@
+### 015_corepi_local  –  2026-11-13 00:29:02
+### Box: verbunden (172.20.10.14:5555)
+
+ping: unknown host corepi.local
+Starting: Intent { act=android.intent.action.VIEW dat=http://corepi.local:8080/... pkg=com.android.chrome }
+
+### Exit-Code: 0
