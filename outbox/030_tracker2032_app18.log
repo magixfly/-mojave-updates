@@ -1,0 +1,9 @@
+### 030_tracker2032_app18  –  2026-11-13 01:27:03
+### Box: verbunden (172.20.10.14:5555)
+
+Success
+online: 2.0.32
+{"busy": true, "prog": 1, "msg": "checking \u2026", "online": "2.0.32", "neu": ["Compass letters stay upright when the map turns (heading up)", "Version number: same size as CORE TRACKER, normal weight, grey", "Scale on the map: brighter text"], "cur": "2.0.30"}
+Tracker 2.0.32 läuft
+
+### Exit-Code: 0
