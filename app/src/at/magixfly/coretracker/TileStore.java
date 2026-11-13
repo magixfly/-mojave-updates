@@ -25,7 +25,7 @@ class TileStore {
     static final int ZMIN = 8, ZFULL = 16, ZMAX = 18;
     static final long KEEP_FREE = 8L * 1024 * 1024 * 1024;     // mindestens 8 GB frei lassen
     static final String SRC = "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/%d/%d/%d.jpeg";
-    static final int WORKERS = 8;
+    static final int WORKERS = 4;
 
     final MainActivity a;
     final File dir;
