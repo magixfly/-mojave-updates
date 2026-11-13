@@ -1,0 +1,11 @@
+### 103_net_check  –  2026-11-13 22:28:05
+### Box: NICHT erreichbar (192.168.30.212:5555)
+
+*       XVII           153   5765 MHz  70     
+Gateway 192.168.30.212
+192.168.30.175 2001:4bc9:b003:73cb:ece1:dc24:6f36:7586 
+rtt min/avg/max/mdev = 4.198/6.967/10.554/2.490 ms
+failed to connect to '192.168.30.212:5555': Connection refused
+adb: device '192.168.30.212:5555' not found
+
+### Exit-Code: 1
