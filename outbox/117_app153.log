@@ -1,0 +1,12 @@
+### 117_app153  –  2026-11-14 00:55:02
+### Box: verbunden (172.20.10.14:5555)
+
+Success
+    versionName=1.53
+com.carsyso.main/com.carsyso.main.misc.accessibility.AccessibilityHookerService:at.magixfly.coretracker/at.magixfly.coretracker.A11y
+ 28294 28294 D CTAP    : Schalter android.widget.Switch checked=true [1980,274][2046,335]
+ 28294 28294 D CTAP    : Schalter android.widget.Switch checked=false [1980,544][2046,605]
+ 28294 28294 D CTAP    : Hotspot-Text [264,257][525,310], Schalter: 2
+ 28294 28294 D CTAP    : Hotspot war schon an
+
+### Exit-Code: 0
