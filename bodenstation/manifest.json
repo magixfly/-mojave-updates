@@ -1,15 +1,16 @@
 {
- "ver": "2.0.48",
+ "ver": "2.0.49",
  "neu": [
+  "Remote maintenance repairs itself after a power cut",
   "Temperature green below 70°",
   "Speaker frame green/red like the icon",
-  "Status line without pitch/roll/heading (heading still feeds the box compass)"
+  "Status line without pitch/roll/heading"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 113459,
-   "md5": "08a4b3704d80afa4b9c033da4feb284b"
+   "s": 114745,
+   "md5": "aed8f9ac4db29fb28f7534515fec2fd8"
   },
   {
    "p": "web/index.html",

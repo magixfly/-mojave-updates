@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.48"
+VERSION = "2.0.49"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -2365,6 +2365,25 @@ class H(BaseHTTPRequestHandler):
             return self.send(200, {"total": n})
         self.send(404, {"err": "not found"})
 
+def bridge_repair():
+    """V2.0.49: Fernwartung (~/carlin-bridge) nach Stromausfall reparieren: leere Git-Objekte löschen und neu holen (alle 5 min prüfen)"""
+    d = os.path.expanduser("~/carlin-bridge")
+    while True:
+        try:
+            if os.path.isdir(os.path.join(d, ".git")):
+                empty = [os.path.join(r, f) for r, _, fs in os.walk(os.path.join(d, ".git", "objects")) for f in fs if os.path.getsize(os.path.join(r, f)) == 0]
+                if empty:
+                    print("bridge repair:", len(empty), "empty git objects")
+                    for f in empty:
+                        try: os.remove(f)
+                        except Exception: pass
+                    env = dict(os.environ, GIT_SSH_COMMAND="ssh -i %s -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" % os.path.expanduser("~/.ssh/carlin_deploy"))
+                    subprocess.run(["git", "-C", d, "fetch", "origin", "carlin"], env=env, capture_output=True, timeout=120)
+                    subprocess.run(["git", "-C", d, "reset", "--hard", "origin/carlin"], env=env, capture_output=True, timeout=60)
+        except Exception as e:
+            print("bridge repair", e)
+        time.sleep(300)
+
 def main():
     if CFG.get("ipv4_only", "1") == "1":
         _ipv4_only()
@@ -2372,6 +2391,7 @@ def main():
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
         threading.Thread(target=wifi_thread, daemon=True).start()
+        threading.Thread(target=bridge_repair, daemon=True).start()   # V2.0.49
     threading.Thread(target=core_thread, daemon=True).start()
     threading.Thread(target=upd_thread, daemon=True).start()
     for _ in range(6):
