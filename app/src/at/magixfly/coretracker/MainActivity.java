@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
     volatile boolean searching = false;
     volatile boolean loaded = false;
     int barWidthPx = 600;
+    int repN = 0;
 
     @Override
     protected void onCreate(Bundle b) {
@@ -205,6 +206,8 @@ public class MainActivity extends Activity {
                 : net == null ? "Maps " + mb + " \u00b7 no internet"
                 : on ? "Maps " + mb + " \u00b7 loading " + net + " \u00b7 tap: stop"
                 : "Maps " + mb + " \u00b7 starting " + net + " \u00b7 tap: stop";
+        if (piBase != null && (++repN % 3) == 0)                 // V1.25: tell the tracker on the Pi (shown on PC / phone / 7" display)
+            new Thread(new Report(this, piBase, txt, on, b1 / 1073741824.0, b2 / 1073741824.0, net, tiles.stopped)).start();
         web.evaluateJavascript("(function(){var e=document.getElementById('ctMapsT');if(e)e.textContent='" + txt + "';var m=document.getElementById('ctMaps');if(m){m.dataset.dl='" + (on ? 1 : 0) + "';var i=m.querySelector('img');if(i)i.style.animationPlayState='" + (on ? "running" : "paused") + "';}})()", null);
     }
 
