@@ -1,18 +1,18 @@
 {
- "ver": "2.0.41",
+ "ver": "2.0.42",
  "neu": [
-  "Box map download shown on every screen, tap = stop/start"
+  "Box: frames in the top bar fit their text"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 111027,
-   "md5": "3c90083d06b3a756807c860ccca56ca5"
+   "md5": "0926e8b39f59dc8f46b8ebe261e203fc"
   },
   {
    "p": "web/index.html",
-   "s": 133271,
-   "md5": "663d866c3f99b076fba2a4df2f986f37"
+   "s": 133676,
+   "md5": "6fae4a79a2903edb1bc066252f08c118"
   }
  ]
 }

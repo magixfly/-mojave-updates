@@ -1298,6 +1298,8 @@ init();
 // V2.0.39: Carlin box app - the Mojave next to "Maps" only turns while tiles are really downloading
 (function(){let last='',chg=0;setInterval(()=>{const t=document.getElementById('ctMapsT'),img=document.querySelector('#ctMaps img');if(!t||!img)return;
  const x=t.textContent||'',now=Date.now();if(x!==last){last=x;chg=now}
+ if(!document.getElementById('ctfix')){const st=document.createElement('style');st.id='ctfix';   // V2.0.42: box app - chips never narrower than their text (frame fits)
+  st.textContent='#top .sp{flex:1 1 0!important;min-width:0!important}#top #esp,#top #wifi,#top #sys{flex:0 0 auto!important;min-width:max-content!important}#top #wifi,#top #esp{padding:0 12px!important}';document.head.appendChild(st)}
  const m=document.getElementById('ctMaps');if(m&&m.dataset.dl!==undefined){img.style.animationPlayState=m.dataset.dl==='1'?'running':'paused';return}   // V2.0.40: app >= 1.22 says itself
  const on=/^Maps\s/.test(x)&&!/complete|paused|waiting|full|Touch/.test(x)&&now-chg<10000;   // text changes while MB count grows
  img.style.animationPlayState=on?'running':'paused'},1000)})();
