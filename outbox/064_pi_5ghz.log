@@ -1,0 +1,22 @@
+### 064_pi_5ghz  –  2026-11-13 14:31:29
+### Box: verbunden (172.20.10.14:5555)
+
+--- vorher
+sudo: a password is required
+inbox/064_pi_5ghz.sh: line 3: iwgetid: command not found
+inbox/064_pi_5ghz.sh: line 3: iw: command not found
+--- setzen
+sudo: a password is required
+sudo: a password is required
+--- nachher
+sudo: a password is required
+--- XVII sichtbar?
+NAME                TYPE      AUTOCONNECT 
+XVII                wifi      yes         
+lo                  loopback  no          
+CoreTracker         wifi      yes         
+Optimus Prime       wifi      yes         
+Wired connection 1  ethernet  yes         
+
+
+### Exit-Code: 0
