@@ -186,7 +186,8 @@ class Fpv {
         if (base == null) m = MAP;
         mode = m;
         label();
-        int vw = Math.round(root.getWidth() / 3.5f);          // V1.34: Split Video : Karte = 1 : 2,5
+        // V1.42: Split = FPV volle Höhe in 16:9 (1920×720 → 1280 breit), Karte links daneben
+        int vw = Math.min(Math.round(root.getWidth() * 0.75f), root.getHeight() * 16 / 9);
         mapWidth(m == SPLIT ? root.getWidth() - vw : -1);
         if (m == MAP) {
             box.setVisibility(View.GONE);
