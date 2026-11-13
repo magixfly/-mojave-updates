@@ -22,6 +22,11 @@ class Client extends WebViewClient {
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView v, String url) {
         try {
+            if (url.contains("/__ctbox/toggle")) {         // Tippen auf "Maps": Download auch beim Fahren erzwingen / zurück auf automatisch
+                a.tiles.force = !a.tiles.force;
+                a.ui.post(new Task(a, Task.PILL, null, 0));
+                return new WebResourceResponse("text/plain", null, new java.io.ByteArrayInputStream(new byte[0]));
+            }
             int i = url.indexOf("/tile/");
             if (i < 0 || a.tiles == null) return null;
             String[] p = url.substring(i + 6).split("[/?.]");
