@@ -1,10 +1,11 @@
 {
- "fw": "V1.63",
+ "fw": "V1.64",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1246432,
- "md5": "e8432ca42b4a1e631f6399862b1083b1",
+ "groesse": 1246416,
+ "md5": "f6551af81cd73f55ee94e6e8362262b5",
  "neu": [
+  "More MT12 diagnostics (other MSP functions, non-MSP packets)",
   "MT12 diagnostics on the status page (channel, ESP-NOW frames seen, ours, MSP ok, our ID)",
   "Map errors shown on the status page; tiles with other permanent errors (4xx, empty) are also retried only once a day",
   "Touch buttons moved to the top bar (- + NET), hidden when armed; zoom taps no longer restart map loading",
