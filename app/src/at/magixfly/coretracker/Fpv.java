@@ -190,6 +190,7 @@ class Fpv {
         // V1.45: Split-Video 10 % schmaler (Karte breiter), Bild wird auf volle Höhe gestreckt (object-fit fill)
         int vw = Math.min(Math.round(root.getWidth() * 0.75f), root.getHeight() * 16 / 9 * 9 / 10);
         mapWidth(m == SPLIT ? root.getWidth() - vw : -1);
+        a.web.evaluateJavascript("document.documentElement.classList.toggle('ctsplit'," + (m == SPLIT) + ")", null);   // V1.48: Karten-Ansicht für Split
         if (m == MAP) {
             box.setVisibility(View.GONE);
             stopWeb();
@@ -338,6 +339,7 @@ class Fpv {
     void fix() {
         if (web == null) return;
         web.evaluateJavascript("window.ctFill=" + fill + ";", null);
+        a.web.evaluateJavascript("document.documentElement.classList.toggle('ctsplit'," + (mode == SPLIT) + ")", null);
         web.evaluateJavascript(JS, new android.webkit.ValueCallback<String>() {
             public void onReceiveValue(String n) {
                 boolean ok = n != null && n.contains("ok");
