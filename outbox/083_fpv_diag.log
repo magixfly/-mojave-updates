@@ -1,0 +1,48 @@
+### 083_fpv_diag  –  2026-11-13 16:03:03
+### Box: verbunden (172.20.10.14:5555)
+
+--- Janus Streams:
+session 544137871203050
+{
+   "janus": "success",
+   "session_id": 544137871203050,
+   "transaction": "c",
+   "sender": 7627511365686749,
+   "plugindata": {
+      "plugin": "janus.plugin.streaming",
+      "data": {
+         "streaming": "list",
+         "list": [
+            {
+               "id": 1,
+               "type": "live",
+               "description": "Multistream 1 audio (port 5040), 2 video (port 5030, 5031)",
+               "metadata": "",
+               "enabled": true,
+               "media": [
+                  {
+                     "mid": "a",
+                     "type": "audio",
+                     "label": "Audio stream",
+                     "age_ms": 357445
+                  },
+                  {
+                     "mid": "v1",
+                     "type": "video",
+                     "label": "Video stream #1",
+                     "age_ms": 357445
+                  },
+                  {
+                     "mid": "v2",
+                     "type": "video",
+                     "label": "Video stream #2",
+                     "age_ms": 357445
+                  }
+               ]
+            },
+            {
+               "id": 10,
+               "type": "live",
+              
+
+### Exit-Code: 0
