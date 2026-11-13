@@ -1,18 +1,18 @@
 {
- "ver": "2.0.39",
+ "ver": "2.0.40",
  "neu": [
-  "Box: Mojave next to Maps only turns while downloading"
+  "Box app 1.22: Mojave turn controlled by the app"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 110015,
-   "md5": "64374391c04c2198fdc830c936d4db09"
+   "md5": "7edefa85f6a6359ccd7abedd23afc724"
   },
   {
    "p": "web/index.html",
-   "s": 132104,
-   "md5": "a1ab4ecadd4fc22786d188dc219aa342"
+   "s": 132292,
+   "md5": "8b4978161cda70cb59ef0853516e81c4"
   }
  ]
 }
