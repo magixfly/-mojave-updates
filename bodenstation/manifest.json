@@ -1,20 +1,18 @@
 {
- "ver": "2.0.32",
+ "ver": "2.0.33",
  "neu": [
-  "Compass letters stay upright when the map turns (heading up)",
-  "Version number: same size as CORE TRACKER, normal weight, grey",
-  "Scale on the map: brighter text"
+  "Short info next to the version number whenever a warning sound plays"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 110015,
-   "md5": "58884765bfaa055ea85b64762d2e0c7a"
+   "md5": "6d04b4e0c5e1f3770df023f580aff4bf"
   },
   {
    "p": "web/index.html",
-   "s": 129796,
-   "md5": "f48927dad03e1e18cd9f21d2b276c3d1"
+   "s": 130254,
+   "md5": "535d754d4e7888c9d731686969ac5c49"
   }
  ]
 }
