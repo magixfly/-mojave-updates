@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 class Fpv {
     static final int MAP = 0, FULL = 1, PIP = 2, SPLIT = 3;
-    static final String[] FIXED = {"cosmostreamer.local", "172.20.10.10", "192.168.178.175"};
+    static final String[] FIXED = {"cosmostreamer.local", "172.20.10.2", "172.20.10.3", "172.20.10.10", "192.168.178.175"};
 
     final MainActivity a;
     final FrameLayout root;
@@ -89,11 +89,12 @@ class Fpv {
                 String b = base;
                 if (b != null) {
                     long t0 = System.currentTimeMillis();
-                    if (isCosmo(b.substring(7))) { misses = 0; ms = System.currentTimeMillis() - t0; }
-                    else if (++misses >= 3) { base = null; post(new Runnable() { public void run() { lost(); } }); }
+                    if (isCosmo(b.substring(7), true)) { misses = 0; ms = System.currentTimeMillis() - t0; }
+                    else if (++misses >= 6) { base = null; post(new Runnable() { public void run() { lost(); } }); }
                 } else {
                     String h = find();
                     if (h != null) {
+                        try { String ip = java.net.InetAddress.getByName(h).getHostAddress(); if (isCosmo(ip, true)) h = ip; } catch (Throwable t) { }
                         a.prefs.edit().putString("cosmo", h).apply();
                         base = "http://" + h;
                         misses = 0;
@@ -138,12 +139,15 @@ class Fpv {
     }
 
     /** Ist unter dieser Adresse (Port 80) die Seite des CosmoStreamers? */
-    static boolean isCosmo(String host) {
+    static boolean isCosmo(String host) { return isCosmo(host, false); }
+
+    /** slow = bekannter CosmoStreamer: länger warten (antwortet unter Last bis ~1,5 s) */
+    static boolean isCosmo(String host, boolean slow) {
         try {
-            if (host.equals("172.20.10.2") || host.startsWith("corepi")) return false;   // Tracker-Pi nie
+            if (host.startsWith("corepi")) return false;   // V1.36: Tracker-Pi wird über seine Seite ausgeschlossen, nicht über die Adresse
             HttpURLConnection con = (HttpURLConnection) new URL("http://" + host + "/").openConnection();
-            con.setConnectTimeout(700);
-            con.setReadTimeout(1500);
+            con.setConnectTimeout(slow ? 3000 : 700);
+            con.setReadTimeout(slow ? 5000 : 1500);
             if (con.getResponseCode() != 200) { con.disconnect(); return false; }
             InputStream in = con.getInputStream();
             byte[] buf = new byte[8192];
