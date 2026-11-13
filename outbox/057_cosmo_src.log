@@ -1,0 +1,29 @@
+### 057_cosmo_src  –  2026-11-13 13:41:02
+### Box: verbunden (192.168.178.235:5555)
+
+-rw-rw-r-- 1 user1 user1 19490 Nov 13 13:41 index.html
+http://192.168.178.175/css/style4.css?863091317 -> css_style4.css_863091317 8274
+http://192.168.178.175/js/adapter.min.js?863091317 -> js_adapter.min.js_863091317 57955
+http://192.168.178.175/js/automovements.js?863091317 -> js_automovements.js_863091317 5395
+http://192.168.178.175/js/binary.js?863091317 -> js_binary.js_863091317 511
+http://192.168.178.175/js/btgimbal.js?863091317 -> js_btgimbal.js_863091317 6775
+http://192.168.178.175/js/data.js?863091317 -> js_data.js_863091317 2786
+http://192.168.178.175/js/gamepad.js?863091317 -> js_gamepad.js_863091317 4463
+http://192.168.178.175/js/janus.js?863091317 -> js_janus.js_863091317 109761
+http://192.168.178.175/js/jmuxer.min.js?863091317 -> js_jmuxer.min.js_863091317 32305
+http://192.168.178.175/js/jquery.min.js?863091317 -> js_jquery.min.js_863091317 89503
+http://192.168.178.175/js/js.cookie.min.js?863091317 -> js_js.cookie.min.js_863091317 1685
+http://192.168.178.175/js/log.js?863091317 -> js_log.js_863091317 125
+http://192.168.178.175/js/parser.js?863091317 -> js_parser.js_863091317 14848
+http://192.168.178.175/js/player-pion.js?863091317 -> js_player-pion.js_863091317 4089
+http://192.168.178.175/js/player-webrtc.js?863091317 -> js_player-webrtc.js_863091317 13791
+http://192.168.178.175/js/player-websockets.js?863091317 -> js_player-websockets.js_863091317 3875
+http://192.168.178.175/js/screenjoystick.js?863091317 -> js_screenjoystick.js_863091317 16323
+http://192.168.178.175/js/screen.js?863091317 -> js_screen.js_863091317 16461
+http://192.168.178.175/js/servocontrols.js?863091317 -> js_servocontrols.js_863091317 4203
+http://192.168.178.175/js/tabs.js?863091317 -> js_tabs.js_863091317 1015
+http://192.168.178.175/js/types.js?863091317 -> js_types.js_863091317 3229
+http://192.168.178.175/js/wirallite.js?863091317 -> js_wirallite.js_863091317 9903
+http://192.168.178.175/manifest.json -> manifest.json 762
+
+### Exit-Code: 0

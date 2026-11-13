@@ -1,0 +1,336 @@
+<html>
+	<head>
+		<title>Cosmostreamer NG - 192.168.178.175</title>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="initial-scale=1, user-scalable=no, maximum-scale=1.0">
+
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+	
+		<link href="css/style4.css?863091317" rel="stylesheet" media="all">
+
+		<link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="/icons/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
+
+		<style>
+			body { background-image:url('imgs/background-cs.jpg'); }
+			.hideforstereopi {  }
+			.djifpvonly { display:none; }
+		</style>
+	</head>
+
+	<body>
+		<script>
+			window.IP = '192.168.178.175';
+			let global_app_type = 23;
+		</script>
+
+		<div id="connectionmessage"></div>
+
+
+		<div id="menu_icons_area">
+			<div id="audio_icons_area" class="hidden">
+				<img id="audio_on_icon" src="imgs/audio-on-icon.png" width="50" title="Audio enabled" class="hidden">
+				<img id="audio_off_icon" src="imgs/audio-off-icon.png" width="50" title="Audio Disabled">
+			</div>
+			<img id="menu_icon" src="imgs/menu_icon.png" width="50" title="Open menu">
+			<img id="close_icon" src="imgs/close_icon.png" width="50" title="Close settings">
+		</div>
+
+		<div id="menu_main">
+			<p>
+				<p class="option_title gray">Video player</p>
+				<select id="video_player_option" style="padding:5px; margin:5px; width:100%; background-color:transparent; color:gray;">
+					<option>Jmuxer</option>
+					<option>WebRTC Janus</option>
+					<option>WebRTC Pion</option>
+					<option>No video</option>
+				</select>
+			</p>
+			<p id="menu_main_item5" class="main_menu_item" style="">Camera controls</p>
+			<p id="menu_main_item2" class="main_menu_item">Camera settings</p>
+			<p id="menu_main_item1" class="main_menu_item">Device settings</p>
+			<p id="menu_main_item10" class="main_menu_item">Gamepad settings</p>
+			<!--<p id="menu_main_item9" class="main_menu_item">Media player</p>-->
+			<p id="menu_main_item3" class="main_menu_item">Console</p>
+			<p id="menu_main_item4" class="main_menu_item">File manager</p>
+			<p id="menu_main_item6" class="main_menu_item">USB storage</p>
+			<p id="menu_main_item7" class="main_menu_item">MicroSD storage</p>
+			<p id="menu_main_item8" class="main_menu_item djifpvonly">DJI FPV Goggles storage</p>
+		</div>
+
+		<div id="top_panel">
+			<span style="width:40%;">
+				<span id="app_type" class="gray"></span>
+				<span id="clients_count"></span>
+			</span>
+
+			<span style="text-align:right; float:right; margin-right:20px; width:60%;">
+				<span id="rc1status" class="yellow">RC1</span>
+				<span id="rc2status" class="yellow">RC2</span>
+				<span id="wlanstatus" class="green hidden">WLAN</span>
+				<span id="camstatus" class="green hidden">CAM</span>
+				<span id="apstatus" class="green hidden">AP</span>
+
+				<span id="curresv1" style="margin-left:10px;"></span>
+				<span id="curbitratev1" style="margin-left:10px;"></span>
+
+				<span id="cpu_temp" class="gray" style="margin-left:10px;" title="CPU temperature"></span>
+				<span id="cpu_load" style="margin-left:10px; display:none;" title="CPU load"></span>
+				<span id="health_msg" style="margin-left:10px; display:none;" title="Board health status"></span>
+			</span>
+		</div>
+
+		<div id="video_container">
+			<div id="top_area"></div>
+
+			<canvas id="video_canvas"></canvas>
+			<video muted playsinline autoplay id="remotevideov1"></video>
+			<video muted playsinline autoplay id="video_element"></video>
+			<audio playsinline id="remotevideoa"></audio>
+
+			<div id="left_area">
+				<div id="mode_block" class="needhide">
+					<p><img id="mode_photo_image" class="control-el" src="imgs/mode_photo.png" height="20" title="Set camera photo mode" style="cursor:hand;"></p>
+					<p><img id="mode_video_image" class="control-el" src="imgs/mode_video.png" height="20" title="Set camera video mode" style="cursor:hand;"></p>
+				</div>
+
+				<img id="rec_start_image" class="needhide control-el" src="imgs/video_record_start.png" height="50" title="Start recording" style="cursor:hand;">
+				<img id="rec_stop_image" class="needhide control-el" src="imgs/video_record_stop.png" height="50" title="Stop recording" style="cursor:hand;">
+				<img id="photo_shot_image" class="needhide control-el" src="imgs/photo_shoot.png" height="50" title="Take a shot" style="cursor:hand; margin-top:20px;">
+				<img id="photo_stop_image" class="needhide control-el" src="imgs/photo_stop.png" height="50" title="Stop shoting" style="cursor:hand; margin-top:20px;">
+				<img id="photo_busy_image" class="needhide control-el" src="imgs/shot_busy.png" height="50" title="Photo busy" style="cursor:hand; margin-top:20px;">
+
+				<div id="zoom_block" class="needhide">
+					<div id="dzoom_value" style="margin-top:10px;"></div>
+					<div id="dzoom_in_button" class="zoom_buttons"></div>
+					<div id="dzoom_out_button" class="zoom_buttons"></div>
+					<div id="zoom_in_button" class="zoom_buttons"></div>
+					<div id="zoom_out_button" class="zoom_buttons"></div>
+				</div>
+			</div>
+
+			<!--<div id="right_area"></div>-->
+
+			<div id="restream_area" class="needhide">
+				<div id="udp_restream_area" class="restream_btn needhide">UDP</div>
+				<div id="rtp_restream_area" class="restream_btn needhide">RTP</div>
+				<div id="ndi_restream_area" class="restream_btn needhide">NDI</div>
+				<div id="ndihx_restream_area" class="restream_btn needhide">NDI | HX</div>
+				<div id="mpegts_restream_area" class="restream_btn needhide">MPEG-TS</div>
+				<div id="v4l2_restream_area" class="restream_btn needhide">V4l2</div>
+				<div id="dvbt_restream_area" class="restream_btn needhide">DVB-T</div>
+				<div id="rtmp_restream_area" class="restream_btn needhide">RTMP <span id="rtmp_restream_time"></span></div>
+				<div id="rtmp2_restream_area" class="restream_btn needhide">RTMP2 <span id="rtmp2_restream_time"></span></div>
+				<div id="rtsp_restream_area" class="restream_btn needhide">RTSP <span id="rtsp_restream_time"></span></div>
+				<div id="srt_restream_area" class="restream_btn needhide">SRT <span id="srt_restream_time"></span></div>
+				<div id="onboard_rec_area" class="restream_btn needhide">Onboard REC <span id="onboard_rec_time"></span></div>
+			</div>
+
+			<div id="bottom_big_container" class="needhide"></div>
+			<div id="bottom_area"></div>
+		</div>
+
+		<div id="tracking_area" class="needhide"></div>
+
+		<div id="focus_area" class="needhide">
+			<span id="focus_area_text" style="color:lightgreen; font-size:8px;"></span>
+		</div>
+
+		<div id="rec_area" class="needhide">
+			<div id="rec_circle"></div>
+			<div id="shot_circle"></div>
+			<span id="rec_label"></span>
+			<div id="rec_duration" style="margin-top:5px; font-size:12px; text-align:right;"></div>
+		</div>
+		<div id="shot_area" class="needhide">
+			<div id="shot_circle"></div>
+			<span id="shot_label"></span>
+		</div>
+
+
+		<div id="wiral_control_area" style="position:absolute; bottom:20px; left:50%; right:50%; transform: translate(-50%, 0%); background-color:#0e0e0e; width:300px; height:170px; box-shadow: 0 0 20px rgba(0,0,0, 1.0); padding:10px; display:none; font-size:0.6em;">
+			<div id="wiral_control_header" style="position:absolute; top:0px; left:0px; width:100%; height:40px; cursor:move;">&nbsp;</div>
+			<p style="color:yellow; font-size:0.8em; margin:0px;">Wiral Lite controls <span style="float:right; color:#777777;">Battery <span id="wiral_battery_level_text" style="color:#ffffff; margin-left:10px;"></span></span></p>
+
+			<div id="wiral_control_area_nc" class="hidden" style="width:100%; height:100%; text-align:center;">
+				<p id="wiral_control_area_nc_message"></p>
+			</div>
+
+			<div id="wiral_control_area_full" class="hidden">
+			<p>
+				<span class="option_title"><input type="checkbox" id="wiral_tictac_enabled"><label for="wiral_tictac_enabled">Tic-tac mode</label></span> &nbsp;&nbsp;&nbsp;
+				<span id="wiral_tictac_times" class="hidden">
+					<span class="gray">Tic time <span id="wiral_tic_time" style="color:white;">0</span></span> &nbsp;&nbsp;&nbsp;
+					<span class="gray">Prev Tic time <span id="wiral_prev_tic_time" style="color:white;">0</span></span>
+				</span>
+			</p>
+			<div class="option_title gray">
+				Set speed <span id="wiral_set_speed_text" style="color:white;"></span>
+				<input id="wiral_set_speed_slider" class="option_el" type="range" min="0" max="255" step="1" value="0" style="width:100%; margin:0;">
+			</div>
+			<div class="option_title gray">
+				Destination <span id="wiral_current_destination_text" style="color:white;">0</span> &nbsp;&nbsp;&nbsp;
+				Position <span id="wiral_current_position_text" style="color:white;">0</span> &nbsp;&nbsp;&nbsp;
+				Speed <span id="wiral_current_speed_text" style="color:white;">0</span>
+				<input id="wiral_current_position_slider" class="option_el" type="range" min="0" max="100" step="1" value="0" disabled style="width:100%; height:3px;">
+				<input id="wiral_set_position_slider_main" class="option_el" type="range" min="0" max="100" step="1" value="0" style="width:100%; margin-top:-5px;">
+			</div>
+			<div style="width:100%; height:15px;">
+				<span id="wiral_start_point_label" style="color:red;">Start point not set</span>
+				<span id="wiral_end_point_label" style="color:red; float:right;">End point not set</span>
+			</div>
+
+			<div>
+				<input id="wiral_move_back" type="button" value="Move Back ('N')" style="background-color:#333333; color:white; padding:5px; border:0; font-size:1em;">
+				<input id="wiral_stop" type="button" value="Stop" style="background-color:red; color:white; padding:5px; border:0; margin-left:10px; font-size:1em; width:70px;">
+				<input id="wiral_move_forward" type="button" value="Move Forward ('M')" style="background-color:#333333; color:white; padding:5px; border:0; float:right; font-size:1em;">
+			</div>
+
+			</div>
+		</div>
+
+		<div id="btgimbal_control_area" style="position:absolute; bottom:20px; left:50%; right:50%; transform: translate(-50%, 0%); background-color:#0e0e0e; width:240px; height:75px; box-shadow: 0 0 20px rgba(0,0,0, 1.0); padding:10px; display:none; font-size:0.6em;">
+			<div id="btgimbal_control_header" style="position:absolute; top:0px; left:0px; width:100%; height:40px; cursor:move;">&nbsp;</div>
+			<p style="color:#00b5fd; font-size:1em; margin:0px;">BT gimbal controls</p>
+			<p>
+				Battery <span id="btgimbal_battery_field"></span> &nbsp;&nbsp;&nbsp; 
+				Position <span id="btgimbal_position_field" style="color:yellow;"></span> &nbsp;&nbsp;&nbsp; 
+				<input id="btgimbal_reset_button" type="button" value="Recenter" style="background-color:#333333; color:white; padding:7px; border:0; font-size:1em; cursor:hand;">
+			</p>
+			<p>
+				Gimbal mode &nbsp;&nbsp;&nbsp;
+				<input id="btgimbal_mode1_button" type="button" value="M1" style="background-color:#333333; color:white; padding:7px; border:0; font-size:1em; cursor:hand;"> &nbsp;&nbsp;&nbsp;
+				<input id="btgimbal_mode2_button" type="button" value="M2" style="background-color:#333333; color:white; padding:7px; border:0; font-size:1em; cursor:hand;"> &nbsp;&nbsp;&nbsp;
+				<input id="btgimbal_mode3_button" type="button" value="M3" style="background-color:#333333; color:white; padding:7px; border:0; font-size:1em; cursor:hand;"> &nbsp;&nbsp;&nbsp;
+			<p>
+		</div>
+
+		<div id="am_control_area" style="position:absolute; bottom:20px; left:50%; right:50%; transform: translate(-50%, 0%); background-color:#0e0e0e; width:280px; height:110px; box-shadow: 0 0 20px rgba(0,0,0, 1.0); padding:10px; display:none; font-size:0.8em;">
+			<div id="am_control_header" style="position:absolute; top:0px; left:0px; width:100%; height:40px; cursor:move;">&nbsp;</div>
+			<div>
+				<span style="color:#00b5fd; font-size:1em; margin:0px;">Auto movements controls</p>
+				<span style="color:#00b5fd; font-size:1em; margin:0px; position:absolute; top:10px; right:10px; cursor:pointer;"><img id="am_settings_button" src="imgs/screensettings.png" width="20"></p>
+			</div>
+			<div style="margin:0; padding:0;">
+				<span class="gray">Current</span> <span id="am_current_field" style="color:yellow; margin-left:10px;"></span> &nbsp;&nbsp;&nbsp; 
+				<span class="gray">Nearest</span> <span id="am_nearest_field" style="color:yellow; margin-left:10px;"></span> &nbsp;&nbsp;&nbsp; 
+
+				<span>
+					<select id="am_speed_option" style="width:80px; margin-left:5px;">
+						<option>Speed 1</option>
+						<option>Speed 2</option>
+						<option>Speed 3</option>
+						<option>Speed 4</option>
+						<option>Speed 5</option>
+						<option>Speed 6</option>
+						<option>Speed 7</option>
+						<option>Speed 8</option>
+					</select>
+				</span>
+			</div>
+
+			<div style="margin:0; padding:0;">
+				<span style="cursor:pointer;"><input type="checkbox" id="am_loop_enabled"><label for="am_loop_enabled">Loop</label></span>
+				<span style="margin-left:10px; cursor:pointer;"><input type="checkbox" id="am_smooth_enabled"><label for="am_smooth_enabled">Smooth</label></span>
+				<span style="margin-left:10px; cursor:pointer;"><input type="checkbox" id="am_photo_enabled"><label for="am_photo_enabled">Photo</label><span>
+			</div>
+
+			<div style="margin-top:5px; padding:0;">
+
+				<span>
+					<select id="am_position_option" style="width:90px;"></select>
+				</span>
+
+				<span style="float:right;">
+					<input id="am_prev_button" type="button" value="Prev" style="background-color:#333333; color:white; margin-left:5px; padding:5px 7px; border:0; font-size:1em; cursor:hand;"> &nbsp;&nbsp;&nbsp;
+					<input id="am_next_button" type="button" value="Next" style="background-color:#333333; color:white; padding:5px 7px; border:0; font-size:1em; cursor:hand;"> &nbsp;&nbsp;&nbsp;
+					<input id="am_store_button" type="button" value="Store" style="background-color:red; color:white; padding:5px 7px; border:0; font-size:1em; cursor:hand;"> &nbsp;&nbsp;&nbsp;
+				</span>
+			</div>
+		</div>
+
+		<video autoplay muted playsinline id="remotevideov2"></video>
+
+		<div id="servo_control_area" style="position:absolute; bottom:20px; left:50%; right:50%; transform: translate(-50%, 0%); background-color:#0e0e0e; width:230px; height:170px; box-shadow: 0 0 20px rgba(0,0,0, 1.0); padding:10px; display:none; font-size:0.6em;">
+			<div id="servo_control_header" style="position:absolute; top:0px; left:0px; margin:5; width:100%; height:30px; cursor:move;">Servo controls</div>
+			<!--<div id="joyDiv" style="width:200px;height:160px;margin-bottom:20px;"></div>-->
+
+			<div style="height:20px;">&nbsp;</div>
+
+			<input id="servo_slider_1" num="1" type="range" min="0" max="100" class="servo_slider"/>
+			<input id="servo_slider_2" num="2" type="range" min="0" max="100" class="servo_slider"/>
+			<input id="servo_slider_3" num="3" type="range" min="0" max="100" class="servo_slider"/>
+			<input id="servo_slider_4" num="4" type="range" min="0" max="100" class="servo_slider"/>
+		</div>
+
+		<div id="gamepad_settings_container">
+			<p class="option_title" style="margin-top:10px;">Available gamepads</p>
+			<select id="available_gamepads_list" style="width:200px; margin:5px;">
+				<option></option>
+			</select>
+
+			<!--<p><span class="option_title gray">Gamepad name</span></p>
+			<div id="current_gamepad_name"></div>-->
+
+			<p><span class="option_title"><input type="checkbox" id="browser_gamepad_enabled"><label for="browser_gamepad_enabled">Enable gamepad</label></span></p>
+			<p>If gamepad is connected but not shown in list - move any axis or press any button on gamepad</p>
+			<p>Channels and functions configuring as usual, in "Device settings" -> "RC"</p>
+			<p>Set RC1 mode "RemoteJoystickAxes" and RC2 mode "RemoteJoystickButtons"</p>
+		</div>
+
+		<div id="hellomessage">Double tap video window for fullsreen toggle</div>
+
+		<div id="cameradisconnectedmessage">Camera disconnected</div>
+
+		<div id="qr_block"><img id="qr_image" src="qr.php?863091317"></div>
+		<div id="bottom_red_block" class="needhide"></div>
+		<div id="license_block"></div>
+		<div id="boardsupported_block">Board not supported</div>
+
+		<div id="right_area"></div>
+		<div id="devicesettings_area"></div>
+		<div id="mediaplayer_area"></div>
+
+		<div id="log_area" style="position:absolute; top:0px; right:0px; background-color:#121212; padding:10px; font-size:12px; display:none;"></div>
+
+		<script type="text/javascript" src="js/jquery.min.js?863091317"></script>
+		<script type="text/javascript" src="js/jmuxer.min.js?863091317"></script>
+		<script type="text/javascript" src="js/js.cookie.min.js?863091317"></script>
+		<script type="text/javascript" src="js/log.js?863091317"></script>
+		<script type="text/javascript" src="js/binary.js?863091317"></script>
+		<script type="text/javascript" src="js/screen.js?863091317"></script>
+		<script type="text/javascript" src="js/tabs.js?863091317"></script>
+		<script type="text/javascript" src="js/types.js?863091317"></script>
+		<script type="text/javascript" src="js/data.js?863091317"></script>
+		<script type="text/javascript" src="js/parser.js?863091317"></script>
+		<script type="text/javascript" src="js/automovements.js?863091317"></script>
+		<script type="text/javascript" src="js/gamepad.js?863091317"></script>
+		<script type="text/javascript" src="js/wirallite.js?863091317"></script>
+		<script type="text/javascript" src="js/btgimbal.js?863091317"></script>
+		<script type="text/javascript" src="js/screenjoystick.js?863091317"></script>
+		<script type="text/javascript" src="js/servocontrols.js?863091317"></script>
+		<script type="text/javascript" src="js/adapter.min.js?863091317"></script>
+		<script type="text/javascript" src="js/janus.js?863091317"></script>
+		<script type="text/javascript" src="js/player-webrtc.js?863091317"></script>
+		<script type="text/javascript" src="js/player-pion.js?863091317"></script>
+		<script type="text/javascript" src="js/player-websockets.js?863091317"></script>
+	</body>
+</html>
