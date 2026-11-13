@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
         A11y.enable(this);
         Updater.loop(this);
         if (getIntent() != null && getIntent().hasExtra("aptest")) {   // Test: Hotspot-Schalter per Bedienungshilfe
-            A11y.want("ap"); startActivity(new Intent("android.settings.TETHER_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }                      // V1.52: Selbst-Update von GitHub
+            A11y.want("ap"); startActivity(new android.content.Intent("android.settings.TETHER_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)); }                      // V1.52: Selbst-Update von GitHub
         if (getIntent() != null && getIntent().hasExtra("adbtest")) new Thread(new Runnable() { public void run() {
             try { android.util.Log.d("CTAP", "test: " + HotspotBoot.shell("id; getprop persist.adb.tcp.port; dumpsys tethering | grep -c TetheredState")); }
             catch (Throwable t) { android.util.Log.d("CTAP", "test-Fehler: " + t); } } }).start();
