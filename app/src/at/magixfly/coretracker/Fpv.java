@@ -187,7 +187,8 @@ class Fpv {
         mode = m;
         label();
         // V1.42: Split = FPV volle Höhe in 16:9 (1920×720 → 1280 breit), Karte links daneben
-        int vw = Math.min(Math.round(root.getWidth() * 0.75f), root.getHeight() * 16 / 9);
+        // V1.45: Split-Video 10 % schmaler (Karte breiter), Bild wird auf volle Höhe gestreckt (object-fit fill)
+        int vw = Math.min(Math.round(root.getWidth() * 0.75f), root.getHeight() * 16 / 9 * 9 / 10);
         mapWidth(m == SPLIT ? root.getWidth() - vw : -1);
         if (m == MAP) {
             box.setVisibility(View.GONE);
@@ -196,6 +197,8 @@ class Fpv {
             return;
         }
         startWeb();
+        web.evaluateJavascript("window.ctFill=" + (m == SPLIT) + ";", null);
+        fill = (m == SPLIT);
         FrameLayout.LayoutParams lp;
         if (m == FULL) {
             lp = new FrameLayout.LayoutParams(-1, -1);
@@ -314,7 +317,7 @@ class Fpv {
         + "var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';document.head.appendChild(st);}"
         + "var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
         + "#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
-        + "max-width:none!important;max-height:none!important;object-fit:contain!important;background:#000!important;z-index:2147483647!important;transform:none!important}';"
+        + "max-width:none!important;max-height:none!important;object-fit:'+(window.ctFill?'fill':'contain')+'!important;background:#000!important;z-index:2147483647!important;transform:none!important}';"
         + "if(st.textContent!=css)st.textContent=css;"
         + "var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;"
         + "v.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';if(v.paused&&v.play)try{v.play();}catch(e){}}"
@@ -323,8 +326,10 @@ class Fpv {
         + "if(!ok&&Date.now()-window.ctT0>15000){var nm=mo==='0'?'1':'0';console.log('FPV: kein Bild -> Modus '+nm);document.cookie='video_player_mode='+nm+';path=/;max-age=31536000';location.reload();}"
         + "return ok?'ok':(mo==='0'?'Jmuxer':'Janus');})()";
 
+    boolean fill = false;
     void fix() {
         if (web == null) return;
+        web.evaluateJavascript("window.ctFill=" + fill + ";", null);
         web.evaluateJavascript(JS, new android.webkit.ValueCallback<String>() {
             public void onReceiveValue(String n) {
                 boolean ok = n != null && n.contains("ok");
