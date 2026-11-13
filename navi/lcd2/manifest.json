@@ -1,10 +1,11 @@
 {
- "fw": "V1.51",
+ "fw": "V1.52",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1237712,
- "md5": "09327735032ae569efae9d05fc04b5a9",
+ "groesse": 1242128,
+ "md5": "f09e2c365687ec3dc4f88b7ab227b4b7",
  "neu": [
+  "MT12 / ELRS as source: car position (EGPS), battery and LQ via the ELRS backpack when the Core is out of range – binding phrase in Settings",
   "'Rotate 180°' is now kept on the Navi – the Core no longer resets it",
   "Race-car font (Orbitron Black) for header, speed and GPS label",
   "Own GPS active: only 'GPS n' shown (small; orange without fix) – no Core warnings or empty Core values",
