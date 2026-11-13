@@ -11,7 +11,7 @@ class TileWorker implements Runnable {
                     while ((s.driving && !s.force) || !s.onWifi() || s.full) {   // beim Fahren nur die nötigen Kacheln (über die Karte)
                         s.paused = true;
                         s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE;
-                        Thread.sleep(s.driving ? 2000 : 15000);
+                        Thread.sleep(2000);   // sofort weiter, sobald frei
                     }
                     s.paused = false;
                     int z = (int) t[0], x = (int) t[1], y = (int) t[2];
