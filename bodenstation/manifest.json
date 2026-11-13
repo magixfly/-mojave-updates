@@ -1,16 +1,14 @@
 {
- "ver": "2.0.49",
+ "ver": "2.0.50",
  "neu": [
-  "Remote maintenance repairs itself after a power cut",
-  "Temperature green below 70°",
-  "Speaker frame green/red like the icon",
-  "Status line without pitch/roll/heading"
+  "WLAN power save off for all saved networks (more stable Wi-Fi)",
+  "Remote maintenance repairs itself after a power cut"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 114745,
-   "md5": "aed8f9ac4db29fb28f7534515fec2fd8"
+   "s": 114943,
+   "md5": "eb14f15544d52698e056b4dfb3a566f6"
   },
   {
    "p": "web/index.html",
