@@ -1,18 +1,18 @@
 {
- "ver": "2.0.36",
+ "ver": "2.0.37",
  "neu": [
-  "Thicker light blue borders on side panel tiles and map buttons"
+  "Car icon no longer turns while standing (heading held below 3 km/h)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 110015,
-   "md5": "436d4199901f109a19f7cc464136489c"
+   "md5": "9f4d624983d860bc71d6752667bd13e8"
   },
   {
    "p": "web/index.html",
-   "s": 130287,
-   "md5": "094aeb37b9863081c04b84aeefb5c904"
+   "s": 130407,
+   "md5": "45f1a0d427f221b97d6bcee4e310a534"
   }
  ]
 }

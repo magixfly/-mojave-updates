@@ -654,7 +654,7 @@ function smoothFeed(SM_=SM,o=st){const SM=SM_,st=o||{};
   let t=now;if(st.gts){const x=now-st.gts*1000;SM.off=SM.off==null?x:Math.min(x,SM.off+3);t=st.gts*1000+SM.off}
   if(L&&t<=L[0])t=L[0]+1;
   if(!L||Math.abs(L[1]-st.lat)+Math.abs(L[2]-st.lon)>0.002)SM.buf=[];   // big jump: no gliding
-  SM.buf.push([t,st.lat,st.lon,st.hdg||0]);if(SM.buf.length>40)SM.buf.splice(0,SM.buf.length-40);
+  SM.buf.push([t,st.lat,st.lon,(L&&(st.spd||0)<3)?L[3]:(st.hdg||0)]);   // V2.0.37: standing (<3 km/h) -> keep the last heading, the car does not turn by GPS noiseif(SM.buf.length>40)SM.buf.splice(0,SM.buf.length-40);
   // V2.0.19: GPS comes only ~1-2 times per second -> show the car one update interval late (+ reserve), else it stops and jumps
   if(L){SM.gap=(SM.gap||[]).concat(t-L[0]).slice(-6);if(SM.gap.length>=3){const g=SM.gap.slice().sort((x,y)=>x-y);
     SM.dlyT=Math.max(SM_DELAY,Math.min(2000,g[g.length-2]*1.15+120))}}
