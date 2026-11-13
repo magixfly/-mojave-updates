@@ -1,0 +1,9 @@
+### 032_tracker2033_app110  –  2026-11-13 01:33:03
+### Box: verbunden (172.20.10.14:5555)
+
+Success
+online: 2.0.33
+{"busy": true, "prog": 1, "msg": "checking \u2026", "online": "2.0.33", "neu": ["Short info next to the version number whenever a warning sound plays"], "cur": "2.0.32"}
+Tracker 2.0.33 läuft
+
+### Exit-Code: 0
