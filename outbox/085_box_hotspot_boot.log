@@ -1,0 +1,98 @@
+### 085_box_hotspot_boot  –  2026-11-13 20:04:48
+### Box: verbunden (172.20.10.14:5555)
+
+uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:su:s0
+5555
+--- ADB-Bestätigung aktiv?
+0
+--- su für Apps?
+ls: /system/xbin/su: No such file or directory
+ls: /system/bin/su: No such file or directory
+ls: /sbin/su: No such file or directory
+user
+--- Befehle
+  connectivity
+  connectivity_native
+  tethering
+  wifi
+  wifiaware
+  wifinl80211
+  wifip2p
+  wifirtt
+  wifiscanner
+  get-softap-supported-features
+    Gets softap supported features. Will print 'wifi_softap_acs_supported'
+    and/or 'wifi_softap_wpa3_sae_supported',
+    and/or 'wifi_softap_bridged_ap_supported',
+    and/or 'wifi_softap_bridged_ap_with_sta_supported',
+    each on a separate line.
+  set-poll-rssi-interval-msecs <int>
+    Sets the interval between RSSI polls to <int> milliseconds.
+--
+  start-softap <ssid> (open|wpa2|wpa3|wpa3_transition|owe|owe_transition) <passphrase> [-b 2|5|6|any|bridged|bridged_2_5|bridged_2_6|bridged_5_6] [-x] [-w 20|40|80|160|320] [-f <int> [<int>]]
+    Start softap with provided params
+    Note that the shell command doesn't activate internet tethering. In some devices, internet sharing is possible when Wi-Fi STA is also enabled and isassociated to another AP with internet access.
+    <ssid> - SSID of the network
+    open|wpa2|wpa3|wpa3_transition|owe|owe_transition - Security type of the network.
+--
+          The exact channel is auto-selected by FW unless overridden by force-softap-channel command or '-f <int> <int>' option
+    -f <int> <int> - force exact channel frequency for operation channel
+    Note: -f <int> <int> - must be the last option
+          For example:
+--
+  stop-softap
+    Stop softap (hotspot)
+  force-softap-band enabled <int> | disabled
+    Forces soft AP band to 2|5|6
+  force-softap-channel enabled <int> | disabled [-w <maxBandwidth>]
+    Sets whether soft AP channel is forced to <int> MHz [-w <maxBandwidth>]
+        -w 0|20|40|80|160|320 - select the maximum channel bandwidth (MHz)
+         Note: If the bandwidth option is not provided or set to 0, framework will set the maximum bandwidth to auto, allowing HAL to select the bandwidth
+--
+    Start local only softap (hotspot) with provided params
+No shell command implementation.
+--- Startskripte?
+UprobeStats.rc
+aconfigd.rc
+android.system.suspend-service.rc
+apexd.rc
+atrace.rc
+audioserver.rc
+blank_screen.rc
+bootanim.rc
+bootstat.rc
+cameraserver.rc
+dmesgd.rc
+drmserver.rc
+dumpstate.rc
+flags_health_check.rc
+gatekeeperd.rc
+gpuservice.rc
+gsid.rc
+heapprofd.rc
+hw
+idmap2d.rc
+incidentd.rc
+installd.rc
+kcmdlinectrl.rc
+keystore2.rc
+lmkd.rc
+logd.rc
+lpdumpd.rc
+mdnsd.rc
+mediaextractor.rc
+mediametrics.rc
+mediaserver_dynamic.rc
+misctrl.rc
+mtectrl.rc
+netbpfload.rc
+netd.rc
+odsign.rc
+perfetto.rc
+prng_seeder.rc
+recovery-persist.rc
+recovery-refresh.rc
+ls: /data/local/userinit*: No such file or directory
+/data/adb
+
+### Exit-Code: 1
