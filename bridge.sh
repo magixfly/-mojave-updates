@@ -18,6 +18,8 @@ if [ -n "${BOX_IPS:-}" ]; then
   pick=""
   for ip in $BOX_IPS; do adb devices | grep -q "^$ip:$BOX_PORT[[:space:]]*device" && { pick=$ip; break; }; done
   [ -z "$pick" ] && for ip in $BOX_IPS; do ping -c1 -W1 "$ip" >/dev/null 2>&1 && { pick=$ip; break; }; done
+  # 13.11. 16:00: Box als eigener 5-GHz-Hotspot (SIM) -> Box ist das Gateway des Pi
+  if [ -z "$pick" ]; then gw=$(ip route 2>/dev/null | awk '/^default/{print $3; exit}'); [ -n "$gw" ] && ping -c1 -W1 "$gw" >/dev/null 2>&1 && pick=$gw; fi
   BOX_IP=${pick:-${BOX_IPS%% *}}
 fi
 T="$BOX_IP:$BOX_PORT"
