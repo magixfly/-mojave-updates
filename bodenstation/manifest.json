@@ -1,19 +1,20 @@
 {
- "ver": "2.0.50",
+ "ver": "2.0.51",
  "neu": [
-  "WLAN power save off for all saved networks (more stable Wi-Fi)",
+  "Pi display shows only info while the Kia box shows the map (saves CPU); tap = map, small KIA button = info again",
+  "WLAN power save off",
   "Remote maintenance repairs itself after a power cut"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 114943,
-   "md5": "eb14f15544d52698e056b4dfb3a566f6"
+   "md5": "f54678cb4a84d62c50e62b40816b62e0"
   },
   {
    "p": "web/index.html",
-   "s": 134094,
-   "md5": "f2bde2be08a74586f4837e62d5cf06b8"
+   "s": 135903,
+   "md5": "95d248c8b8ddef05d8a84f5a7dbba586"
   }
  ]
 }

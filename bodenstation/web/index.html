@@ -867,6 +867,15 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
      e.style.color=r==null?'var(--mut)':r>=-70?'#30d158':r>=-82?'#ff9f0a':'#ff453a'}}
   $('cl').style.display=st.claude&&!DEMO?'inline-flex':'none';$('cl').classList.toggle('on',!!(st.claude&&!DEMO));
   if(!window.boxBound){window.boxBound=1;$('boxst').onclick=()=>{fetch('/api/boxcmd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({toggle:1})});$('boxst').textContent='\u{1F697} Box: sending …'}}
+  {// V2.0.51: Pi-Display zeigt nur Info, solange die Kia-Box die Karte anzeigt (spart CPU); Tippen = Karte, kleiner Knopf = wieder Info
+   const loc=['localhost','127.0.0.1'].includes(location.hostname)&&!document.getElementById('ctMaps');let k=$('kiaOv');
+   if(loc&&!k){k=document.createElement('div');k.id='kiaOv';k.innerHTML='<div class="kt">Display on Kia</div><div class="ki"><span id="kSpd">–</span><span id="kBat">–</span><span id="kLq">–</span></div><div class="kh">tap = show map here</div>';document.body.appendChild(k);
+     const b=document.createElement('div');b.id='kiaBtn';b.textContent='KIA';document.body.appendChild(b);
+     const st2=document.createElement('style');st2.textContent='#kiaOv{position:fixed;inset:0;z-index:900;background:#0b0f14;display:none;flex-direction:column;align-items:center;justify-content:center;gap:26px;color:#e5e7eb;cursor:pointer}#kiaOv .kt{font-size:54px;font-weight:800;color:#4ade80}#kiaOv .ki{display:flex;gap:46px;font-size:44px;font-weight:800;font-variant-numeric:tabular-nums}#kiaOv .kh{font-size:20px;color:var(--mut)}#kiaBtn{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);z-index:899;display:none;padding:6px 16px;border-radius:10px;border:2px solid rgba(74,222,128,.7);background:#0b0f14;color:#4ade80;font-weight:800;font-size:16px;cursor:pointer}';document.head.appendChild(st2);
+     k.onclick=()=>{window.kiaMan=1};b.onclick=()=>{window.kiaMan=0}}
+   if(k){const on=!!st.box&&!window.kiaMan;k.style.display=on?'flex':'none';$('kiaBtn').style.display=(st.box&&window.kiaMan)?'block':'none';
+     $('map').style.visibility=on?'hidden':'';
+     if(on){$('kSpd').textContent=($('vSpd').textContent||'–')+' km/h';$('kBat').textContent=$('vCell').textContent||'–';$('kLq').textContent='LQ '+($('vLq').textContent||'–')}}}
   {const e=$('boxst'),bx=st.box;   // V2.0.41: Carlin box map download (not on the box itself, it has its own pill)
    if(bx&&!document.getElementById('ctMaps')){e.style.display='inline-flex';e.classList.toggle('st',!!bx.stop||!bx.dl);
     e.textContent='\u{1F697} Box: '+(bx.txt||'').replace(/^Maps\s*/,'Maps ').replace(/\s*\u00b7\s*tap:.*$/,'');e.dataset.ip=bx.ip||''}
