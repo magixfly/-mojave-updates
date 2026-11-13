@@ -33,7 +33,7 @@ class TileStore {
     final AtomicLong done = new AtomicLong(), loaded = new AtomicLong(), bytes = new AtomicLong();
     volatile long total = 1;
     volatile String phase = "";
-    volatile boolean finished = false, paused = false, full = false, driving = false;
+    volatile boolean finished = false, paused = false, full = false, driving = false, force = false;
     volatile long lastMove = 0;
 
     TileStore(MainActivity a) {

@@ -115,6 +115,7 @@ public class MainActivity extends Activity {
         FrameLayout.LayoutParams plp = new FrameLayout.LayoutParams(-2, 50, 51);
         plp.leftMargin = 330;
         plp.topMargin = 0;
+        pill.setOnClickListener(new PillClick(this));
         root.addView(pill, plp);
 
         setContentView(root);
@@ -189,15 +190,16 @@ public class MainActivity extends Activity {
         if (d != null && d.length > 0) mojave.img = android.graphics.BitmapFactory.decodeByteArray(d, 0, d.length);
     }
 
-    void tick() {
+    void tick() { updatePill(); ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000); }
+
+    void updatePill() {
         String mb = tiles.bytes.get() > 1024L * 1024 * 1024 ? String.format("%.1f GB", tiles.bytes.get() / 1073741824.0) : (tiles.bytes.get() / 1048576) + " MB";
-        pillText.setText(tiles.finished ? "Karten komplett" : tiles.full ? "Karten · Speicher voll" : tiles.driving ? "Karten " + mb + " · Pause (Fahrt)" : tiles.paused ? "Karten " + mb + " · wartet auf WLAN" : "Karten " + mb);
-        ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000);
+        pillText.setText(tiles.finished ? "Karten komplett" : tiles.full ? "Karten · Speicher voll" : tiles.force ? "Karten " + mb + " · lädt immer (Tippen = Auto)" : tiles.driving ? "Karten " + mb + " · Pause (Fahrt)" : tiles.paused ? "Karten " + mb + " · wartet auf WLAN" : "Karten " + mb);
     }
 
     /** Anpassungen der Tracker-Seite nur auf der Box: Maßstab nach rechts unten. */
     /** Anpassungen der Tracker-Seite nur auf der Box: Maßstab rechts unten, Kompass, Beschriftung "heading". */
-    static final String CSS_JS = "(function(){var s=document.getElementById('ctbox');if(!s){s=document.createElement('style');s.id='ctbox';document.head.appendChild(s);}s.textContent='#scale{position:fixed!important;right:110px!important;bottom:10px!important;left:auto!important;z-index:999;background:rgba(11,15,20,.65);border-radius:8px;min-width:90px}'+'#ctcomp{position:fixed;left:244px;bottom:14px;width:104px;height:104px;z-index:999;pointer-events:none}';if(document.getElementById('ctcomp'))return;var c=document.createElement('div');c.id='ctcomp';c.innerHTML='<svg viewBox=\"-60 -60 120 120\" width=\"104\" height=\"104\"><circle r=\"56\" fill=\"rgba(11,15,20,.72)\" stroke=\"#9ca3af\" stroke-width=\"2\"/>'+'<g id=\"ctrose\"><text y=\"-38\" text-anchor=\"middle\" fill=\"#ef4444\" font-size=\"16\" font-weight=\"800\">N</text><text x=\"42\" y=\"6\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">E</text>'+'<text y=\"49\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">S</text><text x=\"-42\" y=\"6\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">W</text></g>'+'<g id=\"ctarr\"><path d=\"M0,-30 L10,8 L0,2 L-10,8Z\" fill=\"#4ade80\"/></g><text id=\"cthdg\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"800\">–</text></svg>';document.body.appendChild(c);var a=document.getElementById('att');function upd(){if(!a)return;var t=a.textContent||'';var m=t.match(/(\\d+)\\u00b0\\s*$/); if(m&&t.indexOf('heading')<0){var h=+m[1];document.getElementById('ctarr').setAttribute('transform','rotate('+h+')');document.getElementById('cthdg').textContent=h+'\\u00b0';  var n=a.lastChild;if(n&&n.nodeType==3)n.nodeValue=n.nodeValue.replace(/\\u00b7\\s*(\\d+)\\u00b0\\s*$/,'\\u00b7 heading $1\\u00b0');}}if(a)new MutationObserver(upd).observe(a,{childList:true,characterData:true,subtree:true});upd();})()";
+    static final String CSS_JS = "(function(){var s=document.getElementById('ctbox');if(!s){s=document.createElement('style');s.id='ctbox';document.head.appendChild(s);}if(document.getElementById('hdgComp')){s.textContent='';return;}s.textContent='#scale{position:fixed!important;right:110px!important;bottom:10px!important;left:auto!important;z-index:999;background:rgba(11,15,20,.65);border-radius:8px;min-width:90px}'+'#ctcomp{position:fixed;left:244px;bottom:14px;width:104px;height:104px;z-index:999;pointer-events:none}';if(document.getElementById('ctcomp')||document.getElementById('hdgComp'))return;var c=document.createElement('div');c.id='ctcomp';c.innerHTML='<svg viewBox=\"-60 -60 120 120\" width=\"104\" height=\"104\"><circle r=\"56\" fill=\"rgba(11,15,20,.72)\" stroke=\"#9ca3af\" stroke-width=\"2\"/>'+'<g id=\"ctrose\"><text y=\"-38\" text-anchor=\"middle\" fill=\"#ef4444\" font-size=\"16\" font-weight=\"800\">N</text><text x=\"42\" y=\"6\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">E</text>'+'<text y=\"49\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">S</text><text x=\"-42\" y=\"6\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">W</text></g>'+'<g id=\"ctarr\"><path d=\"M0,-30 L10,8 L0,2 L-10,8Z\" fill=\"#4ade80\"/></g><text id=\"cthdg\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"800\">–</text></svg>';document.body.appendChild(c);var a=document.getElementById('att');function upd(){if(!a)return;var t=a.textContent||'';var m=t.match(/(\\d+)\\u00b0\\s*$/); if(m&&t.indexOf('heading')<0){var h=+m[1];document.getElementById('ctarr').setAttribute('transform','rotate('+h+')');document.getElementById('cthdg').textContent=h+'\\u00b0';  var n=a.lastChild;if(n&&n.nodeType==3)n.nodeValue=n.nodeValue.replace(/\\u00b7\\s*(\\d+)\\u00b0\\s*$/,'\\u00b7 heading $1\\u00b0');}}if(a)new MutationObserver(upd).observe(a,{childList:true,characterData:true,subtree:true});upd();})()";
 
     static boolean ok(String host) {
         try {
