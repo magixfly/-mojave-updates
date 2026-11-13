@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
     Handler ui;
     SharedPreferences prefs;
     TileStore tiles;
+    Fpv fpv;
     volatile String piBase = null;
     volatile boolean searching = false;
     volatile boolean loaded = false;
@@ -97,6 +98,7 @@ public class MainActivity extends Activity {
 
         root.addView(overlay, new FrameLayout.LayoutParams(-1, -1, 17));
 
+        fpv = new Fpv(this, root);              // V1.26: optional FPV from the CosmoStreamer
         setContentView(root);
         AdbWifi.ensure(this);
         tiles = new TileStore(this);
@@ -118,6 +120,7 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        if (fpv != null && fpv.mode != Fpv.MAP) { fpv.setMode(Fpv.MAP); return; }
         if (web.canGoBack()) web.goBack(); else super.onBackPressed();
     }
 
