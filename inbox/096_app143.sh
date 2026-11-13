@@ -1,5 +1,5 @@
 #screenshot
-# App 1.41: Kopfzeile 60 px, Rahmen 46 px hoch
+# App 1.43: Kopfzeile höher, Split volle Höhe, Maps beim Start gestoppt, Box-WLAN-Anzeige
 adb push apk/CoreTracker.apk /sdcard/Download/coretracker.apk >/dev/null
 S=$(adb shell stat -c %s /sdcard/Download/coretracker.apk | tr -d '\r')
 adb shell "cat /sdcard/Download/coretracker.apk | pm install -r -S $S"

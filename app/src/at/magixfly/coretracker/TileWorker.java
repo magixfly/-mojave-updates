@@ -8,7 +8,7 @@ class TileWorker implements Runnable {
                 while (true) {
                     long[] t = s.q.take();
                     if (t[0] < 0) { s.finished = true; return; }
-                    while (s.stopped || s.driving || !s.online() || s.full || s.hotspot()) {   // V1.38: + iPhone-Hotspot   // stopped by tap, driving (map loads what it needs), no internet, storage full
+                    while (s.stopped || s.driving || !s.online() || s.full) {   // V1.43: Hotspot-Pause raus (Start ist ohnehin gestoppt)   // stopped by tap, driving (map loads what it needs), no internet, storage full
                         s.paused = true;
                         s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE;
                         Thread.sleep(2000);   // sofort weiter, sobald frei

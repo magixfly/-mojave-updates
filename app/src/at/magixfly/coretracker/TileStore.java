@@ -41,7 +41,7 @@ class TileStore {
         this.a = a;
         dir = new File(a.getFilesDir(), "tiles");
         dir.mkdirs();
-        stopped = a.prefs.getBoolean("dlStop", false);          // V1.22: stop by tapping "Maps", kept over restarts
+        stopped = true;                                          // V1.43: nach jedem Start gestoppt – Tippen auf „Maps“ startet/stoppt
     }
 
     File file(int z, int x, int y) { return new File(dir, z + "/" + x + "/" + y + ".jpg"); }
@@ -132,7 +132,7 @@ class TileStore {
     }
     void setStopped(boolean st) { stopped = st; a.prefs.edit().putBoolean("dlStop", st).apply(); }
     /** really downloading right now (for the turning Mojave) */
-    boolean loadingNow() { return !finished && !full && !stopped && !driving && !paused && !hotspot() && System.currentTimeMillis() - lastOk < 8000; }
+    boolean loadingNow() { return !finished && !full && !stopped && !driving && !paused && System.currentTimeMillis() - lastOk < 8000; }
 
     // ---------- Hilfen ----------
     static long lonX(double lon, int z) { return (long) Math.floor((lon + 180) / 360 * (1L << z)); }
