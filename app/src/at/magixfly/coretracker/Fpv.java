@@ -199,6 +199,7 @@ class Fpv {
         web.setBackgroundColor(Color.BLACK);
         web.setWebChromeClient(new WebChromeClient() {
             @Override public void onPermissionRequest(PermissionRequest r) { try { r.grant(r.getResources()); } catch (Throwable t) { } }
+            @Override public boolean onConsoleMessage(android.webkit.ConsoleMessage m) { android.util.Log.d("CTFPV", m.message() + " @" + m.lineNumber()); return true; }
         });
         web.setWebViewClient(new WebViewClient() {
             @Override public void onPageFinished(WebView v, String url) { fix(); }
@@ -233,7 +234,9 @@ class Fpv {
         + "max-width:none!important;max-height:none!important;object-fit:contain!important;background:#000!important;z-index:2147483647!important;transform:none!important}';"
         + "document.head.appendChild(st);}"
         + "var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;if(v.paused&&v.play)try{v.play();}catch(e){}}"
-        + "var m=document.getElementById('remotevideov1');return m&&m.videoWidth>0?1:0;})()";
+        + "var m=document.getElementById('remotevideov1');if(m){m.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';"
+        + "if(!window.ctdbg||Date.now()-window.ctdbg>6000){window.ctdbg=Date.now();console.log('FPVSTATE src='+!!m.srcObject+' rs='+m.readyState+' paused='+m.paused+' w='+m.videoWidth+' mode='+document.cookie+' janus='+(typeof Janus)+' rtc='+(typeof RTCPeerConnection));}}"
+        + "return m&&m.videoWidth>0?1:0;})()";
 
     void fix() {
         if (web == null) return;
