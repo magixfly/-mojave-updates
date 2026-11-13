@@ -1,0 +1,8 @@
+### 080_scan  –  2026-11-13 15:47:03
+### Box: verbunden (172.20.10.14:5555)
+
+Error: org.freedesktop.NetworkManager.wifi.scan request failed: not authorized.
+IN-USE  SSID  BSSID              CHAN  FREQ      SIGNAL 
+*       XVII  82:E5:82:2B:69:F3  6     2437 MHz  87     
+
+### Exit-Code: 0
