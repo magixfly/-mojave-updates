@@ -1,10 +1,11 @@
 {
- "fw": "V1.53",
+ "fw": "V1.54",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1242640,
- "md5": "7a63b2c5b168e10dc9332dae042f3657",
+ "groesse": 1242704,
+ "md5": "a8df0f43422ea6a2aa8d2217d8a051c0",
  "neu": [
+  "Fix: with MT12 set up, the channel-1 listening interrupted joining the phone hotspot",
   "Settings 'Mojave Core': off = ignore the Core completely (MT12 / own GPS only)",
   "MT12 / ELRS as source: car position (EGPS), battery and LQ via the ELRS backpack when the Core is out of range – binding phrase in Settings",
   "'Rotate 180°' is now kept on the Navi – the Core no longer resets it",
