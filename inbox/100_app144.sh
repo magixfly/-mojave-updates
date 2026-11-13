@@ -1,5 +1,5 @@
 #screenshot
-# App 1.45: Box-WLAN-Anzeige an richtiger Stelle, ohne Emoji
+# App 1.46: Box-WLAN-Anzeige an richtiger Stelle, ohne Emoji
 adb push apk/CoreTracker.apk /sdcard/Download/coretracker.apk >/dev/null
 S=$(adb shell stat -c %s /sdcard/Download/coretracker.apk | tr -d '\r')
 adb shell "cat /sdcard/Download/coretracker.apk | pm install -r -S $S"

@@ -211,6 +211,7 @@ class Fpv {
             tapCatcher.setVisibility(View.VISIBLE);
         }
         box.setLayoutParams(lp);
+        box.setAlpha(m == PIP ? ALPHA[Math.max(0, Math.min(2, a.prefs.getInt("pipA", 0)))] : 1f);
         box.setVisibility(View.VISIBLE);
         box.bringToFront();
         btn.bringToFront();
@@ -218,7 +219,8 @@ class Fpv {
 
     // ---- V1.37: Bild-im-Bild verschieben (ziehen), Größe (doppeltippen), Vollbild (tippen) ----
     static final float[] SIZES = {0.25f, 0.34f, 0.45f};
-    float dx, dy; int sx, sy; boolean drag; long lastUp; Runnable single;
+    float dx, dy; int sx, sy; boolean drag; long lastUp, downT; Runnable single;
+    static final float[] ALPHA = {1f, 0.8f, 0.6f};   // V1.46: lang drücken = Deckkraft 100/80/60 %
 
     FrameLayout.LayoutParams pipParams() {
         int W = root.getWidth(), H = root.getHeight();
@@ -235,7 +237,7 @@ class Fpv {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) box.getLayoutParams();
         switch (e.getActionMasked()) {
             case android.view.MotionEvent.ACTION_DOWN:
-                dx = e.getRawX(); dy = e.getRawY(); sx = lp.leftMargin; sy = lp.topMargin; drag = false;
+                dx = e.getRawX(); dy = e.getRawY(); sx = lp.leftMargin; sy = lp.topMargin; drag = false; downT = System.currentTimeMillis();
                 return true;
             case android.view.MotionEvent.ACTION_MOVE:
                 float mx = e.getRawX() - dx, my = e.getRawY() - dy;
@@ -252,6 +254,12 @@ class Fpv {
                     return true;
                 }
                 long now = System.currentTimeMillis();
+                if (now - downT > 600) {                              // lang gedrückt: Deckkraft wechseln
+                    int ai = (a.prefs.getInt("pipA", 0) + 1) % 3;
+                    a.prefs.edit().putInt("pipA", ai).apply();
+                    box.setAlpha(ALPHA[ai]);
+                    return true;
+                }
                 if (now - lastUp < 350 && single != null) {          // Doppeltippen: Größe wechseln
                     a.ui.removeCallbacks(single); single = null; lastUp = 0;
                     a.prefs.edit().putInt("pipS", (a.prefs.getInt("pipS", 1) + 1) % 3)
