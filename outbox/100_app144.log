@@ -1,0 +1,17 @@
+### 100_app144  –  2026-11-13 22:55:03
+### Box: verbunden (172.20.10.14:5555)
+
+Success
+    versionName=1.46
+5555
+
+tcp6       0      0 [::]:5555               [::]:*                  LISTEN     
+tcp6       0      0 ::ffff:127.0.0.1:39602  ::ffff:127.0.0.1:5555   TIME_WAIT  
+tcp6       0      0 ::ffff:127.0.0.1:39676  ::ffff:127.0.0.1:5555   TIME_WAIT  
+tcp6       0      0 ::ffff:127.0.0.1:39668  ::ffff:127.0.0.1:5555   TIME_WAIT  
+tcp6       0      0 ::ffff:127.0.0.1:39578  ::ffff:127.0.0.1:5555   TIME_WAIT  
+tcp6       0      0 ::ffff:127.0.0.1:39646  ::ffff:127.0.0.1:5555   TIME_WAIT  
+tcp6       0     24 ::ffff:172.20.10.1:5555 ::ffff:172.20.10.:44608 ESTABLISHED
+tcp6       0      0 ::ffff:127.0.0.1:39624  ::ffff:127.0.0.1:5555   TIME_WAIT  
+
+### Exit-Code: 0
