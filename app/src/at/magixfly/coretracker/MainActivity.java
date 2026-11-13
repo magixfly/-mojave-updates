@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
         pillText.setPadding(8, 0, 0, 0);
         pill.addView(pillText);
         FrameLayout.LayoutParams plp = new FrameLayout.LayoutParams(-2, 50, 51);
-        plp.leftMargin = 330;
+        plp.leftMargin = 300;
         plp.topMargin = 0;
         pill.setOnClickListener(new PillClick(this));
         root.addView(pill, plp);
