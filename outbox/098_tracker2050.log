@@ -1,0 +1,9 @@
+### 098_tracker2050  –  2026-11-13 21:43:05
+### Box: NICHT erreichbar (172.20.10.1:5555)
+
+{"busy": true, "prog": 1, "msg": "checking \u2026", "online": "2.0.50", "neu": ["WLAN power save off for all saved networks (more stable Wi-Fi)", "Remote maintenance repairs itself after a power cut"]
+"ver": "2.0.50"
+XVII: powersave=disable
+CoreTracker: powersave=disable
+
+### Exit-Code: 0
