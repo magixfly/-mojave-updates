@@ -13,6 +13,13 @@ export LD_LIBRARY_PATH="${LD_LIBRARY_PATH:-}"; . "$HOME/adbx/env.sh"
 CFG_BOX_IP=172.20.10.14; BOX_PORT=5555; HEARTBEAT_MIN=30; CMD_TIMEOUT=600
 BOX_IP=$CFG_BOX_IP
 [ -f config.txt ] && . ./config.txt
+# 13.11.: Box ist mal im Heim-WLAN, mal im iPhone-Hotspot -> erste Adresse nehmen, die schon verbunden ist oder auf ping antwortet
+if [ -n "${BOX_IPS:-}" ]; then
+  pick=""
+  for ip in $BOX_IPS; do adb devices | grep -q "^$ip:$BOX_PORT[[:space:]]*device" && { pick=$ip; break; }; done
+  [ -z "$pick" ] && for ip in $BOX_IPS; do ping -c1 -W1 "$ip" >/dev/null 2>&1 && { pick=$ip; break; }; done
+  BOX_IP=${pick:-${BOX_IPS%% *}}
+fi
 T="$BOX_IP:$BOX_PORT"
 log(){ echo "$(date '+%F %T') $*" >> "$HOME/carlin-bridge.log"; }
 

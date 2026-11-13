@@ -1,6 +1,7 @@
 # Carlin-Bridge Einstellungen (wird bei jedem Durchlauf neu eingelesen)
 # IP der Carlin-Box im iPhone-Hotspot
 BOX_IP=172.20.10.14
+BOX_IPS="192.168.178.235 172.20.10.14"   # Heim-WLAN, iPhone-Hotspot XVII (erste erreichbare gewinnt)
 # fester ADB-Port (wird nach Neustart der Box automatisch wieder gesetzt)
 BOX_PORT=5555
 # Lebenszeichen alle X Minuten nach GitHub schreiben (0 = aus)
