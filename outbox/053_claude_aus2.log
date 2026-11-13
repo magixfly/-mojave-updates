@@ -1,0 +1,6 @@
+### 053_claude_aus2  –  2026-11-13 10:57:03
+### Box: verbunden (192.168.178.235:5555)
+
+ls: cannot access '/tmp/claude_remote': No such file or directory
+
+### Exit-Code: 2
