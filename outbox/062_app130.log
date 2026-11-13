@@ -1,0 +1,12 @@
+### 062_app130  –  2026-11-13 13:54:02
+### Box: verbunden (192.168.178.235:5555)
+
+Success
+    versionName=1.30
+11-13 13:54:30.182 23227 23227 D CTFPV   : Uncaught SecurityError: Failed to read the 'cookie' property from 'Document': Access is denied for this document. @1
+11-13 13:54:32.135 23227 23227 D CTFPV   : Uncaught SecurityError: Failed to read the 'cookie' property from 'Document': Access is denied for this document. @1
+11-13 13:54:34.138 23227 23227 D CTFPV   : Uncaught SecurityError: Failed to read the 'cookie' property from 'Document': Access is denied for this document. @1
+11-13 13:54:36.137 23227 23227 D CTFPV   : Uncaught SecurityError: Failed to read the 'cookie' property from 'Document': Access is denied for this document. @1
+11-13 13:54:38.138 23227 23227 D CTFPV   : Uncaught SecurityError: Failed to read the 'cookie' property from 'Document': Access is denied for this document. @1
+
+### Exit-Code: 0
