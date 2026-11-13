@@ -1,0 +1,14 @@
+### 056_app126  –  2026-11-13 13:38:03
+### Box: verbunden (192.168.178.235:5555)
+
+Success
+    versionName=1.26
+--- CosmoStreamer aus Sicht des Pi:
+cosmostreamer.local: <title>Cosmostreamer NG - 192.168.178.175
+
+192.168.178.175: <title>Cosmostreamer NG - 192.168.178.175
+
+172.20.10.10: 
+11-13 13:39:48.538  2765  2807 D FloatBallService: update 0 topPkg: at.magixfly.coretracker
+
+### Exit-Code: 0
