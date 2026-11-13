@@ -207,6 +207,7 @@ class Fpv {
         });
         box.addView(web, 0, new FrameLayout.LayoutParams(-1, -1));
         box.addView(tapCatcher, new FrameLayout.LayoutParams(-1, -1));
+        try { android.webkit.CookieManager.getInstance().setCookie(base, "video_player_mode=1; path=/"); } catch (Throwable t) { }
         web.loadUrl(base + "/");
         keepFixing();
     }
@@ -225,18 +226,20 @@ class Fpv {
         a.ui.postDelayed(new Runnable() { public void run() { if (web != null) { fix(); keepFixing(); } } }, 2000);
     }
 
+    /** Janus zuerst; kommt nach 12 s kein Bild, auf Jmuxer (Modus 0) umschalten. Nur das aktive Video groß zeigen, stumm. */
     static final String JS = "(function(){"
-        + "var ss=document.querySelectorAll('select');for(var i=0;i<ss.length;i++){var s=ss[i];for(var j=0;j<s.options.length;j++){var o=s.options[j];"
-        + "if(/janus/i.test(o.text)&&s.selectedIndex!=j){s.selectedIndex=j;s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));}}}"
-        + "if(!document.getElementById('ctfpv')){var st=document.createElement('style');st.id='ctfpv';"
-        + "st.textContent='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
-        + "#remotevideov1{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
+        + "var mo=(document.cookie.match(/video_player_mode=(\\d)/)||[])[1]||'1';var id=mo==='0'?'video_element':'remotevideov1';"
+        + "var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';document.head.appendChild(st);}"
+        + "var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
+        + "#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
         + "max-width:none!important;max-height:none!important;object-fit:contain!important;background:#000!important;z-index:2147483647!important;transform:none!important}';"
-        + "document.head.appendChild(st);}"
-        + "var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;if(v.paused&&v.play)try{v.play();}catch(e){}}"
-        + "var m=document.getElementById('remotevideov1');if(m){m.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';"
-        + "if(!window.ctdbg||Date.now()-window.ctdbg>6000){window.ctdbg=Date.now();console.log('FPVSTATE src='+!!m.srcObject+' rs='+m.readyState+' paused='+m.paused+' w='+m.videoWidth+' mode='+document.cookie+' janus='+(typeof Janus)+' rtc='+(typeof RTCPeerConnection));}}"
-        + "return m&&m.videoWidth>0?1:0;})()";
+        + "if(st.textContent!=css)st.textContent=css;"
+        + "var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;"
+        + "v.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';if(v.paused&&v.play)try{v.play();}catch(e){}}"
+        + "var m=document.getElementById(id);window.ctT0=window.ctT0||Date.now();var ok=m&&m.videoWidth>0;"
+        + "if(!window.ctdbg||Date.now()-window.ctdbg>6000){window.ctdbg=Date.now();console.log('FPVSTATE id='+id+' rs='+(m&&m.readyState)+' w='+(m&&m.videoWidth));}"
+        + "if(!ok&&id=='remotevideov1'&&Date.now()-window.ctT0>12000){console.log('FPV: Janus ohne Bild -> Jmuxer');document.cookie='video_player_mode=0;path=/;max-age=31536000';location.reload();}"
+        + "return ok?1:0;})()";
 
     void fix() {
         if (web == null) return;
