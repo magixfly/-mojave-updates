@@ -49,13 +49,23 @@ public class A11y extends AccessibilityService {
         List<AccessibilityNodeInfo> hs = root.findAccessibilityNodeInfosByText("WLAN-Hotspot");
         if (hs.isEmpty()) hs = root.findAccessibilityNodeInfosByText("Wi-Fi hotspot");
         if (hs.isEmpty()) return;
-        AccessibilityNodeInfo sw = findSwitch(root);
-        if (sw == null) return;
-        if (!sw.isChecked()) {
-            AccessibilityNodeInfo c = sw;
+        android.graphics.Rect hr = new android.graphics.Rect(); hs.get(0).getBoundsInScreen(hr);
+        java.util.ArrayList<AccessibilityNodeInfo> sws = new java.util.ArrayList<AccessibilityNodeInfo>();
+        collect(root, sws);
+        AccessibilityNodeInfo best = null; int bd = 99999;
+        for (AccessibilityNodeInfo n : sws) {
+            android.graphics.Rect r = new android.graphics.Rect(); n.getBoundsInScreen(r);
+            Log.d("CTAP", "Schalter " + n.getClassName() + " checked=" + n.isChecked() + " " + r.toShortString());
+            int d = Math.abs(r.centerY() - hr.centerY());
+            if (d < bd) { bd = d; best = n; }
+        }
+        Log.d("CTAP", "Hotspot-Text " + hr.toShortString() + ", Schalter: " + sws.size());
+        if (best == null || bd > 200) return;               // Seite noch nicht fertig aufgebaut
+        if (!best.isChecked()) {
+            AccessibilityNodeInfo c = best;
             while (c != null && !c.isClickable()) c = c.getParent();
-            if (c != null) c.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-            Log.d("CTAP", "Hotspot-Schalter angetippt");
+            boolean ok = c != null && c.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            Log.d("CTAP", "Hotspot-Schalter angetippt: " + ok);
         } else Log.d("CTAP", "Hotspot war schon an");
         task = null;
         new android.os.Handler(getMainLooper()).postDelayed(new Runnable() { public void run() {
@@ -64,13 +74,10 @@ public class A11y extends AccessibilityService {
         } }, 2500);
     }
 
-    /** erster Schalter auf der Seite = WLAN-Hotspot (darunter USB/Ethernet-Tethering) */
-    AccessibilityNodeInfo findSwitch(AccessibilityNodeInfo n) {
-        if (n == null) return null;
-        CharSequence cn = n.getClassName();
-        if (cn != null && (cn.toString().endsWith("Switch") || cn.toString().endsWith("SwitchCompat") || cn.toString().endsWith("MaterialSwitch"))) return n;
-        for (int i = 0; i < n.getChildCount(); i++) { AccessibilityNodeInfo r = findSwitch(n.getChild(i)); if (r != null) return r; }
-        return null;
+    void collect(AccessibilityNodeInfo n, java.util.List<AccessibilityNodeInfo> out) {
+        if (n == null) return;
+        if (n.isCheckable()) out.add(n);
+        for (int i = 0; i < n.getChildCount(); i++) collect(n.getChild(i), out);
     }
 
     void doInst(AccessibilityNodeInfo root) {
