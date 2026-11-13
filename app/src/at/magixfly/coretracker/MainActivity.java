@@ -34,6 +34,11 @@ public class MainActivity extends Activity {
     LinearLayout barBox;
     Handler ui;
     SharedPreferences prefs;
+    TileStore tiles;
+    MojaveView mojave;
+    TextView pillText;
+    LinearLayout pill;
+    volatile String piBase = null;
     volatile boolean searching = false;
     volatile boolean loaded = false;
     int barWidthPx = 600;
@@ -93,7 +98,29 @@ public class MainActivity extends Activity {
         overlay.addView(barBox, new LinearLayout.LayoutParams(barWidthPx, 56));
 
         root.addView(overlay, new FrameLayout.LayoutParams(-1, -1, 17));
+
+        // links oben: drehender Mojave + Fortschritt des Karten-Downloads
+        pill = new LinearLayout(this);
+        pill.setOrientation(0);
+        pill.setGravity(16);
+        pill.setBackgroundColor(0xCC0B0F14);
+        pill.setPadding(6, 2, 14, 2);
+        mojave = new MojaveView(this);
+        pill.addView(mojave, new LinearLayout.LayoutParams(46, 46));
+        pillText = new TextView(this);
+        pillText.setTextColor(0xFF4ADE80);
+        pillText.setTextSize(15);
+        pillText.setPadding(8, 0, 0, 0);
+        pill.addView(pillText);
+        FrameLayout.LayoutParams plp = new FrameLayout.LayoutParams(-2, 50, 51);
+        plp.leftMargin = 330;
+        plp.topMargin = 0;
+        root.addView(pill, plp);
+
         setContentView(root);
+        tiles = new TileStore(this);
+        tiles.start();
+        ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000);
         hideBars();
         search();
     }
@@ -145,6 +172,8 @@ public class MainActivity extends Activity {
             if (found != null) {
                 String host = found;
                 prefs.edit().putString("host", host).apply();
+                piBase = "http://" + host + ":" + PORT;
+                loadCarImage();
                 showOverlay("Gefunden: " + host, 100);
                 loaded = true;
                 ui.post(new Task(this, Task.LOAD, "http://" + host + ":" + PORT + "/", 0));
@@ -153,6 +182,21 @@ public class MainActivity extends Activity {
                 ui.postDelayed(new Task(this, Task.SEARCH, null, 0), 5000);
             }
     }
+
+    void loadCarImage() {
+        if (mojave.img != null) return;
+        byte[] d = TileStore.http(piBase + "/car.png", 3000);
+        if (d != null && d.length > 0) mojave.img = android.graphics.BitmapFactory.decodeByteArray(d, 0, d.length);
+    }
+
+    void tick() {
+        pillText.setText(tiles.finished ? "Karten komplett" : tiles.paused ? "Karten " + tiles.percent() + " % · wartet auf WLAN" : "Karten " + tiles.percent() + " %");
+        ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000);
+    }
+
+    /** Anpassungen der Tracker-Seite nur auf der Box: Maßstab nach rechts unten. */
+    static final String CSS_JS = "(function(){var s=document.getElementById('ctbox');if(!s){s=document.createElement('style');s.id='ctbox';document.head.appendChild(s);}"
+        + "s.textContent='#scale{position:fixed!important;right:110px!important;bottom:10px!important;left:auto!important;z-index:999;background:rgba(11,15,20,.65);border-radius:8px;min-width:90px}';})()";
 
     static boolean ok(String host) {
         try {
