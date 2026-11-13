@@ -1,13 +1,13 @@
 {
- "ver": "2.0.43",
+ "ver": "2.0.44",
  "neu": [
-  "Box: CLAUDE badge only while Claude is connected"
+  "ESP receiver: automatic reset if it stays silent after a Pi restart (no re-plugging needed)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 111027,
-   "md5": "64e01035e9a669ab70f4c0d3f5da24f3"
+   "s": 112317,
+   "md5": "94601290987ff77d4093e6eebf1b44fb"
   },
   {
    "p": "web/index.html",

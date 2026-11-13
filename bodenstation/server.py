@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.43"
+VERSION = "2.0.44"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1464,6 +1464,30 @@ def open_serial(dev, baud):
     termios.tcsetattr(fd, termios.TCSANOW, a)
     return fd
 
+def esp_lines(fd, rts):
+    """V2.0.44: modem lines of the ESP32 USB serial: DTR always low (GPIO0 high), RTS high = EN low (reset)"""
+    try:
+        import fcntl, struct
+        fcntl.ioctl(fd, termios_mod().TIOCMBIC, struct.pack("I", termios_mod().TIOCM_DTR))
+        fcntl.ioctl(fd, termios_mod().TIOCMBIS if rts else termios_mod().TIOCMBIC, struct.pack("I", termios_mod().TIOCM_RTS))
+    except Exception as e:
+        print("esp lines", e)
+
+def termios_mod():
+    import termios
+    return termios
+
+ESP_RST = {"t": 0.0}
+def esp_reset(fd):
+    """V2.0.44: ESP hangs after a Pi restart (nothing comes until re-plugged) -> hard reset like esptool, at most every 30 s"""
+    if time.time() - ESP_RST["t"] < 30:
+        return
+    ESP_RST["t"] = time.time()
+    print("ESP silent -> hard reset")
+    esp_lines(fd, rts=True)
+    time.sleep(0.15)
+    esp_lines(fd, rts=False)
+
 def serial_win(dev):
     try:
         import serial
@@ -1510,6 +1534,8 @@ def serial_thread():
         with LOCK:
             S["dev"] = dev
         p = Crsf("UART" if "serial" in dev or "ttyAMA" in dev or "ttyS" in dev else "USB")
+        usb_esp = any(os.path.realpath(l) == os.path.realpath(dev) for l in glob.glob("/dev/serial/by-id/*Espressif*"))   # V2.0.44: only the ESP32 receiver
+        last = time.time()
         try:
             while True:
                 r, _, _ = select.select([fd], [], [], 1.0)
@@ -1517,7 +1543,11 @@ def serial_thread():
                     d = os.read(fd, 1024)
                     if not d:
                         raise OSError("closed")
+                    last = time.time()
                     p.feed(d)
+                elif usb_esp and time.time() - last > 8:   # ESP sends at least 1 frame per second -> silent = stuck
+                    esp_reset(fd)
+                    last = time.time()
         except Exception as e:
             print("serial lost", e)
         try:
