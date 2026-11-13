@@ -236,8 +236,8 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
   <div class="car" id="car2"></div>
 </div>
 <div id="hdgComp" style="display:none"><svg viewBox="-60 -60 120 120"><circle r="56" fill="rgba(11,15,20,.72)" stroke="#9ca3af" stroke-width="2"/>
-  <g id="hcRose"><text y="-38" text-anchor="middle" fill="#ef4444" font-size="16" font-weight="800">N</text><text x="42" y="6" text-anchor="middle" fill="#e5e7eb" font-size="13" font-weight="700">E</text>
-  <text y="49" text-anchor="middle" fill="#e5e7eb" font-size="13" font-weight="700">S</text><text x="-42" y="6" text-anchor="middle" fill="#e5e7eb" font-size="13" font-weight="700">W</text></g>
+  <g id="hcRose"><text id="hcN" text-anchor="middle" fill="#ef4444" font-size="16" font-weight="800">N</text><text id="hcE" text-anchor="middle" fill="#e5e7eb" font-size="13" font-weight="700">E</text>
+  <text id="hcS" text-anchor="middle" fill="#e5e7eb" font-size="13" font-weight="700">S</text><text id="hcW" text-anchor="middle" fill="#e5e7eb" font-size="13" font-weight="700">W</text></g>
   <g id="hcArr"><path d="M0,-30 L10,8 L0,2 L-10,8Z" fill="#4ade80"/></g><text id="hcTxt" y="30" text-anchor="middle" fill="#fff" font-size="15" font-weight="800">–</text></svg></div>
 <div id="btns">
   <div class="b" id="bIn">+</div>
@@ -688,7 +688,8 @@ function loop(){
    const nz=V.zoff+(tgt-V.zoff)*0.015;V.z=Math.max(3,Math.min(C.max_zoom+.99,V.z-(nz-V.zoff)));V.zoff=nz;if(Math.abs(tgt-nz)>0.005)dirty=true}
   V.rot=V.head&&!(TWO&&FOL===0)?-F.hdg*Math.PI/180:(V.urot||0);   // V2.0.14: north mode can be turned with 2 fingers
   {const c=$('hdgComp'),ok=st.lat!=null&&st.hdg!=null;c.style.display=ok?'':'none';   // V2.0.30: compass like the Navi
-   if(ok){const r=V.rot*180/Math.PI,h=SM.hdg;$('hcRose').setAttribute('transform',`rotate(${r.toFixed(1)})`);$('hcArr').setAttribute('transform',`rotate(${(h+r).toFixed(1)})`);
+   if(ok){const r=V.rot*180/Math.PI,h=SM.hdg;[['hcN',0],['hcE',90],['hcS',180],['hcW',270]].forEach(([id,a])=>{const q=(a+r)*Math.PI/180,e=$(id);e.setAttribute('x',(42*Math.sin(q)).toFixed(1));e.setAttribute('y',(-42*Math.cos(q)+5).toFixed(1))});   // letters stay upright
+     $('hcArr').setAttribute('transform',`rotate(${(h+r).toFixed(1)})`);
      const t=Math.round(((st.hdg%360)+360)%360)+'°';if($('hcTxt').textContent!==t)$('hcTxt').textContent=t}}
   const key=[V.lat.toFixed(7),V.lon.toFixed(7),V.z.toFixed(3),V.rot.toFixed(3),SM.lat,SM.lon,SM.hdg.toFixed(1),track.length,st.age>2,RIDE.pts?RIDE.pts.length:0,RIDE.mode,RIDE.T,W,H,st.me&&st.me.lat,st.me&&st.me.lon,FIND.on,SM2.lat,SM2.lon,SM2.hdg,track2.length,TWO,FOL,ICON.join(),extras().map(c=>c.n+':'+c.lat+':'+c.lon+':'+c.hdg+':'+(XT[c.n]?XT[c.n].pts.length:0)).join()].join('|');
   if(!dirty&&!moving&&key===lastKey&&!(st.age>2))return;  // nothing changed: do not redraw

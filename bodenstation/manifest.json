@@ -1,20 +1,18 @@
 {
- "ver": "2.0.30",
+ "ver": "2.0.31",
  "neu": [
-  "Compass on the map (bottom left), like the Navi",
-  "Heading shown as 'heading 163\u00b0'",
-  "Scale moved to the bottom right of the map"
+  "Compass letters stay upright when the map turns (heading up)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 110015,
-   "md5": "b2843f198cebf4c4677710ca5914745b"
+   "md5": "5a1ea1536c4e020d2c81d8ec222d1822"
   },
   {
    "p": "web/index.html",
-   "s": 129565,
-   "md5": "ba9c331af9a1ec7eb91d148bf89ebe4c"
+   "s": 129728,
+   "md5": "6ff177dbbf0d5d58fcdf233991befd06"
   }
  ]
 }
