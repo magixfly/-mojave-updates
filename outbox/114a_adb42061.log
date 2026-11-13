@@ -1,0 +1,17 @@
+### 114a_adb42061  –  2026-11-14 00:48:05
+### Box: NICHT erreichbar (172.20.10.14:5555)
+
+failed to connect to '172.20.10.14:42061': Connection refused
+error: device offline
+already connected to 172.20.10.14:5555
+List of devices attached
+172.20.10.14:42061	offline
+172.20.10.14:5555	offline
+172.20.10.1:49152	offline
+192.168.178.1:42843	offline
+192.168.178.1:47001	offline
+192.168.178.1:49000	offline
+192.168.47.241:47305	offline
+
+
+### Exit-Code: 0
