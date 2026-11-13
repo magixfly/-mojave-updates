@@ -56,7 +56,23 @@ class TileStore {
     }
 
     // ---------- Hintergrund-Download ----------
+    /** Gesamtgröße aller gespeicherten Kacheln (bleibt über Neustarts erhalten). */
+    void loadTotal() {
+        long b = a.prefs.getLong("tileBytes", -1);
+        if (b >= 0) { bytes.set(b); return; }
+        bytes.set(dirSize(dir));                       // einmalig zählen
+        saveTotal();
+    }
+    void saveTotal() { a.prefs.edit().putLong("tileBytes", bytes.get()).apply(); }
+    static long dirSize(File f) {
+        if (f.isFile()) return f.length();
+        long t = 0; File[] l = f.listFiles();
+        if (l != null) for (File x : l) t += dirSize(x);
+        return t;
+    }
+
     void start() {
+        loadTotal();
         long t = 0;
         for (int z = ZMIN; z <= ZMAX; z++) t += count(z);
         total = t;

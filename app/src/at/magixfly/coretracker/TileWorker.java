@@ -22,7 +22,7 @@ class TileWorker implements Runnable {
                         if (d.length > 0) { s.loaded.incrementAndGet(); s.bytes.addAndGet(d.length); }
                     }
                     s.done.incrementAndGet();
-                    if ((s.done.get() & 255) == 0) s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE;
+                    if ((s.done.get() & 255) == 0) { s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE; s.saveTotal(); }
                 }
             } catch (Throwable e) { }
         }
