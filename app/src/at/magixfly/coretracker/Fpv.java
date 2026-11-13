@@ -57,7 +57,7 @@ class Fpv {
         box.addView(info, new FrameLayout.LayoutParams(-1, -1));
 
         tapCatcher = new View(a);
-        tapCatcher.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { setMode(FULL); } });
+        tapCatcher.setOnTouchListener(new View.OnTouchListener() { public boolean onTouch(View v, android.view.MotionEvent e) { return pipTouch(e); } });
         tapCatcher.setVisibility(View.GONE);
 
         btn = new TextView(a);
@@ -203,16 +203,67 @@ class Fpv {
             lp = new FrameLayout.LayoutParams(vw, -1, Gravity.RIGHT | Gravity.TOP);
             tapCatcher.setVisibility(View.GONE);
         } else {
-            int w = Math.round(root.getWidth() * 0.34f), h = w * 9 / 16;
-            lp = new FrameLayout.LayoutParams(w, h, Gravity.RIGHT | Gravity.TOP);
-            lp.topMargin = 62;
-            lp.rightMargin = 100;     // rechte Tastenleiste frei lassen
+            lp = pipParams();
             tapCatcher.setVisibility(View.VISIBLE);
         }
         box.setLayoutParams(lp);
         box.setVisibility(View.VISIBLE);
         box.bringToFront();
         btn.bringToFront();
+    }
+
+    // ---- V1.37: Bild-im-Bild verschieben (ziehen), Größe (doppeltippen), Vollbild (tippen) ----
+    static final float[] SIZES = {0.25f, 0.34f, 0.45f};
+    float dx, dy; int sx, sy; boolean drag; long lastUp; Runnable single;
+
+    FrameLayout.LayoutParams pipParams() {
+        int W = root.getWidth(), H = root.getHeight();
+        int si = Math.max(0, Math.min(2, a.prefs.getInt("pipS", 1)));
+        int w = Math.round(W * SIZES[si]), h = w * 9 / 16;
+        int x = a.prefs.getInt("pipX", W - w - 100), y = a.prefs.getInt("pipY", 62);
+        x = Math.max(0, Math.min(W - w, x)); y = Math.max(0, Math.min(H - h, y));
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(w, h, Gravity.LEFT | Gravity.TOP);
+        lp.leftMargin = x; lp.topMargin = y;
+        return lp;
+    }
+
+    boolean pipTouch(android.view.MotionEvent e) {
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) box.getLayoutParams();
+        switch (e.getActionMasked()) {
+            case android.view.MotionEvent.ACTION_DOWN:
+                dx = e.getRawX(); dy = e.getRawY(); sx = lp.leftMargin; sy = lp.topMargin; drag = false;
+                return true;
+            case android.view.MotionEvent.ACTION_MOVE:
+                float mx = e.getRawX() - dx, my = e.getRawY() - dy;
+                if (!drag && Math.abs(mx) + Math.abs(my) > 24) drag = true;
+                if (drag) {
+                    lp.leftMargin = Math.max(0, Math.min(root.getWidth() - lp.width, sx + Math.round(mx)));
+                    lp.topMargin = Math.max(0, Math.min(root.getHeight() - lp.height, sy + Math.round(my)));
+                    box.setLayoutParams(lp);
+                }
+                return true;
+            case android.view.MotionEvent.ACTION_UP:
+                if (drag) {
+                    a.prefs.edit().putInt("pipX", lp.leftMargin).putInt("pipY", lp.topMargin).apply();
+                    return true;
+                }
+                long now = System.currentTimeMillis();
+                if (now - lastUp < 350 && single != null) {          // Doppeltippen: Größe wechseln
+                    a.ui.removeCallbacks(single); single = null; lastUp = 0;
+                    a.prefs.edit().putInt("pipS", (a.prefs.getInt("pipS", 1) + 1) % 3)
+                        .putInt("pipX", lp.leftMargin + lp.width).putInt("pipY", lp.topMargin).apply();
+                    FrameLayout.LayoutParams n = pipParams();
+                    n.leftMargin = Math.max(0, Math.min(root.getWidth() - n.width, lp.leftMargin + lp.width - n.width));  // rechte Kante bleibt
+                    a.prefs.edit().putInt("pipX", n.leftMargin).apply();
+                    box.setLayoutParams(n);
+                    return true;
+                }
+                lastUp = now;
+                single = new Runnable() { public void run() { single = null; if (mode == PIP) setMode(FULL); } };
+                a.ui.postDelayed(single, 360);
+                return true;
+        }
+        return true;
     }
 
     void startWeb() {
@@ -226,6 +277,8 @@ class Fpv {
         s.setLoadWithOverviewMode(true);
         web.setBackgroundColor(Color.BLACK);
         web.setWebChromeClient(new WebChromeClient() {
+            @Override public boolean onJsAlert(WebView v, String url, String msg, android.webkit.JsResult r) { r.confirm(); android.util.Log.d("CTFPV", "alert: " + msg); return true; }
+            @Override public boolean onJsConfirm(WebView v, String url, String msg, android.webkit.JsResult r) { r.cancel(); return true; }
             @Override public void onPermissionRequest(PermissionRequest r) { try { r.grant(r.getResources()); } catch (Throwable t) { } }
             @Override public boolean onConsoleMessage(android.webkit.ConsoleMessage m) { android.util.Log.d("CTFPV", m.message() + " @" + m.lineNumber()); return true; }
         });
@@ -256,7 +309,7 @@ class Fpv {
 
     /** Janus zuerst; kommt nach 12 s kein Bild, auf Jmuxer (Modus 0) umschalten. Nur das aktive Video groß zeigen, stumm. */
     static final String JS = "(function(){"
-        + "var ck='';try{ck=document.cookie;}catch(e){return 'none';}var mo=(ck.match(/video_player_mode=(\\d)/)||[])[1]||'1';var id=mo==='0'?'video_element':'remotevideov1';"
+        + "window.alert=function(m){console.log('alert: '+m);};var ck='';try{ck=document.cookie;}catch(e){return 'none';}var mo=(ck.match(/video_player_mode=(\\d)/)||[])[1]||'1';var id=mo==='0'?'video_element':'remotevideov1';"
         + "var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';document.head.appendChild(st);}"
         + "var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
         + "#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
