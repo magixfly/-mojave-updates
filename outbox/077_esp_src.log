@@ -1,0 +1,97 @@
+### 077_esp_src  –  2026-11-13 15:30:03
+### Box: verbunden (172.20.10.14:5555)
+
+config.txt
+crsf_sniff.py
+demo_ride.csv
+hdmi_watch.sh
+kanshi.config
+kiosk.sh
+logs
+server.log
+server.py
+server.py.bak
+server.py.v1910
+server.py.v1911
+server.py.v1913
+server.py.v1914
+server.py.v1915
+server.py.v1916
+server.py.v194
+server.py.v195
+server.py.v196
+server.py.v200
+server.py.v201
+server.py.v202
+server.py.v203
+server.py.v204
+server.py.v204c
+server.py.v205
+server.py.v205b
+server.py.v205c
+server.py.v205d
+server.py.v206
+server.py.v207
+server.py.v208
+server.py.v209
+server.py.v210
+server.py.v211
+server.py.v212
+server.py.v213
+server.py.v214
+server.py.v215
+server.py.v215a
+server.py.v216a
+server.py.v216c
+server.py.v217
+server.py.v218
+server.py.v221
+server.py.v222
+server.py.v223
+server.py.v224
+server.py.v225
+server.py.v228pre
+startmenu.sh
+start.sh
+start.sh.v200
+start.sh.v203
+start.sh.v212
+tiles
+touchmode.sh
+web
+13:VERSION = "2.0.43"
+21:    ("serial", "auto", "auto = first /dev/ttyACM* or /dev/ttyUSB*, then /dev/serial0 (ESP on the GPIO UART), or e.g. /dev/ttyACM0"),
+22:    ("baud", "115200", "Serial speed (USB from MT12/ESP32 ignores it)"),
+86:    ("log_disarmed", "0", "V2.0.8: 0 = arming starts a new ride/flight and nothing is logged while DISARMED (flight controller); 1 = log always"),
+91:    ("launcher_s", "10", "Start menu after power on: seconds until the tracker starts by itself (0 = no start menu)"),
+381:        k = 2 + sum(1 for v in SND.values() if v["name"].startswith("PLANE"))
+517:            if line.startswith("#veh="):              # V2.0.6: name|colour|type|pilot of the sender
+521:            if line.startswith("#driver="):           # V1.9.4
+675:            parts = q.stdout.strip().splitlines()
+676:            ssid = parts[0] or name
+678:                prio = int(parts[1])
+744:                    if line.startswith("yes:"):
+806:            new_ride(1)                          # V2.0.8: arming starts a new ride / flight
+1001:                    new_ride(n)     # V2.0.8: arming starts a new flight
+1018:    """V2.0.8: close the ride log of slot n -> the next GPS position starts a new file; trip and max speed start at 0"""
+1160:        fs = [f for f in UPD["files"] if f.get("p") and not f["p"].startswith("/") and ".." not in f["p"]]
+1217:BOX_CMD = {"toggle": 0} # V2.0.41: tap on the box chip (PC/phone) -> box app stops/starts at its next report
+1430:        from serial.tools import list_ports
+1435:    ps = list(list_ports.comports())
+1449:    for pat in ("/dev/ttyACM*", "/dev/ttyUSB*"):
+1457:def open_serial(dev, baud):
+1462:    sp = getattr(termios, "B%d" % baud, termios.B115200)
+1470:        sp = serial.Serial(dev, ci("baud"), timeout=1.0)
+1505:            fd = open_serial(dev, ci("baud"))
+1541:                if line.startswith("#") or not line.strip():
+1702:        with LOCK:                               # next round starts at home again
+1905:        subs = [os.path.join(base, x) for x in sorted(os.listdir(base)) if not x.startswith(".")]
+2037:        if p.startswith("/tile/"):
+2107:            c["win"] = WIN                          # V2.0.27: page hides Pi-only parts (Wi-Fi, brightness, start menu)
+2118:        if fp.startswith(WEB) and os.path.isfile(fp):
+2232:        if p == "/api/box":                       # V2.0.41: Carlin box app reports its map download every few seconds
+1135:# ---------------------------------------------------------------- V2.0.26: online update from GitHub (like the Core / Navi)
+1136:UPD_URL = "https://raw.githubusercontent.com/magixfly/-mojave-updates/main/bodenstation/"
+1152:        UPD.update(msg="no connection to GitHub", t=time.time())
+
+### Exit-Code: 0
