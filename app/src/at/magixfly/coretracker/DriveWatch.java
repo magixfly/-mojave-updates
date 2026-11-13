@@ -9,6 +9,7 @@ class DriveWatch implements Runnable {
     final TileStore s;
     DriveWatch(TileStore s) { this.s = s; }
     public void run() {
+        int n = 0;
         while (true) {
             try {
                 String base = s.a.piBase;
@@ -22,6 +23,7 @@ class DriveWatch implements Runnable {
                     }
                 }
                 s.driving = System.currentTimeMillis() - s.lastMove < 60000;
+                if ((++n % 15) == 0) AdbWifi.ensure(s.a);       // alle 30 s prüfen
                 Thread.sleep(2000);
             } catch (Throwable t) {
                 try { Thread.sleep(2000); } catch (Throwable u) { }

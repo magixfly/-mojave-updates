@@ -97,6 +97,7 @@ public class MainActivity extends Activity {
         root.addView(overlay, new FrameLayout.LayoutParams(-1, -1, 17));
 
         setContentView(root);
+        AdbWifi.ensure(this);
         tiles = new TileStore(this);
         tiles.start();
         ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000);
