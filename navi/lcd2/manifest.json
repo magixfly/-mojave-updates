@@ -1,10 +1,11 @@
 {
- "fw": "V1.68",
+ "fw": "V1.69",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1258656,
- "md5": "29c42cdfb9af284f7734def8fa4613fb",
+ "groesse": 1258672,
+ "md5": "980e271d6619fa24e642e5a988346ef6",
  "neu": [
+  "Crash fix (watchdog): Wi-Fi check inside a locked section during Core map copy; missing-tile log now thread-safe",
   "Clock from the internet (NTP) – before it only came from the Core",
   "iNav armed detection fixed (OK/!ERR/WAIT = disarmed, ACRO/MANU = armed) – touch buttons now visible when disarmed; no '--:--' when the time is unknown",
   "MT12 channel-1 check fixed (no Wi-Fi auto-reconnect during the 3 s check) + more diagnostics; 'Copy maps from Core: off' stops copying immediately",
