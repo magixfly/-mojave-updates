@@ -1,18 +1,18 @@
 {
- "ver": "2.0.33",
+ "ver": "2.0.34",
  "neu": [
-  "Short info next to the version number whenever a warning sound plays"
+  "Map buttons: inactive ones with a light blue border"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 110015,
-   "md5": "6d04b4e0c5e1f3770df023f580aff4bf"
+   "md5": "f9fea24acc3c6d6c47f1ceaad79f1ec9"
   },
   {
    "p": "web/index.html",
-   "s": 130254,
-   "md5": "535d754d4e7888c9d731686969ac5c49"
+   "s": 130280,
+   "md5": "2ed2e1f0dca2bc308a28d8f1b49b9400"
   }
  ]
 }
