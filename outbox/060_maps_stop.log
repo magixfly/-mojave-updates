@@ -1,0 +1,8 @@
+### 060_maps_stop  –  2026-11-13 13:47:02
+### Box: verbunden (192.168.178.235:5555)
+
+vorher: 0 Maps 14.3/27.9 GB · loading Wi-Fi · tap: stop
+{"ok": 1}
+nachher: 1 Maps 14.3/27.9 GB · stopped · tap: load
+
+### Exit-Code: 0
