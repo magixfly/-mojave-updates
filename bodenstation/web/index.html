@@ -130,7 +130,7 @@ body.win .noWin{display:none!important}   /* V2.0.27: Windows - no Pi-only setti
 /* V2.0.33: short info next to the version whenever a sound plays */
 #bInfo{display:none;color:#fbbf24;font-weight:700;white-space:nowrap}#bInfo.on{display:inline}
 /* V2.0.30: compass bottom-left on the map, scale bottom-right on the map */
-#hdgComp{position:absolute;left:244px;bottom:14px;width:104px;height:104px;z-index:3;pointer-events:none}#hdgComp svg{width:100%;height:100%}
+#hdgComp{position:absolute;left:244px;bottom:14px;width:104px;height:104px;z-index:3;touch-action:none;cursor:grab}#hdgComp svg{width:100%;height:100%}
 body.two #hdgComp{left:284px}
 #side #scale{position:fixed;right:110px;bottom:10px;z-index:3;background:rgba(11,15,20,.65);border-radius:8px;min-width:90px;color:#f3f4f6}#side #scale div{border-color:#f3f4f6}
 #trB{position:absolute;left:246px;top:64px;width:54px;height:54px;border-radius:14px;background:rgba(0,0,0,.55);border:1px solid var(--line);
@@ -717,12 +717,20 @@ const up=e=>{LP=null;ptr.delete(e.pointerId);if(ptr.size<2)pinch=null};
 cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 // touch: 1 finger = move map, 2 fingers = zoom, double tap = zoom in (direct touch events, works on the Touch Display 2)
 let tch=null,tLast=0;
+// V2.0.38: turn the map with one finger: drag around the compass; short tap on the compass = north up again
+{const hc=$('hdgComp');let cr=null;const ang=(x,y)=>{const r=hc.getBoundingClientRect();return Math.atan2(y-(r.top+r.height/2),x-(r.left+r.width/2))};
+ hc.addEventListener('pointerdown',e=>{e.preventDefault();hc.setPointerCapture(e.pointerId);cr={a:ang(e.clientX,e.clientY),r0:V.urot||0,moved:false}});
+ hc.addEventListener('pointermove',e=>{if(!cr||V.head)return;let da=ang(e.clientX,e.clientY)-cr.a;da=Math.atan2(Math.sin(da),Math.cos(da));if(Math.abs(da)>0.05)cr.moved=true;
+   if(cr.moved){let r=cr.r0+da;V.urot=Math.atan2(Math.sin(r),Math.cos(r));oriBtn();dirty=true}});
+ hc.addEventListener('pointerup',()=>{if(cr&&!cr.moved&&!V.head){V.urot=0;oriBtn();dirty=true}cr=null});hc.addEventListener('pointercancel',()=>{cr=null})}
 function tPts(e){return [...e.touches].map(x=>({x:x.clientX,y:x.clientY}))}
 cv.addEventListener('touchstart',e=>{e.preventDefault();const p=tPts(e);$('menu').style.display='none';
-  if(p.length===1){const now=Date.now();if(now-tLast<300)zoomTo(Math.round(V.z)+1);tLast=now;tch={n:1,x:p[0].x,y:p[0].y,moved:false};lpStart(p[0].x,p[0].y)}
+  if(p.length===1){const now=Date.now(),dbl=now-tLast<300;tLast=dbl?0:now;   // V2.0.38: double tap = zoom in, double tap + drag up/down = zoom (one finger, for car displays)
+    tch={n:dbl?3:1,x:p[0].x,y:p[0].y,y0:p[0].y,z0:V.z,moved:false};if(!dbl)lpStart(p[0].x,p[0].y)}
   else if(p.length>=2){LP=null;tch={n:2,d:Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y)||1,z:V.z,mx:(p[0].x+p[1].x)/2,my:(p[0].y+p[1].y)/2,a:Math.atan2(p[1].y-p[0].y,p[1].x-p[0].x),r0:V.urot||0,rot:false}}
   dirty=true},{passive:false});
 cv.addEventListener('touchmove',e=>{e.preventDefault();if(!tch)return;const p=tPts(e);if(p.length===1)lpMove(p[0].x,p[0].y);else LP=null;
+  if(tch.n===3&&p.length===1){const dy=tch.y0-p[0].y;if(Math.abs(dy)>8)tch.moved=true;if(tch.moved)zoomTo(tch.z0+dy/140);dirty=true;return}
   if(tch.n===1&&p.length===1){const dx=p[0].x-tch.x,dy=p[0].y-tch.y;
     if(!tch.moved&&V.follow&&Math.abs(dx)+Math.abs(dy)<8)return;tch.moved=true;setFollow(false);panBy(dx,dy);tch.x=p[0].x;tch.y=p[0].y}
   else if(tch.n===2&&p.length>=2){const d=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y)||1;zoomTo(tch.z+Math.log2(d/tch.d));
@@ -731,7 +739,7 @@ cv.addEventListener('touchmove',e=>{e.preventDefault();if(!tch)return;const p=tP
       if(!tch.rot&&Math.abs(da)>0.17){tch.rot=true;tch.a+=Math.sign(da)*0.17}   // only after ~10° so pinching does not turn the map
       if(tch.rot){da=Math.atan2(p[1].y-p[0].y,p[1].x-p[0].x)-tch.a;let r=tch.r0+da;r=Math.atan2(Math.sin(r),Math.cos(r));if(Math.abs(r)<0.05)r=0;V.urot=r;oriBtn()}}}
   dirty=true},{passive:false});
-cv.addEventListener('touchend',e=>{e.preventDefault();LP=null;const p=tPts(e);
+cv.addEventListener('touchend',e=>{e.preventDefault();LP=null;const p=tPts(e);if(tch&&tch.n===3&&!tch.moved&&p.length===0)zoomTo(Math.round(V.z)+1);
   if(p.length===0)tch=null;else if(p.length===1)tch={n:1,x:p[0].x,y:p[0].y,moved:true}},{passive:false});
 cv.addEventListener('touchcancel',()=>{tch=null});
 cv.addEventListener('wheel',e=>{e.preventDefault();zoomTo(V.z-e.deltaY/300)},{passive:false});

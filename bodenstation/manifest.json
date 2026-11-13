@@ -1,18 +1,19 @@
 {
- "ver": "2.0.37",
+ "ver": "2.0.38",
  "neu": [
-  "Car icon no longer turns while standing (heading held below 3 km/h)"
+  "One-finger zoom: double tap and drag up/down (for car displays)",
+  "Turn the map: drag around the compass, tap it = north up"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 110015,
-   "md5": "9f4d624983d860bc71d6752667bd13e8"
+   "md5": "2dbd72dabb6863c966a03150435f4448"
   },
   {
    "p": "web/index.html",
-   "s": 130407,
-   "md5": "45f1a0d427f221b97d6bcee4e310a534"
+   "s": 131585,
+   "md5": "58f3418e15d73390deca5c0b52924767"
   }
  ]
 }
