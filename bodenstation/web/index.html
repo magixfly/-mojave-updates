@@ -849,7 +849,8 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
   warnSound();
   {const u=st.mah_used;$('vMah').textContent=u==null?(st.left!=null?st.left+' % left':''):u+' mAh used'+(st.left!=null?' · '+st.left+' % left':'');
    cls($('vMah'),st.left==null?null:st.left<20?'bad':st.left<35?'mid':null)}
-  {const e=$('att');if(st.mode||st.pitch||st.roll){const r=st.roll||0,p=st.pitch||0,flip=Math.abs(r)>100||Math.abs(p)>100;
+  {const e=$('att');e.dataset.hdg=(st.hdg!=null&&st.lat!=null)?Math.round(st.hdg):'';   // V2.0.48: heading for the box compass (not shown)
+   if(st.mode||st.pitch||st.roll){const r=st.roll||0,p=st.pitch||0,flip=Math.abs(r)>100||Math.abs(p)>100;
      e.innerHTML=[st.mode?`<span style="color:${modeCol(st.mode)}">${modeTxt(st.mode,st.sats,st.lat)}</span>`:'',flip?'<span style="color:var(--red)">UPSIDE DOWN</span>':''].filter(x=>x).join(' · ');e.style.display=e.innerHTML?'':'none'}else e.style.display='none'}   // V2.0.47: no pitch/roll/heading
   {const n=st.dl||0,e=$('dlst'),pr=st.pre,pc=pr&&pr.total?Math.floor(pr.done/pr.total*100):0;   // V2.0.16: background map preload with progress bar
    const h=(pr?`<span title="map preload ${pr.done}/${pr.total}">↓ Preload <span style="display:inline-block;width:70px;height:14px;border-radius:7px;background:#2a3440;vertical-align:-1px;position:relative;overflow:hidden"><span style="position:absolute;left:0;top:0;bottom:0;width:${pc}%;background:var(--acc)"></span><span style="position:absolute;inset:0;font-size:11px;line-height:14px;text-align:center;color:#fff">${pc} %</span></span> <span style="color:var(--mut);font-size:15px">${pr.done} of ${pr.total}</span></span>`:(MAPS||n)?((MAPS?'Map '+MAPP+' %':'Map')+(n?' · ↓ '+n+' from internet':'')):'');e.style.whiteSpace='nowrap';

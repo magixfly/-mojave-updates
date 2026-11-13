@@ -1,20 +1,20 @@
 {
- "ver": "2.0.47",
+ "ver": "2.0.48",
  "neu": [
   "Temperature green below 70°",
   "Speaker frame green/red like the icon",
-  "Status line without pitch/roll/heading"
+  "Status line without pitch/roll/heading (heading still feeds the box compass)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 113459,
-   "md5": "4494a1fad368e0215b32089e317b03a8"
+   "md5": "08a4b3704d80afa4b9c033da4feb284b"
   },
   {
    "p": "web/index.html",
-   "s": 133971,
-   "md5": "ec086eb444fa0adda3689896f6684dad"
+   "s": 134094,
+   "md5": "f2bde2be08a74586f4837e62d5cf06b8"
   }
  ]
 }
