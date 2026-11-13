@@ -13,11 +13,6 @@
    "p": "web/index.html",
    "s": 133271,
    "md5": "663d866c3f99b076fba2a4df2f986f37"
-  },
-  {
-   "p": "__pycache__/server.cpython-313.pyc",
-   "s": 182914,
-   "md5": "db7c82dee025e112c2ce57227a779f11"
   }
  ]
 }
