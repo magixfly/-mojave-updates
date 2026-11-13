@@ -1,19 +1,20 @@
 {
- "ver": "2.0.29",
+ "ver": "2.0.30",
  "neu": [
-  "Fix: Wi-Fi list and other lists showed every entry twice",
-  "Small CLAUDE badge in the top bar while Claude is connected remotely"
+  "Compass on the map (bottom left), like the Navi",
+  "Heading shown as 'heading 163\u00b0'",
+  "Scale moved to the bottom right of the map"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 110015,
-   "md5": "993edfc4d5957aa772b6ecd757ad7a41"
+   "md5": "b2843f198cebf4c4677710ca5914745b"
   },
   {
    "p": "web/index.html",
-   "s": 128044,
-   "md5": "7bb71989e0c9e8200ce03aca360d04a0"
+   "s": 129565,
+   "md5": "ba9c331af9a1ec7eb91d148bf89ebe4c"
   }
  ]
 }
