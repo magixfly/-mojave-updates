@@ -1,0 +1,11 @@
+### 087_adb_connect  –  2026-11-13 20:03:04
+### Box: NICHT erreichbar (172.20.10.14:5555)
+
+connected to 172.20.10.14:42243
+connected to 172.20.10.14:5555
+List of devices attached
+172.20.10.14:42243	offline
+172.20.10.14:5555	device
+
+
+### Exit-Code: 0
