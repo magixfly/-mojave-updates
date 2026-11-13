@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.40"
+VERSION = "2.0.41"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1213,6 +1213,9 @@ def batt_view(d, sc, cl, mah, fc_pct):
         d["mah_used"] = None
         d["left"] = None
 
+BOX = {"t": 0}          # V2.0.41: status the Carlin box app sends (map download)
+BOX_CMD = {"toggle": 0} # V2.0.41: tap on the box chip (PC/phone) -> box app stops/starts at its next report
+
 def claude_remote():
     """V2.0.28: Claude works on the Pi remotely (Pi Connect shell) -> it touches /tmp/claude_remote every 30 s"""
     try:
@@ -1228,6 +1231,8 @@ def snapshot():
         d = dict(S)
         d["age"] = round(time.time() - LAST_RX, 1) if LAST_RX else 99.0
         d["claude"] = claude_remote()
+        if time.time() - BOX["t"] < 20:                      # V2.0.41: box map download, shown on every screen
+            d["box"] = {k: v for k, v in BOX.items() if k != "t"}
         if TEST["on"] and PLAY["pause"]:
             d["age"] = 0.0                     # paused demo is not a lost link
         d["test"] = TEST["on"]
@@ -2224,6 +2229,16 @@ class H(BaseHTTPRequestHandler):
             CFG[k] = v.strip()
             save_cfg(CFG)
             return self.send(200, {"ok": True, "k": k, "v": CFG[k]})
+        if p == "/api/box":                       # V2.0.41: Carlin box app reports its map download every few seconds
+            BOX.update({k: b[k] for k in ("txt", "dl", "gb", "est", "net", "stop", "ver", "ip") if k in b})
+            BOX["t"] = time.time()
+            if "ip" not in b: BOX["ip"] = self.client_address[0]
+            r = {"ok": 1, "toggle": BOX_CMD["toggle"]}
+            BOX_CMD["toggle"] = 0
+            return self.send(200, r)
+        if p == "/api/boxcmd":                    # V2.0.41: {toggle:1} from the box chip
+            if b.get("toggle"): BOX_CMD["toggle"] = 1
+            return self.send(200, {"ok": 1})
         if p == "/api/update":                    # V2.0.26: {check:1} or {install:1}
             if b.get("install") and not UPD["busy"]:
                 threading.Thread(target=upd_install, daemon=True).start()

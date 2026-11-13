@@ -19,6 +19,7 @@ background:var(--pan);border-bottom:1px solid var(--line);font-size:19px}
 #dot{width:16px;height:16px;border-radius:50%;background:#666;flex:none}
 #top .sp{flex:1}
 #src{color:var(--mut);font-size:17px}
+#boxst{display:none;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#4ade80;border:1px solid rgba(74,222,128,.6);border-radius:9px;padding:1px 8px;white-space:nowrap;cursor:pointer}#boxst.st{color:#fbbf24;border-color:rgba(251,191,36,.6)}
 #cl{display:none;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#d97757;border:1px solid #d97757;border-radius:9px;padding:1px 8px}
 #cl i{width:9px;height:9px;border-radius:50%;background:#d97757;animation:clp 1.6s infinite}@keyframes clp{50%{opacity:.25}}
 #esp,#wifi{font-size:17px;font-variant-numeric:tabular-nums;color:var(--mut)}
@@ -214,7 +215,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
 <canvas id="map"></canvas>
 
 <div id="top"><span id="dot"></span><b>CORE TRACKER</b><span id="ver" style="color:var(--mut);font-size:19px;font-weight:400"></span><span id="bInfo"></span><span id="src"></span><span id="chips"></span><span id="dlst" style="color:var(--acc);font-size:17px;font-weight:700;font-variant-numeric:tabular-nums"></span>
-<span class="sp"></span><span id="cl" title="Claude is connected remotely (Pi Connect)"><i></i>CLAUDE</span><span id="sys" title="Pi: CPU / RAM / temperature"></span><span id="esp"></span><span id="wifi"></span><span id="snd" title="Warning sound on/off"></span><span id="clock"></span></div>
+<span class="sp"></span><span id="boxst" title="Carlin box in the car: map download (tap = stop / start)"></span><span id="cl" title="Claude is connected remotely (Pi Connect)"><i></i>CLAUDE</span><span id="sys" title="Pi: CPU / RAM / temperature"></span><span id="esp"></span><span id="wifi"></span><span id="snd" title="Warning sound on/off"></span><span id="clock"></span></div>
 <div id="warn"></div>
 
 <div id="rideSide"></div>
@@ -862,7 +863,12 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
    else if(x.age>3||!x.pps){e.textContent='ESP no data';e.style.color='#ff453a'}
    else{const r=x.rssi;e.textContent='ESP '+(r!=null?r+' dBm · ':'')+x.pps+'/s';
      e.style.color=r==null?'var(--mut)':r>=-70?'#30d158':r>=-82?'#ff9f0a':'#ff453a'}}
-  $('cl').style.display=st.claude&&!DEMO?'inline-flex':'none';   // V2.0.28: Claude connected remotely
+  $('cl').style.display=st.claude&&!DEMO?'inline-flex':'none';
+  if(!window.boxBound){window.boxBound=1;$('boxst').onclick=()=>{fetch('/api/boxcmd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({toggle:1})});$('boxst').textContent='\u{1F697} Box: sending …'}}
+  {const e=$('boxst'),bx=st.box;   // V2.0.41: Carlin box map download (not on the box itself, it has its own pill)
+   if(bx&&!document.getElementById('ctMaps')){e.style.display='inline-flex';e.classList.toggle('st',!!bx.stop||!bx.dl);
+    e.textContent='\u{1F697} Box: '+(bx.txt||'').replace(/^Maps\s*/,'Maps ').replace(/\s*\u00b7\s*tap:.*$/,'');e.dataset.ip=bx.ip||''}
+   else e.style.display='none'}   // V2.0.28: Claude connected remotely
   {const y=st.sys,e=$('sys');   // V2.0.2: load of the Pi (1 GB RAM - watch it)
    if(!y||DEMO){e.innerHTML=''}else{const col=v=>v==null?'var(--mut)':v>=85?'#ff453a':v>=70?'#ff9f0a':'#30d158';
      const bar=(l,v)=>`<b style="color:${col(v)}">${l} ${v??'–'}%<i><u style="width:${Math.min(100,v||0)}%;background:${col(v)}"></u></i></b>`;
