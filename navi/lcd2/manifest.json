@@ -1,10 +1,11 @@
 {
- "fw": "V1.64",
+ "fw": "V1.65",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1246416,
- "md5": "f6551af81cd73f55ee94e6e8362262b5",
+ "groesse": 1255728,
+ "md5": "21d128de168cf7788838b92b3d07b6bb",
  "neu": [
+  "Missing map tiles are logged on the SD card (/fehlt.log, once per tile per day) – list on the status page with location pin",
   "More MT12 diagnostics (other MSP functions, non-MSP packets)",
   "MT12 diagnostics on the status page (channel, ESP-NOW frames seen, ours, MSP ok, our ID)",
   "Map errors shown on the status page; tiles with other permanent errors (4xx, empty) are also retried only once a day",
