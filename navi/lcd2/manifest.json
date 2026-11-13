@@ -1,10 +1,11 @@
 {
- "fw": "V1.55",
+ "fw": "V1.56",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1242704,
- "md5": "fe7bf7dba17aa05b05c0ce4234e81bd3",
+ "groesse": 1242976,
+ "md5": "fbe8bf8c4ae4a198f4b446eb027d5706",
  "neu": [
+  "Navi works alone by default (Core off): own GPS or MT12 telemetry, home Wi-Fi / phone hotspot for maps, no Core warnings",
   "No double 'Core' warning: when standing, only NO CORE is shown",
   "Fix: with MT12 set up, the channel-1 listening interrupted joining the phone hotspot",
   "Settings 'Mojave Core': off = ignore the Core completely (MT12 / own GPS only)",
