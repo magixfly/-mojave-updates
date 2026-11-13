@@ -1,18 +1,18 @@
 {
- "ver": "2.0.42",
+ "ver": "2.0.43",
  "neu": [
-  "Box: frames in the top bar fit their text"
+  "Box: CLAUDE badge only while Claude is connected"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 111027,
-   "md5": "0926e8b39f59dc8f46b8ebe261e203fc"
+   "md5": "64e01035e9a669ab70f4c0d3f5da24f3"
   },
   {
    "p": "web/index.html",
-   "s": 133676,
-   "md5": "6fae4a79a2903edb1bc066252f08c118"
+   "s": 133769,
+   "md5": "93dc7d42eccfcf3ce817161f05006a36"
   }
  ]
 }

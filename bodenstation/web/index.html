@@ -863,7 +863,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
    else if(x.age>3||!x.pps){e.textContent='ESP no data';e.style.color='#ff453a'}
    else{const r=x.rssi;e.textContent='ESP '+(r!=null?r+' dBm · ':'')+x.pps+'/s';
      e.style.color=r==null?'var(--mut)':r>=-70?'#30d158':r>=-82?'#ff9f0a':'#ff453a'}}
-  $('cl').style.display=st.claude&&!DEMO?'inline-flex':'none';
+  $('cl').style.display=st.claude&&!DEMO?'inline-flex':'none';$('cl').classList.toggle('on',!!(st.claude&&!DEMO));
   if(!window.boxBound){window.boxBound=1;$('boxst').onclick=()=>{fetch('/api/boxcmd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({toggle:1})});$('boxst').textContent='\u{1F697} Box: sending …'}}
   {const e=$('boxst'),bx=st.box;   // V2.0.41: Carlin box map download (not on the box itself, it has its own pill)
    if(bx&&!document.getElementById('ctMaps')){e.style.display='inline-flex';e.classList.toggle('st',!!bx.stop||!bx.dl);
@@ -1299,7 +1299,7 @@ init();
 (function(){let last='',chg=0;setInterval(()=>{const t=document.getElementById('ctMapsT'),img=document.querySelector('#ctMaps img');if(!t||!img)return;
  const x=t.textContent||'',now=Date.now();if(x!==last){last=x;chg=now}
  if(!document.getElementById('ctfix')){const st=document.createElement('style');st.id='ctfix';   // V2.0.42: box app - chips never narrower than their text (frame fits)
-  st.textContent='#top .sp{flex:1 1 0!important;min-width:0!important}#top #esp,#top #wifi,#top #sys{flex:0 0 auto!important;min-width:max-content!important}#top #wifi,#top #esp{padding:0 12px!important}';document.head.appendChild(st)}
+  st.textContent='#top .sp{flex:1 1 0!important;min-width:0!important}#top #esp,#top #wifi,#top #sys{flex:0 0 auto!important;min-width:max-content!important}#top #wifi,#top #esp{padding:0 12px!important}#top #cl:not(.on){display:none!important}';document.head.appendChild(st)}
  const m=document.getElementById('ctMaps');if(m&&m.dataset.dl!==undefined){img.style.animationPlayState=m.dataset.dl==='1'?'running':'paused';return}   // V2.0.40: app >= 1.22 says itself
  const on=/^Maps\s/.test(x)&&!/complete|paused|waiting|full|Touch/.test(x)&&now-chg<10000;   // text changes while MB count grows
  img.style.animationPlayState=on?'running':'paused'},1000)})();
