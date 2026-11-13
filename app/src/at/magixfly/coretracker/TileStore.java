@@ -25,7 +25,7 @@ class TileStore {
     static final int ZMIN = 8, ZFULL = 16, ZMAX = 18;
     static final long KEEP_FREE = 8L * 1024 * 1024 * 1024;     // mindestens 8 GB frei lassen
     static final String SRC = "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/%d/%d/%d.jpeg";
-    static final int WORKERS = 4;
+    static final int WORKERS = 8;                               // V1.22: 8 downloads at the same time
 
     final MainActivity a;
     final File dir;
@@ -33,13 +33,15 @@ class TileStore {
     final AtomicLong done = new AtomicLong(), loaded = new AtomicLong(), bytes = new AtomicLong();
     volatile long total = 1;
     volatile String phase = "";
-    volatile boolean finished = false, paused = false, full = false, driving = false, force = false;
+    volatile boolean finished = false, paused = false, full = false, driving = false, stopped = false;
+    volatile long lastOk = 0;                                   // last tile downloaded (for "loading now")
     volatile long lastMove = 0;
 
     TileStore(MainActivity a) {
         this.a = a;
         dir = new File(a.getFilesDir(), "tiles");
         dir.mkdirs();
+        stopped = a.prefs.getBoolean("dlStop", false);          // V1.22: stop by tapping "Maps", kept over restarts
     }
 
     File file(int z, int x, int y) { return new File(dir, z + "/" + x + "/" + y + ".jpg"); }
@@ -98,19 +100,26 @@ class TileStore {
         if (finished) s = "Maps Vienna + Lower Austria complete";
         else if (full) s = "Maps: storage almost full – download paused";
         else if (driving) s = "Maps · paused while driving";
-        else if (paused) s = "Maps " + pct + " % · waiting for Wi-Fi";
+        else if (stopped) s = "Maps " + pct + " % · stopped";
+        else if (paused) s = "Maps " + pct + " % · no internet";
         return s;
     }
 
     int percent() { return (int) Math.min(100, done.get() * 100 / Math.max(1, total)); }
 
-    boolean onWifi() {
+    /** V1.22: any internet - Wi-Fi or the SIM card of the box. */
+    boolean online() { return netType() != null; }
+    String netType() {
         try {
             ConnectivityManager cm = (ConnectivityManager) a.getSystemService("connectivity");
             NetworkInfo ni = cm.getActiveNetworkInfo();
-            return ni != null && ni.isConnected() && ni.getType() == 1;
-        } catch (Throwable t) { return false; }
+            if (ni == null || !ni.isConnected()) return null;
+            return ni.getType() == 1 ? "Wi-Fi" : ni.getType() == 0 ? "SIM" : "network";
+        } catch (Throwable t) { return null; }
     }
+    void setStopped(boolean st) { stopped = st; a.prefs.edit().putBoolean("dlStop", st).apply(); }
+    /** really downloading right now (for the turning Mojave) */
+    boolean loadingNow() { return !finished && !full && !stopped && !driving && !paused && System.currentTimeMillis() - lastOk < 8000; }
 
     // ---------- Hilfen ----------
     static long lonX(double lon, int z) { return (long) Math.floor((lon + 180) / 360 * (1L << z)); }
@@ -125,7 +134,7 @@ class TileStore {
             HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
             c.setConnectTimeout(timeout);
             c.setReadTimeout(timeout);
-            c.setRequestProperty("User-Agent", "CoreTracker-Box/1.3");
+            c.setRequestProperty("User-Agent", "CoreTracker-Box/1.22");
             int code = c.getResponseCode();
             if (code == 404 || code == 400) { c.disconnect(); return new byte[0]; }
             if (code != 200) { c.disconnect(); return null; }

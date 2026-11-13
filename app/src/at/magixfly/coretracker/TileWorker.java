@@ -8,7 +8,7 @@ class TileWorker implements Runnable {
                 while (true) {
                     long[] t = s.q.take();
                     if (t[0] < 0) { s.finished = true; return; }
-                    while ((s.driving && !s.force) || !s.onWifi() || s.full) {   // beim Fahren nur die nötigen Kacheln (über die Karte)
+                    while (s.stopped || s.driving || !s.online() || s.full) {   // stopped by tap, driving (map loads what it needs), no internet, storage full
                         s.paused = true;
                         s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE;
                         Thread.sleep(2000);   // sofort weiter, sobald frei
@@ -19,7 +19,7 @@ class TileWorker implements Runnable {
                     byte[] d = TileStore.http(String.format(TileStore.SRC, z, y, x), 8000);
                     if (d != null) {
                         TileStore.save(f, d);                                   // 0 Byte = keine Daten an dieser Stelle
-                        if (d.length > 0) { s.loaded.incrementAndGet(); s.bytes.addAndGet(d.length); }
+                        if (d.length > 0) { s.loaded.incrementAndGet(); s.bytes.addAndGet(d.length); s.lastOk = System.currentTimeMillis(); }
                     }
                     s.done.incrementAndGet();
                     if ((s.done.get() & 255) == 0) { s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE; s.saveTotal(); }

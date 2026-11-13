@@ -22,8 +22,8 @@ class Client extends WebViewClient {
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView v, String url) {
         try {
-            if (url.contains("/__ctbox/toggle")) {         // Tippen auf "Maps": Download auch beim Fahren erzwingen / zurück auf automatisch
-                a.tiles.force = !a.tiles.force;
+            if (url.contains("/__ctbox/toggle")) {         // V1.22: tap on "Maps" = stop / start the download
+                a.tiles.setStopped(!a.tiles.stopped);
                 a.ui.post(new Task(a, Task.PILL, null, 0));
                 return new WebResourceResponse("text/plain", null, new java.io.ByteArrayInputStream(new byte[0]));
             }

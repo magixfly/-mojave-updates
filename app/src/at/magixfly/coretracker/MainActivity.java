@@ -170,8 +170,16 @@ public class MainActivity extends Activity {
     void updatePill() {
         if (!loaded) return;
         String mb = size(tiles.bytes.get()) + " / " + size(tiles.estimate());
-        String txt = (tiles.finished ? "Maps complete" : tiles.full ? "Maps · storage full" : tiles.force ? "Maps " + mb + " · always loading (tap = auto)" : tiles.driving ? "Maps " + mb + " · paused while driving" : tiles.paused ? "Maps " + mb + " · waiting for Wi-Fi" : "Maps " + mb);
-        web.evaluateJavascript("(function(){var e=document.getElementById('ctMapsT');if(e)e.textContent='" + txt + "';})()", null);
+        String net = tiles.netType();
+        boolean on = tiles.loadingNow();
+        String txt = tiles.finished ? "Maps complete \u2713"
+                : tiles.full ? "Maps " + mb + " \u00b7 storage full"
+                : tiles.stopped ? "Maps " + mb + " \u00b7 stopped \u00b7 tap = load"
+                : tiles.driving ? "Maps " + mb + " \u00b7 paused while driving"
+                : net == null ? "Maps " + mb + " \u00b7 no internet"
+                : on ? "Maps " + mb + " \u00b7 loading (" + net + ") \u00b7 tap = stop"
+                : "Maps " + mb + " \u00b7 starting (" + net + ") \u00b7 tap = stop";
+        web.evaluateJavascript("(function(){var e=document.getElementById('ctMapsT');if(e)e.textContent='" + txt + "';var m=document.getElementById('ctMaps');if(m){m.dataset.dl='" + (on ? 1 : 0) + "';var i=m.querySelector('img');if(i)i.style.animationPlayState='" + (on ? "running" : "paused") + "';}})()", null);
     }
 
     /** Anpassungen der Tracker-Seite nur auf der Box: Karten-Anzeige mit drehendem Mojave in der Statusleiste, Schrift gleich groß. */
