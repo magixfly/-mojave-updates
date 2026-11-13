@@ -1,18 +1,18 @@
 {
- "ver": "2.0.34",
+ "ver": "2.0.35",
  "neu": [
-  "Map buttons: inactive ones with a light blue border"
+  "Side panel tiles with the same light blue border as the map buttons"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 110015,
-   "md5": "f9fea24acc3c6d6c47f1ceaad79f1ec9"
+   "md5": "5d6829a8931bbacb9b11540fabbe6bf0"
   },
   {
    "p": "web/index.html",
-   "s": 130280,
-   "md5": "2ed2e1f0dca2bc308a28d8f1b49b9400"
+   "s": 130289,
+   "md5": "669c6aa81f96da599d5f80f6902d6d06"
   }
  ]
 }
