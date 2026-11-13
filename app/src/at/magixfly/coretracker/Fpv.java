@@ -163,7 +163,11 @@ class Fpv {
 
     void post(Runnable r) { a.ui.post(r); }
 
-    void found() { btn.setVisibility(View.VISIBLE); label(); }
+    void found() {
+        btn.setVisibility(View.VISIBLE); label();
+        int m = a.prefs.getInt("fpvMode", MAP);                 // V1.51: zuletzt gewählte Ansicht wiederherstellen
+        if (m != MAP && mode == MAP) setMode(m);
+    }
 
     void lost() {
         setMode(MAP);
@@ -192,6 +196,7 @@ class Fpv {
 
     void setMode(int m) {
         if (base == null) m = MAP;
+        else a.prefs.edit().putInt("fpvMode", m).apply();       // V1.51: merken
         mode = m;
         label();
         // V1.42: Split = FPV volle Höhe in 16:9 (1920×720 → 1280 breit), Karte links daneben
