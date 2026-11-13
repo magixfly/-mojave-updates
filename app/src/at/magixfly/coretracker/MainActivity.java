@@ -191,7 +191,7 @@ public class MainActivity extends Activity {
 
     void tick() {
         String mb = tiles.bytes.get() > 1024L * 1024 * 1024 ? String.format("%.1f GB", tiles.bytes.get() / 1073741824.0) : (tiles.bytes.get() / 1048576) + " MB";
-        pillText.setText(tiles.finished ? "Karten komplett" : tiles.full ? "Karten · Speicher voll" : tiles.paused ? "Karten " + mb + " · wartet auf WLAN" : "Karten " + mb);
+        pillText.setText(tiles.finished ? "Karten komplett" : tiles.full ? "Karten · Speicher voll" : tiles.driving ? "Karten " + mb + " · Pause (Fahrt)" : tiles.paused ? "Karten " + mb + " · wartet auf WLAN" : "Karten " + mb);
         ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000);
     }
 

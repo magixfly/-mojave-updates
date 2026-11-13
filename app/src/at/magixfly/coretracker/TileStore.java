@@ -33,7 +33,8 @@ class TileStore {
     final AtomicLong done = new AtomicLong(), loaded = new AtomicLong(), bytes = new AtomicLong();
     volatile long total = 1;
     volatile String phase = "";
-    volatile boolean finished = false, paused = false, full = false;
+    volatile boolean finished = false, paused = false, full = false, driving = false;
+    volatile long lastMove = 0;
 
     TileStore(MainActivity a) {
         this.a = a;
@@ -61,6 +62,7 @@ class TileStore {
         total = t;
         for (int i = 0; i < WORKERS; i++) new Thread(new TileWorker(this)).start();
         new Thread(new TileProducer(this)).start();
+        new Thread(new DriveWatch(this)).start();
     }
 
     long count(int z) {
@@ -74,6 +76,7 @@ class TileStore {
         String s = "Karten " + pct + " % · " + phase + " · " + (bytes.get() / (1024 * 1024)) + " MB geladen";
         if (finished) s = "Karten Wien + NÖ komplett";
         else if (full) s = "Karten: Speicher fast voll – Download pausiert";
+        else if (driving) s = "Karten · Pause während der Fahrt";
         else if (paused) s = "Karten " + pct + " % · wartet auf WLAN (Hotspot)";
         return s;
     }
