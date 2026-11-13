@@ -109,6 +109,19 @@ class TileStore {
 
     /** V1.22: any internet - Wi-Fi or the SIM card of the box. */
     boolean online() { return netType() != null; }
+
+    /** V1.38: iPhone-Hotspot (172.20.10.x) = mobile Daten → Download pausieren */
+    long hsT = 0; boolean hsV = false;
+    boolean hotspot() {
+        if (System.currentTimeMillis() - hsT < 5000) return hsV;
+        hsT = System.currentTimeMillis(); hsV = false;
+        try {
+            for (java.net.NetworkInterface ni : java.util.Collections.list(java.net.NetworkInterface.getNetworkInterfaces()))
+                for (java.net.InetAddress ia : java.util.Collections.list(ni.getInetAddresses()))
+                    if (ia.getHostAddress().startsWith("172.20.10.")) hsV = true;
+        } catch (Throwable t) { }
+        return hsV;
+    }
     String netType() {
         try {
             ConnectivityManager cm = (ConnectivityManager) a.getSystemService("connectivity");
@@ -119,7 +132,7 @@ class TileStore {
     }
     void setStopped(boolean st) { stopped = st; a.prefs.edit().putBoolean("dlStop", st).apply(); }
     /** really downloading right now (for the turning Mojave) */
-    boolean loadingNow() { return !finished && !full && !stopped && !driving && !paused && System.currentTimeMillis() - lastOk < 8000; }
+    boolean loadingNow() { return !finished && !full && !stopped && !driving && !paused && !hotspot() && System.currentTimeMillis() - lastOk < 8000; }
 
     // ---------- Hilfen ----------
     static long lonX(double lon, int z) { return (long) Math.floor((lon + 180) / 360 * (1L << z)); }
