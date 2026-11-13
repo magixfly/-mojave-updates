@@ -1,0 +1,10 @@
+### 036_app113_adbwifi  –  2026-11-13 01:51:03
+### Box: verbunden (172.20.10.14:5555)
+
+Success
+Berechtigung erteilt
+    versionName=1.13
+      android.permission.WRITE_SECURE_SETTINGS: granted=true
+adb_wifi_enabled=1
+
+### Exit-Code: 0
