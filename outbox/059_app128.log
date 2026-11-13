@@ -1,0 +1,54 @@
+### 059_app128  –  2026-11-13 13:45:02
+### Box: verbunden (192.168.178.235:5555)
+
+Success
+    versionName=1.28
+--- Janus am CosmoStreamer:
+{
+   "janus": "server_info",
+   "transaction": "x",
+   "name": "Janus WebRTC Server",
+   "version": 1100,
+   "version_string": "1.1.0",
+   "author": "Meetecho s.r.l.",
+   "commit-hash": "4346c1ad387fa0a710a45d978ee980d83a756caa",
+   "compile-time": "Wed 31 Aug 22:34:09 BST 2022",
+   "log-to-stdout": true,
+   "log-to-file": false,
+   "data_channels": true,
+   "accepting-new-sessions": true,
+   "ses
+11-13 13:45:05.171 16808 16808 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+11-13 13:45:05.412 16830 16830 D nativeloader: Load /data/app/~~h2q07iTwsT7VwG58GSkryQ==/com.google.android.webview-KFC8jwFlSKtGCG1b0iwqIw==/base.apk!/lib/arm64-v8a/libwebviewchromium.so using ns clns-8 from class loader (caller=/data/app/~~h2q07iTwsT7VwG58GSkryQ==/com.google.android.webview-KFC8jwFlSKtGCG1b0iwqIw==/base.apk): ok
+11-13 13:45:05.414 16830 16830 D nativeloader: Load /system/lib64/libwebviewchromium_plat_support.so using ns clns-8 from class loader (caller=/data/app/~~h2q07iTwsT7VwG58GSkryQ==/com.google.android.webview-KFC8jwFlSKtGCG1b0iwqIw==/base.apk): ok
+11-13 13:45:05.420 16830 16871 I chromium: [INFO:android_webview/browser/variations/variations_seed_loader.cc:63] Failed to open file for reading.: No such file or directory (2)
+11-13 13:45:05.448  1299  1811 I ActivityManager: Start proc 16874:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0i13 for  {at.magixfly.coretracker/org.chromium.content.app.SandboxedProcessService0:0}
+11-13 13:45:05.500 16874 16874 I cr_WebViewApkApp: version= (810303803) minSdkVersion=29 processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 splits=<none>
+11-13 13:45:05.667 16874 16906 W chromium: [WARNING:content/app/android/content_main_android.cc:82] android_setCpu already initialized
+11-13 13:45:05.715 16874 16941 I chromium: [INFO:third_party/skia/src/ports/SkFontMgr_android_parser.cpp:724] [SkFontMgr Android Parser] '/product/etc/fonts_customization.xml' could not be opened
+11-13 13:45:05.715 16874 16941 I chromium: 
+11-13 13:45:31.872 29961 29961 W JobInfo : Job 'com.android.chrome/org.chromium.components.background_task_scheduler.internal.BackgroundTaskJobService#116' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+11-13 13:45:31.876  1299  3075 W JobInfo : Job 'com.android.chrome/org.chromium.components.background_task_scheduler.internal.BackgroundTaskJobService#116' has a deadline with no functional constraints. The deadline won't improve job execution latency. Consider removing the deadline.
+11-13 13:45:35.618 16830 16830 D CTFPV   : The keyword 'slider-vertical' specified to an 'appearance' property is not standardized. It will be removed in the future. Use <input type=range style="writing-mode: vertical-lr; direction: rtl"> instead. @0
+11-13 13:45:35.619 16830 16830 D CTFPV   : The keyword 'slider-vertical' specified to an 'appearance' property is not standardized. It will be removed in the future. Use <input type=range style="writing-mode: vertical-lr; direction: rtl"> instead. @0
+11-13 13:45:35.953 16830 16830 D CTFPV   : gamepad disabled @28
+11-13 13:45:35.972 16830 16830 D CTFPV   : FPVSTATE src=false rs=0 paused=false w=0 mode= janus=function rtc=function @1
+11-13 13:45:36.110 16830 16830 D CTFPV   : getStreamInfo:  [object Object] @363
+11-13 13:45:36.113 16830 16830 D CTFPV   :  ::: Got a message ::: [object Object] @114
+11-13 13:45:36.172 16874 17277 W chromium: [WARNING:third_party/webrtc/pc/jsep_transport_controller.cc:449] Not adding candidate because the JsepTransport doesn't exist. Ignore it.
+11-13 13:45:36.173 16874 17277 W chromium: [WARNING:third_party/webrtc/pc/jsep_transport_controller.cc:449] Not adding candidate because the JsepTransport doesn't exist. Ignore it.
+11-13 13:45:36.186 16874 17277 I chromium: [INFO:third_party/blink/renderer/platform/p2p/ipc_socket_factory.cc:575] Setting new p2p socket buffer limit to 262144
+11-13 13:45:36.189 16874 17277 I chromium: [INFO:third_party/blink/renderer/platform/p2p/ipc_socket_factory.cc:575] Setting new p2p socket buffer limit to 262144
+11-13 13:45:36.229 16830 16830 D CTFPV   :  ::: Got a message ::: [object Object] @114
+11-13 13:45:36.259 16874 17277 W chromium: [WARNING:third_party/webrtc/p2p/client/basic_port_allocator.cc:961] Discarding candidate because port is already done gathering.
+11-13 13:45:36.279 16830 16830 D CTFPV   :  ::: Got a message ::: [object Object] @114
+11-13 13:45:38.149   547   547 I lowmemorykiller: Kill 'com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0' (9746), uid 99010, oom_score_adj 975 to free 45032kB rss, 53648kB swap; reason: min watermark is breached
+11-13 13:45:38.198  1299  4921 I ActivityManager: Process com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 (pid 9746) has died: cch+75 CEM 
+11-13 13:45:38.200  1299  4921 W ActivityManager: Scheduling restart of crashed service com.google.android.googlequicksearchbox/org.chromium.content.app.SandboxedProcessService0:0 in 10000ms for connection
+11-13 13:45:43.500 16830 16830 D CTFPV   : FPVSTATE src=true rs=0 paused=false w=0 mode= janus=function rtc=function @1
+11-13 13:45:49.504 16830 16830 D CTFPV   : FPVSTATE src=true rs=0 paused=false w=0 mode= janus=function rtc=function @1
+11-13 13:45:57.502 16830 16830 D CTFPV   : FPVSTATE src=true rs=0 paused=false w=0 mode= janus=function rtc=function @1
+11-13 13:46:03.505 16830 16830 D CTFPV   : FPVSTATE src=true rs=0 paused=false w=0 mode= janus=function rtc=function @1
+11-13 13:46:09.507 16830 16830 D CTFPV   : FPVSTATE src=true rs=0 paused=false w=0 mode= janus=function rtc=function @1
+
+### Exit-Code: 0
