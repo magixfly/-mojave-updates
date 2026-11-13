@@ -61,16 +61,21 @@ class Fpv {
         tapCatcher.setVisibility(View.GONE);
 
         btn = new TextView(a);
-        btn.setTextSize(19);
+        btn.setTextSize(17);
         btn.setTextColor(0xFF0B0F14);
         btn.setTypeface(null, 1);
         btn.setGravity(Gravity.CENTER);
-        btn.setBackgroundColor(0xE64ADE80);
-        btn.setPadding(26, 14, 26, 14);
+        android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
+        bg.setColor(0xE64ADE80);
+        bg.setCornerRadius(14);
+        btn.setBackground(bg);
+        btn.setPadding(10, 8, 10, 8);
         btn.setVisibility(View.GONE);
         btn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { setMode((mode + 1) % 3); } });
-        FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(-2, -2, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        bl.rightMargin = 12;
+        // V1.31: links unten unter dem GPS-Feld (verdeckt nichts mehr)
+        FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(208, 64, Gravity.LEFT | Gravity.BOTTOM);
+        bl.leftMargin = 10;
+        bl.bottomMargin = 14;
         root.addView(btn, bl);
 
         new Thread(new Runnable() { public void run() { loop(); } }).start();
@@ -180,7 +185,7 @@ class Fpv {
             int w = Math.round(root.getWidth() * 0.34f), h = w * 9 / 16;
             lp = new FrameLayout.LayoutParams(w, h, Gravity.RIGHT | Gravity.TOP);
             lp.topMargin = 62;
-            lp.rightMargin = 12;
+            lp.rightMargin = 100;     // rechte Tastenleiste frei lassen
             tapCatcher.setVisibility(View.VISIBLE);
         }
         box.setLayoutParams(lp);
@@ -230,7 +235,7 @@ class Fpv {
 
     /** Janus zuerst; kommt nach 12 s kein Bild, auf Jmuxer (Modus 0) umschalten. Nur das aktive Video groß zeigen, stumm. */
     static final String JS = "(function(){"
-        + "var mo=(document.cookie.match(/video_player_mode=(\\d)/)||[])[1]||'1';var id=mo==='0'?'video_element':'remotevideov1';"
+        + "var ck='';try{ck=document.cookie;}catch(e){return 'none';}var mo=(ck.match(/video_player_mode=(\\d)/)||[])[1]||'1';var id=mo==='0'?'video_element':'remotevideov1';"
         + "var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';document.head.appendChild(st);}"
         + "var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
         + "#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
