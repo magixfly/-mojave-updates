@@ -38,6 +38,7 @@ class Fpv {
     int mode = MAP;
     long lastScan = 0;
     int misses = 0;
+    volatile long ms = -1;
 
     Fpv(MainActivity a, FrameLayout root) {
         this.a = a;
@@ -81,7 +82,8 @@ class Fpv {
             try {
                 String b = base;
                 if (b != null) {
-                    if (isCosmo(b.substring(7))) misses = 0;
+                    long t0 = System.currentTimeMillis();
+                    if (isCosmo(b.substring(7))) { misses = 0; ms = System.currentTimeMillis() - t0; }
                     else if (++misses >= 3) { base = null; post(new Runnable() { public void run() { lost(); } }); }
                 } else {
                     String h = find();
@@ -203,7 +205,7 @@ class Fpv {
         });
         web.setWebViewClient(new WebViewClient() {
             @Override public void onPageFinished(WebView v, String url) { fix(); }
-            @Override public void onReceivedError(WebView v, int code, String desc, String url) { info.setText("FPV: CosmoStreamer not reachable"); }
+            @Override public void onReceivedError(WebView v, int code, String desc, String url) { info.setVisibility(View.VISIBLE); info.setText("CosmoStreamer \u2717 not reachable"); }
         });
         box.addView(web, 0, new FrameLayout.LayoutParams(-1, -1));
         box.addView(tapCatcher, new FrameLayout.LayoutParams(-1, -1));
@@ -238,13 +240,21 @@ class Fpv {
         + "v.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';if(v.paused&&v.play)try{v.play();}catch(e){}}"
         + "var m=document.getElementById(id);window.ctT0=window.ctT0||Date.now();var ok=m&&m.videoWidth>0;"
         + "if(!window.ctdbg||Date.now()-window.ctdbg>6000){window.ctdbg=Date.now();console.log('FPVSTATE id='+id+' rs='+(m&&m.readyState)+' w='+(m&&m.videoWidth));}"
-        + "if(!ok&&id=='remotevideov1'&&Date.now()-window.ctT0>12000){console.log('FPV: Janus ohne Bild -> Jmuxer');document.cookie='video_player_mode=0;path=/;max-age=31536000';location.reload();}"
-        + "return ok?1:0;})()";
+        + "if(!ok&&Date.now()-window.ctT0>15000){var nm=mo==='0'?'1':'0';console.log('FPV: kein Bild -> Modus '+nm);document.cookie='video_player_mode='+nm+';path=/;max-age=31536000';location.reload();}"
+        + "return ok?'ok':(mo==='0'?'Jmuxer':'Janus');})()";
 
     void fix() {
         if (web == null) return;
         web.evaluateJavascript(JS, new android.webkit.ValueCallback<String>() {
-            public void onReceiveValue(String n) { info.setVisibility("0".equals(n) || n == null ? View.VISIBLE : View.GONE); }
+            public void onReceiveValue(String n) {
+                boolean ok = n != null && n.contains("ok");
+                info.setVisibility(ok ? View.GONE : View.VISIBLE);
+                if (!ok && base != null) {
+                    String p = n == null ? "" : n.replace("\"", "");
+                    info.setText("CosmoStreamer \u2713 " + base.substring(7) + (ms >= 0 ? " \u00b7 " + ms + " ms" : "")
+                        + "\nwaiting for video \u2013 goggles on?" + (p.length() > 0 && !p.equals("null") ? "\n(trying " + p + ")" : ""));
+                }
+            }
         });
     }
 }
