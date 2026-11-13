@@ -1,18 +1,20 @@
 {
- "ver": "2.0.46",
+ "ver": "2.0.47",
  "neu": [
-  "Status bar: ESP rate and other numbers keep a fixed width (no jumping)"
+  "Temperature green below 70°",
+  "Speaker frame green/red like the icon",
+  "Status line without pitch/roll/heading"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 113459,
-   "md5": "489140acf153142f9cbd461fdb23431c"
+   "md5": "4494a1fad368e0215b32089e317b03a8"
   },
   {
    "p": "web/index.html",
-   "s": 133925,
-   "md5": "5bfdff472b07a1d65c5611e9eddc8503"
+   "s": 133971,
+   "md5": "ec086eb444fa0adda3689896f6684dad"
   }
  ]
 }

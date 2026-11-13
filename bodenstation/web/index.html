@@ -850,7 +850,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
   {const u=st.mah_used;$('vMah').textContent=u==null?(st.left!=null?st.left+' % left':''):u+' mAh used'+(st.left!=null?' · '+st.left+' % left':'');
    cls($('vMah'),st.left==null?null:st.left<20?'bad':st.left<35?'mid':null)}
   {const e=$('att');if(st.mode||st.pitch||st.roll){const r=st.roll||0,p=st.pitch||0,flip=Math.abs(r)>100||Math.abs(p)>100;
-     e.innerHTML=(st.mode?`<span style="color:${modeCol(st.mode)}">${modeTxt(st.mode,st.sats,st.lat)}</span> · `:'')+(flip?'<span style="color:var(--red)">UPSIDE DOWN</span>':`pitch ${p.toFixed(0)}° · roll ${r.toFixed(0)}°`)+(st.hdg!=null&&st.lat!=null?` · heading ${Math.round(st.hdg)}°`:'');e.style.display=''}else e.style.display='none'}
+     e.innerHTML=[st.mode?`<span style="color:${modeCol(st.mode)}">${modeTxt(st.mode,st.sats,st.lat)}</span>`:'',flip?'<span style="color:var(--red)">UPSIDE DOWN</span>':''].filter(x=>x).join(' · ');e.style.display=e.innerHTML?'':'none'}else e.style.display='none'}   // V2.0.47: no pitch/roll/heading
   {const n=st.dl||0,e=$('dlst'),pr=st.pre,pc=pr&&pr.total?Math.floor(pr.done/pr.total*100):0;   // V2.0.16: background map preload with progress bar
    const h=(pr?`<span title="map preload ${pr.done}/${pr.total}">↓ Preload <span style="display:inline-block;width:70px;height:14px;border-radius:7px;background:#2a3440;vertical-align:-1px;position:relative;overflow:hidden"><span style="position:absolute;left:0;top:0;bottom:0;width:${pc}%;background:var(--acc)"></span><span style="position:absolute;inset:0;font-size:11px;line-height:14px;text-align:center;color:#fff">${pc} %</span></span> <span style="color:var(--mut);font-size:15px">${pr.done} of ${pr.total}</span></span>`:(MAPS||n)?((MAPS?'Map '+MAPP+' %':'Map')+(n?' · ↓ '+n+' from internet':'')):'');e.style.whiteSpace='nowrap';
    if(e.dataset.h!==h){e.dataset.h=h;e.innerHTML=h}}
@@ -873,7 +873,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
   {const y=st.sys,e=$('sys');   // V2.0.2: load of the Pi (1 GB RAM - watch it)
    if(!y||DEMO){e.innerHTML=''}else{const col=v=>v==null?'var(--mut)':v>=85?'#ff453a':v>=70?'#ff9f0a':'#30d158';
      const bar=(l,v)=>`<b style="color:${col(v)}">${l} ${v??'–'}%<i><u style="width:${Math.min(100,v||0)}%;background:${col(v)}"></u></i></b>`;
-     const tc=y.temp==null?'var(--mut)':y.temp>=80?'#ff453a':y.temp>=70?'#ff9f0a':'var(--mut)';
+     const tc=y.temp==null?'var(--mut)':y.temp>=80?'#ff453a':y.temp>=70?'#ff9f0a':'#30d158';   // V2.0.47: green below 70°
      const h=bar('CPU',y.cpu)+bar('RAM',y.ram)+(y.temp!=null?`<b style="color:${tc}">${y.temp}°</b>`:'');
      if(e.dataset.h!==h){e.dataset.h=h;e.innerHTML=h}
      e.title=`RAM ${y.ram_mb??'–'} of ${y.ram_tot??'–'} MB used`+(y.swap_mb!=null?` · swap ${y.swap_mb} MB`:'')}}
@@ -1124,7 +1124,7 @@ function warnSound(){
   lastWarn=w}
 function sndIcon(){const on=soundOn(),e=$('snd'),h=on?(st.test?'t':'1'):'0';if(e.dataset.h===h)return;e.dataset.h=h;
   e.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/>'+(on?'<path d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11"/>':'<path d="M16 9l6 6M22 9l-6 6"/>')+'</svg>';
-  e.style.color=on?(st.test?'var(--mut)':'var(--grn)'):'var(--red)';e.title=on?(st.test?'Sound on (silent in test ride)':'Warning sound on'):'Warning sound off'}
+  e.style.color=on?(st.test?'var(--mut)':'var(--grn)'):'var(--red)';e.style.setProperty('border-color',e.style.color,'important');e.title=on?(st.test?'Sound on (silent in test ride)':'Warning sound on'):'Warning sound off'}
 $('snd').onclick=()=>$('mSound').onclick();
 $('mSound').onclick=()=>{const on=!soundOn();try{localStorage.setItem('snd',on?'1':'0')}catch(e){}j2('/api/set',{sound:on?1:0});if(on){beep(1000,.15);bInfo('Warning sound on')}updMenu();sndIcon()};
 // ------------------------------------------------ display settings
