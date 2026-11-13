@@ -1,0 +1,10 @@
+### 028_tracker2030_app16  –  2026-11-13 01:21:03
+### Box: verbunden (172.20.10.14:5555)
+
+{"busy": false, "prog": 0, "msg": "", "online": "2.0.30", "neu": ["Compass on the map (bottom left), like the Navi", "Heading shown as 'heading 163\u00b0'", "Scale moved to the bottom right of the map"], "cur": "2.0.28"}
+{"busy": true, "prog": 1, "msg": "checking \u2026", "online": "2.0.30", "neu": ["Compass on the map (bottom left), like the Navi", "Heading shown as 'heading 163\u00b0'", "Scale moved to the bottom right of the map"], "cur": "2.0.28"}
+Tracker 2.0.30 läuft
+{"busy": false, "prog": 0, "msg": "", "online": null, "neu": [], "cur": "2.0.30"}
+Success
+
+### Exit-Code: 0
