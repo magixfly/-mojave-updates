@@ -24,16 +24,24 @@ class HotspotBoot {
         if (started || SystemClock.elapsedRealtime() > 10 * 60 * 1000L) return;
         if (!c.getSharedPreferences("ct", 0).getBoolean("apAuto", true)) return;
         started = true;
+        A11y.enable(c);                                            // V1.52: Bedienungshilfe statt ADB
         new Thread(new Runnable() { public void run() {
             try {
-                Thread.sleep(20000);                           // System fertig starten lassen
-                String r = shell("if dumpsys tethering | grep -q TetheredState; then echo schon_an; else "
-                    + "am start -a android.settings.TETHER_SETTINGS >/dev/null; sleep 4; input tap 1866 304; sleep 4; "
-                    + "am start -n at.magixfly.coretracker/.MainActivity >/dev/null; sleep 2; "
-                    + "dumpsys tethering | grep -c TetheredState; fi");
-                Log.d("CTAP", "Hotspot: " + r.trim());
+                Thread.sleep(20000);
+                if (apOn(c)) { Log.d("CTAP", "Hotspot schon an"); return; }
+                A11y.want("ap");
+                c.startActivity(new android.content.Intent("android.settings.TETHER_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
+                Log.d("CTAP", "Hotspot-Seite geöffnet");
             } catch (Throwable t) { Log.d("CTAP", "Hotspot-Fehler: " + t); }
         } }).start();
+    }
+
+    /** Hotspot an? (versteckte WifiManager-Methode) */
+    static boolean apOn(Context c) {
+        try {
+            Object wm = c.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            return (Boolean) wm.getClass().getMethod("isWifiApEnabled").invoke(wm);
+        } catch (Throwable t) { return false; }
     }
 
     // ---- minimaler ADB-Client (ohne RSA, da ro.adb.secure=0) ----

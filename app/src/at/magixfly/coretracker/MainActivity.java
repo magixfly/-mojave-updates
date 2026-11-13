@@ -103,6 +103,10 @@ public class MainActivity extends Activity {
         AdbWifi.ensure(this);
         HotspotBoot.maybe(this);                 // V1.39: Box-Hotspot nach dem Start automatisch einschalten
         new Thread(new Runnable() { public void run() { netLoop(); } }).start();   // V1.43: WLAN/Hotspot der Box anzeigen
+        A11y.enable(this);
+        Updater.loop(this);
+        if (getIntent() != null && getIntent().hasExtra("aptest")) {   // Test: Hotspot-Schalter per Bedienungshilfe
+            A11y.want("ap"); startActivity(new Intent("android.settings.TETHER_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); }                      // V1.52: Selbst-Update von GitHub
         if (getIntent() != null && getIntent().hasExtra("adbtest")) new Thread(new Runnable() { public void run() {
             try { android.util.Log.d("CTAP", "test: " + HotspotBoot.shell("id; getprop persist.adb.tcp.port; dumpsys tethering | grep -c TetheredState")); }
             catch (Throwable t) { android.util.Log.d("CTAP", "test-Fehler: " + t); } } }).start();
@@ -206,6 +210,7 @@ public class MainActivity extends Activity {
     void netLoop() {
         while (true) {
             try {
+                if (HotspotBoot.apOn(this)) { netTxt = "Box: Hotspot"; throw new RuntimeException("ap"); }
                 String r = HotspotBoot.shell("dumpsys tethering | grep -c TetheredState; cmd wifi status | grep -m1 'connected to'; dumpsys wifi | grep -m1 mWifiInfo | grep -o 'RSSI: -[0-9]*'; ip neigh 2>/dev/null | grep -v FAILED | grep -c -E 'ap|wlan|swlan'");
                 String[] l = r.split("\n");
                 int teth = 0; try { teth = Integer.parseInt(l[0].trim()); } catch (Throwable t) { }
@@ -217,11 +222,21 @@ public class MainActivity extends Activity {
                     t = m.find() ? "Box: " + m.group(1) + (q.find() ? " " + q.group(1) + " dBm" : "") : "Box: no Wi-Fi";
                 }
                 netTxt = t;
-            } catch (Throwable e) { netTxt = "Box: ?"; }
+            } catch (Throwable e) { if (!"ap".equals(e.getMessage())) netTxt = wifiTxt(); }
             final String js = "(function(){var e=document.getElementById('ctNet');if(!e){e=document.createElement('span');e.id='ctNet';e.title='Box Wi-Fi';var a=document.getElementById('att');if(a&&a.parentNode)a.parentNode.insertBefore(e,a.nextSibling);else document.body.appendChild(e);}e.textContent='" + netTxt.replace("'", "") + "';})()";
             ui.post(new Runnable() { public void run() { if (loaded) web.evaluateJavascript(js, null); } });
             try { Thread.sleep(15000); } catch (Throwable e) { }
         }
+    }
+
+    String wifiTxt() {
+        try {
+            android.net.wifi.WifiManager wm = (android.net.wifi.WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+            android.net.wifi.WifiInfo wi = wm.getConnectionInfo();
+            if (wi == null || wi.getNetworkId() == -1) return "Box: SIM";
+            String ss = wi.getSSID(); if (ss == null || ss.contains("unknown")) ss = "Wi-Fi"; ss = ss.replace("\"", "");
+            return "Box: " + ss + " " + wi.getRssi() + " dBm";
+        } catch (Throwable t) { return "Box: ?"; }
     }
 
     void updatePill() {

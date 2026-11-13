@@ -1,0 +1,14 @@
+#screenshot
+# App 1.52: Bedienungshilfe (Hotspot-Autostart ohne ADB) + Selbst-Update von GitHub
+adb push apk/CoreTracker.apk /sdcard/Download/coretracker.apk >/dev/null
+S=$(adb shell stat -c %s /sdcard/Download/coretracker.apk | tr -d '\r')
+adb shell "cat /sdcard/Download/coretracker.apk | pm install -r -S $S"
+adb shell dumpsys package at.magixfly.coretracker | grep versionName
+adb shell appops set at.magixfly.coretracker REQUEST_INSTALL_PACKAGES allow
+adb shell pm grant at.magixfly.coretracker android.permission.WRITE_SECURE_SETTINGS
+adb shell logcat -c
+adb shell am force-stop at.magixfly.coretracker; sleep 1
+adb shell monkey -p at.magixfly.coretracker -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1
+sleep 15
+adb shell settings get secure enabled_accessibility_services; adb shell settings get secure accessibility_enabled
+adb shell logcat -d | grep CTAP | tail -5
