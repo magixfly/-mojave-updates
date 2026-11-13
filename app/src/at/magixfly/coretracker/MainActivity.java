@@ -166,7 +166,7 @@ public class MainActivity extends Activity {
             for (int i = 1; i <= 15; i++) { String h = "172.20.10." + i; if (!c.contains(h)) c.add(h); }
             String found = null;
             for (int i = 0; i < c.size() && found == null; i++) {
-                showOverlay("Suche Core Tracker … " + c.get(i), i * 100 / c.size());
+                showOverlay("Searching Core Tracker … " + c.get(i), i * 100 / c.size());
                 if (ok(c.get(i))) found = c.get(i);
             }
             searching = false;
@@ -175,11 +175,11 @@ public class MainActivity extends Activity {
                 prefs.edit().putString("host", host).apply();
                 piBase = "http://" + host + ":" + PORT;
                 loadCarImage();
-                showOverlay("Gefunden: " + host, 100);
+                showOverlay("Found: " + host, 100);
                 loaded = true;
                 ui.post(new Task(this, Task.LOAD, "http://" + host + ":" + PORT + "/", 0));
             } else {
-                showOverlay("Tracker nicht gefunden – ist der Pi im Hotspot? Neuer Versuch in 5 s", 100);
+                showOverlay("Tracker not found – is the Pi in the hotspot? Retry in 5 s", 100);
                 ui.postDelayed(new Task(this, Task.SEARCH, null, 0), 5000);
             }
     }
@@ -194,7 +194,7 @@ public class MainActivity extends Activity {
 
     void updatePill() {
         String mb = tiles.bytes.get() > 1024L * 1024 * 1024 ? String.format("%.1f GB", tiles.bytes.get() / 1073741824.0) : (tiles.bytes.get() / 1048576) + " MB";
-        pillText.setText(tiles.finished ? "Karten komplett" : tiles.full ? "Karten · Speicher voll" : tiles.force ? "Karten " + mb + " · lädt immer (Tippen = Auto)" : tiles.driving ? "Karten " + mb + " · Pause (Fahrt)" : tiles.paused ? "Karten " + mb + " · wartet auf WLAN" : "Karten " + mb);
+        pillText.setText(tiles.finished ? "Maps complete" : tiles.full ? "Maps · storage full" : tiles.force ? "Maps " + mb + " · always loading (tap = auto)" : tiles.driving ? "Maps " + mb + " · paused while driving" : tiles.paused ? "Maps " + mb + " · waiting for Wi-Fi" : "Maps " + mb);
     }
 
     /** Anpassungen der Tracker-Seite nur auf der Box: Maßstab nach rechts unten. */

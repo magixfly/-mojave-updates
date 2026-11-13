@@ -73,11 +73,11 @@ class TileStore {
     String status() {
         long d = done.get();
         int pct = (int) Math.min(100, d * 100 / Math.max(1, total));
-        String s = "Karten " + pct + " % · " + phase + " · " + (bytes.get() / (1024 * 1024)) + " MB geladen";
-        if (finished) s = "Karten Wien + NÖ komplett";
-        else if (full) s = "Karten: Speicher fast voll – Download pausiert";
-        else if (driving) s = "Karten · Pause während der Fahrt";
-        else if (paused) s = "Karten " + pct + " % · wartet auf WLAN (Hotspot)";
+        String s = "Maps " + pct + " % · " + phase + " · " + (bytes.get() / (1024 * 1024)) + " MB loaded";
+        if (finished) s = "Maps Vienna + Lower Austria complete";
+        else if (full) s = "Maps: storage almost full – download paused";
+        else if (driving) s = "Maps · paused while driving";
+        else if (paused) s = "Maps " + pct + " % · waiting for Wi-Fi";
         return s;
     }
 

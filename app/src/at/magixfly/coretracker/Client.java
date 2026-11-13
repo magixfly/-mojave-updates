@@ -9,7 +9,7 @@ class Client extends WebViewClient {
     @Override
     public void onReceivedError(WebView v, int code, String desc, String url) {
         a.loaded = false;
-        a.showOverlay("Verbindung zum Tracker verloren – suche neu …", 0);
+        a.showOverlay("Connection to the tracker lost – searching …", 0);
         a.ui.postDelayed(new Task(a, Task.SEARCH, null, 0), 2000);
     }
     @Override

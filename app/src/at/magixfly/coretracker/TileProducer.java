@@ -15,7 +15,7 @@ class TileProducer implements Runnable {
                 long x0 = TileStore.lonX(TileStore.LON_W, 17), x1 = TileStore.lonX(TileStore.LON_E, 17), y0 = TileStore.latY(TileStore.LAT_N, 17), y1 = TileStore.latY(TileStore.LAT_S, 17);
                 long rMax = Math.max(Math.max(cx - x0, x1 - cx), Math.max(cy - y0, y1 - cy));
                 for (long r = 0; r <= rMax; r++) {
-                    s.phase = "Zoom 17/18 · " + (r * 100 / Math.max(1, rMax)) + " % der Fläche";
+                    s.phase = "Zoom 17/18 · " + (r * 100 / Math.max(1, rMax)) + " % of the area";
                     for (long x = cx - r; x <= cx + r; x++)
                         for (long y = cy - r; y <= cy + r; y++) {
                             if (Math.max(Math.abs(x - cx), Math.abs(y - cy)) != r) continue;
