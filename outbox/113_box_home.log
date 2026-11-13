@@ -1,0 +1,8 @@
+### 113_box_home  –  2026-11-14 00:31:48
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+192.168.178.235 kein ping
+failed to connect to '192.168.178.235:5555': No route to host
+adb: device '192.168.178.235:5555' not found
+
+### Exit-Code: 0
