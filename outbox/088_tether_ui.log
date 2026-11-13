@@ -1,0 +1,18 @@
+### 088_tether_ui  –  2026-11-13 20:06:02
+### Box: verbunden (172.20.10.14:5555)
+
+ERROR: could not get idle state.
+cat: /sdcard/ui.xml: No such file or directory
+
+    tetherableUsbRegexs: [usb\d, rndis\d]
+    tetherableWifiRegexs: [wlan\d, softap\d, ap_br_wlan\d, ap_br_softap\d]
+    tetherableWifiP2pRegexs: [p2p-p2p\d-.*, p2p\d]
+    tetherableBluetoothRegexs: [bt-pan]
+    tetherableNcmRegexs: []
+    wlan0 - AvailableState - lastError = 0
+    Upstream quota: {wlan0=9223372036854775807, rmnet_data2=27157585624}
+    2025-12-25T17:16:13.412223 - [config] TetheringConfiguration{activeDataSubId:-1 tetherableUsbRegexs:[usb\d,rndis\d] tetherableWifiRegexs:[wlan\d,softap\d,ap_br_wlan\d,ap_br_softap\d] tetherableWifiP2pRegexs:[p2p-p2p\d-.*,p2p\d] tetherableBluetoothRegexs:[bt-pan] isDunRequired:false chooseUpstreamAutomatically:true offloadPollInterval:5000 preferredUpstreamIfaceTypes:[I@2f1eb37 provisioningApp:[] provisioningAppNoUi: isCarrierSupportTethering:true isCarrierConfigAffirmsEntitlementCheckRequired:true enableBpfOffload:true enableLegacyDhcpServer:false enableWearTethering:false}
+    2025-12-25T17:16:39.588437 - [config] TetheringConfiguration{activeDataSubId:-1 tetherableUsbRegexs:[usb\d,rndis\d] tetherableWifiRegexs:[wlan\d,softap\d,ap_br_wlan\d,ap_br_softap\d] tetherableWifiP2pRegexs:[p2p-p2p\d-.*,p2p\d] tetherableBluetoothRegexs:[bt-pan] isDunRequired:false chooseUpstreamAutomatically:true offloadPollInterval:5000 preferredUpstreamIfaceTypes:[I@4b3a7cd provisioningApp:[] provisioningAppNoUi: isCarrierSupportTethering:true isCarrierConfigAffirmsEntitlementCheckRequired:true enableBpfOffload:true enableLegacyDhcpServer:false enableWearTethering:false}
+    2025-12-25T17:16:39.648585 - rmnet_ipa0 is used for -1 which is not tetherable (-1 == INVALID is expected on upstream interface)
+
+### Exit-Code: 0
