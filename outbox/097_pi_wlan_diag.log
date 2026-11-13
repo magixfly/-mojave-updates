@@ -1,0 +1,26 @@
+### 097_pi_wlan_diag  –  2026-11-13 21:42:05
+### Box: NICHT erreichbar (172.20.10.1:5555)
+
+throttled=0x0
+temp=66.2'C
+*       XVII  6     2437 MHz  84      130 Mbit/s 
+inbox/097_pi_wlan_diag.sh: line 5: iw: command not found
+XVII: powersave=default
+CoreTracker: powersave=default
+Error: Optimus - no such connection profile.
+Optimus: powersave=
+Error: Prime - no such connection profile.
+Prime: powersave=
+/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/1p, 480M
+    |__ Port 001: Dev 002, If 0, Class=Hub, Driver=hub/4p, 480M
+/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci_hcd/4p, 5000M
+20 packets transmitted, 20 received, 0% packet loss, time 5717ms
+rtt min/avg/max/mdev = 2.490/9.744/37.603/9.137 ms
+[    7.665436] brcmfmac: F1 signature read @0x18000000=0x15264345
+[    7.713848] brcmfmac: brcmf_fw_alloc_request: using brcm/brcmfmac43455-sdio for chip BCM4345/6
+[    7.714466] usbcore: registered new interface driver brcmfmac
+[    7.990374] brcmfmac: brcmf_c_process_txcap_blob: no txcap_blob available (err=-2)
+[    7.990861] brcmfmac: brcmf_c_preinit_dcmds: Firmware: BCM4345/6 wl0: Aug 29 2023 01:47:08 version 7.45.265 (28bca26 CY) FWID 01-b677b91b
+[   14.043734] brcmfmac: brcmf_cfg80211_set_power_mgmt: power save enabled
+
+### Exit-Code: 0
