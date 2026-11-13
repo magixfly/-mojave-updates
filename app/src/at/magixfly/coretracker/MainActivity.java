@@ -101,6 +101,10 @@ public class MainActivity extends Activity {
         fpv = new Fpv(this, root);              // V1.26: optional FPV from the CosmoStreamer
         setContentView(root);
         AdbWifi.ensure(this);
+        HotspotBoot.maybe(this);                 // V1.39: Box-Hotspot nach dem Start automatisch einschalten
+        if (getIntent() != null && getIntent().hasExtra("adbtest")) new Thread(new Runnable() { public void run() {
+            try { android.util.Log.d("CTAP", "test: " + HotspotBoot.shell("id; getprop persist.adb.tcp.port; dumpsys tethering | grep -c TetheredState")); }
+            catch (Throwable t) { android.util.Log.d("CTAP", "test-Fehler: " + t); } } }).start();
         tiles = new TileStore(this);
         tiles.start();
         ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000);

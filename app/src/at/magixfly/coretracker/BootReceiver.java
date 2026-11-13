@@ -7,5 +7,5 @@ import android.content.Intent;
 /** Beim Start der Box: Debugging über WLAN einschalten, damit der Pi die Box wieder erreicht. */
 public class BootReceiver extends BroadcastReceiver {
     @Override
-    public void onReceive(Context c, Intent i) { AdbWifi.ensure(c); }
+    public void onReceive(Context c, Intent i) { AdbWifi.ensure(c); HotspotBoot.maybe(c.getApplicationContext()); }
 }
