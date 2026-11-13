@@ -229,11 +229,11 @@ class Fpv {
         + "if(/janus/i.test(o.text)&&s.selectedIndex!=j){s.selectedIndex=j;s.dispatchEvent(new Event('input',{bubbles:true}));s.dispatchEvent(new Event('change',{bubbles:true}));}}}"
         + "if(!document.getElementById('ctfpv')){var st=document.createElement('style');st.id='ctfpv';"
         + "st.textContent='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
-        + "video{visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
+        + "#remotevideov1{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
         + "max-width:none!important;max-height:none!important;object-fit:contain!important;background:#000!important;z-index:2147483647!important;transform:none!important}';"
         + "document.head.appendChild(st);}"
         + "var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;if(v.paused&&v.play)try{v.play();}catch(e){}}"
-        + "return document.querySelectorAll('video').length;})()";
+        + "var m=document.getElementById('remotevideov1');return m&&m.videoWidth>0?1:0;})()";
 
     void fix() {
         if (web == null) return;
