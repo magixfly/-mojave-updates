@@ -208,6 +208,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
 #sndE .seg b{height:56px;font-size:19px}
 .sw{display:flex;gap:8px}.sw b{flex:1;height:52px;border-radius:12px;border:3px solid transparent;cursor:pointer}.sw b.on{border-color:#fff}
 #rideTxt{overflow:hidden;text-overflow:ellipsis;min-width:0;flex:0 1 auto}#rideBar>b,#rideBar>span:not(#rideTxt){flex:none}
+#esp,#wifi,#sys{font-variant-numeric:tabular-nums}   /* V2.0.46: numbers do not make the bar jump */
 </style>
 </head>
 <body>
@@ -861,7 +862,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
   {const x=st.esp,e=$('esp');
    if(!x){e.textContent=''}
    else if(x.age>3||!x.pps){e.textContent='ESP no data';e.style.color='#ff453a'}
-   else{const r=x.rssi;e.textContent='ESP '+(r!=null?r+' dBm · ':'')+x.pps+'/s';
+   else{const r=x.rssi;e.textContent='ESP '+(r!=null?r+' dBm · ':'')+String(x.pps).padStart(3,'\u2007')+'/s';   // V2.0.46: fixed width
      e.style.color=r==null?'var(--mut)':r>=-70?'#30d158':r>=-82?'#ff9f0a':'#ff453a'}}
   $('cl').style.display=st.claude&&!DEMO?'inline-flex':'none';$('cl').classList.toggle('on',!!(st.claude&&!DEMO));
   if(!window.boxBound){window.boxBound=1;$('boxst').onclick=()=>{fetch('/api/boxcmd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({toggle:1})});$('boxst').textContent='\u{1F697} Box: sending …'}}

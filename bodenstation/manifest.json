@@ -1,19 +1,18 @@
 {
- "ver": "2.0.45",
+ "ver": "2.0.46",
  "neu": [
-  "Device list refreshes itself after a WLAN change",
-  "Stuck in the ESP WLAN \"CoreTracker\" -> switches back to a saved WLAN in range"
+  "Status bar: ESP rate and other numbers keep a fixed width (no jumping)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 113459,
-   "md5": "eee19e1b5bb580e322f3cce350cd6c33"
+   "md5": "489140acf153142f9cbd461fdb23431c"
   },
   {
    "p": "web/index.html",
-   "s": 133769,
-   "md5": "93dc7d42eccfcf3ce817161f05006a36"
+   "s": 133925,
+   "md5": "5bfdff472b07a1d65c5611e9eddc8503"
   }
  ]
 }
