@@ -165,9 +165,11 @@ public class MainActivity extends Activity {
 
     void tick() { updatePill(); ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000); }
 
+    static String size(long b) { return b >= 1073741824L ? String.format(java.util.Locale.US, "%.1f GB", b / 1073741824.0) : (b / 1048576) + " MB"; }
+
     void updatePill() {
         if (!loaded) return;
-        String mb = tiles.bytes.get() > 1024L * 1024 * 1024 ? String.format("%.1f GB", tiles.bytes.get() / 1073741824.0) : (tiles.bytes.get() / 1048576) + " MB";
+        String mb = size(tiles.bytes.get()) + " / " + size(tiles.estimate());
         String txt = (tiles.finished ? "Maps complete" : tiles.full ? "Maps · storage full" : tiles.force ? "Maps " + mb + " · always loading (tap = auto)" : tiles.driving ? "Maps " + mb + " · paused while driving" : tiles.paused ? "Maps " + mb + " · waiting for Wi-Fi" : "Maps " + mb);
         web.evaluateJavascript("(function(){var e=document.getElementById('ctMapsT');if(e)e.textContent='" + txt + "';})()", null);
     }

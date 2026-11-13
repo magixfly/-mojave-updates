@@ -59,16 +59,21 @@ class TileStore {
     /** Gesamtgröße aller gespeicherten Kacheln (bleibt über Neustarts erhalten). */
     void loadTotal() {
         long b = a.prefs.getLong("tileBytes", -1);
-        if (b >= 0) { bytes.set(b); return; }
-        bytes.set(dirSize(dir));                       // einmalig zählen
+        if (b >= 0) { bytes.set(b); loaded.set(a.prefs.getLong("tileCount", 0)); return; }
+        long[] r = new long[2]; dirSize(dir, r);       // einmalig zählen
+        bytes.set(r[0]); loaded.set(r[1]);
         saveTotal();
     }
-    void saveTotal() { a.prefs.edit().putLong("tileBytes", bytes.get()).apply(); }
-    static long dirSize(File f) {
-        if (f.isFile()) return f.length();
-        long t = 0; File[] l = f.listFiles();
-        if (l != null) for (File x : l) t += dirSize(x);
-        return t;
+    void saveTotal() { a.prefs.edit().putLong("tileBytes", bytes.get()).putLong("tileCount", loaded.get()).apply(); }
+    static void dirSize(File f, long[] r) {
+        if (f.isFile()) { if (f.length() > 0) { r[0] += f.length(); r[1]++; } return; }
+        File[] l = f.listFiles();
+        if (l != null) for (File x : l) dirSize(x, r);
+    }
+    /** geschätzte Gesamtgröße Wien + NÖ (Kachelanzahl × durchschnittliche Größe; ~45 % der Fläche liegen außerhalb Österreichs) */
+    long estimate() {
+        long n = loaded.get(); double avg = n > 200 ? (double) bytes.get() / n : 18000;
+        return (long) (total * 0.55 * avg);
     }
 
     void start() {
