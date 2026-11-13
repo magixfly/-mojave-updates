@@ -1,0 +1,11 @@
+### 114_box_ap_check  –  2026-11-14 00:39:04
+### Box: NICHT erreichbar (192.168.47.241:5555)
+
+yes:XVII:5805 MHz
+GW 192.168.47.241
+ping ok
+nc: connect to 192.168.47.241 port 5555 (tcp) failed: Connection refused
+failed to connect to '192.168.47.241:5555': Connection refused
+adb: device '192.168.47.241:5555' not found
+
+### Exit-Code: 0
