@@ -9,7 +9,7 @@ class DriveWatch implements Runnable {
     final TileStore s;
     DriveWatch(TileStore s) { this.s = s; }
     public void run() {
-        int n = 0;
+        int n = 0, hits = 0;
         while (true) {
             try {
                 String base = s.a.piBase;
@@ -18,8 +18,9 @@ class DriveWatch implements Runnable {
                     if (d != null && d.length > 0) {
                         Matcher m = SPD.matcher(new String(d, "UTF-8"));
                         boolean moving = false;
-                        while (m.find()) if (Double.parseDouble(m.group(1)) > 2.0) moving = true;
-                        if (moving) s.lastMove = System.currentTimeMillis();
+                        while (m.find()) if (Double.parseDouble(m.group(1)) > 6.0) moving = true;   // GPS-Rauschen im Stand ignorieren
+                        hits = moving ? hits + 1 : 0;
+                        if (hits >= 3) s.lastMove = System.currentTimeMillis();   // erst nach 3 Messungen (6 s) = Fahrt
                     }
                 }
                 s.driving = System.currentTimeMillis() - s.lastMove < 60000;
