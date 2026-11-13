@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Antippen: Karte → FPV (Vollbild) → Bild-im-Bild → Karte.
  */
 class Fpv {
-    static final int MAP = 0, FULL = 1, PIP = 2;
+    static final int MAP = 0, FULL = 1, PIP = 2, SPLIT = 3;
     static final String[] FIXED = {"cosmostreamer.local", "172.20.10.10", "192.168.178.175"};
 
     final MainActivity a;
@@ -71,7 +71,7 @@ class Fpv {
         btn.setBackground(bg);
         btn.setPadding(10, 8, 10, 8);
         btn.setVisibility(View.GONE);
-        btn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { setMode((mode + 1) % 3); } });
+        btn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { setMode(next(mode)); } });
         // V1.31: links unten unter dem GPS-Feld (verdeckt nichts mehr)
         FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(208, 64, Gravity.LEFT | Gravity.BOTTOM);
         bl.leftMargin = 10;
@@ -162,14 +162,24 @@ class Fpv {
         btn.setVisibility(View.GONE);
     }
 
+    /** V1.32: Karte → Splitscreen → FPV Vollbild → Bild-im-Bild → Karte */
+    static int next(int m) { return m == MAP ? SPLIT : m == SPLIT ? FULL : m == FULL ? PIP : MAP; }
+
     void label() {
-        btn.setText(mode == MAP ? "📷 FPV" : mode == FULL ? "▣ PiP" : "🗺 MAP");
+        int n = next(mode);
+        btn.setText(n == SPLIT ? "\u25E7 Split" : n == FULL ? "\uD83D\uDCF7 FPV" : n == PIP ? "\u25A3 PiP" : "\uD83D\uDDFA MAP");
+    }
+
+    /** Karte (Tracker-WebView) volle Breite oder linke Hälfte. */
+    void mapWidth(int w) {
+        a.web.setLayoutParams(new FrameLayout.LayoutParams(w, -1, Gravity.LEFT | Gravity.TOP));
     }
 
     void setMode(int m) {
         if (base == null) m = MAP;
         mode = m;
         label();
+        mapWidth(m == SPLIT ? root.getWidth() / 2 : -1);
         if (m == MAP) {
             box.setVisibility(View.GONE);
             stopWeb();
@@ -180,6 +190,9 @@ class Fpv {
         FrameLayout.LayoutParams lp;
         if (m == FULL) {
             lp = new FrameLayout.LayoutParams(-1, -1);
+            tapCatcher.setVisibility(View.GONE);
+        } else if (m == SPLIT) {
+            lp = new FrameLayout.LayoutParams(root.getWidth() - root.getWidth() / 2, -1, Gravity.RIGHT | Gravity.TOP);
             tapCatcher.setVisibility(View.GONE);
         } else {
             int w = Math.round(root.getWidth() * 0.34f), h = w * 9 / 16;
