@@ -148,6 +148,7 @@ public class MainActivity extends Activity {
                 showOverlay("Searching Core Tracker … " + c.get(i), i * 100 / c.size());
                 if (ok(c.get(i))) found = c.get(i);
             }
+            if (found == null) found = scanSubnet();     // V1.24: e.g. home Wi-Fi without corepi.local (mDNS)
             searching = false;
             if (found != null) {
                 String host = found;
@@ -162,6 +163,30 @@ public class MainActivity extends Activity {
             }
     }
 
+
+    /** V1.24: look for the tracker in the own /24 network (all addresses at once, ~2 s). */
+    String scanSubnet() {
+        try {
+            final List<String> hosts = new ArrayList<String>();
+            for (java.net.NetworkInterface ni : java.util.Collections.list(java.net.NetworkInterface.getNetworkInterfaces())) {
+                if (!ni.isUp() || ni.isLoopback()) continue;
+                for (java.net.InetAddress ia : java.util.Collections.list(ni.getInetAddresses())) {
+                    if (!(ia instanceof java.net.Inet4Address) || !ia.isSiteLocalAddress()) continue;
+                    String ip = ia.getHostAddress(), pre = ip.substring(0, ip.lastIndexOf('.') + 1);
+                    for (int i = 1; i < 255; i++) { String h = pre + i; if (!h.equals(ip) && !hosts.contains(h)) hosts.add(h); }
+                }
+            }
+            if (hosts.isEmpty()) return null;
+            showOverlay("Searching Core Tracker in the whole network (" + hosts.size() + " addresses) …", 95);
+            java.util.concurrent.ExecutorService ex = java.util.concurrent.Executors.newFixedThreadPool(48);
+            final java.util.concurrent.atomic.AtomicReference<String> hit = new java.util.concurrent.atomic.AtomicReference<String>();
+            for (final String h : hosts) ex.execute(new Scan(h, hit));
+            ex.shutdown();
+            ex.awaitTermination(15, java.util.concurrent.TimeUnit.SECONDS);
+            ex.shutdownNow();
+            return hit.get();
+        } catch (Throwable t) { return null; }
+    }
 
     void tick() { updatePill(); ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000); }
 
