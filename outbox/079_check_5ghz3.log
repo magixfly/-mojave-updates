@@ -1,0 +1,12 @@
+### 079_check_5ghz3  –  2026-11-13 15:44:03
+### Box: verbunden (172.20.10.14:5555)
+
+US
+*       XVII           6     2437 MHz  88     
+CosmoStreamer 172.20.10.2: 200 0.265339s
+Box:
+11: wlan0    inet 172.20.10.14/28 brd 172.20.10.15 scope global wlan0\       valid_lft forever preferred_lft forever
+mWifiInfo SSID: "XVII", BSSID: 82:e5:82:2b:69:f3, MAC: b0:5a:44:75:3e:33, IP: /172.20.10.14, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11n, RSSI: -40, Link speed: 144Mbps, Tx Link speed: 144Mbps, Max Supported Tx Link speed: 144Mbps, Rx Li
+Failed to write while dumping service wifi: Broken pipe
+
+### Exit-Code: 0
