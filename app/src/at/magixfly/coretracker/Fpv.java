@@ -61,7 +61,7 @@ class Fpv {
         tapCatcher.setVisibility(View.GONE);
 
         btn = new TextView(a);
-        btn.setTextSize(15);
+        btn.setTextSize(18);
         btn.setTextColor(0xFF0B0F14);
         btn.setTypeface(null, 1);
         btn.setGravity(Gravity.CENTER);
@@ -73,10 +73,10 @@ class Fpv {
         btn.setVisibility(View.GONE);
         btn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { setMode(next(mode)); } });
         // V1.31: links unten unter dem GPS-Feld (verdeckt nichts mehr)
-        // V1.33: oben in der Kopfzeile in der freien Lücke neben „Maps“
-        FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(190, 38, Gravity.LEFT | Gravity.TOP);
-        bl.leftMargin = 745;
-        bl.topMargin = 7;
+        // V1.34: links unten (gut erreichbar); die Lage-/GPS-Zeile ist dafür oben in der Kopfzeile
+        FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(208, 62, Gravity.LEFT | Gravity.BOTTOM);
+        bl.leftMargin = 10;
+        bl.bottomMargin = 12;
         root.addView(btn, bl);
 
         new Thread(new Runnable() { public void run() { loop(); } }).start();
@@ -182,7 +182,8 @@ class Fpv {
         if (base == null) m = MAP;
         mode = m;
         label();
-        mapWidth(m == SPLIT ? root.getWidth() / 2 : -1);
+        int vw = Math.round(root.getWidth() / 3.5f);          // V1.34: Split Video : Karte = 1 : 2,5
+        mapWidth(m == SPLIT ? root.getWidth() - vw : -1);
         if (m == MAP) {
             box.setVisibility(View.GONE);
             stopWeb();
@@ -195,7 +196,7 @@ class Fpv {
             lp = new FrameLayout.LayoutParams(-1, -1);
             tapCatcher.setVisibility(View.GONE);
         } else if (m == SPLIT) {
-            lp = new FrameLayout.LayoutParams(root.getWidth() - root.getWidth() / 2, -1, Gravity.RIGHT | Gravity.TOP);
+            lp = new FrameLayout.LayoutParams(vw, -1, Gravity.RIGHT | Gravity.TOP);
             tapCatcher.setVisibility(View.GONE);
         } else {
             int w = Math.round(root.getWidth() * 0.34f), h = w * 9 / 16;
