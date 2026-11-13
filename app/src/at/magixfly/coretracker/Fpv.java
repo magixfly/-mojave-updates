@@ -62,11 +62,12 @@ class Fpv {
 
         btn = new TextView(a);
         btn.setTextSize(18);
-        btn.setTextColor(0xFF0B0F14);
+        btn.setTextColor(0xFF4ADE80);
         btn.setTypeface(null, 1);
         btn.setGravity(Gravity.CENTER);
         android.graphics.drawable.GradientDrawable bg = new android.graphics.drawable.GradientDrawable();
-        bg.setColor(0xE64ADE80);
+        bg.setColor(0xFF0B0F14);                     // V1.50: wie die Rahmen links (dunkel, blauer Rand, grüne Schrift)
+        bg.setStroke(3, 0x994DB8FF);
         bg.setCornerRadius(14);
         btn.setBackground(bg);
         btn.setPadding(4, 0, 4, 0);
@@ -174,7 +175,14 @@ class Fpv {
 
     void label() {
         int n = next(mode);
-        btn.setText(n == SPLIT ? "\u25E7 Split" : n == FULL ? "\uD83D\uDCF7 FPV" : n == PIP ? "\u25A3 PiP" : "\uD83D\uDDFA MAP");
+        btn.setText(n == SPLIT ? "Split" : n == FULL ? "FPV" : n == PIP ? "PiP" : "MAP");   // V1.50: ohne Symbole
+        // Breite wie die linke Spalte: normal 208 px, im Split ist die Spalte schmaler
+        FrameLayout.LayoutParams bl = (FrameLayout.LayoutParams) btn.getLayoutParams();
+        if (bl != null) {
+            boolean sp = mode == SPLIT;
+            bl.width = sp ? 125 : 208; bl.height = sp ? 56 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? 8 : 12;
+            btn.setLayoutParams(bl);
+        }
     }
 
     /** Karte (Tracker-WebView) volle Breite oder linke Hälfte. */
