@@ -1,0 +1,23 @@
+### 061_app129  –  2026-11-13 13:49:02
+### Box: verbunden (192.168.178.235:5555)
+
+Success
+    versionName=1.29
+11-13 13:49:40.099 19973 19973 D CTFPV   : FPVSTATE id=remotevideov1 rs=0 w=0 @1
+11-13 13:49:46.097 19973 19973 D CTFPV   : FPV: Janus ohne Bild -> Jmuxer @1
+11-13 13:49:46.276 19973 19973 D CTFPV   : The keyword 'slider-vertical' specified to an 'appearance' property is not standardized. It will be removed in the future. Use <input type=range style="writing-mode: vertical-lr; direction: rtl"> instead. @0
+11-13 13:49:46.276 19973 19973 D CTFPV   : The keyword 'slider-vertical' specified to an 'appearance' property is not standardized. It will be removed in the future. Use <input type=range style="writing-mode: vertical-lr; direction: rtl"> instead. @0
+11-13 13:49:46.712 19973 19973 D CTFPV   : gamepad disabled @28
+11-13 13:49:46.727 19973 19973 D CTFPV   : FPVSTATE id=video_element rs=0 w=0 @1
+11-13 13:49:46.878 19973 19973 D CTFPV   :  ::: Got a message ::: [object Object] @114
+11-13 13:49:46.907 19973 19973 D CTFPV   : getStreamInfo:  [object Object] @363
+11-13 13:49:46.933 20003 20404 W chromium: [WARNING:third_party/webrtc/pc/jsep_transport_controller.cc:449] Not adding candidate because the JsepTransport doesn't exist. Ignore it.
+11-13 13:49:46.933 20003 20404 W chromium: [WARNING:third_party/webrtc/pc/jsep_transport_controller.cc:449] Not adding candidate because the JsepTransport doesn't exist. Ignore it.
+11-13 13:49:46.944 20003 20404 I chromium: [INFO:third_party/blink/renderer/platform/p2p/ipc_socket_factory.cc:575] Setting new p2p socket buffer limit to 262144
+11-13 13:49:46.944 20003 20404 I chromium: [INFO:third_party/blink/renderer/platform/p2p/ipc_socket_factory.cc:575] Setting new p2p socket buffer limit to 262144
+11-13 13:49:46.990 19973 19973 D CTFPV   :  ::: Got a message ::: [object Object] @114
+11-13 13:49:46.991 20003 20404 W chromium: [WARNING:third_party/webrtc/p2p/client/basic_port_allocator.cc:961] Discarding candidate because port is already done gathering.
+11-13 13:49:47.056 19973 19973 D CTFPV   :  ::: Got a message ::: [object Object] @114
+11-13 13:49:54.097 19973 19973 D CTFPV   : FPVSTATE id=video_element rs=0 w=0 @1
+
+### Exit-Code: 0
