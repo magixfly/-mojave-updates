@@ -1,0 +1,13 @@
+### 063_cosmo_ping  –  2026-11-13 13:56:03
+### Box: verbunden (192.168.178.235:5555)
+
+cosmostreamer.local: 
+192.168.178.175: 
+192.168.178.138 dev wlan0 lladdr 3c:5c:c4:eb:37:e0 STALE 
+192.168.178.175 dev wlan0 lladdr dc:a6:32:09:df:0d PROBE 
+192.168.178.213 dev wlan0 FAILED 
+192.168.178.235 dev wlan0 lladdr b0:5a:44:75:3e:33 REACHABLE 
+192.168.178.243 dev wlan0 lladdr 7c:8a:e1:99:68:44 DELAY 
+192.168.178.1 dev wlan0 lladdr c8:0e:14:91:0a:f2 REACHABLE 
+
+### Exit-Code: 0
