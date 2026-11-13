@@ -1,10 +1,11 @@
 {
- "fw": "V1.57",
+ "fw": "V1.58",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1244192,
- "md5": "3a3daf3b7d44423bc6244c638e1b7bf8",
+ "groesse": 1244352,
+ "md5": "5da403a76d21cb22ca9bc0f693bb22c9",
  "neu": [
+  "Map copy from the Core pauses while the car is armed (flight mode via MT12 telemetry)",
   "Core in the same Wi-Fi (mojave.local) is found automatically and missing map tiles are copied – even with the Core switched off",
   "Navi works alone by default (Core off): own GPS or MT12 telemetry, home Wi-Fi / phone hotspot for maps, no Core warnings",
   "No double 'Core' warning: when standing, only NO CORE is shown",
