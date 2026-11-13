@@ -1,10 +1,11 @@
 {
- "fw": "V1.61",
+ "fw": "V1.62",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1245168,
- "md5": "c2d0cb2a351b260a44140c568f876634",
+ "groesse": 1245712,
+ "md5": "d9729b9a597fa1db190afa5ef75f3041",
  "neu": [
+  "Map errors shown on the status page; tiles with other permanent errors (4xx, empty) are also retried only once a day",
   "Touch buttons moved to the top bar (- + NET), hidden when armed; zoom taps no longer restart map loading",
   "Touch on when the car is not armed: + / - zoom (further out), NET button = Wi-Fi + load maps, press again = back to MT12",
   "No error messages: satellite search shown as 'GPS n...' / 'EGPS n...' (animated); MT12 telemetry always has priority over Wi-Fi",
