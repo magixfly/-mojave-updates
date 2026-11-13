@@ -64,7 +64,8 @@ for f in inbox/*.sh; do
   [ -e "$f" ] || continue
   n=$(basename "$f" .sh)
   [ -e "outbox/$n.log" ] && continue
-  if ! is_dev; then log "$n wartet – Box nicht erreichbar"; break; fi
+  # 13.11.: Befehle mit Zeile "#nobox" laufen auch ohne Box (z. B. Tracker-Update am Pi)
+  if ! is_dev && ! grep -q '^#nobox' "$f"; then log "$n wartet – Box nicht erreichbar"; continue; fi
   log "starte $n"
   { echo "### $n  –  $(date '+%F %T')"; echo "### Box: $ST"; echo;
     cd "$D"; timeout "$CMD_TIMEOUT" bash "$f" 2>&1; rc=$?; echo; echo "### Exit-Code: $rc"; } > "outbox/$n.log"

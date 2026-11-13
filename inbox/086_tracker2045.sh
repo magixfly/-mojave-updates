@@ -1,4 +1,5 @@
 #screenshot
+#nobox
 # Tracker auf 2.0.45 aktualisieren (GitHub-Cache bis ~5 min)
 for i in $(seq 1 14); do
   curl -s -X POST -H 'Content-Type: application/json' -d '{"check":1}' http://127.0.0.1:8080/api/update >/dev/null; sleep 8
