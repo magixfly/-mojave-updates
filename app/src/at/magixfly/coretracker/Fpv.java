@@ -220,7 +220,7 @@ class Fpv {
         int W = root.getWidth(), H = root.getHeight();
         int si = Math.max(0, Math.min(2, a.prefs.getInt("pipS", 1)));
         int w = Math.round(W * SIZES[si]), h = w * 9 / 16;
-        int x = a.prefs.getInt("pipX", W - w - 100), y = a.prefs.getInt("pipY", 62);
+        int x = a.prefs.getInt("pipX", W - w - 100), y = a.prefs.getInt("pipY", 68);
         x = Math.max(0, Math.min(W - w, x)); y = Math.max(0, Math.min(H - h, y));
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(w, h, Gravity.LEFT | Gravity.TOP);
         lp.leftMargin = x; lp.topMargin = y;
