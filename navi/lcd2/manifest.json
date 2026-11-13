@@ -1,10 +1,11 @@
 {
- "fw": "V1.70",
+ "fw": "V1.71",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1258752,
- "md5": "4625ef35f1d5872f23867581d49d5925",
+ "groesse": 1258832,
+ "md5": "d04b829c23430a648028633fa08d6e61",
  "neu": [
+  "Gap between battery voltage and clock when the touch buttons are shown",
   "Tiles that fail while the internet works are not retried the same day, not even after a restart (shown as n/a, retry tomorrow)",
   "Crash fix (watchdog): Wi-Fi check inside a locked section during Core map copy; missing-tile log now thread-safe",
   "Clock from the internet (NTP) – before it only came from the Core",
