@@ -1,10 +1,11 @@
 {
- "fw": "V1.48",
+ "fw": "V1.49",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1224688,
- "md5": "8dec337128955ec719700c7234c3a2cf",
+ "groesse": 1224784,
+ "md5": "1047ee32947e175824ba7e3ad35018e6",
  "neu": [
+  "Own GPS active: only 'GPS n' shown (small; orange without fix) – no Core warnings or empty Core values",
   "Link quality (LQ) shown top left in the header (green/orange/red) – needs a Core that sends LQ",
   "Header larger and bold without 'Bat:'; small grey GPS label; fix: NO FIX / NO CORE shown again",
   "While driving only the tiles of the visible map are loaded; area downloads resume after standing 1 minute",
