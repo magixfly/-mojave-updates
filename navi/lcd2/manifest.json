@@ -1,10 +1,11 @@
 {
- "fw": "V1.65",
+ "fw": "V1.66",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1255728,
- "md5": "21d128de168cf7788838b92b3d07b6bb",
+ "groesse": 1256464,
+ "md5": "f85faa830b016abffc12d747068eb831",
  "neu": [
+  "MT12 channel-1 check fixed (no Wi-Fi auto-reconnect during the 3 s check) + more diagnostics; 'Copy maps from Core: off' stops copying immediately",
   "Missing map tiles are logged on the SD card (/fehlt.log, once per tile per day) – list on the status page with location pin",
   "More MT12 diagnostics (other MSP functions, non-MSP packets)",
   "MT12 diagnostics on the status page (channel, ESP-NOW frames seen, ours, MSP ok, our ID)",
