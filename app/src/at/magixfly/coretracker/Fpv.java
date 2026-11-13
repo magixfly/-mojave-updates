@@ -61,7 +61,7 @@ class Fpv {
         tapCatcher.setVisibility(View.GONE);
 
         btn = new TextView(a);
-        btn.setTextSize(17);
+        btn.setTextSize(15);
         btn.setTextColor(0xFF0B0F14);
         btn.setTypeface(null, 1);
         btn.setGravity(Gravity.CENTER);
@@ -69,13 +69,14 @@ class Fpv {
         bg.setColor(0xE64ADE80);
         bg.setCornerRadius(14);
         btn.setBackground(bg);
-        btn.setPadding(10, 8, 10, 8);
+        btn.setPadding(4, 0, 4, 0);
         btn.setVisibility(View.GONE);
         btn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { setMode(next(mode)); } });
         // V1.31: links unten unter dem GPS-Feld (verdeckt nichts mehr)
-        FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(208, 64, Gravity.LEFT | Gravity.BOTTOM);
-        bl.leftMargin = 10;
-        bl.bottomMargin = 14;
+        // V1.33: oben in der Kopfzeile in der freien Lücke neben „Maps“
+        FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(190, 38, Gravity.LEFT | Gravity.TOP);
+        bl.leftMargin = 745;
+        bl.topMargin = 7;
         root.addView(btn, bl);
 
         new Thread(new Runnable() { public void run() { loop(); } }).start();
@@ -139,6 +140,7 @@ class Fpv {
     /** Ist unter dieser Adresse (Port 80) die Seite des CosmoStreamers? */
     static boolean isCosmo(String host) {
         try {
+            if (host.equals("172.20.10.2") || host.startsWith("corepi")) return false;   // Tracker-Pi nie
             HttpURLConnection con = (HttpURLConnection) new URL("http://" + host + "/").openConnection();
             con.setConnectTimeout(700);
             con.setReadTimeout(1500);
@@ -149,7 +151,8 @@ class Fpv {
             while (n < buf.length && (r = in.read(buf, n, buf.length - n)) > 0) n += r;
             in.close();
             con.disconnect();
-            return new String(buf, 0, n, "UTF-8").toLowerCase().contains("cosmostreamer");
+            String t = new String(buf, 0, n, "UTF-8").toLowerCase();
+            return t.contains("<title>cosmostreamer") && t.contains("video_player_option");   // V1.33: nur die echte CosmoStreamer-Seite
         } catch (Throwable t) { return false; }
     }
 
