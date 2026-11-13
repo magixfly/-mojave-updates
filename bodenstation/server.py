@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.44"
+VERSION = "2.0.45"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -775,7 +775,26 @@ def wifi_thread():
                 pass
         HOME_WIFI["sig"] = sig if ssid else None
         HOME_WIFI["ms"] = ms
+        # V2.0.45: after a WLAN change refresh the device list (IP/WLAN of this Pi were stale)
+        if ssid != WIFI_ESC.get("last"):
+            WIFI_ESC.update(last=ssid, since=time.time())
+            threading.Thread(target=devices_scan, daemon=True).start()
+        # V2.0.45: stuck in the ESP's own WLAN "CoreTracker" (no internet) -> back to a saved WLAN in range
+        if ssid.lower() == "coretracker" and time.time() - WIFI_ESC["since"] > 45 and time.time() - WIFI_ESC["tried"] > 120 and not WIFI_SW.get("busy"):
+            WIFI_ESC["tried"] = time.time()
+            try:
+                nm("dev", "wifi", "rescan", timeout=8)
+                time.sleep(3)
+                cand = [w for w in wifi_list() if w["ssid"].lower() != "coretracker" and w.get("signal")]
+                cand.sort(key=lambda w: (-w["prio"], -(w["signal"] or 0)))
+                if cand:
+                    print("WLAN: CoreTracker -> " + cand[0]["ssid"])
+                    wifi_switch(cand[0]["con"], cand[0]["ssid"])
+            except Exception as e:
+                print("WLAN escape", e)
         time.sleep(10)
+
+WIFI_ESC = {"last": None, "since": 0.0, "tried": 0.0}
 
 DISARMED_MODES = ("OK", "WAIT", "!ERR", "!FS!")
 

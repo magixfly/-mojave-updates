@@ -1,13 +1,14 @@
 {
- "ver": "2.0.44",
+ "ver": "2.0.45",
  "neu": [
-  "ESP receiver: automatic reset if it stays silent after a Pi restart (no re-plugging needed)"
+  "Device list refreshes itself after a WLAN change",
+  "Stuck in the ESP WLAN \"CoreTracker\" -> switches back to a saved WLAN in range"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 112317,
-   "md5": "94601290987ff77d4093e6eebf1b44fb"
+   "s": 113459,
+   "md5": "eee19e1b5bb580e322f3cce350cd6c33"
   },
   {
    "p": "web/index.html",
