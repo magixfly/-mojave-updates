@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.55"
+VERSION = "2.0.56"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -202,13 +202,19 @@ def devices_scan():
             ssid = subprocess.run(["iwgetid", "-r"], capture_output=True, text=True, timeout=3).stdout.strip()
         except Exception:
             pass
+        ghz = ""
+        try:                                      # V2.0.56: Band des eigenen WLANs
+            fr = int(re.search(r"freq: (\d+)", subprocess.run(["iw", "dev", "wlan0", "link"], capture_output=True, text=True, timeout=3).stdout).group(1))
+            ghz = "5 GHz" if fr > 4900 else "2.4 GHz"
+        except Exception:
+            pass
         hn = socket.gethostname()
         if not ips:
             try:
                 s0 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); s0.connect(("8.8.8.8", 80)); ips.append(["net", s0.getsockname()[0]]); s0.close()
             except Exception:
                 pass
-        out["tracker"] = {"ok": True, "host": hn + ".local", "ips": ips, "ssid": ssid, "ver": VERSION}
+        out["tracker"] = {"ok": True, "host": hn + ".local", "ips": ips, "ssid": ssid, "ghz": ghz, "ver": VERSION}
         DEVS["prog"] = 20
         # Core: addresses from config.txt (core_hosts), the one that answered last first
         hs = []
@@ -252,7 +258,7 @@ def devices_scan():
             hs = bip is not None and bip == subprocess.run(["ip", "route"], capture_output=True, text=True, timeout=3).stdout.split("default via ")[1].split()[0]
         except Exception:
             hs = False
-        out["box"] = {"ok": time.time() - BOX.get("t", 0) < 30, "host": "Carlin box", "ip": bip, "hs": hs}   # hs: the box is the hotspot
+        out["box"] = {"ok": time.time() - BOX.get("t", 0) < 30, "host": "Carlin box", "ip": bip, "hs": hs, "wifi": BOX.get("wifi") or ""}   # hs: the box is the hotspot
         cos = {"ok": False, "host": "cosmostreamer.local", "ip": None}
         cand = ["cosmostreamer.local"]
         try:
@@ -2329,7 +2335,7 @@ class H(BaseHTTPRequestHandler):
             save_cfg(CFG)
             return self.send(200, {"ok": True, "k": k, "v": CFG[k]})
         if p == "/api/box":                       # V2.0.41: Carlin box app reports its map download every few seconds
-            BOX.update({k: b[k] for k in ("txt", "dl", "gb", "est", "net", "stop", "ver", "ip") if k in b})
+            BOX.update({k: b[k] for k in ("txt", "dl", "gb", "est", "net", "stop", "ver", "ip", "wifi") if k in b})
             BOX["t"] = time.time()
             if "ip" not in b: BOX["ip"] = self.client_address[0]
             r = {"ok": 1, "toggle": BOX_CMD["toggle"]}

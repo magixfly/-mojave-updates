@@ -1,19 +1,19 @@
 {
- "ver": "2.0.55",
+ "ver": "2.0.56",
  "neu": [
-  "Disarmed hold is released after 5 s at >= 3 km/h in one direction (vehicle carried)",
-  "Device list with Wi-Fi names on the \"Display on Kia\" screen"
+  "Display on Kia: Wi-Fi band (2.4 / 5 GHz) for every device",
+  "Disarmed hold released after 5 s at >= 3 km/h in one direction"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 117577,
-   "md5": "7f5ed51446dae32aed6fca5d07c72d3d"
+   "s": 117981,
+   "md5": "9271194bd08acc964d2a0c672309cfdc"
   },
   {
    "p": "web/index.html",
-   "s": 136885,
-   "md5": "74c5eda4edcb5fa4ebe39a01c799136b"
+   "s": 137167,
+   "md5": "0311f85da60dac9d472c097204ef911a"
   }
  ]
 }
