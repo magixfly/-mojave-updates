@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.51"
+VERSION = "2.0.52"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -34,6 +34,7 @@ DEFAULTS = [
     ("max_zoom", "21", "Highest zoom on screen (20/21 = AI tiles or enlarged)"),
     ("still_kmh", "2", "Below this speed the car counts as standing: map/arrow do not move"),
     ("still_jump_m", "15", "...unless the position jumps more than this (car carried away)"),
+    ("still_jump_disarmed_m", "60", "Disarmed and slower than 20 km/h: keep the position unless it jumps more than this (GPS jitter indoors)"),
     ("freeze_disarmed", "1", "1 = also stand still while the car is disarmed (mode OK/WAIT/...*)"),
     ("auto_zoom", "1", "1 = zoom out a little when driving fast (like a car navi), back in when standing"),
     ("auto_zoom_out", "0.7", "Zoom levels out at auto_zoom_kmh"),
@@ -845,7 +846,10 @@ def on_gps(lat, lon, spd, hdg, alt, sats, src):
         # stand still: car disarmed or slower than still_kmh -> keep position/heading (no GPS jitter on the map)
         disarmed = CFG.get("freeze_disarmed", "1") == "1" and is_disarmed(S.get("mode"))
         still = spd < cf("still_kmh")              # V2.0.24: only real stand still (disarmed but moving, e.g. carried in a car, showed 0 km/h)
-        if still and src != "TEST" and S["lat"] is not None and haversine(S["lat"], S["lon"], lat, lon) < cf("still_jump_m"):
+        # V2.0.52: disarmed -> much stronger hold (indoors the GPS wanders 10-50 m and reports a few km/h)
+        jump = cf("still_jump_disarmed_m") if disarmed and spd < 20 else cf("still_jump_m")
+        still = still or (disarmed and spd < 20)
+        if still and src != "TEST" and S["lat"] is not None and haversine(S["lat"], S["lon"], lat, lon) < jump:
             S.update(spd=0.0 if disarmed else spd, alt=alt, sats=sats, parked=True)
             log_row()
             return
@@ -912,7 +916,9 @@ def c_gps(n, lat, lon, spd, hdg, alt, sats):
             log_rowx(n)
             return
         disarmed = CFG.get("freeze_disarmed", "1") == "1" and is_disarmed(c.get("mode"))
-        if spd < cf("still_kmh") and c.get("lat") is not None and haversine(c["lat"], c["lon"], lat, lon) < cf("still_jump_m"):
+        hold = disarmed and spd < 20                                     # V2.0.52: like the main car
+        jump = cf("still_jump_disarmed_m") if hold else cf("still_jump_m")
+        if (spd < cf("still_kmh") or hold) and c.get("lat") is not None and haversine(c["lat"], c["lon"], lat, lon) < jump:
             c.update(spd=0.0 if disarmed else spd, alt=alt, sats=sats)
             log_rowx(n)
             return

@@ -1,15 +1,14 @@
 {
- "ver": "2.0.51",
+ "ver": "2.0.52",
  "neu": [
-  "Pi display shows only info while the Kia box shows the map (saves CPU); tap = map, small KIA button = info again",
-  "WLAN power save off",
-  "Remote maintenance repairs itself after a power cut"
+  "Disarmed vehicles keep their position (no GPS jitter / jumping track indoors, up to 60 m)",
+  "Pi display shows only info while the Kia box shows the map"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 114943,
-   "md5": "f54678cb4a84d62c50e62b40816b62e0"
+   "s": 115494,
+   "md5": "fbabadfd1243793a5bfb2e2070117ffa"
   },
   {
    "p": "web/index.html",
