@@ -1,19 +1,18 @@
 {
- "ver": "2.0.56",
+ "ver": "2.0.57",
  "neu": [
-  "Display on Kia: Wi-Fi band (2.4 / 5 GHz) for every device",
-  "Disarmed hold released after 5 s at >= 3 km/h in one direction"
+  "Core and Navi shown with 2.4 GHz (ESP32 only supports 2.4 GHz)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 117981,
-   "md5": "9271194bd08acc964d2a0c672309cfdc"
+   "md5": "339eeb311b369b7debee9da72185be2c"
   },
   {
    "p": "web/index.html",
-   "s": 137167,
-   "md5": "0311f85da60dac9d472c097204ef911a"
+   "s": 137221,
+   "md5": "a730089667b49772b2398bb4f00c1287"
   }
  ]
 }
