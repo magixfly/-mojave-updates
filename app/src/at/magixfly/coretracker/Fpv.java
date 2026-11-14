@@ -75,7 +75,7 @@ class Fpv {
         btn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { setMode(next(mode)); } });
         // V1.31: links unten unter dem GPS-Feld (verdeckt nichts mehr)
         // V1.34: links unten (gut erreichbar); die Lage-/GPS-Zeile ist dafür oben in der Kopfzeile
-        FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(208, 62, Gravity.LEFT | Gravity.BOTTOM);
+        FrameLayout.LayoutParams bl = new FrameLayout.LayoutParams(240, 62, Gravity.LEFT | Gravity.BOTTOM);
         bl.leftMargin = 10;
         bl.bottomMargin = 12;
         root.addView(btn, bl);
@@ -184,7 +184,7 @@ class Fpv {
         FrameLayout.LayoutParams bl = (FrameLayout.LayoutParams) btn.getLayoutParams();
         if (bl != null) {
             boolean sp = mode == SPLIT;
-            bl.width = sp ? 125 : 208; bl.height = sp ? 56 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? 8 : 12;
+            bl.width = sp ? 125 : 240; bl.height = sp ? 56 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? 8 : 12;
             btn.setLayoutParams(bl);
         }
     }
