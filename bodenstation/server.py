@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.53"
+VERSION = "2.0.54"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -248,7 +248,11 @@ def devices_scan():
                 bip = gw if _dev_ip(gw) else None
             except Exception:
                 bip = None
-        out["box"] = {"ok": time.time() - BOX.get("t", 0) < 30, "host": "Carlin box", "ip": bip}
+        try:
+            hs = bip is not None and bip == subprocess.run(["ip", "route"], capture_output=True, text=True, timeout=3).stdout.split("default via ")[1].split()[0]
+        except Exception:
+            hs = False
+        out["box"] = {"ok": time.time() - BOX.get("t", 0) < 30, "host": "Carlin box", "ip": bip, "hs": hs}   # hs: the box is the hotspot
         cos = {"ok": False, "host": "cosmostreamer.local", "ip": None}
         cand = ["cosmostreamer.local"]
         try:
