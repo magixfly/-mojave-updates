@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.52"
+VERSION = "2.0.53"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -240,6 +240,31 @@ def devices_scan():
                 navi.update(ver=st.get("ver"), ssid=st.get("ssid") or "", rssi=st.get("rssi"))
                 break
         out["navi"] = navi
+        # V2.0.53: Kia-Box (meldet sich selbst per /api/box) und CosmoStreamer
+        bip = BOX.get("ip") if time.time() - BOX.get("t", 0) < 30 else None
+        if not bip:
+            try:
+                gw = subprocess.run(["ip", "route"], capture_output=True, text=True, timeout=3).stdout.split("default via ")[1].split()[0]
+                bip = gw if _dev_ip(gw) else None
+            except Exception:
+                bip = None
+        out["box"] = {"ok": time.time() - BOX.get("t", 0) < 30, "host": "Carlin box", "ip": bip}
+        cos = {"ok": False, "host": "cosmostreamer.local", "ip": None}
+        cand = ["cosmostreamer.local"]
+        try:
+            pre = [x[1] for x in ips if not x[1].startswith("127.")][0].rsplit(".", 1)[0]
+            cand += [pre + ".%d" % i for i in range(2, 21)]
+        except Exception:
+            pass
+        for h in cand:
+            try:
+                with urllib.request.urlopen("http://%s/" % h, timeout=1.0) as r:
+                    if b"cosmostreamer" in r.read(4000).lower():
+                        cos = {"ok": True, "host": "cosmostreamer.local", "ip": _dev_ip(h) or h}
+                        break
+            except Exception:
+                pass
+        out["cosmo"] = cos
     finally:
         DEVS["d"], DEVS["t"], DEVS["busy"], DEVS["prog"] = out, time.time(), False, 100
 

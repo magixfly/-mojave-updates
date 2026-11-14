@@ -1,19 +1,19 @@
 {
- "ver": "2.0.52",
+ "ver": "2.0.53",
  "neu": [
-  "Disarmed vehicles keep their position (no GPS jitter / jumping track indoors, up to 60 m)",
-  "Pi display shows only info while the Kia box shows the map"
+  "\"Display on Kia\" screen lists names and IP addresses of all known devices (tracker, box, Core, Navi, CosmoStreamer)",
+  "Disarmed vehicles keep their position (no GPS jitter indoors)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 115494,
-   "md5": "fbabadfd1243793a5bfb2e2070117ffa"
+   "s": 116736,
+   "md5": "e6604e6d7ef2c7eeaad7a3c3d0a253f1"
   },
   {
    "p": "web/index.html",
-   "s": 135903,
-   "md5": "95d248c8b8ddef05d8a84f5a7dbba586"
+   "s": 136658,
+   "md5": "eaccee456191d36d4dc2f258b1aa8f30"
   }
  ]
 }
