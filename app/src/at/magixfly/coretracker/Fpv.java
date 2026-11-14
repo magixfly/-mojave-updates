@@ -29,7 +29,7 @@ class Fpv {
 
     final MainActivity a;
     final FrameLayout root;
-    TextView btn;
+    TextView btn, bL, bR;   // V1.56: Split-Breite ◀ ▶
     TextView info;
     FrameLayout box;           // Rahmen für das FPV-Bild (Vollbild oder klein)
     WebView web;
@@ -79,6 +79,7 @@ class Fpv {
         bl.leftMargin = 10;
         bl.bottomMargin = 12;
         root.addView(btn, bl);
+        bL = arrow("\u25C0", 1); bR = arrow("\u25B6", -1);   // V1.56: ◀ Video breiter, ▶ Video schmaler (100-px-Schritte)
 
         new Thread(new Runnable() { public void run() { loop(); } }).start();
     }
@@ -163,6 +164,36 @@ class Fpv {
 
     void post(Runnable r) { a.ui.post(r); }
 
+    TextView arrow(String t, final int d) {
+        TextView b = new TextView(a);
+        b.setText(t); b.setTextSize(26); b.setTextColor(0xFF4ADE80); b.setTypeface(null, 1); b.setGravity(Gravity.CENTER);
+        android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
+        g.setColor(0xFF0B0F14); g.setStroke(3, 0x994DB8FF); g.setCornerRadius(14);
+        b.setBackground(g); b.setVisibility(View.GONE);
+        b.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+            int[] r = range(); int w = Math.max(r[0], Math.min(r[1], splitW() + 100 * d));
+            a.prefs.edit().putInt("splitW", w).apply();
+            setMode(SPLIT);
+        } });
+        root.addView(b, new FrameLayout.LayoutParams(105, 64, Gravity.LEFT | Gravity.BOTTOM));
+        return b;
+    }
+
+    /** V1.56: Videobreite im Split: max = bisher (Karte minimal), min = so schmal wie die Karte bisher war */
+    int[] range() {
+        int vmax = Math.min(Math.round(root.getWidth() * 0.75f), root.getHeight() * 16 / 9 * 9 / 10);
+        return new int[]{root.getWidth() - vmax, vmax};
+    }
+    int splitW() {
+        int[] r = range(); int w = a.prefs.getInt("splitW", r[1]);
+        return Math.max(r[0], Math.min(r[1], w));
+    }
+    /** Höhe: schmaler = niedriger, aber höchstens 100 px Rand oben und unten (Bild wird dafür leicht gestreckt) */
+    int splitH(int vw) {
+        int H = root.getHeight(), vmax = range()[1];
+        return Math.min(H, Math.max(H - 200, Math.round((float) vw * H / vmax)));
+    }
+
     void found() {
         btn.setVisibility(View.VISIBLE); label();
         int m = a.prefs.getInt("fpvMode", MAP);                 // V1.51: zuletzt gewählte Ansicht wiederherstellen
@@ -171,7 +202,7 @@ class Fpv {
 
     void lost() {
         setMode(MAP);
-        btn.setVisibility(View.GONE);
+        btn.setVisibility(View.GONE); label();
     }
 
     /** V1.32: Karte → Splitscreen → FPV Vollbild → Bild-im-Bild → Karte */
@@ -184,8 +215,18 @@ class Fpv {
         FrameLayout.LayoutParams bl = (FrameLayout.LayoutParams) btn.getLayoutParams();
         if (bl != null) {
             boolean sp = mode == SPLIT;
-            bl.width = sp ? 125 : 240; bl.height = sp ? 56 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? 8 : 12;
+            bl.width = sp ? 218 : 240; bl.height = sp ? 64 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? 8 : 12;   // V1.56: im Split größer
             btn.setLayoutParams(bl);
+            int vis = sp && btn.getVisibility() == View.VISIBLE ? View.VISIBLE : View.GONE;
+            int[] r = range(); int w = splitW();
+            TextView[] ar = {bL, bR};
+            for (int i = 0; i < 2; i++) {
+                FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) ar[i].getLayoutParams();
+                p.leftMargin = 6 + i * 113; p.bottomMargin = 80; ar[i].setLayoutParams(p);
+                ar[i].setVisibility(vis);
+                ar[i].setAlpha((i == 0 ? w >= r[1] : w <= r[0]) ? 0.35f : 1f);
+                ar[i].bringToFront();
+            }
         }
     }
 
@@ -201,7 +242,7 @@ class Fpv {
         label();
         // V1.42: Split = FPV volle Höhe in 16:9 (1920×720 → 1280 breit), Karte links daneben
         // V1.45: Split-Video 10 % schmaler (Karte breiter), Bild wird auf volle Höhe gestreckt (object-fit fill)
-        int vw = Math.min(Math.round(root.getWidth() * 0.75f), root.getHeight() * 16 / 9 * 9 / 10);
+        int vw = splitW();   // V1.56: in 100-px-Schritten einstellbar
         mapWidth(m == SPLIT ? root.getWidth() - vw : -1);
         a.web.evaluateJavascript("document.documentElement.classList.toggle('ctsplit'," + (m == SPLIT) + ")", null);   // V1.48: Karten-Ansicht für Split
         if (m == MAP) {
@@ -218,7 +259,7 @@ class Fpv {
             lp = new FrameLayout.LayoutParams(-1, -1);
             tapCatcher.setVisibility(View.GONE);
         } else if (m == SPLIT) {
-            lp = new FrameLayout.LayoutParams(vw, -1, Gravity.RIGHT | Gravity.TOP);
+            lp = new FrameLayout.LayoutParams(vw, splitH(vw), Gravity.RIGHT | Gravity.CENTER_VERTICAL);
             tapCatcher.setVisibility(View.GONE);
         } else {
             lp = pipParams();

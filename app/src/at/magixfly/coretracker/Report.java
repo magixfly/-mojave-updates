@@ -12,7 +12,7 @@ class Report implements Runnable {
     public void run() {
         try {
             String j = "{\"txt\":" + q(txt) + ",\"dl\":" + (on ? 1 : 0) + ",\"gb\":" + String.format(java.util.Locale.US, "%.2f", gb)
-                    + ",\"est\":" + String.format(java.util.Locale.US, "%.1f", est) + ",\"net\":" + q(net) + ",\"stop\":" + (stop ? 1 : 0) + ",\"ver\":\"1.25\"}";
+                    + ",\"est\":" + String.format(java.util.Locale.US, "%.1f", est) + ",\"net\":" + q(net) + ",\"stop\":" + (stop ? 1 : 0) + ",\"ver\":\"1.56\",\"wifi\":" + q(a.netTxt) + "}";
             HttpURLConnection c = (HttpURLConnection) new URL(base + "/api/box").openConnection();
             c.setConnectTimeout(1500); c.setReadTimeout(2000); c.setDoOutput(true);
             c.setRequestMethod("POST"); c.setRequestProperty("Content-Type", "application/json");
