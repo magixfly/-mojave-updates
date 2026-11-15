@@ -69,11 +69,11 @@ public class A11y extends AccessibilityService {
             Log.d("CTAP", "Hotspot-Schalter angetippt: " + ok);
         } else Log.d("CTAP", "Hotspot war schon an");
         task = null;
+        final boolean band = getSharedPreferences("ct", 0).getBoolean("ap5", true) && (!bandDone || Autostart.forceBand);
         new android.os.Handler(getMainLooper()).postDelayed(new Runnable() { public void run() {
-            Intent i = new Intent(A11y.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(i);
-        } }, 2500);
-        new android.os.Handler(getMainLooper()).postDelayed(new Runnable() { public void run() { startBand(A11y.this); } }, 12000);   // V1.57: danach 5 GHz
+            if (band) startBand(A11y.this, true);           // V1.57/59: gleich weiter zum 5-GHz-Band
+            else goBack();
+        } }, band ? 6000 : 2500);
     }
 
     // ---- V1.57: Hotspot-Band auf 5 GHz festlegen (Einstellungen → WLAN-Hotspot → (Erweitert) → AP-Band → 5 GHz) ----
@@ -81,9 +81,10 @@ public class A11y extends AccessibilityService {
     static long lastAct = 0;
     static int stage = 0;
 
-    static void startBand(Context c) {
-        if (bandDone || !c.getSharedPreferences("ct", 0).getBoolean("ap5", true)) return;
-        bandDone = true; stage = 0;                          // nur einmal pro Start
+    static void startBand(Context c) { startBand(c, false); }
+    static void startBand(Context c, boolean force) {
+        if (bandDone && !force || !c.getSharedPreferences("ct", 0).getBoolean("ap5", true)) return;
+        bandDone = true; stage = 0; Autostart.forceBand = false;                          // nur einmal pro Start
         want("band");
         try { c.startActivity(new Intent("android.settings.TETHER_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); } catch (Throwable t) { Log.d("CTAP", "band: " + t); }
         Log.d("CTAP", "Band: Hotspot-Seite geöffnet");
@@ -104,11 +105,21 @@ public class A11y extends AccessibilityService {
         if (ok) lastAct = System.currentTimeMillis();
         return ok;
     }
+    /** V1.59: zurück zur Karte, wenn sie offen war (oder „Karte beim Start öffnen“ an ist), sonst zum Startbildschirm */
+    void goBack() {
+        Class<?> back = Autostart.backTo;
+        Autostart.backTo = null;
+        if (back != null) startActivity(new Intent(this, back).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+        else if (MainActivity.alive || getSharedPreferences("ct", 0).getBoolean("mapAuto", false))
+            startActivity(new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+        else performGlobalAction(GLOBAL_ACTION_HOME);
+    }
+
     void bandFinish(String why) {
         Log.d("CTAP", "Band fertig: " + why);
         task = null;
         new android.os.Handler(getMainLooper()).postDelayed(new Runnable() { public void run() {
-            startActivity(new Intent(A11y.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+            goBack();
         } }, 2500);
     }
 
@@ -167,6 +178,8 @@ public class A11y extends AccessibilityService {
     @Override protected void onServiceConnected() {
         Log.d("CTAP", "Bedienungshilfe gestartet");
         HotspotBoot.maybe(getApplicationContext());
+        if (!getSharedPreferences("ct", 0).getBoolean("apAuto", true) && getSharedPreferences("ct", 0).getBoolean("mapAuto", false) && !MainActivity.alive)
+            try { startActivity(new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); } catch (Throwable t) { }
     }
 
     @Override public void onInterrupt() { }

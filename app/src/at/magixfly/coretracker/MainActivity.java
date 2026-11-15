@@ -42,9 +42,13 @@ public class MainActivity extends Activity {
     int barWidthPx = 600;
     int repN = 0;
 
+    static volatile boolean alive = false;   // V1.59: Karte läuft (für die Rückkehr nach dem Hotspot-Schalten)
+    @Override protected void onDestroy() { alive = false; super.onDestroy(); }
+
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
+        alive = true;
         requestWindowFeature(1);                  // kein Titelbalken
         getWindow().addFlags(0x80 | 0x400);       // Bildschirm an lassen + Vollbild
         ui = new Handler(Looper.getMainLooper());

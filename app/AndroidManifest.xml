@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="at.magixfly.coretracker" android:versionCode="59" android:versionName="1.58">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="at.magixfly.coretracker" android:versionCode="60" android:versionName="1.59">
     <uses-sdk android:minSdkVersion="24" android:targetSdkVersion="35"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -9,6 +9,12 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <application android:label="Core Tracker" android:usesCleartextTraffic="true" android:hardwareAccelerated="true">
         <activity android:name="at.magixfly.coretracker.MainActivity" android:label="Core Tracker" android:exported="true" android:screenOrientation="sensorLandscape" android:configChanges="keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="at.magixfly.coretracker.Autostart" android:label="Box Autostart" android:exported="true" android:taskAffinity="at.magixfly.coretracker.autostart" android:theme="@android:style/Theme.DeviceDefault.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
