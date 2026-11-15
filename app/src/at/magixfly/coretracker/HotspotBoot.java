@@ -28,7 +28,7 @@ class HotspotBoot {
         new Thread(new Runnable() { public void run() {
             try {
                 Thread.sleep(20000);
-                if (apOn(c)) { Log.d("CTAP", "Hotspot schon an"); return; }
+                if (apOn(c)) { Log.d("CTAP", "Hotspot schon an"); A11y.startBand(c); return; }   // V1.57: 5 GHz festlegen
                 A11y.want("ap");
                 c.startActivity(new android.content.Intent("android.settings.TETHER_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
                 Log.d("CTAP", "Hotspot-Seite geöffnet");

@@ -42,6 +42,7 @@ public class A11y extends AccessibilityService {
         try {
             if (t.equals("ap")) doAp(root);
             else if (t.equals("inst")) doInst(root);
+            else if (t.equals("band")) doBand(root);
         } catch (Throwable x) { Log.d("CTAP", "a11y: " + x); }
     }
 
@@ -72,6 +73,71 @@ public class A11y extends AccessibilityService {
             Intent i = new Intent(A11y.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(i);
         } }, 2500);
+        new android.os.Handler(getMainLooper()).postDelayed(new Runnable() { public void run() { startBand(A11y.this); } }, 12000);   // V1.57: danach 5 GHz
+    }
+
+    // ---- V1.57: Hotspot-Band auf 5 GHz festlegen (Einstellungen → WLAN-Hotspot → (Erweitert) → AP-Band → 5 GHz) ----
+    static volatile boolean bandDone = false;
+    static long lastAct = 0;
+    static int stage = 0;
+
+    static void startBand(Context c) {
+        if (bandDone || !c.getSharedPreferences("ct", 0).getBoolean("ap5", true)) return;
+        bandDone = true; stage = 0;                          // nur einmal pro Start
+        want("band");
+        try { c.startActivity(new Intent("android.settings.TETHER_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); } catch (Throwable t) { Log.d("CTAP", "band: " + t); }
+        Log.d("CTAP", "Band: Hotspot-Seite geöffnet");
+    }
+
+    void texts(AccessibilityNodeInfo n, java.util.List<AccessibilityNodeInfo> out) {
+        if (n == null) return;
+        if (n.getText() != null && n.getText().length() > 0) out.add(n);
+        for (int i = 0; i < n.getChildCount(); i++) texts(n.getChild(i), out);
+    }
+    static String tx(AccessibilityNodeInfo n) { return n.getText() == null ? "" : n.getText().toString(); }
+    static boolean is5(String t) { String l = t.toLowerCase(); return l.contains("5") && l.contains("ghz") && !l.contains("2,4") && !l.contains("2.4") && !l.contains("6 ghz"); }
+    boolean click(AccessibilityNodeInfo n, String why) {
+        AccessibilityNodeInfo c = n;
+        while (c != null && !c.isClickable()) c = c.getParent();
+        boolean ok = c != null && c.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        Log.d("CTAP", "Band: " + why + " → " + ok);
+        if (ok) lastAct = System.currentTimeMillis();
+        return ok;
+    }
+    void bandFinish(String why) {
+        Log.d("CTAP", "Band fertig: " + why);
+        task = null;
+        new android.os.Handler(getMainLooper()).postDelayed(new Runnable() { public void run() {
+            startActivity(new Intent(A11y.this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+        } }, 2500);
+    }
+
+    void doBand(AccessibilityNodeInfo root) {
+        if (System.currentTimeMillis() - lastAct < 1500) return;   // Seite nach einem Tipp erst aufbauen lassen
+        java.util.ArrayList<AccessibilityNodeInfo> all = new java.util.ArrayList<AccessibilityNodeInfo>();
+        texts(root, all);
+        // 1) Auswahl-Dialog offen: 5-GHz-Eintrag wählen (exakte Variante vor „bevorzugt“)
+        if (stage >= 2) {
+            AccessibilityNodeInfo pick = null;
+            for (AccessibilityNodeInfo n : all) { String t = tx(n); if (is5(t) && t.length() < 30) { if (pick == null || !t.toLowerCase().contains("bevorzug") && !t.toLowerCase().contains("prefer")) pick = n; } }
+            if (pick != null && all.size() < 12) { click(pick, "gewählt " + tx(pick)); stage = 3; bandFinish("5 GHz gesetzt"); return; }
+        }
+        // 2) Eintrag „AP-Band“ / „Band“ auf der Hotspot-Seite
+        for (AccessibilityNodeInfo n : all) {
+            String t = tx(n), l = t.toLowerCase();
+            if ((l.contains("ap-band") || l.equals("band") || l.contains("frequenzband") || l.contains("ap band") || l.endsWith("-band") && !l.contains("ghz")) && !l.contains("ghz")) {
+                AccessibilityNodeInfo row = n.getParent();
+                java.util.ArrayList<AccessibilityNodeInfo> sub = new java.util.ArrayList<AccessibilityNodeInfo>();
+                texts(row != null ? row : n, sub);
+                for (AccessibilityNodeInfo x : sub) if (x != n && is5(tx(x))) { bandFinish("schon 5 GHz (" + tx(x) + ")"); return; }
+                if (click(n, "AP-Band öffnen")) stage = 2;
+                return;
+            }
+        }
+        // 3) „Erweitert“ aufklappen
+        for (AccessibilityNodeInfo n : all) { String l = tx(n).toLowerCase(); if (l.equals("erweitert") || l.equals("advanced") || l.startsWith("erweitert")) { click(n, "Erweitert"); return; } }
+        // 4) Tethering-Seite: Unterseite „WLAN-Hotspot“ öffnen
+        if (stage == 0) for (AccessibilityNodeInfo n : all) { String l = tx(n).toLowerCase(); if (l.equals("wlan-hotspot") || l.equals("wi-fi hotspot") || l.equals("mobiler hotspot")) { if (click(n, "Hotspot-Seite")) stage = 1; return; } }
     }
 
     void collect(AccessibilityNodeInfo n, java.util.List<AccessibilityNodeInfo> out) {
