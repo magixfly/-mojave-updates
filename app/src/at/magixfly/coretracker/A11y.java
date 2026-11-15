@@ -162,5 +162,12 @@ public class A11y extends AccessibilityService {
         }
     }
 
+    /** V1.58: Die Bedienungshilfe startet das System beim Hochfahren von selbst – unabhängig davon, ob die App geöffnet wird.
+     *  Darum hier Hotspot einschalten + 5 GHz festlegen (läuft nur einmal pro Start). */
+    @Override protected void onServiceConnected() {
+        Log.d("CTAP", "Bedienungshilfe gestartet");
+        HotspotBoot.maybe(getApplicationContext());
+    }
+
     @Override public void onInterrupt() { }
 }
