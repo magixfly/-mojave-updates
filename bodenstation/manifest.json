@@ -1,19 +1,18 @@
 {
- "ver": "2.0.58",
+ "ver": "2.0.59",
  "neu": [
-  "Display on Kia: version of every device, refreshed every 10 s",
-  "CosmoStreamer is searched in the whole network"
+  "Core line next to the compass; box top bar: nothing slides under the Maps chip"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 118799,
-   "md5": "3c49cb6e4f7d9d5e6d5501f2de40cd0f"
+   "md5": "cba725361a6737a01d116419b5521ada"
   },
   {
    "p": "web/index.html",
-   "s": 137453,
-   "md5": "e46227206320852e119d903ad85812f5"
+   "s": 138140,
+   "md5": "5c945494c4f2ea59eb991b3ad520319b"
   }
  ]
 }

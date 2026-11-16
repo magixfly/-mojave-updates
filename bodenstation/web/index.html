@@ -842,6 +842,7 @@ function rideSide(){const e=$('rideSide'),TR=RIDE.tracks;if(!TR||TR.length<2||RI
 function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('trP').style.display==='flex')trShow(false);const st=rideHud(ST());
   const age=st.age??99,link=age<=1.5?'ok':age<=4?'mid':'bad';
   $('dot').style.background=st.src==='-'?'#666':`var(--${link==='ok'?'grn':link==='mid'?'org':'red'})`;
+  {const hc=$('hdgComp'),ce=$('core');if(hc&&ce){const vis=hc.offsetWidth>0&&getComputedStyle(hc).display!=='none';ce.style.left=vis?(hc.offsetLeft+hc.offsetWidth+10)+'px':''}}   // V2.0.59: Core line next to the compass, not under it
   {const c=st.core,e=$('core');
    if(!c||!coreShow()){e.style.display='none'}else{const tc=v=>v>=80?'var(--red)':v>=65?'var(--org)':'var(--grn)';
      e.innerHTML='<span style="color:var(--mut)">CORE'+(c.via==='radio'?' · ESP-NOW':c.via==='wlan'?' · WLAN':'')+'</span> · '+c.temps.map(x=>`${x[0]} <span style="color:${tc(x[1])}">${x[1]}°</span>`).join(' · ')+(c.nr!=null||c.pct!=null?' · BAT'+(c.nr!=null?' '+c.nr:'')+(c.pct!=null?` ${c.pct} %`:''):'');
@@ -1311,8 +1312,9 @@ init();
 // V2.0.39: Carlin box app - the Mojave next to "Maps" only turns while tiles are really downloading
 (function(){let last='',chg=0;setInterval(()=>{const t=document.getElementById('ctMapsT'),img=document.querySelector('#ctMaps img');if(!t||!img)return;
  const x=t.textContent||'',now=Date.now();if(x!==last){last=x;chg=now}
+ {const mc=document.getElementById('ctMaps'),sp=document.querySelector('#top .sp');if(mc&&sp){const vis=mc.offsetWidth>0&&getComputedStyle(mc).display!=='none',need=vis?Math.max(0,mc.offsetLeft+mc.offsetWidth+12-sp.offsetLeft):0;sp.style.setProperty('flex',vis?'0 0 '+need+'px':'1 1 0','important')}}   // V2.0.59: spacer covers the Maps chip -> nothing slides under it
  if(!document.getElementById('ctfix')){const st=document.createElement('style');st.id='ctfix';   // V2.0.42: box app - chips never narrower than their text (frame fits)
-  st.textContent='#top .sp{flex:1 1 0!important;min-width:0!important}#top #esp,#top #wifi,#top #sys{flex:0 0 auto!important;min-width:max-content!important}#top #wifi,#top #esp{padding:0 12px!important}#top #cl:not(.on){display:none!important}';document.head.appendChild(st)}
+  st.textContent='#top #esp,#top #sys{flex:0 0 auto!important;min-width:max-content!important}#top #wifi{flex:0 1 auto!important;min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}#top #wifi,#top #esp{padding:0 12px!important}#top #cl:not(.on){display:none!important}';document.head.appendChild(st)}
  const m=document.getElementById('ctMaps');if(m&&m.dataset.dl!==undefined){img.style.animationPlayState=m.dataset.dl==='1'?'running':'paused';return}   // V2.0.40: app >= 1.22 says itself
  const on=/^Maps\s/.test(x)&&!/complete|paused|waiting|full|Touch/.test(x)&&now-chg<10000;   // text changes while MB count grows
  img.style.animationPlayState=on?'running':'paused'},1000)})();
