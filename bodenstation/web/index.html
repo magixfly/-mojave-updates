@@ -69,6 +69,9 @@ display:flex;align-items:center;justify-content:center;font-size:34px;font-weigh
 #lockPill i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--acc)}
 #lockPill span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800}
 body.night #map{filter:brightness(.55) saturate(.8)}
+/* V2.0.61: 3D view - tilted map like a car navigation (Pi and Kia box) */
+html.v3d body{background:linear-gradient(180deg,#22324a 0,#10161d 38%)}
+html.v3d body #map,html.v3d #map{transform:perspective(1000px) rotateX(50deg) scale(1.62)!important;transform-origin:50% 94%!important}
 body.night #side,body.night #top,body.night #btns{filter:brightness(.7)}
 #uimp{position:absolute;left:calc(115px + 50%);bottom:56px;transform:translateX(-50%);width:520px;display:none}
 #uimp .bar span{white-space:nowrap}
@@ -297,7 +300,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <div class="seg noWin" id="sBright"><b data-v="20">20 %</b><b data-v="40">40 %</b><b data-v="70">70 %</b><b data-v="100">100 %</b></div>
     <label>Track length (live + replay) · how much of the line stays visible</label>
     <div style="display:flex;gap:10px;align-items:center"><button class="mb" id="mTlM" style="width:90px;font-size:30px">−</button><b id="mTl" style="flex:1;text-align:center;font-size:26px"></b><button class="mb" id="mTlP" style="width:90px;font-size:30px">+</button></div>
-    <button class="mb" id="mNight">Night mode: off</button>
+    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="m3d">3D view: on</button>
     <button class="mb" id="mCore">Core info: on</button>
     <button class="mb" id="mSound">Warning sound: on</button>
     <label>Drivers</label>
@@ -451,7 +454,7 @@ function draw(){
   frame++;
   const tz=Math.min(Math.floor(V.z),C.max_zoom),sc=2**(V.z-tz);
   const cx=lon2x(V.lon,tz),cy=lat2y(V.lat,tz);
-  const oy=V.head?H*0.18:0;                    // heading-up: car a bit below centre
+  const v3=document.documentElement.classList.contains('v3d'),oy=v3?H*0.3:V.head?H*0.18:0;   // heading-up: car a bit below centre (V2.0.61: 3D view lower)
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.fillStyle='#10161d';ctx.fillRect(0,0,W,H);
   ctx.save();ctx.translate(W/2,H/2+oy);ctx.rotate(V.rot);ctx.scale(sc,sc);
@@ -482,7 +485,7 @@ function draw(){
   drawRide(tz,cx,cy,sc);
   // track
   if(track.length>1){
-    ctx.lineWidth=4.5/sc;ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.lineWidth=(v3?8:4.5)/sc;ctx.lineCap='round';ctx.lineJoin='round';if(v3){ctx.shadowColor='rgba(0,0,0,.85)';ctx.shadowBlur=5}   // V2.0.61: 3D = thick line with dark edge
     // V2.0.3: points projected once (cached), segments of the same colour in one path, off-screen parts skipped
     const k=TS*2**tz,n1=trackEnd(track,SM),Rv=R+40,TA=trailA(track,n1);let pp=proj(track[TA.i0]),px=pp[0]*k-cx,py=pp[1]*k-cy,mx=px,my=py,col=null,open=false;
     const flush=()=>{if(open){ctx.stroke();open=false}};
@@ -496,7 +499,7 @@ function draw(){
     if(!open){ctx.beginPath();ctx.moveTo(mx,my);open=true}ctx.lineTo(px,py);
     flush();ctx.globalAlpha=1;
     if(SM.lat!=null&&n1<track.length){if(!open){ctx.beginPath();ctx.moveTo(px,py);open=true}ctx.lineTo(lon2x(SM.lon,tz)-cx,lat2y(SM.lat,tz)-cy)}
-    flush();
+    flush();ctx.shadowBlur=0;ctx.shadowColor='transparent';
   }
   if(TWO&&track2.length>1){ctx.lineCap='round';ctx.lineJoin='round';   // V1.9.6: car 2 (V2.0.7: fading trail)
     const k2=TS*2**tz,n2=trackEnd(track2,SM2);const e=strokeTrail(track2,n2,k2,cx,cy,C2COL,4.5/sc);
@@ -963,7 +966,7 @@ function brg(a,b,c,d){const f1=a*Math.PI/180,f2=c*Math.PI/180,dl=(d-b)*Math.PI/1
   return (Math.atan2(Math.sin(dl)*Math.cos(f2),Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl))*180/Math.PI+360)%360}
 function posLine(){$('vPos').textContent=st.lat==null?'–':`${st.lat.toFixed(6)}, ${st.lon.toFixed(6)}`}
 // menu closes after an action button (not for map loading, saved rides or the segment buttons)
-['mHome','mClear','mTest','mTest2','mNight','mSound','mCore','mLock'].forEach(id=>$(id).addEventListener('click',()=>setTimeout(()=>{$('menu').style.display='none'},150)));
+['mHome','mClear','mTest','mTest2','mNight','m3d','mSound','mCore','mLock'].forEach(id=>$(id).addEventListener('click',()=>setTimeout(()=>{$('menu').style.display='none'},150)));
 // V1.8.1: test ride player – pause, timeline, 1x/2x/4x
 const PL={drag:false};
 function fmtS(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
@@ -1073,7 +1076,7 @@ async function init(){
     $('pRad').value=c.preload_radius_m;$('pZ').value=c.preload_zmax;
     try{if(!localStorage.ori)V.head=c.orientation==='heading'}catch(e){V.head=c.orientation==='heading'}}
   catch(e){DEMO=true;C.max_zoom=19;demoInit()}
-  setNight(isNight());loadIcons();V.z=C.start_zoom;{let s=null;try{s=localStorage.getItem('az')}catch(e){}setAz(s===null?C.auto_zoom:s==='1')}$('ver').textContent=DEMO?'demo':'V'+((C.cfg&&C.cfg.version)||'');uiScale();
+  setNight(isNight());set3d(is3d());loadIcons();V.z=C.start_zoom;{let s=null;try{s=localStorage.getItem('az')}catch(e){}setAz(s===null?C.auto_zoom:s==='1')}$('ver').textContent=DEMO?'demo':'V'+((C.cfg&&C.cfg.version)||'');uiScale();
   if(V.head){$('bOri').textContent='▲';$('bOri').classList.add('on')}
   setInterval(poll,150);poll();loop();
 }
@@ -1144,8 +1147,10 @@ $('mSound').onclick=()=>{const on=!soundOn();try{localStorage.setItem('snd',on?'
 function seg(id,val,fn){const el=$(id);el.querySelectorAll('b').forEach(b=>{b.classList.toggle('on',+b.dataset.v===+val);b.onclick=()=>{fn(+b.dataset.v);seg(id,+b.dataset.v,fn)}})}
 async function j2(u,b){try{return await (await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)})).json()}catch(e){return {}}}
 function isNight(){return !!(C.cfg&&C.cfg.night==='1')}
+function is3d(){return !(C.cfg&&C.cfg.map3d==='0')}   // V2.0.61
+function set3d(on,save){document.documentElement.classList.toggle('v3d',on);if(save){if(C.cfg)C.cfg.map3d=on?'1':'0';j2('/api/set',{map3d:on?1:0})}dirty=true;updMenu()}
 function setNight(on,save){document.body.classList.toggle('night',on);if(save){if(C.cfg)C.cfg.night=on?'1':'0';j2('/api/set',{night:on?1:0})}updMenu()}
-$('mNight').onclick=()=>setNight(!isNight(),true);
+$('mNight').onclick=()=>setNight(!isNight(),true);$('m3d').onclick=()=>set3d(!is3d(),true);
 $('mCore').onclick=()=>{const v=coreShow()?'0':'1';if(C.cfg)C.cfg.core_show=v;j2('/api/set',{core_show:+v});updMenu();hud()};
 function azShow(){azIcon();const v=+C.auto_zoom_out||0;$('azV').innerHTML=v<=0?'off':`${v.toFixed(1)} levels · <span style="color:var(--mut)">${(2**v).toFixed(1)}× wider at ${C.auto_zoom_kmh} km/h</span>`}
 function azStep(d){C.auto_zoom_out=Math.max(0,Math.min(3,Math.round(((+C.auto_zoom_out||0)+d)*10)/10));if(C.cfg)C.cfg.auto_zoom_out=String(C.auto_zoom_out);azShow();j2('/api/set',{auto_zoom_out:C.auto_zoom_out});dirty=true}
@@ -1199,7 +1204,7 @@ $('sndA').onclick=async()=>{await j2('/api/sender',{auto:!SNDAUTO});sndLoad()};
 $('sndEN').onclick=()=>{const x=SNDL.find(i=>i.mac===SNDSEL);if(!x)return;KB.mode='snd';KB.mac=x.mac;KB.t=x.name||'';KB.sh=false;kbMode();kbDraw();$('kb').style.display='flex'};
 $('sndEP').onclick=()=>{const x=SNDL.find(i=>i.mac===SNDSEL);if(!x)return;KB.mode='sndp';KB.mac=x.mac;KB.t=x.pilot||'';KB.sh=false;kbMode();kbDraw();$('kb').style.display='flex'};
 $('sndF').onclick=async()=>{if(!SNDSEL)return;await j2('/api/sender',{mac:SNDSEL,forget:true});SNDSEL=null;sndLoad()};
-function updMenu(){azShow();$('mNames').textContent='Names on the map: '+(mapNames()?'on':'off');$('mName1').textContent='Driver car 1: '+drvName(1)+'  ✎';$('mName2').textContent='Driver car 2: '+drvName(2)+'  ✎';$('mNight').textContent='Night mode: '+(isNight()?'on':'off');$('mCore').textContent='Core info: '+(coreShow()?'on':'off');$('mSound').textContent='Warning sound: '+(soundOn()?'on':'off');
+function updMenu(){azShow();$('mNames').textContent='Names on the map: '+(mapNames()?'on':'off');$('mName1').textContent='Driver car 1: '+drvName(1)+'  ✎';$('mName2').textContent='Driver car 2: '+drvName(2)+'  ✎';$('mNight').textContent='Night mode: '+(isNight()?'on':'off');$('m3d').textContent='3D view: '+(is3d()?'on':'off');$('mCore').textContent='Core info: '+(coreShow()?'on':'off');$('mSound').textContent='Warning sound: '+(soundOn()?'on':'off');
   seg('sBright',st.bright??100,v=>j2('/api/set',{bright:v}));seg('sRange',(C.cfg&&+C.cfg.range_warn_m)||0,v=>{if(C.cfg)C.cfg.range_warn_m=v;j2('/api/set',{range_warn_m:v})})}
 // ------------------------------------------------ screen lock (hold 2 s to unlock)
 let lockT=null,lockS=0;

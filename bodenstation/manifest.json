@@ -1,18 +1,23 @@
 {
- "ver": "2.0.60",
+ "ver": "2.0.61",
  "neu": [
-  "Device list finds the Navi also in a hotspot (no mDNS)"
+  "3D view like a car navigation (tilted map, car low, thick track with dark edge), menu: 3D view on/off"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 120092,
-   "md5": "3847f52c86cd54a84d68db46e77344c2"
+   "s": 120204,
+   "md5": "10d9e65a654506f2a2cfcd6f1230ca0c"
   },
   {
    "p": "web/index.html",
-   "s": 138140,
-   "md5": "5c945494c4f2ea59eb991b3ad520319b"
+   "s": 139047,
+   "md5": "efb7a2200e297d6f61c32e3921a3b5a0"
+  },
+  {
+   "p": "__pycache__/server.cpython-313.pyc",
+   "s": 197294,
+   "md5": "668d0f5fa9424961d5ab8ab18768cf41"
   }
  ]
 }

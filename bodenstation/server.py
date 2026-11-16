@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.60"
+VERSION = "2.0.61"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -48,6 +48,7 @@ DEFAULTS = [
     ("core_radio", "1", "1 = use the Core radio broadcast (ESP-NOW, Core V2.72+) heard by the ESP receiver - works without WLAN"),
     ("core_show", "1", "1 = show the Core line on the map (menu Core info)"),
     ("night", "0", "1 = night mode (darker map, menu)"),
+    ("map3d", "1", "V2.0.61: 1 = 3D view (tilted satellite map like a car navigation, menu 3D view)"),
     ("me_gps", "1", "1 = use the GPS module on the ESP receiver as own position (pilot / ground station)"),
     ("me_timeout_s", "5", "Own GPS older than this = not shown"),
     ("bright", "100", "Display brightness in % (set with the menu)"),
@@ -2317,7 +2318,7 @@ class H(BaseHTTPRequestHandler):
             ok = {}
             if b.get("orientation") in ("north", "heading"):   # V1.8.2: menu settings survive a restart (browser runs incognito)
                 CFG["orientation"] = b["orientation"]; ok["orientation"] = b["orientation"]
-            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names"):
+            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "map3d"):
                 if k in b:
                     v = str(int(float(b[k])))
                     CFG[k] = v
