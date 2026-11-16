@@ -1,13 +1,13 @@
 {
- "ver": "2.0.59",
+ "ver": "2.0.60",
  "neu": [
-  "Core line next to the compass; box top bar: nothing slides under the Maps chip"
+  "Device list finds the Navi also in a hotspot (no mDNS)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 118799,
-   "md5": "cba725361a6737a01d116419b5521ada"
+   "s": 120092,
+   "md5": "3847f52c86cd54a84d68db46e77344c2"
   },
   {
    "p": "web/index.html",

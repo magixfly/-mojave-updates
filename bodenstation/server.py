@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.59"
+VERSION = "2.0.60"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -62,6 +62,7 @@ DEFAULTS = [
     ("lq_warn", "50", "Warning below this link quality in % (0 = off)"),
     ("core_sync", "1", "1 = take warning limits from the Core (/api/cfg) when reachable, saved here"),
     ("core_hosts", "192.168.178.213 mojave.local", "Core addresses, separated by spaces"),
+    ("navi_hosts", "", "V2.0.60: extra Navi addresses, separated by spaces (normally found automatically)"),
     ("home_min_sats", "6", "Home point is set at first fix with this many satellites"),
     ("link_timeout_s", "2", "No data for this long = link lost"),
     ("preload_radius_m", "1000", "Default radius for map preload"),
@@ -186,6 +187,7 @@ def _dev_get(h, path, t=2.5):
         return None
 
 COSMO_LAST = [None]
+NAVI_LAST = [None]   # V2.0.60: last address the Navi answered on
 
 def devices_scan():
     DEVS["busy"], DEVS["prog"] = True, 5
@@ -237,16 +239,33 @@ def devices_scan():
         out["core"] = core
         DEVS["prog"] = 60
         navi = {"ok": False, "host": "mojave-navi.local", "ip": None}
-        for i, h in enumerate(["mojave-navi.local", "navi.local"]):
+        # V2.0.60: names (mDNS) often do not resolve in a phone/box hotspot -> also last address, navi_hosts, network neighbours
+        cand = []
+        for h in [NAVI_LAST[0]] + CFG.get("navi_hosts", "").split():
+            if h and h not in cand:
+                cand.append(h)
+        for h in ["mojave-navi.local", "navi.local"]:
             ip = _dev_ip(h)
-            DEVS["prog"] = 60 + 20 * (i + 1)
-            if not ip:
+            if ip and ip not in cand:
+                cand.append(ip)
+        skip = {core.get("ip"), BOX.get("ip")}
+        try:
+            for l in subprocess.run(["ip", "neigh"], capture_output=True, text=True, timeout=3).stdout.splitlines():
+                f = l.split()
+                if f and "FAILED" not in l and re.match(r"^\d+\.\d+\.\d+\.\d+$", f[0]) and f[0] not in cand and f[0] not in skip:
+                    cand.append(f[0])
+            pre = [x[1] for x in ips if not x[1].startswith("127.")][0].rsplit(".", 1)[0]
+            cand += [pre + ".%d" % i for i in range(2, 21) if pre + ".%d" % i not in cand and pre + ".%d" % i not in skip]
+        except Exception:
+            pass
+        for i, h in enumerate(cand):
+            DEVS["prog"] = 60 + int(20 * (i + 1) / max(1, len(cand)))
+            st = _dev_get(h, "/api/status", 0.8)
+            if not st or "wlSsid" in st or "ver" not in st:      # the Core answers /api/status too (has wlSsid)
                 continue
-            st = _dev_get(ip, "/api/status")
-            navi = {"ok": bool(st), "host": h, "ip": (st or {}).get("ip") or ip}
-            if st:
-                navi.update(ver=st.get("ver"), ssid=st.get("ssid") or "", rssi=st.get("rssi"))
-                break
+            NAVI_LAST[0] = h
+            navi = {"ok": True, "host": "mojave-navi.local", "ip": st.get("ip") or h, "ver": st.get("ver"), "ssid": st.get("ssid") or "", "rssi": st.get("rssi")}
+            break
         out["navi"] = navi
         # V2.0.53: Kia-Box (meldet sich selbst per /api/box) und CosmoStreamer
         bip = BOX.get("ip") if time.time() - BOX.get("t", 0) < 30 else None
