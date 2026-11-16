@@ -1,0 +1,5 @@
+### 133_devs  –  2026-11-16 08:22:46
+### Box: NICHT erreichbar (192.168.199.136:5555)
+
+{"busy": true, "prog": 100, "d": {"tracker": {"ok": true, "host": "corepi.local", "ips": [["wlan0", "192.168.199.175"]], "ssid": "XVII", "ghz": "5 GHz", "ver": "2.0.58"}, "core": {"ok": false, "host": "mojave.local", "ip": null}, "navi": {"ok": false, "host": "mojave-navi.local", "ip": null}, "box": {"ok": true, "host": "Carlin box", "ip": "192.168.199.136", "hs": true, "wifi": "", "ver": "1.25"}, "cosmo": {"ok": false, "host": "cosmostreamer.local", "ip": null}}}
+### Exit-Code: 0
