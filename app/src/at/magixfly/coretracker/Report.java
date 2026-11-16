@@ -8,11 +8,12 @@ class Report implements Runnable {
     Report(MainActivity a, String base, String txt, boolean on, double gb, double est, String net, boolean stop) {
         this.a = a; this.base = base; this.txt = txt; this.on = on; this.gb = gb; this.est = est; this.net = net; this.stop = stop;
     }
+    static String ver(android.content.Context c) { try { return c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionName; } catch (Throwable t) { return "?"; } }   // V1.60: echte Version
     static String q(String s) { return s == null ? "null" : "\"" + s.replace("\\", "\\\\").replace("\"", "\\\"") + "\""; }
     public void run() {
         try {
             String j = "{\"txt\":" + q(txt) + ",\"dl\":" + (on ? 1 : 0) + ",\"gb\":" + String.format(java.util.Locale.US, "%.2f", gb)
-                    + ",\"est\":" + String.format(java.util.Locale.US, "%.1f", est) + ",\"net\":" + q(net) + ",\"stop\":" + (stop ? 1 : 0) + ",\"ver\":\"1.56\",\"wifi\":" + q(a.netTxt) + "}";
+                    + ",\"est\":" + String.format(java.util.Locale.US, "%.1f", est) + ",\"net\":" + q(net) + ",\"stop\":" + (stop ? 1 : 0) + ",\"ver\":" + q(ver(a)) + ",\"wifi\":" + q(a.netTxt) + "}";
             HttpURLConnection c = (HttpURLConnection) new URL(base + "/api/box").openConnection();
             c.setConnectTimeout(1500); c.setReadTimeout(2000); c.setDoOutput(true);
             c.setRequestMethod("POST"); c.setRequestProperty("Content-Type", "application/json");
