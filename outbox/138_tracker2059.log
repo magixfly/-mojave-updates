@@ -1,0 +1,15 @@
+### 138_tracker2059  –  2026-11-16 16:19:04
+### Box: verbunden (172.20.10.14:5555)
+
+online: 2.0.59
+Tracker 2.0.59 läuft
+--- Sender-Farben
+senders=DA:2D:E4:3C:74:6C/1/car/1/1a8cff/MOJAVE/Thorsten;14:33:5C:8B:E2:74/2/plane/2/ff3b30/FUNJET/Thorsten;06:84:A7:E2:D3:58/2/plane/2/d4ff00/FUNJET/Horst;46:E8:8D:5C:B4:65/2/plane/1/ff9500/PLANE 2/ 
+sender_auto=1   # 1 = a new sender (ESP firmware 1.3+) is shown automatically (0 = only senders set up in the menu)
+veh_timeout_s=300   # V2.0.6: a vehicle without telemetry for this long frees its place (its last position stays until another one takes it)
+senders = DA:2D:E4:3C:74:6C/1/car/1/1a8cff/MOJAVE/Thorsten;14:33:5C:8B:E2:74/2/plane/2/ff3b30/FUNJET/Thorsten;06:84:A7:E2:D3:58/2/plane/2/d4ff00/FUNJET/Horst;46:E8:8D:5C:B4:65/2/plane/1/ff9500/PLANE 2/
+sender_auto = 1
+max_vehicles = 4
+veh_timeout_s = 300
+
+### Exit-Code: 0
