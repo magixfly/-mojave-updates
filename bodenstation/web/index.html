@@ -455,7 +455,7 @@ function draw(){
   frame++;
   const tz=Math.min(Math.floor(V.z),C.max_zoom),sc=2**(V.z-tz);
   const cx=lon2x(V.lon,tz),cy=lat2y(V.lat,tz);
-  const v3=document.documentElement.classList.contains('v3d'),oy=v3?H*0.38:V.head?H*0.18:0;   // heading-up: car a bit below centre (V2.0.61: 3D view lower)
+  const v3=document.documentElement.classList.contains('v3d'),oy=v3?H*0.41:V.head?H*0.18:0;   // heading-up: car a bit below centre (V2.0.61: 3D view lower)
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.fillStyle='#10161d';ctx.fillRect(0,0,W,H);
   ctx.save();ctx.translate(W/2,H/2+oy);ctx.rotate(V.rot);ctx.scale(sc,sc);
@@ -1151,7 +1151,7 @@ function isNight(){return !!(C.cfg&&C.cfg.night==='1')}
 function is3d(){return !(C.cfg&&C.cfg.map3d==='0')}   // V2.0.61
 function set3d(on,save){const m=cv.style;['top','left','width','height'].forEach(k=>m.removeProperty(k));document.documentElement.classList.toggle('v3d',on);
   if(on){const t=cv.offsetTop,l=cv.offsetLeft,w=cv.offsetWidth,hh=cv.offsetHeight;   // V2.0.62: flat map area (Pi 230/52, box 262/60), canvas 2.6x taller and 1.8x wider so the far area reaches the horizon
-    m.setProperty('top',(t+hh-hh*2.6)+'px','important');m.setProperty('height',(hh*2.6)+'px','important');m.setProperty('left',(l-w*.4)+'px','important');m.setProperty('width',(w*1.8)+'px','important')}
+    m.setProperty('top',(t+hh-hh*3.4)+'px','important');m.setProperty('height',(hh*3.4)+'px','important');m.setProperty('left',(l-w*.7)+'px','important');m.setProperty('width',(w*2.4)+'px','important')}
   if(save){if(C.cfg)C.cfg.map3d=on?'1':'0';j2('/api/set',{map3d:on?1:0})}resize();updMenu()}
 {let rt=0;const re3=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(is3d())set3d(true)},300)};addEventListener('resize',re3);new MutationObserver(re3).observe(document.head,{childList:true,subtree:true,characterData:true})}   // V2.0.62: box app adds its CSS later -> measure again
 function setNight(on,save){document.body.classList.toggle('night',on);if(save){if(C.cfg)C.cfg.night=on?'1':'0';j2('/api/set',{night:on?1:0})}updMenu()}
