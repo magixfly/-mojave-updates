@@ -1,10 +1,11 @@
 {
- "fw": "V1.96",
+ "fw": "V1.97",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1277152,
- "md5": "3372686855126312060fc0c7bac247be",
+ "groesse": 1277504,
+ "md5": "11e36345da9a5efc4fd7e310d0762600",
  "neu": [
+  "Update check works again while maps load (open download connections are closed first to free memory)",
   "Receives map tiles from the PC program NaviKarten.exe over Wi-Fi (much faster than downloading on the Navi)",
   "Map areas show their size (radius, max zoom); street map deletion slows down while tiles are downloading",
   "Aerial maps only: street map no longer loaded or copied, map type button removed, street map tiles are deleted from the SD in the background (progress on the Navi page)",
