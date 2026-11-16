@@ -1,0 +1,17 @@
+### 136_corecheck  –  2026-11-16 08:53:03
+### Box: verbunden (172.20.10.14:5555)
+
+ver 2.0.58
+core {'temps': [['ESC', 69], ['LED', 38], ['O4PRO', 70]], 'pct': 93, 'nr': 1, 'wet': False, 'armed': False, 'via': 'radio', 'name': 'mojave', 'mac': '80:45:6B:24:6A:4C', 'rssi': -47, 'ch': 6, 'ver': 'V2.86'}
+model MOJAVE esp {'rssi': -56, 'pps': 12, 'bad': 0, 'age': 0.5}
+dev core {'ok': True, 'host': 'mojave.local', 'ip': '172.20.10.3', 'ssid': 'Optimus Prime', 'rssi': -56, 'ver': 'V2.86'}
+dev tracker {'ok': True, 'host': 'corepi.local', 'ips': [['wlan0', '172.20.10.4']], 'ssid': 'Optimus Prime', 'ghz': '2.4 GHz', 'ver': '2.0.58'}
+core_live=1   # 1 = read temperatures and battery % from the Core over WLAN when reachable
+core_radio=1   # 1 = use the Core radio broadcast (ESP-NOW, Core V2.72+) heard by the ESP receiver - works without WLAN
+core_show=0   # 1 = show the Core line on the map (menu Core info)
+me_gps=1   # 1 = use the GPS module on the ESP receiver as own position (pilot / ground station)
+core_sync=1   # 1 = take warning limits from the Core (/api/cfg) when reachable, saved here
+core_hosts=192.168.178.213 mojave.local   # Core addresses, separated by spaces
+wlan0            UP             172.20.10.4/28 2001:4bc9:a03b:a72e:a50f:1010:631e:b988/64 fe80::b398:62ec:eb2e:7ce4/64 
+
+### Exit-Code: 0
