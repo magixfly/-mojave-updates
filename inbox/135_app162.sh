@@ -1,5 +1,5 @@
 #screenshot
-# App 1.61: Hotspot 5 GHz
+# App 1.62: Hotspot 5 GHz
 adb push apk/CoreTracker.apk /sdcard/Download/coretracker.apk >/dev/null
 S=$(adb shell stat -c %s /sdcard/Download/coretracker.apk | tr -d '\r')
 adb shell "cat /sdcard/Download/coretracker.apk | pm install -r -S $S"
