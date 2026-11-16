@@ -1,0 +1,44 @@
+### 145_diag  –  2026-11-16 16:51:04
+### Box: verbunden (172.20.10.14:5555)
+
+#!/bin/bash
+# Mojave Ground Station V1.2 - starts the program and the full-screen page
+cd "$(dirname "$(readlink -f "$0")")"
+bash ./touchmode.sh touch   # V2.0.4: tracker = real touch (desktop may have switched to mouse)
+exec 9>/tmp/mojave-start.lock
+flock -n 9 || exit 0   # already running (e.g. started twice by autostart)
+pkill -f "python3 .*Bodenstation/server.py" 2>/dev/null
+for i in $(seq 1 20); do pgrep -f "python3 .*Bodenstation/server.py" >/dev/null || break; sleep 0.25; done
+python3 "$PWD/server.py" > "$PWD/server.log" 2>&1 9>&- &
+# wait until the program answers (max 15 s)
+for i in $(seq 1 30); do
+  curl -s -o /dev/null http://localhost:8080/api/state && break
+  sleep 0.5
+done
+# V2.0.13: HDMI monitor plugged in / out -> the page moves to the active display
+pkill -f "bash ./hdmi_watch.sh" 2>/dev/null
+setsid bash ./hdmi_watch.sh >/tmp/hdmi_watch.log 2>&1 </dev/null 9>&- &
+exec bash ./kiosk.sh
+---journal
+No journal files were found.
+-- No entries --
+---log
+-rw-r----- 1 user1 user1 1121 Nov 16 16:34 /tmp/adb.1000.log
+-rw-rw-r-- 1 user1 user1    0 Nov 16 16:33 /tmp/hdmi_watch.log
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.13/http/server.py", line 424, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "/home/user1/Bodenstation/server.py", line 2254, in do_GET
+    return self.send(200, f.read(), TYPES.get(os.path.splitext(fp)[1], "application/octet-stream"))
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user1/Bodenstation/server.py", line 2159, in send
+    self.wfile.write(body)
+    ~~~~~~~~~~~~~~~~^^^^^^
+  File "/usr/lib/python3.13/socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+
+### Exit-Code: 1
