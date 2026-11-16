@@ -1,0 +1,39 @@
+### 142_core_espnow_aus  –  2026-11-16 16:45:04
+### Box: verbunden (172.20.10.14:5555)
+
+{"ok": true, "k": "core_radio", "v": "0"}
+boot zum Anwenden)
+# ok (save + reboot zum Anwenden)
+# gespeichert
+}F\e/~}F\e9dd}F\eF^}F\e!OK}F\e9ddS}F\e&}F\e9ddS}F\e
+z
+f}F\e\j~*}F\e9ddS}F\e
+
+~5}F\e9dd}F\ep!.}F\e9dd}F\edd}F\e^}F\eF!OK}F\eddj}F\e&zm
+# Core Tracker ESP-NOW receiver V1.4  uid=46:E8:8D:5C:B4:65  ch=1  any_sender=1  packets=95  bad=0  last=0s
+# core=0 packets=0 last=9999s ch=0 rssi=0  gps=1 baud=38400 fix=0 sats=0  uart=1 (TX GP43 / RX GP44, 115200 baud)  mac_tag=1
+# sender 46:E8:8D:5C:B4:65  -43 dBm  packets=95  last=0s
+# other espnow=0 last 00:00:00:00:00:00 ch=0 rssi=0 bytes 00 00 00 00
+# search scans=0 polls=0 ok=0 chErr=0 (0 at ch 0) now_ch=1 state=0 csCh=0 fail=0 next_poll=-7s next_scan=-7s allowed=0
+# car ap=1 ssid=CoreTracker active=1 stations=0 pages=0  heap=223952
+Failed to connect to user scope bus via local transport: $DBUS_SESSION_BUS_ADDRESS and $XDG_RUNTIME_DIR not defined (consider using --machine=<user>@.host --user to connect to bus of other user)
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import json,sys;d=json.load(sys.stdin);print('ver',d.get('ver'),'esp',d.get('esp'),'core via',(d.get('core') or {}).get('via'))
+                      ~~~~~~~~~^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/usr/lib/python3.13/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+### Exit-Code: 1
