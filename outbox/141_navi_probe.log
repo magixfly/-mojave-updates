@@ -1,0 +1,21 @@
+### 141_navi_probe  –  2026-11-16 16:43:03
+### Box: verbunden (172.20.10.14:5555)
+
+172.20.10.11 dev wlan0 INCOMPLETE 
+172.20.10.10 dev wlan0 INCOMPLETE 
+172.20.10.9 dev wlan0 INCOMPLETE 
+172.20.10.7 dev wlan0 FAILED 
+172.20.10.6 dev wlan0 FAILED 
+172.20.10.5 dev wlan0 FAILED 
+172.20.10.2 dev wlan0 FAILED 
+172.20.10.1 dev wlan0 lladdr 26:55:9a:82:21:64 REACHABLE 
+172.20.10.3 dev wlan0 lladdr 80:45:6b:24:6a:4c REACHABLE 
+172.20.10.13 dev wlan0 FAILED 
+172.20.10.12 dev wlan0 INCOMPLETE 
+172.20.10.8 dev wlan0 FAILED 
+== 172.20.10.5
+
+== 172.20.10.6
+
+
+### Exit-Code: 0
