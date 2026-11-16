@@ -1,0 +1,9 @@
+### 137_coreshow  –  2026-11-16 08:54:03
+### Box: verbunden (172.20.10.14:5555)
+
+{"core_show": "1"}
+core_show=1   # 1 = show the Core line on the map (menu Core info)
+Starting: Intent { cmp=at.magixfly.coretracker/.MainActivity }
+fertig
+
+### Exit-Code: 0
