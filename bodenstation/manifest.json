@@ -1,18 +1,18 @@
 {
- "ver": "2.0.64",
+ "ver": "2.0.65",
  "neu": [
-  "3D view: map fills the whole screen up to the top edge"
+  "Box: map download status no longer overlaps the version"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120204,
-   "md5": "9d946b04739d6d4be2a3acd0c08a8afe"
+   "md5": "e0b6c378090c6b2df4331be2ddbcedd4"
   },
   {
    "p": "web/index.html",
-   "s": 139884,
-   "md5": "6d711fa7ff55ee05910324725586f9f4"
+   "s": 140155,
+   "md5": "ee3c1659fdcd30549e2aef199db31c98"
   }
  ]
 }
