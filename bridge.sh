@@ -14,6 +14,9 @@ CFG_BOX_IP=172.20.10.14; BOX_PORT=5555; HEARTBEAT_MIN=30; CMD_TIMEOUT=600
 BOX_IP=$CFG_BOX_IP
 [ -f config.txt ] && . ./config.txt
 # 13.11.: Box ist mal im Heim-WLAN, mal im iPhone-Hotspot -> erste Adresse nehmen, die schon verbunden ist oder auf ping antwortet
+# 16.11.: im Hotspot der Box ist die Box das Gateway des Pi (z. B. 192.168.199.x) -> Gateway immer mit probieren
+GW=$(ip route 2>/dev/null | awk '/^default/{print $3; exit}')
+[ -n "$GW" ] && BOX_IPS="${BOX_IPS:-} $GW"
 if [ -n "${BOX_IPS:-}" ]; then
   pick=""
   for ip in $BOX_IPS; do adb devices | grep -q "^$ip:$BOX_PORT[[:space:]]*device" && { pick=$ip; break; }; done
