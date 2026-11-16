@@ -1,10 +1,11 @@
 {
- "fw": "V1.97",
+ "fw": "V1.98",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1277504,
- "md5": "11e36345da9a5efc4fd7e310d0762600",
+ "groesse": 1277792,
+ "md5": "c9bcead5a8699f424196993625eb670f",
  "neu": [
+  "Touch read in its own task (taps no longer lost or delayed while maps load); update check works while loading; receives tiles from NaviKarten.exe",
   "Update check works again while maps load (open download connections are closed first to free memory)",
   "Receives map tiles from the PC program NaviKarten.exe over Wi-Fi (much faster than downloading on the Navi)",
   "Map areas show their size (radius, max zoom); street map deletion slows down while tiles are downloading",
