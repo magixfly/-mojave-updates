@@ -1,10 +1,11 @@
 {
- "fw": "V2.05",
+ "fw": "V2.06",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1285408,
- "md5": "d178121358668ce79a31be795dbd45c0",
+ "groesse": 1285456,
+ "md5": "9d0d0d59832fe75745d5af08bbeb81d2",
  "neu": [
+  "Driven route is loaded 200 m left and right (was 500 m)",
   "Remembers the driven route and later, when standing, loads 500 m left and right of it up to zoom 18",
   "Map always turns with the driving direction; long press (north up) removed",
   "Bigger + / - buttons (62x58) with larger touch area, zoom reacts quickly after a tap; north arrow moved to the left",
