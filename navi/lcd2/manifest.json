@@ -1,10 +1,11 @@
 {
- "fw": "V1.83",
+ "fw": "V1.84",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1264448,
- "md5": "355ae5bbd82d59070d83235d78c9c2f3",
+ "groesse": 1264464,
+ "md5": "dcee370fdda162785b4b64d0a469fd9b",
  "neu": [
+  "Phone GPS fix fixed (iPhone GGA quality 0 ignored, 15 s tolerance); no flicker when standing (visible map images were replaced)",
   "Version in the footer white like the IP",
   "Big zoom buttons + / - on the right, also while armed (NET and long press only when not armed); phone GPS held still until you move (>4 km/h or >30 m), no trail",
   "Zoom state (AUTO or +1/-2 …) stays visible next to the - + buttons",
