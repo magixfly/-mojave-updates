@@ -1,10 +1,11 @@
 {
- "fw": "V1.93",
+ "fw": "V1.94",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1272192,
- "md5": "a6aee9c63af6347bf6d7f7b5914a333e",
+ "groesse": 1274000,
+ "md5": "802f598c1196f3a63c7662d0e3fe9930",
  "neu": [
+  "Aerial maps only: street map no longer loaded or copied, map type button removed, street map tiles are deleted from the SD in the background (progress on the Navi page)",
   "Config download/upload on the Navi page; no more 'no SD card' after updates (safe restart, SD retries); rotation applied when the SD comes back",
   "Map type button (SAT/MAP) on the display above the speed box; config.txt is written safely with a backup (settings like 180° rotation no longer lost)",
   "Faster downloads: the HTTPS connection to basemap.at stays open (keep-alive) instead of a new TLS handshake per tile",
