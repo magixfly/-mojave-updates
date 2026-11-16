@@ -1,18 +1,19 @@
 {
- "ver": "2.0.57",
+ "ver": "2.0.58",
  "neu": [
-  "Core and Navi shown with 2.4 GHz (ESP32 only supports 2.4 GHz)"
+  "Display on Kia: version of every device, refreshed every 10 s",
+  "CosmoStreamer is searched in the whole network"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 117981,
-   "md5": "339eeb311b369b7debee9da72185be2c"
+   "s": 118799,
+   "md5": "3c49cb6e4f7d9d5e6d5501f2de40cd0f"
   },
   {
    "p": "web/index.html",
-   "s": 137221,
-   "md5": "a730089667b49772b2398bb4f00c1287"
+   "s": 137453,
+   "md5": "e46227206320852e119d903ad85812f5"
   }
  ]
 }

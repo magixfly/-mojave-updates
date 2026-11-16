@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.57"
+VERSION = "2.0.58"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -185,6 +185,8 @@ def _dev_get(h, path, t=2.5):
     except Exception:
         return None
 
+COSMO_LAST = [None]
+
 def devices_scan():
     DEVS["busy"], DEVS["prog"] = True, 5
     out = {}
@@ -258,19 +260,27 @@ def devices_scan():
             hs = bip is not None and bip == subprocess.run(["ip", "route"], capture_output=True, text=True, timeout=3).stdout.split("default via ")[1].split()[0]
         except Exception:
             hs = False
-        out["box"] = {"ok": time.time() - BOX.get("t", 0) < 30, "host": "Carlin box", "ip": bip, "hs": hs, "wifi": BOX.get("wifi") or ""}   # hs: the box is the hotspot
+        out["box"] = {"ok": time.time() - BOX.get("t", 0) < 30, "host": "Carlin box", "ip": bip, "hs": hs, "wifi": BOX.get("wifi") or "", "ver": BOX.get("ver") or ""}   # hs: the box is the hotspot
         cos = {"ok": False, "host": "cosmostreamer.local", "ip": None}
-        cand = ["cosmostreamer.local"]
-        try:
+        cand = ([COSMO_LAST[0]] if COSMO_LAST[0] else []) + ["cosmostreamer.local"]
+        try:                                      # V2.0.58: alle bekannten Nachbarn im Netz (statt nur .2–.20)
+            for l in subprocess.run(["ip", "neigh"], capture_output=True, text=True, timeout=3).stdout.splitlines():
+                f = l.split()
+                if f and "FAILED" not in l and re.match(r"^\d+\.\d+\.\d+\.\d+$", f[0]) and f[0] not in cand and f[0] != bip:
+                    cand.append(f[0])
             pre = [x[1] for x in ips if not x[1].startswith("127.")][0].rsplit(".", 1)[0]
-            cand += [pre + ".%d" % i for i in range(2, 21)]
+            cand += [pre + ".%d" % i for i in range(2, 21) if pre + ".%d" % i not in cand]
         except Exception:
             pass
         for h in cand:
             try:
-                with urllib.request.urlopen("http://%s/" % h, timeout=1.0) as r:
-                    if b"cosmostreamer" in r.read(4000).lower():
+                with urllib.request.urlopen("http://%s/" % h, timeout=0.8) as r:
+                    pg = r.read(60000)
+                    if b"cosmostreamer" in pg[:4000].lower():
                         cos = {"ok": True, "host": "cosmostreamer.local", "ip": _dev_ip(h) or h}
+                        m = re.search(rb"(?:NG|[Vv]ersion|ver)[\s:v]*([0-9]+\.[0-9]+(?:\.[0-9]+)?)", pg)
+                        if m: cos["ver"] = m.group(1).decode()
+                        COSMO_LAST[0] = cos["ip"]
                         break
             except Exception:
                 pass
@@ -2150,7 +2160,7 @@ class H(BaseHTTPRequestHandler):
             return self.send(200, {k: UPD[k] for k in ("busy", "prog", "msg", "online", "neu")} | {"cur": VERSION})
         if p == "/api/devices":                  # V2.0.22: IP addresses / host names of tracker, Core, Navi
             q = parse_qs(u.query)
-            if not DEVS["busy"] and (q.get("new") or time.time() - DEVS["t"] > 15):
+            if not DEVS["busy"] and (q.get("new") or time.time() - DEVS["t"] > 8):   # V2.0.58: alle ~10 s neu
                 DEVS["busy"], DEVS["prog"] = True, 1
                 threading.Thread(target=devices_scan, daemon=True).start()
             return self.send(200, {"busy": DEVS["busy"], "prog": DEVS["prog"], "d": DEVS["d"]})
