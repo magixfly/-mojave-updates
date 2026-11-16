@@ -1,10 +1,11 @@
 {
- "fw": "V2.00",
+ "fw": "V2.01",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1279600,
- "md5": "ced4399b299f952bf675c2ad69a6493e",
+ "groesse": 1280624,
+ "md5": "4a1bb522aad81338939174a54f0fc113",
  "neu": [
+  "While driving only a narrow corridor ahead is loaded (tile under the car plus one left/right, ~30 s ahead, 400 m to 3 km)",
   "No more 2-second freezes while maps load: a saved tile only refreshes itself instead of making all missing tiles be searched on the SD again",
   "Missing tiles log: only tiles still missing, with area name, zoom level and tile size; 'clear log'",
   "Touch read in its own task (taps no longer lost or delayed while maps load); update check works while loading; receives tiles from NaviKarten.exe",
