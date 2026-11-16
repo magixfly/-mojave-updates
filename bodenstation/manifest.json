@@ -1,18 +1,18 @@
 {
- "ver": "2.0.61",
+ "ver": "2.0.62",
  "neu": [
-  "3D view like a car navigation (tilted map, car low, thick track with dark edge), menu: 3D view on/off; height no longer twice (Home card)"
+  "3D view: map now fills the screen up to the horizon"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120204,
-   "md5": "10d9e65a654506f2a2cfcd6f1230ca0c"
+   "md5": "fb6be3082c4feccafc70c497ef52c822"
   },
   {
    "p": "web/index.html",
-   "s": 138967,
-   "md5": "b8a2b9c3a6193826142b515d220fe93f"
+   "s": 139247,
+   "md5": "842ec2228105e791728cebfe0d090d92"
   }
  ]
 }
