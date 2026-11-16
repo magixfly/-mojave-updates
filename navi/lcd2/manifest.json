@@ -1,10 +1,11 @@
 {
- "fw": "V2.01",
+ "fw": "V2.02",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1280624,
- "md5": "4a1bb522aad81338939174a54f0fc113",
+ "groesse": 1280672,
+ "md5": "7217b1d93d0f03c2adb2e4bed2e29748",
  "neu": [
+  "While driving only one download at a time (corridor ahead only, smoother display)",
   "While driving only a narrow corridor ahead is loaded (tile under the car plus one left/right, ~30 s ahead, 400 m to 3 km)",
   "No more 2-second freezes while maps load: a saved tile only refreshes itself instead of making all missing tiles be searched on the SD again",
   "Missing tiles log: only tiles still missing, with area name, zoom level and tile size; 'clear log'",
