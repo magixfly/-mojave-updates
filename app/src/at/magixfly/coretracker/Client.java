@@ -16,6 +16,8 @@ class Client extends WebViewClient {
     public void onPageFinished(WebView v, String url) {
         if (a.loaded) a.overlay.setVisibility(View.GONE);
         v.evaluateJavascript(MainActivity.CSS_JS, null);
+        // V1.61: neben „CORE TRACKER“ zwei Zeilen: Box-Version über Tracker-Version
+        v.evaluateJavascript("(function(){function f(){var e=document.getElementById('ver');if(!e)return;e.dataset.box='Box " + Report.ver(a) + "';var t=e.textContent||'';if(/^V\\d/.test(t))e.textContent='Tracker '+t;}f();if(!window.ctVerT)window.ctVerT=setInterval(f,3000);})()", null);
     }
 
     /** Kartenkacheln aus dem Speicher der Box liefern (schnell), sonst vom Pi holen und merken. */
