@@ -1,0 +1,8 @@
+### 146_server_start  –  2026-11-16 16:52:04
+### Box: verbunden (172.20.10.14:5555)
+
+Running as unit: run-p16919-i16920.service; invocation ID: 3b897d51a42f4d2690d8c9af1bcb1412
+16921 python3 /home/user1/Bodenstation/server.py
+ver 2.0.60 age 0.1 esp {'rssi': -41, 'pps': 12, 'bad': 0, 'age': 0.2} core via wlan
+
+### Exit-Code: 0
