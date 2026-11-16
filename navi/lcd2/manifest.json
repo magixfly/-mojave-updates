@@ -1,10 +1,11 @@
 {
- "fw": "V1.80",
+ "fw": "V1.81",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1263904,
- "md5": "8a4bdfaebb71a919969673fda319fb89",
+ "groesse": 1264064,
+ "md5": "a69316a5641079a279f66f1a692a1fa3",
  "neu": [
+  "Zoom state (AUTO or +1/-2 …) stays visible next to the - + buttons",
   "NET mode back as before: no MT12 checks while NET is green (V1.79 undone)",
   "NET mode: every 20 s a 2 s MT12 check - arming the car switches NET off and back to MT12 immediately",
   "Maps at a new place load immediately (visible area first, replan as soon as a position arrives); HGPS without 0; version light grey",
