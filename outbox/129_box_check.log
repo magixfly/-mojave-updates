@@ -1,0 +1,11 @@
+### 129_box_check  –  2026-11-16 07:45:54
+### Box: NICHT erreichbar (192.168.46.103:5555)
+
+--- Pi WLAN
+inbox/129_box_check.sh: line 3: iwgetid: command not found
+inbox/129_box_check.sh: line 3: iw: command not found
+--- Geräte
+{"err": "not found"}
+{"busy": false, "prog": 100, "d": {"tracker": {"ok": true, "host": "corepi.local", "ips": [["wlan0", "192.168.46.175"]], "ssid": "XVII", "ghz": "5 GHz", "ver": "2.0.57"}, "core": {"ok": false, "host": "mojave.local", "ip": null}, "navi": {"ok": false, "host": "mojave-navi.local", "ip": null}, "box": {"ok": true, "host": "Carlin box", "ip": "192.168.46.103", "hs": true, "wifi": ""}, "cosmo": {"ok": false, "host": "cosmostreamer.local", "ip": null}}}
+
+### Exit-Code: 0
