@@ -1,0 +1,9 @@
+### 140_tracker2060  –  2026-11-16 16:39:03
+### Box: verbunden (172.20.10.14:5555)
+
+online: 2.0.60
+Tracker 2.0.60 läuft
+navi {'ok': False, 'host': 'mojave-navi.local', 'ip': None}
+core {'ok': True, 'host': 'mojave.local', 'ip': '172.20.10.3', 'ssid': 'Optimus Prime', 'rssi': -57, 'ver': 'V2.86'}
+
+### Exit-Code: 0
