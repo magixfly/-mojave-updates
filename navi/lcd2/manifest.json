@@ -1,10 +1,11 @@
 {
- "fw": "V1.77",
+ "fw": "V1.78",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1263872,
- "md5": "539dfb6586f9fa82ed971a6c0fc813d7",
+ "groesse": 1263904,
+ "md5": "2b67cd35d1e52e3b03e936fa9c3827e1",
  "neu": [
+  "Maps at a new place load immediately (visible area first, replan as soon as a position arrives); HGPS without 0; version light grey",
   "Phone GPS (GPS2IP) settings and status on the Navi web page",
   "Phone as GPS: iPhone app GPS2IP (socket mode, port 11123) over the phone hotspot, shown as HGPS; last source after Core/MT12/GPS module",
   "NET is now the speed box bottom left (big touch area, green = Wi-Fi + maps); small NET button removed",
