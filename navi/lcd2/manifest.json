@@ -1,10 +1,11 @@
 {
- "fw": "V2.07",
+ "fw": "V2.08",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1285664,
- "md5": "bf22625562d911ead9ec69ad9936cfec",
+ "groesse": 1285648,
+ "md5": "167b69d4ef697f7967a6bdd04690f189",
  "neu": [
+  "Navi page shows times as s / min / h instead of thousands of seconds",
   "Current zoom level (Z13…Z19) shown above the + button",
   "Driven route is loaded 200 m left and right (was 500 m)",
   "Remembers the driven route and later, when standing, loads 500 m left and right of it up to zoom 18",
