@@ -71,7 +71,7 @@ display:flex;align-items:center;justify-content:center;font-size:34px;font-weigh
 body.night #map{filter:brightness(.55) saturate(.8)}
 /* V2.0.61: 3D view - tilted map like a car navigation (Pi and Kia box) */
 html.v3d body{background:linear-gradient(180deg,#22324a 0,#10161d 38%)}
-html.v3d body #map,html.v3d #map{top:calc(100% - (100% - 52px)*2.6);height:calc((100% - 52px)*2.6);left:calc(230px - (100% - 230px)*.4);width:calc((100% - 230px)*1.8);transform:perspective(1200px) rotateX(45deg)!important;transform-origin:50% 100%!important}   /* V2.0.62: canvas 2.6x taller, far area reaches the horizon */
+html.v3d body #map,html.v3d #map{transform:perspective(1200px) rotateX(45deg)!important;transform-origin:50% 100%!important}   /* V2.0.62: canvas 2.6x taller, far area reaches the horizon */
 html.v3d #top,html.v3d #side,html.v3d #side2{z-index:6}html.v3d #top{background:var(--pan)}
 body.night #side,body.night #top,body.night #btns{filter:brightness(.7)}
 #uimp{position:absolute;left:calc(115px + 50%);bottom:56px;transform:translateX(-50%);width:520px;display:none}
@@ -1149,7 +1149,11 @@ function seg(id,val,fn){const el=$(id);el.querySelectorAll('b').forEach(b=>{b.cl
 async function j2(u,b){try{return await (await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)})).json()}catch(e){return {}}}
 function isNight(){return !!(C.cfg&&C.cfg.night==='1')}
 function is3d(){return !(C.cfg&&C.cfg.map3d==='0')}   // V2.0.61
-function set3d(on,save){document.documentElement.classList.toggle('v3d',on);if(save){if(C.cfg)C.cfg.map3d=on?'1':'0';j2('/api/set',{map3d:on?1:0})}resize();updMenu()}
+function set3d(on,save){const m=cv.style;['top','left','width','height'].forEach(k=>m.removeProperty(k));document.documentElement.classList.toggle('v3d',on);
+  if(on){const t=cv.offsetTop,l=cv.offsetLeft,w=cv.offsetWidth,hh=cv.offsetHeight;   // V2.0.62: flat map area (Pi 230/52, box 262/60), canvas 2.6x taller and 1.8x wider so the far area reaches the horizon
+    m.setProperty('top',(t+hh-hh*2.6)+'px','important');m.setProperty('height',(hh*2.6)+'px','important');m.setProperty('left',(l-w*.4)+'px','important');m.setProperty('width',(w*1.8)+'px','important')}
+  if(save){if(C.cfg)C.cfg.map3d=on?'1':'0';j2('/api/set',{map3d:on?1:0})}resize();updMenu()}
+{let rt=0;const re3=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(is3d())set3d(true)},300)};addEventListener('resize',re3);new MutationObserver(re3).observe(document.head,{childList:true,subtree:true,characterData:true})}   // V2.0.62: box app adds its CSS later -> measure again
 function setNight(on,save){document.body.classList.toggle('night',on);if(save){if(C.cfg)C.cfg.night=on?'1':'0';j2('/api/set',{night:on?1:0})}updMenu()}
 $('mNight').onclick=()=>setNight(!isNight(),true);$('m3d').onclick=()=>set3d(!is3d(),true);
 $('mCore').onclick=()=>{const v=coreShow()?'0':'1';if(C.cfg)C.cfg.core_show=v;j2('/api/set',{core_show:+v});updMenu();hud()};

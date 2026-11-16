@@ -1,18 +1,18 @@
 {
- "ver": "2.0.62",
+ "ver": "2.0.63",
  "neu": [
-  "3D view: map now fills the screen up to the horizon"
+  "3D view: map up to the horizon also on the Kia box"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120204,
-   "md5": "fb6be3082c4feccafc70c497ef52c822"
+   "md5": "2bc01e87039adb0beda14f89860de10f"
   },
   {
    "p": "web/index.html",
-   "s": 139247,
-   "md5": "842ec2228105e791728cebfe0d090d92"
+   "s": 139884,
+   "md5": "31367cde6261573bfc474a1942109d0e"
   }
  ]
 }
