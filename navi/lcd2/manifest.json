@@ -1,10 +1,11 @@
 {
- "fw": "V1.78",
+ "fw": "V1.79",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1263904,
- "md5": "2b67cd35d1e52e3b03e936fa9c3827e1",
+ "groesse": 1263920,
+ "md5": "1d7847566458de5d2db2afe2a5a232ec",
  "neu": [
+  "NET mode: every 20 s a 2 s MT12 check - arming the car switches NET off and back to MT12 immediately",
   "Maps at a new place load immediately (visible area first, replan as soon as a position arrives); HGPS without 0; version light grey",
   "Phone GPS (GPS2IP) settings and status on the Navi web page",
   "Phone as GPS: iPhone app GPS2IP (socket mode, port 11123) over the phone hotspot, shown as HGPS; last source after Core/MT12/GPS module",
