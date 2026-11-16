@@ -1,10 +1,11 @@
 {
- "fw": "V1.91",
+ "fw": "V1.92",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1268960,
- "md5": "3cb792de2ec37fe2127cc6ca76d068dc",
+ "groesse": 1269520,
+ "md5": "3148cbeba30a90753cfa8c1e30dc95a2",
  "neu": [
+  "Map type button (SAT/MAP) on the display above the speed box; config.txt is written safely with a backup (settings like 180° rotation no longer lost)",
   "Faster downloads: the HTTPS connection to basemap.at stays open (keep-alive) instead of a new TLS handshake per tile",
   "⚡ also next to areas with n/a tiles: retries today's n/a tiles immediately",
   "Navi page: tap ⚡ next to an unfinished map area to load it first",
