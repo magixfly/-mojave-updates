@@ -1,0 +1,7 @@
+### 148_check2061  –  2026-11-16 18:13:02
+### Box: verbunden (172.20.10.14:5555)
+
+{"busy": false, "prog": 53, "msg": "update failed: HTTP Error 404: Not Found", "online": "2.0.61", "neu": ["3D view like a car navigation (tilted map, car low, thick track with dark edge), menu: 3D view on/off"], "cur": "2.0.60"}
+{"ver": "2.0.60", "src": "USB", "dev": "
+{"busy": true, "prog": 1, "msg": "checking \u2026", "online": "2.0.61", "neu": ["3D view like a car navigation (tilted map, car low, thick track with dark edge), menu: 3D view on/off"], "cur": "2.0.60"}
+### Exit-Code: 0
