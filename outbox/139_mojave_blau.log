@@ -1,0 +1,10 @@
+### 139_mojave_blau  –  2026-11-16 16:21:03
+### Box: verbunden (172.20.10.14:5555)
+
+{"ok": true, "k": "senders", "v": "DA:2D:E4:3C:74:6C/1/car/1/1a8cff/MOJAVE/Thorsten;14:33:5C:8B:E2:74/2/plane/2/ff3b30/FUNJET/Thorsten;06:84:A7:E2:D3:58/2/plane/2/d4ff00/FUNJET/Horst;46:E8:8D:5C:B4:65/1/car/1/1a8cff/MOJAVE/Thorsten"}
+senders=DA:2D:E4:3C:74:6C/1/car/1/1a8cff/MOJAVE/Thorsten;14:33:5C:8B:E2:74/2/plane/2/ff3b30/FUNJET/Thorsten;06:84:A7:E2:D3:58/2/plane/2/d4ff00/FUNJET/Horst;46:E8:8D:5C:B4:65/1/car/1/1a8cff/MOJAVE/Thorsten   # Known senders (menu Sender): MAC/slot/type/symbol/c
+Starting: Intent { cmp=at.magixfly.coretracker/.MainActivity }
+Running as unit: run-p90361-i90362.service; invocation ID: 3597567e19f341a1bd4cff59b491ff46
+fertig
+
+### Exit-Code: 0
