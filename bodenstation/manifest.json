@@ -1,18 +1,18 @@
 {
- "ver": "2.0.65",
+ "ver": "2.0.66",
  "neu": [
-  "Box: map download status no longer overlaps the version"
+  "Pi overview 'Display on Kia': map download of the box with progress bar"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120204,
-   "md5": "e0b6c378090c6b2df4331be2ddbcedd4"
+   "md5": "a674a062e173189f520a11ebcb4ae9e8"
   },
   {
    "p": "web/index.html",
-   "s": 140155,
-   "md5": "ee3c1659fdcd30549e2aef199db31c98"
+   "s": 141026,
+   "md5": "db82205fb291df2995e2eeb2bba55b8e"
   }
  ]
 }
