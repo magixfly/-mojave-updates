@@ -1,10 +1,11 @@
 {
- "fw": "V1.88",
+ "fw": "V1.89",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1266672,
- "md5": "d832685159d35401749d4af6dee2a7c9",
+ "groesse": 1267968,
+ "md5": "d7d05f3f85b4f4b3c2e7be9a92995fc2",
  "neu": [
+  "Navi page: tap ⚡ next to an unfinished map area to load it first",
   "Blue progress bar also while checking tiles (nothing to download)",
   "Much faster check of tiles already on the SD: each folder is read once instead of searching every tile",
   "Broken map folder on the SD is repaired when a tile cannot be saved (St. Leonhard 10 tiles); 503 never n/a; network errors n/a only on the 2nd failure",
