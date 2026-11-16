@@ -1,0 +1,7 @@
+### 125_tracker2057  –  2026-11-16 07:42:29
+### Box: NICHT erreichbar (192.168.46.103:5555)
+
+{"busy": true, "prog": 1, "msg": "checking \u2026", "online": "2.0.57", "neu": ["Core and Navi shown with 2.4 GHz (ESP32 only supports 2.4 GHz)"], "cur": "2.0.56"}
+"ver": "2.0.57"
+
+### Exit-Code: 0
