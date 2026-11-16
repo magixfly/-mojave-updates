@@ -924,7 +924,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
   const ag=$('arrG');if(st.home&&st.lat!=null&&st.dist>3){const dy=(st.home[0]-st.lat)*111320,dx=(st.home[1]-st.lon)*111320*Math.cos(st.lat*Math.PI/180);
     const brg=Math.atan2(dx,dy)*180/Math.PI+V.rot*180/Math.PI;ag.setAttribute('transform',`rotate(${brg})`);ag.style.display=''}else ag.style.display='none';
   const d=st.dist;$('vDist').textContent=d==null?'–':fmtM(d);   // V2.0.21: from 1000 m in km (11665 m -> 11.7 km)
-  $('vHome2').textContent=st.home?'from start point'+(st.ralt!=null?' · height '+(st.ralt<0?'↓':'↑')+Math.abs(st.ralt)+' m':''):'no start point yet';
+  $('vHome2').textContent=st.home?'from start point':'no start point yet';
   }
   {const e=$('vAlt');if(e){const sc1=slotCfg(1);e.innerHTML=st.ralt!=null?'<small style="font-size:13px;color:var(--mut)">HEIGHT </small>'+(st.ralt<0?'↓':'↑')+Math.abs(st.ralt)+' m':'';e.style.fontSize=sc1&&sc1.type==='plane'?'28px':'20px'}}   // V2.0.7: height above start
   // GPS tile: coordinates (tap = QR), satellites, trip

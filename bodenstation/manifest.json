@@ -1,7 +1,7 @@
 {
  "ver": "2.0.61",
  "neu": [
-  "3D view like a car navigation (tilted map, car low, thick track with dark edge), menu: 3D view on/off"
+  "3D view like a car navigation (tilted map, car low, thick track with dark edge), menu: 3D view on/off; height no longer twice (Home card)"
  ],
  "dateien": [
   {
@@ -11,8 +11,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 139047,
-   "md5": "efb7a2200e297d6f61c32e3921a3b5a0"
+   "s": 138967,
+   "md5": "b8a2b9c3a6193826142b515d220fe93f"
   }
  ]
 }
