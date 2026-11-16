@@ -1,10 +1,11 @@
 {
- "fw": "V1.81",
+ "fw": "V1.82",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1264064,
- "md5": "a69316a5641079a279f66f1a692a1fa3",
+ "groesse": 1264448,
+ "md5": "8862f1627e5f71252f7a3357072499a8",
  "neu": [
+  "Big zoom buttons + / - on the right, also while armed (NET and long press only when not armed); phone GPS held still until you move (>4 km/h or >30 m), no trail",
   "Zoom state (AUTO or +1/-2 …) stays visible next to the - + buttons",
   "NET mode back as before: no MT12 checks while NET is green (V1.79 undone)",
   "NET mode: every 20 s a 2 s MT12 check - arming the car switches NET off and back to MT12 immediately",
