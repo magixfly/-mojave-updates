@@ -1,10 +1,11 @@
 {
- "fw": "V1.74",
+ "fw": "V1.75",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1261216,
- "md5": "221f91c862732c7579bfd2f746194305",
+ "groesse": 1261312,
+ "md5": "2cb1a5e3ff087b26760db5cda50192dc",
  "neu": [
+  "NET is now the speed box bottom left (big touch area, green = Wi-Fi + maps); small NET button removed",
   "Smoother map: tiles are read and unpacked in the background; 4 frames/s when standing still (SD gets the shared bus); areas complete except n/a are not re-checked again today; fixes",
   "Failed tiles go to n/a for the day also when all other tiles are already on the SD (internet proven by the update check)",
   "MT12: position held still while disarmed (no GPS jitter, no trail); moves again after 15 m or when armed",
