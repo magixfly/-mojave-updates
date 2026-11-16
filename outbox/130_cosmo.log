@@ -1,0 +1,11 @@
+### 130_cosmo  –  2026-11-16 07:49:04
+### Box: NICHT erreichbar (192.168.46.103:5555)
+
+--- Nachbarn
+192.168.46.103 dev wlan0 lladdr 62:a4:46:ee:54:a9 REACHABLE 
+fe80::60a4:46ff:feee:54a9 dev wlan0 lladdr 62:a4:46:ee:54:a9 router STALE 
+--- Suche CosmoStreamer im Netz
+--- Tracker-Liste
+"cosmo": {"ok": false, "host": "cosmostreamer.local", "ip": null}
+
+### Exit-Code: 0
