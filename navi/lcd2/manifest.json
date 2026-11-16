@@ -1,10 +1,11 @@
 {
- "fw": "V1.90",
+ "fw": "V1.91",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1268832,
- "md5": "f64ef4d571523641c2f0ef375a43fd05",
+ "groesse": 1268960,
+ "md5": "3cb792de2ec37fe2127cc6ca76d068dc",
  "neu": [
+  "Faster downloads: the HTTPS connection to basemap.at stays open (keep-alive) instead of a new TLS handshake per tile",
   "⚡ also next to areas with n/a tiles: retries today's n/a tiles immediately",
   "Navi page: tap ⚡ next to an unfinished map area to load it first",
   "Blue progress bar also while checking tiles (nothing to download)",
