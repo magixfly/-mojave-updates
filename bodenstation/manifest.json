@@ -1,13 +1,13 @@
 {
- "ver": "2.0.69",
+ "ver": "2.70",
  "neu": [
-  "Kia info page: column titles (Device, IP, Network, Version), no double V, map icon visible on the Pi"
+  "New version numbers: Vx.xx (2.70 follows 2.0.69)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 120267,
-   "md5": "7e279b2865c7c179dc1042eab8b44628"
+   "s": 120265,
+   "md5": "3a866ff02cfd661c4509e8df1917b503"
   },
   {
    "p": "web/index.html",
