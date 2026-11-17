@@ -1,10 +1,11 @@
 {
-  "fw": "V2.15",
+  "fw": "V2.16",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1307568,
-  "md5": "50ff1f33ebd2ba1678917bbea6289f78",
+  "groesse": 1309392,
+  "md5": "2304e66268cab5f5f36fd5f91a7df6e8",
   "neu": [
+    "V2.16: crash trace - after a crash the Navi writes what it was doing to /crash.log and shows it on the web page (Last crash), memory display, safer SD counting",
     "V2.15: overview map works without internet - grey Austria map (zoom 6-11) is loaded onto the SD in between when standing, map program stored on the SD, zoomed in it shows the aerial tiles from the SD",
     "V2.14: \"Maps on the SD card\" on the web page - tiles per zoom and an overview map of Austria showing where maps are (tap a square: % per zoom, load first)",
     "V2.13: third Wi-Fi (mobile router) and Wi-Fi choice on the web page (Automatic / Home / Phone / Mobile router), remembered in config.txt",
