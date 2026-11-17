@@ -215,14 +215,20 @@ class Fpv {
         FrameLayout.LayoutParams bl = (FrameLayout.LayoutParams) btn.getLayoutParams();
         if (bl != null) {
             boolean sp = mode == SPLIT;
-            bl.width = sp ? 218 : 240; bl.height = sp ? 64 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? 8 : 12;   // V1.56: im Split größer
+            // V1.68: im Split so breit wie die linke Spalte (Tracker skaliert mit der Kartenbreite: 230 px × S)
+            float S = Math.min(1f, Math.min((root.getWidth() - splitW()) / 1280f, root.getHeight() / 720f));
+            int col = Math.max(120, Math.round(230 * S));
+            bl.width = sp ? col - 12 : 240; bl.height = sp ? 52 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? 8 : 12;
+            btn.setTextSize(sp ? 16 : 18);
             btn.setLayoutParams(bl);
             int vis = sp && btn.getVisibility() == View.VISIBLE ? View.VISIBLE : View.GONE;
             int[] r = range(); int w = splitW();
             TextView[] ar = {bL, bR};
             for (int i = 0; i < 2; i++) {
                 FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) ar[i].getLayoutParams();
-                p.leftMargin = 6 + i * 113; p.bottomMargin = 80; ar[i].setLayoutParams(p);
+                int aw = sp ? (col - 18) / 2 : 105;
+                p.width = aw; p.height = sp ? 46 : 64; p.leftMargin = 6 + i * (aw + 6); p.bottomMargin = sp ? 66 : 80; ar[i].setLayoutParams(p);
+                ar[i].setTextSize(sp ? 20 : 26);
                 ar[i].setVisibility(vis);
                 ar[i].setAlpha((i == 0 ? w >= r[1] : w <= r[0]) ? 0.35f : 1f);
                 ar[i].bringToFront();
