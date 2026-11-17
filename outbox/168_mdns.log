@@ -1,0 +1,12 @@
+### 168_mdns  –  2026-11-17 12:26:03
+### Box: verbunden (192.168.178.235:5555)
+
+ping: unknown host corepi.local
+nc: corepi.local:8080: No address associated with hostname
+nc-local-fail
+0
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+
+### Exit-Code: 0
