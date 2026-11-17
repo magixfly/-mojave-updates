@@ -1,0 +1,8 @@
+### 204_shot  –  2026-11-17 18:15:03
+### Box: verbunden (192.168.178.235:5555)
+
+    <int name="fpvMode" value="3" />
+    <int name="splitW" value="768" />
+    <string name="cosmo">192.168.178.159</string>
+
+### Exit-Code: 0
