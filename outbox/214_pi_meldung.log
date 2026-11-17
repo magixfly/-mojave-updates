@@ -1,0 +1,18 @@
+### 214_pi_meldung  –  2026-11-17 20:47:03
+### Box: verbunden (192.168.178.235:5555)
+
+               total        used        free      shared  buff/cache   available
+Mem:             905         470         199          56         348         435
+Swap:            904         223         681
+
+  RSS COMMAND
+135448 chromium
+131800 chromium
+117292 chromium
+77188 chromium
+60764 chromium
+41236 wf-panel-pi
+33412 packagekitd
+-rw-rw-r-- 1 user1 user1 89769 Nov 17 20:47 outbox/214_pi.png
+
+### Exit-Code: 0
