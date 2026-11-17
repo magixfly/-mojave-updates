@@ -1,10 +1,11 @@
 {
- "fw": "V2.08",
+ "fw": "V2.09",
  "board": "ESP32-S3-Touch-LCD-2",
  "datei": "Navi_update.bin",
- "groesse": 1285648,
- "md5": "167b69d4ef697f7967a6bdd04690f189",
+ "groesse": 1285712,
+ "md5": "7d5aced08f5c073bd3826956f9f9514d",
  "neu": [
+  "No more slight flicker when standing: auto zoom no longer changes the scale by tiny amounts every frame",
   "Navi page shows times as s / min / h instead of thousands of seconds",
   "Current zoom level (Z13…Z19) shown above the + button",
   "Driven route is loaded 200 m left and right (was 500 m)",
