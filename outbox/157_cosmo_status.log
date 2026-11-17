@@ -1,0 +1,13 @@
+### 157_cosmo_status  –  2026-11-17 10:10:02
+### Box: verbunden (192.168.178.235:5555)
+
+rtt min/avg/max/mdev = 3.744/5.278/6.107/1.086 ms
+Camera controls  			 Camera settings  			 Device settings  			 
+connected but not shown in list - move any axis or press any button o
+Camera disconnected   		  		  		  		 Board not supported   
+/api/status -> 404 
+/status -> 404 
+/api/info -> 404 
+/info.json -> 404 
+
+### Exit-Code: 0
