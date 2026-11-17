@@ -22,10 +22,13 @@ class Report implements Runnable {
             OutputStream o = c.getOutputStream(); o.write(d); o.close();
             java.io.InputStream in = c.getInputStream();
             byte[] r = new byte[256]; int n = in.read(r); in.close(); c.disconnect();
+            a.repFail = 0;
             if (n > 0 && new String(r, 0, n, "UTF-8").replace(" ", "").contains("\"toggle\":1")) {
                 a.tiles.setStopped(!a.tiles.stopped);
                 a.ui.post(new Task(a, Task.PILL, null, 0));
             }
-        } catch (Throwable t) { }
+        } catch (Throwable t) {                  // V1.64: Tracker 30 s lang nicht erreichbar -> neu suchen (z. B. andere IP)
+            if (++a.repFail >= 10 && !a.searching) { a.repFail = 0; a.ui.post(new Task(a, Task.SEARCH, null, 0)); }
+        }
     }
 }
