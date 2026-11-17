@@ -1,0 +1,379 @@
+<div class="tab">
+	<button class="tablinks active" onclick="openTab(event, 'WifiSystem')">System</button>
+	<button class="tablinks hideforstereopi" onclick="openTab(event, 'WifiCam')">Camera</button>
+	<button class="tablinks" onclick="openTab(event, 'WifiWLAN')">WLAN</button>
+	<button class="tablinks" onclick="openTab(event, 'WifiAP')">Access Point</button>
+</div>
+
+<div id="WifiSystem" class="tabcontent" style="display:block;">
+	<div>
+	<p class="option_title gray">Country</p>
+	<select id="system_country_option" class="option_el" style="width:250px; margin-bottom:10px;">
+		<option></option>
+		<option>00</option>
+		<option>CN</option>
+		<option>US</option>
+	</select>
+	</div>
+</div>
+
+<div id="WifiCam" class="tabcontent">
+	<select id="camera_wifi_option" class="option_el" style="width:250px; margin:5px; margin-bottom:20px;">
+		<option>Disabled</option>
+		<option>Internal Wi-Fi</option>
+		<option>USB Wi-Fi</option>
+		<option>USB Wi-Fi 2</option>
+	</select>
+
+	<div id="camera_wifi_block" style="display:none;">
+		<p class="option_title gray">SSID</p>
+		<div><input type="text" id="camera_ssid_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+		<p class="option_title gray">Password</p>
+		<div><input type="text" id="camera_pass_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+
+		<div class="option_title gray" style="margin-top:10px;">Current IP</div>
+		<div id="camera_ip_field"></div>
+
+		<div><input id="camera_scan_button" type="button" value="Scan networks" style="width:auto; padding:10px; background-color:transparent; color:white; border-width:1px; margin-top:20px; margin-bottom:20px;"></div>
+
+		<div id="camera_loading" style="display:none;"><img src="imgs/loader.gif"></div>
+		<div><select id="camera_scan_results" class="option_el" style="width:250px; margin:5px; margin-bottom:20px; display:none;"></select></div>
+	</div>
+</div>
+
+<div id="WifiWLAN" class="tabcontent">
+	<select id="wlan_wifi_option" class="option_el" style="width:250px; margin:5px; margin-bottom:20px;">
+		<option>Disabled</option>
+		<option>Internal Wi-Fi</option>
+		<option>USB Wi-Fi</option>
+		<option>USB Wi-Fi 2</option>
+	</select>
+
+	<div id="wlan_wifi_block" style="display:none;">
+		<p class="option_title gray">SSID</p>
+		<div><input type="text" id="wifi_ssid_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+		<p class="option_title gray">Password</p>
+		<div><input type="text" id="wifi_pass_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+
+		<div class="option_title gray" style="margin-top:10px;">Current IP</div>
+		<div id="wifi_ip_field"></div>
+
+
+		<p><span class="option_title"><input type="checkbox" id="wifi_static_ip_enabled"><label for="wifi_static_ip_enabled">Static IP enabled</label></span></p>
+
+		<p class="option_title gray">Static IP address</p>
+		<div><input type="text" id="wifi_ip_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+		<p class="option_title gray">Static mask</p>
+		<div><input type="text" id="wifi_mask_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+		<p class="option_title gray">Default gw</p>
+		<div><input type="text" id="wifi_gw_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+		<p class="option_title gray">DNS server</p>
+		<div><input type="text" id="wifi_dns_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+
+
+		<div><input id="wifi_scan_button" type="button" value="Scan networks" style="width:auto; padding:10px; background-color:transparent; color:white; border-width:1px; margin-top:20px; margin-bottom:20px;"></div>
+
+		<div id="wifi_loading" style="display:none;"><img src="imgs/loader.gif"></div>
+		<div><select id="wifi_scan_results" class="option_el" style="width:250px; margin:5px; margin-bottom:20px; display:none;"></select></div>
+	</div>
+</div>
+
+<div id="WifiAP" class="tabcontent">
+	<select id="ap_wifi_option" class="option_el" style="width:250px; margin:5px; margin-bottom:20px;">
+		<option>Disabled</option>
+		<option>Internal Wi-Fi</option>
+		<option>USB Wi-Fi</option>
+		<option>USB Wi-Fi 2</option>
+	</select>
+
+	<div id="ap_wifi_block" style="display:none;">
+		<p class="option_title gray">SSID</p>
+		<div><input type="text" id="ap_ssid_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+		<p class="option_title gray">Password</p>
+		<div><input type="text" id="ap_pass_textarea" style="width:100%; height:30px; margin-bottom:10px; background-color:transparent; padding:5px; color:white; border-width:1px;"></div>
+
+		<div>
+		<p class="option_title gray">Country</p>
+		<select id="ap_country_option" class="option_el" style="width:250px; margin-bottom:10px;">
+			<option>EU</option>
+			<option>CN</option>
+			<option>US</option>
+		</select>
+		</div>
+
+		<div>
+		<p class="option_title gray">Mode</p>
+		<select id="ap_mode_option" class="option_el" style="width:250px; margin-bottom:10px;">
+			<option>2.4GHz</option>
+			<option>5GHz</option>
+		</select>
+		</div>
+
+		<div id="ap_2_block" style="display:none;">
+		<p class="option_title gray">Channel</p>
+		<select id="ap_channel2_option" class="option_el" style="width:250px; margin-bottom:10px;"></select>
+		</div>
+
+		<div id="ap_5_block" style="display:none;">
+		<p class="option_title gray">Channel</p>
+		<select id="ap_channel5_option" class="option_el" style="width:250px; margin-bottom:10px;"></select>
+		</div>
+
+		<div class="option_title gray" style="margin-top:10px;">Current IP</div>
+		<div id="ap_ip_field"></div>
+
+	</div>
+</div>
+
+<div><input id="wifi_save_button" type="button" value="Save" style="width:100px; padding:10px; background-color:red; color:white; border:0; margin-top:20px;"></div>
+
+
+
+<script>
+	var config;
+
+	DeviceConfigInit();
+	ConfigRequest();
+
+	function ConfigRequest() {
+		sendStringCommand('{"cmd":"config_request","param":"wifi"}');
+	}
+
+	function DeviceConfigInit() {
+		/// Fill default values
+
+
+		$('.option_el').on("change", function(e) {
+			switch ($(this).attr('id')) {
+				case "camera_wifi_option":
+					$("#camera_wifi_block").css("display","none");
+					var my_iface = GetInterfaceType($(this));
+					if (my_iface == "") break;
+					if (GetInterfaceType($("#wlan_wifi_option")) == my_iface) { alert('This interface already busy by Wlan'); $(this).prop('selectedIndex',0).change(); break; }
+					if (GetInterfaceType($("#ap_wifi_option")) == my_iface) { alert('This interface already busy by AP'); $(this).prop('selectedIndex',0).change(); break;}
+					$("#camera_wifi_block").css("display","block");
+				break;
+
+				case "wlan_wifi_option":
+					$("#wlan_wifi_block").css("display","none");
+					var my_iface = GetInterfaceType($(this));
+					if (my_iface == "") break;
+					if (GetInterfaceType($("#camera_wifi_option")) == my_iface) { alert('This interface already busy by Camera'); $(this).prop('selectedIndex',0); break; }
+					if (GetInterfaceType($("#ap_wifi_option")) == my_iface) { alert('This interface already busy by AP'); $(this).prop('selectedIndex',0); break; }
+					$("#wlan_wifi_block").css("display","block");
+				break;
+
+				case "ap_wifi_option":
+					$("#ap_wifi_block").css("display","none");
+					var my_iface = GetInterfaceType($(this));
+					if (my_iface == "") break;
+					if (GetInterfaceType($("#camera_wifi_option")) == my_iface) { alert('This interface already busy by Camera'); $(this).prop('selectedIndex',0); break; }
+					if (GetInterfaceType($("#wlan_wifi_option")) == my_iface) { alert('This interface already busy by Wlan'); $(this).prop('selectedIndex',0); break; }
+					$("#ap_wifi_block").css("display","block");
+				break;
+
+
+				case "camera_scan_results":
+					$("#camera_ssid_textarea").val($(this).val());
+				break;
+
+				case "wifi_scan_results":
+					$("#wifi_ssid_textarea").val($(this).val());
+				break;
+
+				case "ap_country_option":
+					FillChannels2($(this).val(), config);
+					FillChannels5($(this).val(), config);
+				break;
+
+				case "ap_mode_option":
+					if ($(this).val() == "2.4GHz") {
+						$("#ap_2_block").css("display","block");
+						$("#ap_5_block").css("display","none");
+					}
+					if ($(this).val() == "5GHz") {
+						$("#ap_2_block").css("display","none");
+						$("#ap_5_block").css("display","block");
+					}
+				break;
+			}
+		});
+
+		$("#camera_scan_button").on("click", function(e) {
+			var iface = GetInterfaceType($("#camera_wifi_option"));
+			if (iface == "") return;
+			var cmd = '{"cmd":"wlan","param":"scan","value":"' + iface + '"}';
+			$("#camera_loading").css("display","block");
+			$("#camera_scan_results").empty();
+			sendStringCommand(cmd);
+		});
+
+		$("#wifi_scan_button").on("click", function(e) {
+			var iface = GetInterfaceType($("#wlan_wifi_option"));
+			if (iface == "") return;
+			$("#wifi_loading").css("display","block");
+			$("wifi_scan_results").empty();
+			var cmd = '{"cmd":"wlan","param":"scan","value":"' + iface + '"}';
+			sendStringCommand(cmd);
+		});
+
+
+		$("#wifi_save_button").on("click", function(e) {
+
+			if (!confirm("Are you sure?")) return;
+
+			var ap_mode = 2;
+			if ($("#ap_mode_option").val() == "2.4GHz") ap_mode = 2;
+			if ($("#ap_mode_option").val() == "5GHz") ap_mode = 5;
+
+			var ap_channel = "";
+			if (ap_mode == 2) ap_channel = $("#ap_channel2_option").val();
+			if (ap_mode == 5) ap_channel = $("#ap_channel5_option").val();
+
+			var ap_country = $("#ap_country_option").val();
+			var system_country = $("#system_country_option").val();
+
+			var wifi_static_ip_enabled = $("#wifi_static_ip_enabled").prop('checked') ? 1 : 0;
+			var wifi_static_ip = $("#wifi_ip_textarea").val();
+			var wifi_static_mask = $("#wifi_mask_textarea").val();
+			var wifi_static_gw = $("#wifi_gw_textarea").val();
+			var wifi_static_dns = $("#wifi_dns_textarea").val();
+
+            var cmd = '{"cmd":"updateconfig","param":"wlan",';
+            cmd += '"value":"' + GetInterfaceType($("#camera_wifi_option")) + '","value2":"' + $("#camera_ssid_textarea").val() + '","value3":"' + $("#camera_pass_textarea").val() + '",';
+            cmd += '"value4":"' + GetInterfaceType($("#wlan_wifi_option")) + '","value5":"' + $("#wifi_ssid_textarea").val() + '","value6":"' + $("#wifi_pass_textarea").val() + '",';
+            cmd += '"value7":"' + GetInterfaceType($("#ap_wifi_option")) + '","value8":"' + $("#ap_ssid_textarea").val() + '","value9":"' + $("#ap_pass_textarea").val() + '",';
+            cmd += '"value10":"' + ap_mode + '","value11":"' + ap_channel + '","value12":"' + ap_country + '",';
+			cmd += '"value13":"' + system_country + '",';
+			cmd += '"value14":"' + wifi_static_ip_enabled + '",';
+			cmd += '"value15":"' + wifi_static_ip + '",';
+			cmd += '"value16":"' + wifi_static_mask + '",';
+			cmd += '"value17":"' + wifi_static_gw + '",';
+			cmd += '"value18":"' + wifi_static_dns + '"';
+            cmd += '}';
+
+			sendStringCommand(cmd);
+
+			$(this).css('background-color','darkred');
+		});
+	}
+
+	function ParseDeviceConfig(json) {
+		//alert(json);
+
+		try {
+			config = JSON.parse(json);
+		} catch (e) {
+			alert(e);
+			return;
+		}
+
+
+		if (config.cmd == "wlanscan") {
+
+			var cam_iface = GetInterfaceType($("#camera_wifi_option"));
+			var wlan_iface = GetInterfaceType($("#wlan_wifi_option"));
+
+			if (config.param == cam_iface) {
+				$("#camera_loading").css("display","none");
+				FillScanResults($("#camera_scan_results"), config.value);
+			}
+
+			if (config.param == wlan_iface) {
+				$("#wifi_loading").css("display","none");
+				FillScanResults($("#wifi_scan_results"), config.value);
+			}
+
+			return;
+		}
+
+		if (config.cmd != "config_answer") return;
+
+		if (config.camera_iface == "") $("#camera_wifi_option").prop('selectedIndex', 0).change();
+		if (config.camera_iface == "int") $("#camera_wifi_option").prop('selectedIndex', 1).change();
+		if (config.camera_iface == "ext") $("#camera_wifi_option").prop('selectedIndex', 2).change();
+		if (config.camera_iface == "ext2") $("#camera_wifi_option").prop('selectedIndex', 3).change();
+
+		if (config.wifi_iface == "") $("#wlan_wifi_option").prop('selectedIndex', 0).change();
+		if (config.wifi_iface == "int") $("#wlan_wifi_option").prop('selectedIndex', 1).change();
+		if (config.wifi_iface == "ext") $("#wlan_wifi_option").prop('selectedIndex', 2).change();
+		if (config.wifi_iface == "ext2") $("#wlan_wifi_option").prop('selectedIndex', 3).change();
+
+		if (config.ap_iface == "") $("#ap_wifi_option").prop('selectedIndex', 0).change();
+		if (config.ap_iface == "int") $("#ap_wifi_option").prop('selectedIndex', 1).change();
+		if (config.ap_iface == "ext") $("#ap_wifi_option").prop('selectedIndex', 2).change();
+		if (config.ap_iface == "ext2") $("#ap_wifi_option").prop('selectedIndex', 3).change();
+
+		$("#system_country_option").val(config.sys_country);
+
+		$("#camera_ssid_textarea").val(config.camera_ssid);
+		$("#camera_pass_textarea").val(config.camera_psk);
+		$("#camera_ip_field").html(config.camera_ip);
+		$("#wifi_ssid_textarea").val(config.wifi_ssid);
+		$("#wifi_pass_textarea").val(config.wifi_psk);
+		$("#wifi_ip_field").html(config.wifi_ip);
+		$("#ap_ssid_textarea").val(config.ap_ssid);
+		$("#ap_pass_textarea").val(config.ap_psk);
+		$("#ap_country_option").val(config.ap_country).change();
+		$("#ap_ip_field").html(config.ap_ip);
+
+		$("#wifi_static_ip_enabled").prop("checked", config.wifi_s_enabled == 1);
+		$("#wifi_ip_textarea").val(config.wifi_s_addr);
+		$("#wifi_mask_textarea").val(config.wifi_s_mask);
+		$("#wifi_gw_textarea").val(config.wifi_s_gw);
+		$("#wifi_dns_textarea").val(config.wifi_s_dns);
+
+		if (config.ap_mode == 2) $("#ap_mode_option").prop('selectedIndex', 0).change();
+		if (config.ap_mode == 5) $("#ap_mode_option").prop('selectedIndex', 1).change();
+	}
+
+	function GetInterfaceType(element) {
+		var iface = "";
+		switch (element.prop('selectedIndex')) {
+			case 1: iface = "int"; break;
+			case 2: iface = "ext"; break;
+			case 3: iface = "ext2"; break;
+		}
+		return iface;
+	}
+
+	function FillScanResults(element, value) {
+		var items = value.split(',');
+		element.empty();
+		for (var i = 0; i < items.length; i++) {
+			element.append($("<option></option>").attr("value", items[i]).text(items[i]));
+		}
+		element.css("display","block");
+	}
+
+	function FillChannels2(country, config) {
+		var channel_list;
+		if (country == "EU") channel_list = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+		if (country == "CN") channel_list = [1,2,3,4,5,6,7,8,9,10,11,12,13];
+		if (country == "US") channel_list = [1,2,3,4,5,6,7,8,9,10,11];
+
+		$("#ap_channel2_option").empty();
+		for (var i = 0; i < channel_list.length; i++) {
+			$("#ap_channel2_option").append($("<option></option>").attr("value", channel_list[i]).text(channel_list[i]));
+		}
+
+		/// Select current value
+		$("#ap_channel2_option").val(config.ap_channel);
+	}
+
+	function FillChannels5(country, config) {
+		var channel_list;
+		if (country == "EU") channel_list = [36,40,44,48,52,56,60,64,100,104,108,112,116,120,124,128,132,136,140,144,149,153,157,161,165];
+		if (country == "CN") channel_list = [149,153,157,161,165];
+		if (country == "US") channel_list = [36,40,44,48,149,153,157,161,165];
+
+		$("#ap_channel5_option").empty();
+		for (var i = 0; i < channel_list.length; i++) {
+			$("#ap_channel5_option").append($("<option></option>").attr("value", channel_list[i]).text(channel_list[i]));
+		}
+
+		/// Select current value
+		$("#ap_channel5_option").val(config.ap_channel);
+	}
+
+</script>
