@@ -1,0 +1,11 @@
+### 162_tracker_front  –  2026-11-17 11:33:02
+### Box: verbunden (192.168.178.235:5555)
+
+Starting: Intent { cmp=at.magixfly.coretracker/.MainActivity }
+box in state:
+{'txt': 'Maps 15.7/28.0 GB · stopped', 'dl': 0, 'gb': 15.69, 'est': 28.0, 'net': 'Wi-Fi', 'stop': 1, 'ver': '1.62', 'wifi': 'Box: Hotspot', 'ip': '192.168.178.235'}
+busy True
+box {"ok": true, "host": "Carlin box", "ip": "192.168.178.235", "hs": false, "wifi": "Box: Hotspot", "ver": "1.62"}
+    <string name="host">corepi.local</string>
+
+### Exit-Code: 0
