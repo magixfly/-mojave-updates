@@ -1,0 +1,13 @@
+### 156_check_home  –  2026-11-17 09:23:03
+### Box: verbunden (192.168.178.235:5555)
+
+inbox/156_check_home.sh: line 4: iwgetid: command not found
+Pi: 192.168.178.169 WLAN=
+Box: 1 ADB-Gerät(e)
+15
+cosmostreamer.local: time=5.55 ms
+192.168.178.175: time=2.65 ms
+<title>Cosmostreamer NG - 192.168.178.175
+{"busy": false, "prog": 1, "msg": "", "online": "2.0.66", "neu": ["Pi overview 'Display on
+
+### Exit-Code: 0
