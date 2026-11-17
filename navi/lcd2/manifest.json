@@ -1,10 +1,11 @@
 {
-  "fw": "V2.26",
+  "fw": "V2.27",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1313392,
-  "md5": "016e8ebf18b08d4a98e9196e6af03343",
+  "groesse": 1313808,
+  "md5": "c8014c5907915ea326a75ed2fba0b02f",
   "neu": [
+    "V2.27: fix freeze when deleting or adding an own area (area list is now locked while the map loader reads it)",
     "V2.26: \"Load here first\" on a square of the SD map overview now really loads it - the whole square (zoom 13-19) is loaded first and shown in the area list as \"Square ...\" with progress",
     "V2.25: speed always shown, also in the full-screen map; speed box slightly smaller",
     "V2.24: full-screen map while driving - from 10 km/h only the map and car arrow are shown; normal view again after 10 s standing still or when disarmed (config.txt vollKmh / vollRuhe, also on the Navi page)",
