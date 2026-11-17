@@ -1,0 +1,28 @@
+### 189_wlan_fix  –  2026-11-17 17:13:09
+### Box: verbunden (192.168.178.235:5555)
+
+--- Verbindungen:
+Wired connection 1:802-3-ethernet:yes:-999:eth0
+Optimus Prime:802-11-wireless:yes:0:wlan0
+lo:loopback:no:0:lo
+CoreTracker:802-11-wireless:yes:0:
+Media:802-11-wireless:yes:0:
+XVII:802-11-wireless:yes:0:
+--- WLAN in Reichweite:
+Optimus Prime:78:WPA2 WPA3
+sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+sudo: a password is required
+sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+sudo: a password is required
+sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+sudo: a password is required
+--- jetzt:
+eth0:connected:Wired connection 1
+wlan0:connected:Optimus Prime
+lo:connected (externally):lo
+p2p-dev-wlan0:disconnected:
+lo               UNKNOWN        127.0.0.1/8 
+eth0             UP             192.168.178.200/24 
+wlan0            UP             192.168.178.169/24 
+
+### Exit-Code: 0

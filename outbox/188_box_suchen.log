@@ -1,0 +1,16 @@
+### 188_box_suchen  –  2026-11-17 17:12:03
+### Box: verbunden (192.168.178.235:5555)
+
+--- Tracker meldet Box:
+{'ok': True, 'host': 'Carlin box', 'ip': '192.168.178.235', 'hs': False, 'wifi': 'Box: Optimus Prime 2.4 GHz', 'ver': '1.65'}
+--- ip neigh:
+192.168.178.159 dev eth0 lladdr dc:a6:32:09:df:0e REACHABLE 
+192.168.178.1 dev eth0 lladdr c8:0e:14:91:0a:f2 REACHABLE 
+192.168.178.221 dev eth0 lladdr b8:1f:3f:c8:39:ec REACHABLE 
+192.168.178.213 dev eth0 INCOMPLETE 
+192.168.178.235 dev wlan0 lladdr b0:5a:44:75:3e:33 STALE 
+192.168.178.235 dev eth0 lladdr b0:5a:44:75:3e:33 REACHABLE 
+--- Port 5555:
+offen: 192.168.178.235
+
+### Exit-Code: 124
