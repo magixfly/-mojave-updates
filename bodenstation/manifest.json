@@ -1,18 +1,18 @@
 {
- "ver": "2.76",
+ "ver": "2.77",
  "neu": [
-  "Box split view: flat map, map and video same height with black bars"
+  "Box split view: map height fixed"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120511,
-   "md5": "166169d78390706551b9b489809f819b"
+   "md5": "dda34074e485525db524b6756128a114"
   },
   {
    "p": "web/index.html",
-   "s": 142963,
-   "md5": "7ca2d57416faaba71c9d8b28bff29698"
+   "s": 142961,
+   "md5": "c0b6ef749303106ce642752adbb6008a"
   }
  ]
 }
