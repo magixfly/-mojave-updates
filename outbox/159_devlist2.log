@@ -1,0 +1,22 @@
+### 159_devlist2  –  2026-11-17 11:27:02
+### Box: verbunden (192.168.178.235:5555)
+
+ busy True prog 5
+ busy True prog 37
+ busy True prog 60
+ busy True prog 70
+ busy True prog 80
+ busy True prog 80
+tracker {"ok": true, "host": "corepi.local", "ips": [["wlan0", "192.168.178.169"]], "ssid": "Optimus Prime", "ghz": "2.4 GHz", "ver": "2.0.66"}
+core {"ok": false, "host": "mojave.local", "ip": null}
+navi {"ok": false, "host": "mojave-navi.local", "ip": null}
+box {"ok": false, "host": "Carlin box", "ip": "192.168.178.1", "hs": true, "wifi": "", "ver": ""}
+cosmo {"ok": true, "host": "cosmostreamer.local", "ip": "192.168.178.175"}
+--- Box-App postet an Tracker?
+    <int name="pipX" value="295" />
+    <int name="pipY" value="102" />
+    <string name="host">192.168.229.175</string>
+    <int name="pipS" value="0" />
+    <int name="pipA" value="0" />
+
+### Exit-Code: 0
