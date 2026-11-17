@@ -1,18 +1,18 @@
 {
- "ver": "2.77",
+ "ver": "2.78",
  "neu": [
-  "Box split view: map height fixed"
+  "Box split view: map not tilted, same height as the video"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120511,
-   "md5": "dda34074e485525db524b6756128a114"
+   "md5": "95979d9f68258c9a5df5621ac99d020c"
   },
   {
    "p": "web/index.html",
-   "s": 142961,
-   "md5": "c0b6ef749303106ce642752adbb6008a"
+   "s": 142986,
+   "md5": "c191d546be4837a4792fb06227896784"
   }
  ]
 }
