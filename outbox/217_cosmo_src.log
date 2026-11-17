@@ -1,0 +1,37 @@
+### 217_cosmo_src  –  2026-11-18 00:30:02
+### Box: verbunden (192.168.178.235:5555)
+
+src="imgs/audio-on-icon.png"
+src="imgs/audio-off-icon.png"
+src="imgs/menu_icon.png"
+src="imgs/close_icon.png"
+src="imgs/mode_photo.png"
+src="imgs/mode_video.png"
+src="imgs/video_record_start.png"
+src="imgs/video_record_stop.png"
+src="imgs/photo_shoot.png"
+src="imgs/photo_stop.png"
+src="imgs/shot_busy.png"
+src="imgs/screensettings.png"
+src="qr.php?1123173787"
+src="js/jquery.min.js?1123173787"
+src="js/jmuxer.min.js?1123173787"
+src="js/js.cookie.min.js?1123173787"
+src="js/log.js?1123173787"
+src="js/binary.js?1123173787"
+src="js/screen.js?1123173787"
+src="js/tabs.js?1123173787"
+61:					<option>Jmuxer</option>
+62:					<option>WebRTC Janus</option>
+315:		<script type="text/javascript" src="js/jmuxer.min.js?1123173787"></script>
+331:		<script type="text/javascript" src="js/janus.js?1123173787"></script>
+js/jquery.min.js?1123173787 89503
+js/jmuxer.min.js?1123173787 32305
+js/js.cookie.min.js?1123173787 1685
+js/log.js?1123173787 125
+js/binary.js?1123173787 511
+js/screen.js?1123173787 16461
+js/tabs.js?1123173787 1015
+js/types.js?1123173787 3229
+
+### Exit-Code: 0
