@@ -1,0 +1,16 @@
+### 196_tap_test  –  2026-11-17 17:31:02
+### Box: verbunden (192.168.178.235:5555)
+
+tap-Antwort: ok
+key-Antwort: ok
+com.carsyso.main/com.carsyso.main.misc.accessibility.AccessibilityHookerService:at.magixfly.coretracker/at.magixfly.coretracker.A11y
+11-17 17:19:20.016  4643  4643 D CTSS    : Aufnahme beendet
+11-17 17:19:21.282 17749 17771 D CTSS    : Bildschirm-Server auf 8090
+11-17 17:21:07.962 17749 17749 D CTSS    : Aufnahme-Dialog bestätigt: Starten
+11-17 17:21:08.017 17749 17749 D CTSS    : start: java.lang.reflect.InvocationTargetException
+11-17 17:21:08.072 17749 17749 D CTSS    : Aufnahme beendet
+11-17 17:28:05.907 23209 23231 D CTSS    : Bildschirm-Server auf 8090
+11-17 17:28:07.258 23209 23209 D CTSS    : Aufnahme-Dialog bestätigt: Starten
+11-17 17:28:07.426 23209 23209 D CTSS    : Aufnahme läuft
+
+### Exit-Code: 0
