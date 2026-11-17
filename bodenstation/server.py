@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.71"
+VERSION = "2.72"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -783,6 +783,9 @@ def wifi_add(ssid, psk):   # V2.0.50: wifi_fix_auto runs again after adding (pow
 def wifi_fix_auto():
     """V2.0.13: every saved Wi-Fi connects by itself and keeps trying (NetworkManager gives up after 4 tries by default)"""
     for w in wifi_list():
+        if w.get("ssid") == "CoreTracker" or w["con"] == "CoreTracker":   # V2.72: own ESP access point (car mode, no internet) - never join by itself
+            nm("con", "modify", w["con"], "connection.autoconnect", "no")
+            continue
         nm("con", "modify", w["con"], "connection.autoconnect", "yes", "connection.autoconnect-retries", "0",
            "802-11-wireless.powersave", "2")   # V2.0.50: WLAN power save off (caused 100-600 ms spikes); applies on next connect
 

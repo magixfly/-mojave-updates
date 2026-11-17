@@ -1,13 +1,13 @@
 {
- "ver": "2.71",
+ "ver": "2.72",
  "neu": [
-  "Pi: smaller 3D map (Chromium crashed 'Aw, Snap')"
+  "Pi never joins the ESP Wi-Fi CoreTracker by itself (no internet there)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 120265,
-   "md5": "0925db9361d5712e2aab71bc5940a7db"
+   "s": 120511,
+   "md5": "7c6c4f9ce55ca72ffc8f9ba79bbc57d0"
   },
   {
    "p": "web/index.html",
