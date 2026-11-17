@@ -1,0 +1,10 @@
+### 211_cosmo_media  –  2026-11-17 18:57:03
+### Box: verbunden (192.168.178.235:5555)
+
+192.168.178.159 dev wlan0 lladdr dc:a6:32:09:df:0d REACHABLE 
+192.168.178.175 dev wlan0 lladdr dc:a6:32:09:df:0d REACHABLE 
+192.168.178.159: <title>Cosmostreamer NG - 192.168.178.159
+192.168.178.175: <title>Cosmostreamer NG - 192.168.178.175
+    <string name="cosmo">192.168.178.159</string>
+
+### Exit-Code: 0
