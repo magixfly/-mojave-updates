@@ -1,0 +1,46 @@
+### 171_cosmo_pages  –  2026-11-17 13:16:03
+### Box: verbunden (192.168.178.235:5555)
+
+HTTP/1.1 200 OK
+Server: nginx/1.14.2
+Date: Tue, 17 Nov 2026 12:16:03 GMT
+Content-Type: text/html; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+
+<html>
+	<head>
+		<title>Cosmostreamer NG - 192.168.178.175</title>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="initial-scale=1, user-scalable=no, maximum-scale=1.0">
+
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+	
+		<link href="css/style4.css?202927862" rel="stylesheet" media="all">
+
+		<link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+		<link
+index.html       404 169
+wifi             404 169
+wifi.html        404 169
+network          404 169
+network.html     404 169
+settings         404 169
+settings.html    404 169
+api/wifi         404 169
+api/status       404 169
+status           404 169
+cgi-bin/wifi     404 169
+
+### Exit-Code: 23
