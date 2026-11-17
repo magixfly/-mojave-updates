@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.0.66"
+VERSION = "2.0.67"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -269,18 +269,18 @@ def devices_scan():
             break
         out["navi"] = navi
         # V2.0.53: Kia-Box (meldet sich selbst per /api/box) und CosmoStreamer
-        bip = BOX.get("ip") if time.time() - BOX.get("t", 0) < 30 else None
-        if not bip:
-            try:
-                gw = subprocess.run(["ip", "route"], capture_output=True, text=True, timeout=3).stdout.split("default via ")[1].split()[0]
-                bip = gw if _dev_ip(gw) else None
-            except Exception:
-                bip = None
+        box_ok = time.time() - BOX.get("t", 0) < 30
+        bip = BOX.get("ip") if box_ok else None
         try:
-            hs = bip is not None and bip == subprocess.run(["ip", "route"], capture_output=True, text=True, timeout=3).stdout.split("default via ")[1].split()[0]
+            gw = subprocess.run(["ip", "route"], capture_output=True, text=True, timeout=3).stdout.split("default via ")[1].split()[0]
         except Exception:
-            hs = False
-        out["box"] = {"ok": time.time() - BOX.get("t", 0) < 30, "host": "Carlin box", "ip": bip, "hs": hs, "wifi": BOX.get("wifi") or "", "ver": BOX.get("ver") or ""}   # hs: the box is the hotspot
+            gw = None
+        on_box_ap = ssid.strip().lower() == "box"     # V2.0.67: Pi hängt im Hotspot der Box -> Gateway IST die Box
+        if not bip and on_box_ap and gw and _dev_ip(gw):
+            bip = gw
+        hs = bool(on_box_ap and bip and bip == gw)
+        # V2.0.67: ohne Meldung der App und nicht im Box-Hotspot = offline (früher fälschlich die FRITZ!Box/Router-Adresse)
+        out["box"] = {"ok": box_ok or hs, "host": "Carlin box", "ip": bip, "hs": hs, "wifi": BOX.get("wifi") or "", "ver": BOX.get("ver") or ""}   # hs: the box is the hotspot
         cos = {"ok": False, "host": "cosmostreamer.local", "ip": None}
         cand = ([COSMO_LAST[0]] if COSMO_LAST[0] else []) + ["cosmostreamer.local"]
         try:                                      # V2.0.58: alle bekannten Nachbarn im Netz (statt nur .2–.20)

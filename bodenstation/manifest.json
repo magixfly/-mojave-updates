@@ -1,13 +1,13 @@
 {
- "ver": "2.0.66",
+ "ver": "2.0.67",
  "neu": [
-  "Pi overview 'Display on Kia': map download of the box with progress bar"
+  "Device list: Kia box shows 'offline' when the app does not report (no longer the router address)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 120204,
-   "md5": "a674a062e173189f520a11ebcb4ae9e8"
+   "s": 120267,
+   "md5": "53aa3157851a44d448d988fcd4c657a5"
   },
   {
    "p": "web/index.html",
