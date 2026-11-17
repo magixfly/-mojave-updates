@@ -191,7 +191,7 @@ class Fpv {
     /** Höhe: schmaler = niedriger, aber höchstens 100 px Rand oben und unten (Bild wird dafür leicht gestreckt) */
     int splitH(int vw) {
         int H = root.getHeight(), vmax = range()[1];
-        return H;   // V1.66: Video im Split immer volle Höhe (Bild wird gestreckt)
+        return Math.round(H * 0.95f);   // V1.67: 95 % Höhe, oben und unten gleich viel schwarz (wie die Karte)
     }
 
     void found() {
