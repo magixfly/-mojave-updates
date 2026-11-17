@@ -1,0 +1,46 @@
+### 193_crash  –  2026-11-17 17:25:03
+### Box: verbunden (192.168.178.235:5555)
+
+11-17 17:19:20.031  4643  4643 E AndroidRuntime: 	at android.app.ActivityThread.handleSendResult(ActivityThread.java:5918)
+11-17 17:19:20.031  4643  4643 E AndroidRuntime: 	at android.app.servertransaction.ActivityResultItem.execute(ActivityResultItem.java:69)
+11-17 17:19:20.031  4643  4643 E AndroidRuntime: 	at android.app.servertransaction.ActivityTransactionItem.execute(ActivityTransactionItem.java:60)
+11-17 17:19:20.031  4643  4643 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:174)
+11-17 17:19:20.031  4643  4643 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:109)
+11-17 17:19:20.031  4643  4643 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:81)
+11-17 17:19:20.031  4643  4643 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2637)
+11-17 17:19:20.031  4643  4643 E AndroidRuntime: 	... 7 more
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: FATAL EXCEPTION: main
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: Process: at.magixfly.coretracker, PID: 17749
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: android.app.RemoteServiceException$ForegroundServiceDidNotStartInTimeException: Context.startForegroundService() did not then call Service.startForeground(): ServiceRecord{371370 u0 at.magixfly.coretracker/.ProjService c:at.magixfly.coretracker}
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ActivityThread.generateForegroundServiceDidNotStartInTimeException(ActivityThread.java:2272)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ActivityThread.throwRemoteServiceException(ActivityThread.java:2240)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mthrowRemoteServiceException(Unknown Source:0)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2558)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:107)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:232)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:317)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:8751)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:580)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:892)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: Caused by: android.app.StackTrace: Last startServiceCommon() call for this service was made here
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ContextImpl.startServiceCommon(ContextImpl.java:1981)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ContextImpl.startForegroundService(ContextImpl.java:1935)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.content.ContextWrapper.startForegroundService(ContextWrapper.java:832)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at at.magixfly.coretracker.ProjActivity.onActivityResult(ProjActivity.java:30)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.Activity.onActivityResult(Activity.java:7550)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.Activity.internalDispatchActivityResult(Activity.java:9435)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.Activity.dispatchActivityResult(Activity.java:9412)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ActivityThread.deliverResults(ActivityThread.java:5868)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ActivityThread.handleSendResult(ActivityThread.java:5918)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.servertransaction.ActivityResultItem.execute(ActivityResultItem.java:69)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.servertransaction.ActivityTransactionItem.execute(ActivityTransactionItem.java:60)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeNonLifecycleItem(TransactionExecutor.java:174)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeTransactionItems(TransactionExecutor.java:109)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:81)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2637)
+11-17 17:21:08.073 17749 17749 E AndroidRuntime: 	... 7 more
+21333
+
+### Exit-Code: 0
