@@ -214,12 +214,15 @@ public class MainActivity extends Activity {
     void netLoop() {
         while (true) {
             try {
-                if (HotspotBoot.apOn(this)) { netTxt = "Box: Hotspot" + apBand(); throw new RuntimeException("ap"); }
+                String sw = wifiTxt();                     // V1.63: zuerst prüfen, ob die Box in einem WLAN hängt
+                if (HotspotBoot.apOn(this) && ("Box: SIM".equals(sw) || "Box: ?".equals(sw))) { netTxt = "Box: Hotspot" + apBand(); throw new RuntimeException("ap"); }
                 String r = HotspotBoot.shell("dumpsys tethering | grep -c TetheredState; cmd wifi status | grep -m1 'connected to'; dumpsys wifi | grep -m1 mWifiInfo | grep -o 'RSSI: -[0-9]*'; ip neigh 2>/dev/null | grep -v FAILED | grep -c -E 'ap|wlan|swlan'");
                 String[] l = r.split("\n");
                 int teth = 0; try { teth = Integer.parseInt(l[0].trim()); } catch (Throwable t) { }
                 String t;
-                if (teth > 0) t = "Box: Hotspot" + apBand();
+                java.util.regex.Matcher w0 = java.util.regex.Pattern.compile("connected to \"([^\"]*)\"").matcher(r);
+                if (w0.find()) t = "Box: " + w0.group(1) + " " + ghz();   // V1.63: verbunden mit einem WLAN = kein Hotspot (TetheredState zählte auch inaktive Einträge)
+                else if (teth > 0 && HotspotBoot.apOn(this)) t = "Box: Hotspot" + apBand();
                 else {
                     java.util.regex.Matcher m = java.util.regex.Pattern.compile("connected to \"([^\"]*)\"").matcher(r);
                     java.util.regex.Matcher q = java.util.regex.Pattern.compile("RSSI: (-\\d+)").matcher(r);
