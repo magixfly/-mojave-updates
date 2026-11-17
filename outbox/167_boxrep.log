@@ -1,0 +1,13 @@
+### 167_boxrep  –  2026-11-17 12:25:03
+### Box: verbunden (192.168.178.235:5555)
+
+    topResumedActivity=ActivityRecord{37601b9 u0 at.magixfly.coretracker/.MainActivity t2018}
+  mWakefulness=Awake
+Display Power: com.android.server.power.PowerManagerService$1@300e65b
+nc-ok
+    <string name="host">corepi.local</string>
+box: None
+box: None
+box: None
+
+### Exit-Code: 0
