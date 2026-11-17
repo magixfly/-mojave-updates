@@ -1,0 +1,8 @@
+### 176_cosmo_tpl  –  2026-11-17 13:22:30
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+1469 outbox/176_dev.tpl.log
+-rw-rw-r-- 1 user1 user1  120 Nov 17 13:22 outbox/176_cosmo_tpl.log
+-rw-rw-r-- 1 user1 user1 1469 Nov 17 13:22 outbox/176_dev.tpl.log
+
+### Exit-Code: 0
