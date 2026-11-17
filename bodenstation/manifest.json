@@ -1,18 +1,18 @@
 {
- "ver": "2.75",
+ "ver": "2.76",
  "neu": [
-  "Box: top bar no longer jumps, clock flush right, UPSIDE DOWN shown over the map"
+  "Box split view: flat map, map and video same height with black bars"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120511,
-   "md5": "02e6790489f35ab2a359b6bcbf4ce6c8"
+   "md5": "166169d78390706551b9b489809f819b"
   },
   {
    "p": "web/index.html",
-   "s": 142353,
-   "md5": "36d517493571b308cc1473679a44f21a"
+   "s": 142963,
+   "md5": "7ca2d57416faaba71c9d8b28bff29698"
   }
  ]
 }
