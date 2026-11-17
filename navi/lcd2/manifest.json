@@ -1,10 +1,11 @@
 {
-  "fw": "V2.16",
+  "fw": "V2.17",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1309392,
-  "md5": "2304e66268cab5f5f36fd5f91a7df6e8",
+  "groesse": 1309568,
+  "md5": "20638d22e6a180f86d993ae25a6ef87f",
   "neu": [
+    "V2.17: fix restart about 60 s after start (SD counting and background map check starved the watchdog), counting starts after 2 min",
     "V2.16: crash trace - after a crash the Navi writes what it was doing to /crash.log and shows it on the web page (Last crash), memory display, safer SD counting",
     "V2.15: overview map works without internet - grey Austria map (zoom 6-11) is loaded onto the SD in between when standing, map program stored on the SD, zoomed in it shows the aerial tiles from the SD",
     "V2.14: \"Maps on the SD card\" on the web page - tiles per zoom and an overview map of Austria showing where maps are (tap a square: % per zoom, load first)",
