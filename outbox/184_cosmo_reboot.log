@@ -1,0 +1,12 @@
+### 184_cosmo_reboot  –  2026-11-17 13:35:06
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+HTTP/1.1 101 WebSocket Protocol Handshake
+{"cmd":"ifaces","param":"eth0 192.168.178.175;"}
+wieder da nach 40 s
+"cmd":"ifaces","param":"eth0 192.168.178.175;"
+"sys_country":"US"
+"wifi_ip":""
+"wifi_ssid":"Media"
+
+### Exit-Code: 0
