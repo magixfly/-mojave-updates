@@ -283,8 +283,7 @@ public class MainActivity extends Activity {
         String txt = tiles.finished ? "Maps \u2713"                      // V1.38: kurze Texte (Tippen = Stopp/Start bleibt)
                 : tiles.full ? "Maps " + mb + " \u00b7 full"
                 : tiles.stopped ? "Maps " + mb + " \u00b7 stopped"
-                : tiles.driving ? "Maps " + mb + " \u00b7 driving"
-                : net == null ? "Maps " + mb + " \u00b7 offline"
+                                : net == null ? "Maps " + mb + " \u00b7 offline"
                 : on ? "Maps " + mb + " \u00b7 loading"
                 : "Maps " + mb + " \u00b7 starting";
         if (piBase != null && (++repN % 3) == 0)                 // V1.25: tell the tracker on the Pi (shown on PC / phone / 7" display)

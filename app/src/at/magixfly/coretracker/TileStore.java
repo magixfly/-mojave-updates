@@ -132,7 +132,7 @@ class TileStore {
     }
     void setStopped(boolean st) { stopped = st; a.prefs.edit().putBoolean("dlStop", st).apply(); }
     /** really downloading right now (for the turning Mojave) */
-    boolean loadingNow() { return !finished && !full && !stopped && !driving && !paused && System.currentTimeMillis() - lastOk < 8000; }
+    boolean loadingNow() { return !finished && !full && !stopped && !paused && System.currentTimeMillis() - lastOk < 8000; }
 
     // ---------- Hilfen ----------
     static long lonX(double lon, int z) { return (long) Math.floor((lon + 180) / 360 * (1L << z)); }
