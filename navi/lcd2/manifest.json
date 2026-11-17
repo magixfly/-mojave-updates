@@ -1,10 +1,11 @@
 {
-  "fw": "V2.22",
+  "fw": "V2.23",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1311280,
-  "md5": "43bb180500957e58e66e8a278a8247e0",
+  "groesse": 1311520,
+  "md5": "4d23050073fb91ef133cab7a5ec6674c",
   "neu": [
+    "V2.23: zoom limited to 19 (no zoom 20) - auto zoom, + button and zoom hint stop at 19",
     "V2.22: backlight PWM 25 kHz instead of 5 kHz (less flicker), 100 % brightness = fully on; config.txt lichtHz",
     "V2.21: logo now reads CORE NAV",
     "V2.20: home Wi-Fi always shows the home position (also with VGPS off); elsewhere the logo is shown after 10 s without position data instead of a map at a wrong place",
