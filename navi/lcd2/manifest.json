@@ -1,10 +1,11 @@
 {
-  "fw": "V2.23",
+  "fw": "V2.24",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1311520,
-  "md5": "4d23050073fb91ef133cab7a5ec6674c",
+  "groesse": 1312464,
+  "md5": "c44deeab77a1808be0b5cd9bdc76af5a",
   "neu": [
+    "V2.24: full-screen map while driving - from 10 km/h only the map and car arrow are shown; normal view again after 10 s standing still or when disarmed (config.txt vollKmh / vollRuhe, also on the Navi page)",
     "V2.23: zoom limited to 19 (no zoom 20) - auto zoom, + button and zoom hint stop at 19",
     "V2.22: backlight PWM 25 kHz instead of 5 kHz (less flicker), 100 % brightness = fully on; config.txt lichtHz",
     "V2.21: logo now reads CORE NAV",
