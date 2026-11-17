@@ -191,7 +191,7 @@ class Fpv {
     /** Höhe: schmaler = niedriger, aber höchstens 100 px Rand oben und unten (Bild wird dafür leicht gestreckt) */
     int splitH(int vw) {
         int H = root.getHeight(), vmax = range()[1];
-        return Math.min(H, Math.max(H - 200, Math.round((float) vw * H / vmax)));
+        return H;   // V1.66: Video im Split immer volle Höhe (Bild wird gestreckt)
     }
 
     void found() {
