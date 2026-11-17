@@ -1,5 +1,5 @@
 {
- "ver": "2.0.68",
+ "ver": "2.0.69",
  "neu": [
   "Kia info page: column titles (Device, IP, Network, Version), no double V, map icon visible on the Pi"
  ],
@@ -7,12 +7,12 @@
   {
    "p": "server.py",
    "s": 120267,
-   "md5": "4f0d9f3655ce00f4a58e7bde931a995e"
+   "md5": "7e279b2865c7c179dc1042eab8b44628"
   },
   {
    "p": "web/index.html",
-   "s": 141026,
-   "md5": "db82205fb291df2995e2eeb2bba55b8e"
+   "s": 141352,
+   "md5": "85641450e57c6bd7cb2b693d111eb245"
   }
  ]
 }
