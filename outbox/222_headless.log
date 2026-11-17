@@ -1,0 +1,9 @@
+### 222_headless  –  2026-11-18 00:44:03
+### Box: verbunden (192.168.178.235:5555)
+
+[63377:63408:1118/004404.188621:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[63377:63377:1118/004404.266957:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: 
+79087 bytes written to file outbox/222_hl.png
+<html lang="en" translate="no" class="v3d cosmoOn">
+
+### Exit-Code: 0
