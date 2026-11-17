@@ -1,0 +1,11 @@
+### 185_cosmo_check  –  2026-11-17 14:46:06
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 351 MBit/s -55 55/70;"
+"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 351 MBit/s -56 54/70;"
+"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 351 MBit/s -57 53/70;"
+"sys_country":"US"
+"wifi_ip":"192.168.178.159"
+"wifi_ssid":"Media"
+
+### Exit-Code: 0
