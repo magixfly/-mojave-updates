@@ -228,7 +228,7 @@ class Fpv {
                 FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) ar[i].getLayoutParams();
                 int aw = sp ? (col - 18) / 2 : 105;
                 p.width = aw; p.height = sp ? 46 : 64; p.leftMargin = 6 + i * (aw + 6); p.bottomMargin = sp ? 66 : 80; ar[i].setLayoutParams(p);
-                ar[i].setTextSize(sp ? 20 : 26);
+                ar[i].setTextSize(sp ? 14 : 26); ar[i].setPadding(0, 0, 0, 0); ar[i].setIncludeFontPadding(false);   // V1.69: Pfeile passen in den Rahmen
                 ar[i].setVisibility(vis);
                 ar[i].setAlpha((i == 0 ? w >= r[1] : w <= r[0]) ? 0.35f : 1f);
                 ar[i].bringToFront();
