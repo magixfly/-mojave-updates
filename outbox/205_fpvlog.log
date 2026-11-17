@@ -1,0 +1,22 @@
+### 205_fpvlog  –  2026-11-17 18:16:02
+### Box: verbunden (192.168.178.235:5555)
+
+11-17 17:50:39.825 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:50:47.812 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:50:53.815 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:50:59.819 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:05.823 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:11.825 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:17.827 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:23.835 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:31.836 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:39.839 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:47.837 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:53.839 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:51:59.839 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:52:05.841 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+11-17 17:52:11.845 28396 28396 D CTFPV   : FPVSTATE id=remotevideov1 rs=4 w=1920 @1
+2 packets transmitted, 0 received, 100% packet loss, time 1029ms
+
+
+### Exit-Code: 0
