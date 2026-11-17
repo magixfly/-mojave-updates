@@ -1,18 +1,18 @@
 {
- "ver": "2.72",
+ "ver": "2.73",
  "neu": [
-  "Pi never joins the ESP Wi-Fi CoreTracker by itself (no internet there)"
+  "Box: top bar tidied - sats chip only for UPSIDE DOWN, no double Wi-Fi chip"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120511,
-   "md5": "7c6c4f9ce55ca72ffc8f9ba79bbc57d0"
+   "md5": "5c651d25cc90bd4f0e092ee95f62cd54"
   },
   {
    "p": "web/index.html",
-   "s": 141640,
-   "md5": "2cea5f686bedeb0bfa56b902f0638447"
+   "s": 141970,
+   "md5": "bf4cd42a2e0bcbcfe7511f1f8ba5d0ee"
   }
  ]
 }
