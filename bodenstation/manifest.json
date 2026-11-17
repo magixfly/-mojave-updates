@@ -1,18 +1,18 @@
 {
- "ver": "2.73",
+ "ver": "2.74",
  "neu": [
-  "Box: top bar tidied - sats chip only for UPSIDE DOWN, no double Wi-Fi chip"
+  "Box: UPSIDE DOWN chip readable (no sats, auto width)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120511,
-   "md5": "5c651d25cc90bd4f0e092ee95f62cd54"
+   "md5": "60bc8b00a61477dbd6d4edc582497afd"
   },
   {
    "p": "web/index.html",
-   "s": 141970,
-   "md5": "bf4cd42a2e0bcbcfe7511f1f8ba5d0ee"
+   "s": 142094,
+   "md5": "9a9c9adcdfc9cf257badeb4c87863e52"
   }
  ]
 }
