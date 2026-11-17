@@ -1,0 +1,9 @@
+### 160_boxshot  –  2026-11-17 11:29:03
+### Box: verbunden (192.168.178.235:5555)
+
+mWifiInfo SSID: "Optimus Prime", BSSID: 04:18:d6:e7:21:0f, MAC: b0:5a:44:75:3e:33, IP: /192.168.178.235, Security type: 2, Supplicant state: COMPLETED, Wi-Fi st
+    inet 127.0.0.1/8 scope host lo
+    inet 192.168.178.235/24 brd 192.168.178.255 scope global wlan0
+    inet 100.83.161.102/30 scope global rmnet_data2
+
+### Exit-Code: 0
