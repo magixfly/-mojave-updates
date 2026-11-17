@@ -1,18 +1,18 @@
 {
- "ver": "2.74",
+ "ver": "2.75",
  "neu": [
-  "Box: UPSIDE DOWN chip readable (no sats, auto width)"
+  "Box: top bar no longer jumps, clock flush right, UPSIDE DOWN shown over the map"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120511,
-   "md5": "60bc8b00a61477dbd6d4edc582497afd"
+   "md5": "02e6790489f35ab2a359b6bcbf4ce6c8"
   },
   {
    "p": "web/index.html",
-   "s": 142094,
-   "md5": "9a9c9adcdfc9cf257badeb4c87863e52"
+   "s": 142353,
+   "md5": "36d517493571b308cc1473679a44f21a"
   }
  ]
 }
