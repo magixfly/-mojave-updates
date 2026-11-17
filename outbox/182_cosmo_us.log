@@ -1,0 +1,16 @@
+### 182_cosmo_us  –  2026-11-17 13:30:06
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+vorher: Land '' WLAN int Media IP ''
+gespeichert: Land US
+nach 15 s: Land 'US', WLAN-IP ''
+nach 30 s: Land 'US', WLAN-IP ''
+nach 45 s: Land 'US', WLAN-IP ''
+nach 60 s: Land 'US', WLAN-IP ''
+nach 75 s: Land 'US', WLAN-IP ''
+nach 90 s: Land 'US', WLAN-IP ''
+nach 105 s: Land 'US', WLAN-IP ''
+nach 120 s: Land 'US', WLAN-IP ''
+192.168.178.175 dev wlan0 lladdr dc:a6:32:09:df:0d REACHABLE 
+
+### Exit-Code: 0
