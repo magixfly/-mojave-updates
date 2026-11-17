@@ -1,0 +1,7 @@
+### 221_dbg  –  2026-11-18 00:42:03
+### Box: verbunden (192.168.178.235:5555)
+
+/usr/lib/chromium/chromium --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable-pings --media-router=0 --disable-dev-shm-usage --enable-remote-extensions --load-extension --use-angle=gles --kiosk --start-fullscreen --disable-features=Translate --window-position=0,0 --window-size=1280,720 --force
+/usr/lib/chromium/chromium --type=zygote --no-zygote-sandbox --force-device-scale-factor=1 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --change-stack-guard-on-fork=enable
+
+### Exit-Code: 0
