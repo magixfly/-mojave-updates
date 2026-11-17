@@ -1,0 +1,68 @@
+$(".device_menu_item").unbind("mouseup");
+$('.device_menu_item').on("mouseup", function(e) { onMenuItemClick($(this)); });
+
+$(".device_menu_item").unbind("mouseover");
+$('.device_menu_item').on("mouseover", function(e) { onMenuItemOver($(this)); });
+
+$(".device_menu_item").unbind("mouseleave");
+$('.device_menu_item').on("mouseleave", function(e) { onMenuItemLeave($(this)); });
+
+/// Load previous menu chapter
+LoadDeviceMenuChapter(prev_menu_chapter);
+
+function onMenuItemOver(item) {
+	$(".device_menu_item").removeClass("active");
+	$(item).addClass("active");
+}
+
+function onMenuItemLeave(item) {
+	$(".device_menu_item").removeClass("active");
+}
+
+function onMenuItemClick(item) {
+	$(".device_menu_item").removeClass("current");
+	$(item).addClass("current");
+
+	var item_id = $(item).html();
+	LoadDeviceMenuChapter(item_id);
+}
+
+function LoadDeviceMenuChapter(name) {
+	$(".device_menu_item").removeClass("current");
+	$(".device_menu_item").get().forEach(function(entry, index, array) {
+		if ($(entry).html() == name) $(entry).addClass("current");
+	});
+
+	try { RC_StopTimer(); } catch (e) {}
+
+	var url = "";
+
+	switch (name) {
+		default:
+		case "Info": url = "tpl/devicesettings.info.tpl.html"; break;
+		case "License": url = "tpl/devicesettings.license.tpl.html"; break;
+		case "Splash/Intro": url = "tpl/devicesettings.splashintro.tpl.html"; break;
+		case "Wi-Fi": url = "tpl/devicesettings.wifi.tpl.html"; break;
+		case "Ethernet": url = "tpl/devicesettings.ethernet.tpl.html"; break;
+		case "Display": url = "tpl/devicesettings.display.tpl.html"; break;
+		case "Video/Audio": url = "tpl/devicesettings.videoaudio.tpl.html"; break;
+		case "Streaming": url = "tpl/devicesettings.streaming.tpl.html"; break;
+		case "Recording": url = "tpl/devicesettings.recording.tpl.html"; break;
+		case "Secondary camera": url = "tpl/devicesettings.camera.tpl.html"; break;
+		case "RC": url = "tpl/devicesettings.rc.tpl.html"; break;
+		case "Servo control": url = "tpl/devicesettings.servocontrol.tpl.html"; break;
+		case "Controls": url = "tpl/devicesettings.controls.tpl.html"; break;
+		case "Gimbal": url = "tpl/devicesettings.gimbal.tpl.html"; break;
+		case "Auto movement": url = "tpl/devicesettings.automovement.tpl.html"; break;
+		case "ZeroTier": url = "tpl/devicesettings.zerotier.tpl.html"; break;
+		case "Tailscale": url = "tpl/devicesettings.tailscale.tpl.html"; break;
+		case "Wiral Lite": url = "tpl/devicesettings.wirallite.tpl.html"; break;
+		case "System": url = "tpl/devicesettings.system.tpl.html"; break;
+	}
+
+	if (url != "") {
+		$("#device_menu_item_content").load(url + "?" + Math.random());
+	}
+
+	prev_menu_chapter = name;
+}
