@@ -1,0 +1,2 @@
+for f in player-websockets.js janus-player.js player-janus.js webrtc.js; do curl -s -m 5 "http://192.168.178.159/js/$f" -o "outbox/cosmo/$f"; echo "$f $(wc -c < outbox/cosmo/$f)"; done
+grep -o 'src="js/[^"?]*' outbox/cosmo/index.html | sed 's/src="js\///' | while read f; do [ -s "outbox/cosmo/$f" ] || { curl -s -m 5 "http://192.168.178.159/js/$f" -o "outbox/cosmo/$f"; echo "$f $(wc -c < outbox/cosmo/$f)"; }; done
