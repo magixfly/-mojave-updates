@@ -1,0 +1,21 @@
+### 218_cosmo_js  –  2026-11-18 00:31:02
+### Box: verbunden (192.168.178.235:5555)
+
+player-websockets.js 3875
+janus-player.js 169
+player-janus.js 169
+webrtc.js 169
+data.js 2786
+parser.js 14848
+automovements.js 5395
+gamepad.js 4463
+wirallite.js 9903
+btgimbal.js 6775
+screenjoystick.js 16323
+servocontrols.js 4203
+adapter.min.js 57955
+janus.js 109761
+player-webrtc.js 13791
+player-pion.js 4089
+
+### Exit-Code: 0
