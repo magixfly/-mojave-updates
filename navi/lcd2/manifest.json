@@ -1,10 +1,11 @@
 {
-  "fw": "V2.19",
+  "fw": "V2.20",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1310064,
-  "md5": "b2245a3f36dd5790c1f21c6ca4f7b8a9",
+  "groesse": 1310992,
+  "md5": "59b0af5a9b40efc2602ad0081b545636",
   "neu": [
+    "V2.20: home Wi-Fi always shows the home position (also with VGPS off); elsewhere the logo is shown after 10 s without position data instead of a map at a wrong place",
     "V2.19: in the home Wi-Fi the Navi uses the fixed home position (VGPS) when there is no other position; phone search in the Wi-Fi removed again (phone GPS only via hotspot)",
     "V2.18: phone GPS (GPS2IP) also in home Wi-Fi and mobile router - the Navi searches the phone in the Wi-Fi and remembers its IP per network",
     "V2.17: fix restart about 60 s after start (SD counting and background map check starved the watchdog), counting starts after 2 min",
