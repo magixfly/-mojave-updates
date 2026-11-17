@@ -1,10 +1,11 @@
 {
-  "fw": "V2.20",
+  "fw": "V2.21",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
   "groesse": 1310992,
-  "md5": "59b0af5a9b40efc2602ad0081b545636",
+  "md5": "554452e375f95c73341feec0209a8ff8",
   "neu": [
+    "V2.21: logo now reads CORE NAV",
     "V2.20: home Wi-Fi always shows the home position (also with VGPS off); elsewhere the logo is shown after 10 s without position data instead of a map at a wrong place",
     "V2.19: in the home Wi-Fi the Navi uses the fixed home position (VGPS) when there is no other position; phone search in the Wi-Fi removed again (phone GPS only via hotspot)",
     "V2.18: phone GPS (GPS2IP) also in home Wi-Fi and mobile router - the Navi searches the phone in the Wi-Fi and remembers its IP per network",
