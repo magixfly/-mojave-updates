@@ -1,10 +1,11 @@
 {
-  "fw": "V2.10",
+  "fw": "V2.11",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1287184,
-  "md5": "e03c4e89adc3cc940ef0b2ef18a214f5",
+  "groesse": 1287776,
+  "md5": "ffa907d4f443377e3120b6b326e1e058",
   "neu": [
+    "V2.11: no more map flicker when standing - map position, heading (<2 deg) and zoom are held still",
     "V2.10: display test on the Navi web page (static test image, test image with light 100 % without PWM, freeze map) - 60 s, touch ends it",
     "No more slight flicker when standing: auto zoom no longer changes the scale by tiny amounts every frame",
     "Navi page shows times as s / min / h instead of thousands of seconds",
