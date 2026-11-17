@@ -1,0 +1,17 @@
+### 167_app165_share  –  2026-11-17 12:33:02
+### Box: verbunden (192.168.178.235:5555)
+
+Success
+    versionName=1.65
+Box-IP: 192.168.178.235
+{"state":"idle","run":false,"age":-1}
+{"state":"live","run":true,"age":178}
+-rw-rw-r-- 1 user1 user1 69728 Nov 17 12:33 outbox/167_share.png
+outbox/167_share.png: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, baseline, precision 8, 960x360, components 3
+<!doctype html><html><head><meta name=viewport content='width=device-width,initial-scale=1'><title>Box-Bildschirm</title
+--------- beginning of main
+11-17 12:33:03.990 10427 10453 D CTSS    : Bildschirm-Server auf 8090
+11-17 12:33:24.671 10427 10427 D CTSS    : Aufnahme-Dialog bestätigt: Starten
+11-17 12:33:24.817 10427 10427 D CTSS    : Aufnahme läuft
+
+### Exit-Code: 0
