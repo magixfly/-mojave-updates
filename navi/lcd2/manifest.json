@@ -1,10 +1,11 @@
 {
-  "fw": "V2.18",
+  "fw": "V2.19",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1311088,
-  "md5": "1e45bbc1c4d651df9683dbed8e3843ee",
+  "groesse": 1310064,
+  "md5": "b2245a3f36dd5790c1f21c6ca4f7b8a9",
   "neu": [
+    "V2.19: in the home Wi-Fi the Navi uses the fixed home position (VGPS) when there is no other position; phone search in the Wi-Fi removed again (phone GPS only via hotspot)",
     "V2.18: phone GPS (GPS2IP) also in home Wi-Fi and mobile router - the Navi searches the phone in the Wi-Fi and remembers its IP per network",
     "V2.17: fix restart about 60 s after start (SD counting and background map check starved the watchdog), counting starts after 2 min",
     "V2.16: crash trace - after a crash the Navi writes what it was doing to /crash.log and shows it on the web page (Last crash), memory display, safer SD counting",
