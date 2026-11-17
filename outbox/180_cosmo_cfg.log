@@ -1,0 +1,13 @@
+### 180_cosmo_cfg  –  2026-11-17 13:27:31
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+HTTP/1.1 101 WebSocket Protocol Handshake
+{"cmd":"config_answer","sys_country":"","ap_iface":"","ap_ssid":"cs1","ap_psk":"***","ap_mode":2,"ap_channel":0,"ap_country":"null","ap_ip":"","wifi_iface":"int","wifi_ssid":"Media","wifi_psk":"***","wifi_ip":"","wifi_s_enabled":0,"wifi_s_addr":"","wifi_s_mask":"255.255.255.0","wifi_s_gw":"","wifi_s_dns":"","camera_iface":"ext","camera_ssid":"","camera_psk":"***","camera_ip":""}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;"}
+{"cmd":"wlanscan","param":"int","value":"Media,Optimus Prime,Optimus Prime"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;"}
+
+### Exit-Code: 0
