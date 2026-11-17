@@ -1,18 +1,18 @@
 {
- "ver": "2.80",
+ "ver": "2.81",
  "neu": [
-  "CosmoStreamer video on the Pi: button bottom left MAP -> Split -> FPV -> PiP (like the box)"
+  "TEMP label next to CPU / RAM"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123477,
-   "md5": "15d54cfbb4fca0628947199d016bd167"
+   "md5": "87398191bf0b579861dc46b7a0379ef6"
   },
   {
    "p": "web/index.html",
-   "s": 145514,
-   "md5": "1ba9eb7c5abe337e9b93966e06036bf3"
+   "s": 145519,
+   "md5": "016f5849867a6183cc58fe14082bf146"
   }
  ]
 }

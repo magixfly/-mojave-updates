@@ -905,7 +905,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
    if(!y||DEMO){e.innerHTML=''}else{const col=v=>v==null?'var(--mut)':v>=85?'#ff453a':v>=70?'#ff9f0a':'#30d158';
      const bar=(l,v)=>`<b style="color:${col(v)}">${l} ${v??'–'}%<i><u style="width:${Math.min(100,v||0)}%;background:${col(v)}"></u></i></b>`;
      const tc=y.temp==null?'var(--mut)':y.temp>=80?'#ff453a':y.temp>=70?'#ff9f0a':'#30d158';   // V2.0.47: green below 70°
-     const h=bar('CPU',y.cpu)+bar('RAM',y.ram)+(y.temp!=null?`<b style="color:${tc}">${y.temp}°</b>`:'');
+     const h=bar('CPU',y.cpu)+bar('RAM',y.ram)+(y.temp!=null?`<b style="color:${tc}">TEMP ${y.temp}°</b>`:'');
      if(e.dataset.h!==h){e.dataset.h=h;e.innerHTML=h}
      e.title=`RAM ${y.ram_mb??'–'} of ${y.ram_tot??'–'} MB used`+(y.swap_mb!=null?` · swap ${y.swap_mb} MB`:'')}}
   {const w=st.wifi||{},e=$('wifi');
