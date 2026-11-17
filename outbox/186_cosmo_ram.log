@@ -1,0 +1,12 @@
+### 186_cosmo_ram  –  2026-11-17 15:51:42
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+{"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 390 MBit/s -56 54/70;"}
+{"cmd":"config_answer","board_model":"Raspberry Pi 4 Model B Rev 1.1","app_type":23,"app_type_autodetect":1,"app_version":"0.17.5","device_name":"30B0029B6339CF8F6382EBD4068A00C43D6803","licenses_list":"9,11,16,18,19,21,24,17,23"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 390 MBit/s -56 54/70;"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 390 MBit/s -56 54/70;"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 390 MBit/s -57 53/70;"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 390 MBit/s -55 55/70;"}
+{"cmd":"ifaces","param":"eth0 192.168.178.175;int 192.168.178.159 Media 5.18GHz 390 MBit/s -55 55/70;"}
+
+### Exit-Code: 0
