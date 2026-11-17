@@ -1,0 +1,14 @@
+### 190_ct_aus_2071  –  2026-11-17 17:15:02
+### Box: verbunden (192.168.178.235:5555)
+
+Error: Failed to modify connection 'CoreTracker': Insufficient privileges
+Error: Failed to modify connection 'Optimus Prime': Insufficient privileges
+Wired connection 1:yes:-999
+Optimus Prime:yes:0
+lo:no:0
+CoreTracker:yes:0
+Media:yes:0
+XVII:yes:0
+2.71 läuft
+
+### Exit-Code: 0
