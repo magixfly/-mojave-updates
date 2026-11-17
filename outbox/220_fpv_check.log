@@ -1,0 +1,6 @@
+### 220_fpv_check  –  2026-11-18 00:41:02
+### Box: verbunden (192.168.178.235:5555)
+
+cosmo: {'ok': True, 'host': 'cosmostreamer.local', 'ip': '192.168.178.175'}
+
+### Exit-Code: 0
