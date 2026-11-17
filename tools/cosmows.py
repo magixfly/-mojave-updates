@@ -25,14 +25,17 @@ def frame():
     elif ln == 127: ln = struct.unpack(">Q", rx(8))[0]
     if b & 128: rx(4)
     return op, rx(ln)
-for c in cmds: send(c); time.sleep(0.3)
+time.sleep(1)
+for c in cmds: send(c); time.sleep(0.5)
+seen = {}
 end = time.time() + wait; s.settimeout(2)
 while time.time() < end:
     try: op, d = frame()
     except socket.timeout: continue
     except EOFError: break
-    if op == 1:
-        t = d.decode("utf-8", "replace")
-        if '"cmd"' in t and ("config_answer" in t or "wlanscan" in t or "wifi" in t):
+    i = d.find(b"{")
+    if b"cmd" in d and i >= 0:
+        t = d[i:].decode("utf-8", "replace")
+        if True:
             t = re.sub(r'("(?:\w*_psk|\w*pass\w*)"\s*:\s*")[^"]*"', r'\1***"', t)
             print(t[:3000])
