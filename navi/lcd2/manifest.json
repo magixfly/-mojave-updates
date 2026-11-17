@@ -1,10 +1,11 @@
 {
-  "fw": "V2.12",
+  "fw": "V2.13",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1288912,
-  "md5": "28a482715c4609b58e8a369f7f03cfc3",
+  "groesse": 1291696,
+  "md5": "07379aa19cae2782682336dd9841d34c",
   "neu": [
+    "V2.13: third Wi-Fi (mobile router) and Wi-Fi choice on the web page (Automatic / Home / Phone / Mobile router), remembered in config.txt",
     "V2.12: identical frames are no longer sent to the display, bigger tile memory (28), stronger standstill hold, flicker diagnosis on the web page",
     "V2.11: no more map flicker when standing - map position, heading (<2 deg) and zoom are held still",
     "V2.10: display test on the Navi web page (static test image, test image with light 100 % without PWM, freeze map) - 60 s, touch ends it",
