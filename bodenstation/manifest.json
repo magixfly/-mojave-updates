@@ -1,18 +1,18 @@
 {
- "ver": "2.78",
+ "ver": "2.79",
  "neu": [
-  "Box split view: map not tilted, same height as the video"
+  "3D view fills up to the top edge also on a Pi with more RAM"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120511,
-   "md5": "95979d9f68258c9a5df5621ac99d020c"
+   "md5": "d5ab9c87ace790ba6a1a20461bb962b9"
   },
   {
    "p": "web/index.html",
-   "s": 142986,
-   "md5": "c191d546be4837a4792fb06227896784"
+   "s": 143101,
+   "md5": "7080e29395605d393826127c25927638"
   }
  ]
 }
