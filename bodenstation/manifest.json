@@ -1,13 +1,13 @@
 {
- "ver": "2.0.67",
+ "ver": "2.0.68",
  "neu": [
-  "Device list: Kia box shows 'offline' when the app does not report (no longer the router address)"
+  "Kia info page: column titles (Device, IP, Network, Version), no double V, map icon visible on the Pi"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120267,
-   "md5": "53aa3157851a44d448d988fcd4c657a5"
+   "md5": "4f0d9f3655ce00f4a58e7bde931a995e"
   },
   {
    "p": "web/index.html",
