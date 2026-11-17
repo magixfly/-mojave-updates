@@ -1,0 +1,10 @@
+### 199_app165_gesten  –  2026-11-17 17:35:03
+### Box: verbunden (192.168.178.235:5555)
+
+Success
+a11y: com.carsyso.main/com.carsyso.main.misc.accessibility.AccessibilityHookerService:at.magixfly.coretracker/at.magixfly.coretracker.A11y
+     Enabled services:{{at.magixfly.coretracker/at.magixfly.coretracker.A11y}, {com.carsyso.main/com.carsyso.main.misc.accessibility.AccessibilityHookerService}}
+[com.google.android.inputmethod.latin][at.magixfly.coretracker][com.google.android.apps.maps][com.google.android.as][com.google.android.youtube]}]
+tap: ok
+
+### Exit-Code: 0
