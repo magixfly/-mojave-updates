@@ -1,0 +1,19 @@
+### 183_sys  –  2026-11-17 13:34:32
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+60:		case "System": url = "tpl/devicesettings.system.tpl.html"; break;
+42:<div><input id="restart_button" type="button" value="Restart server app" style="width:150px; padding:10px; background-color:transparent; color:white; margin-bottom:20px; border-width:1px;"></div>
+43:<div><input id="reboot_button"type="button" value="Reboot box" style="width:150px; padding:10px; background-color:transparent; color:white; border-width:1px;"></div>
+54:		sendStringCommand('{"cmd":"config_request","param":"system"}');
+86:						$("#fw_upload_status").html('Uploading done. Device will be rebooted.');
+109:		$("#restart_button").on("click", function(e) {
+111:			sendStringCommand('{"cmd":"restart"}');
+114:		$("#reboot_button").on("click", function(e) {
+116:			sendStringCommand('{"cmd":"reboot"}');
+139:			var cmd = '{"cmd":"updateconfig","param":"web_auth","value":"' + enabled + '","value2":"' + username + '","value3":"' + userpass + '"}';
+140:			sendStringCommand(cmd);
+156:		if (config.cmd != "config_answer") return;
+185:				sendStringCommand('{"cmd":"updateconfig","param":"fs_rw","value":"' + item_value + '","value2":""}');
+189:				sendStringCommand('{"cmd":"updateconfig","param":"make_preview","value":"' + item_value + '","value2":""}');
+
+### Exit-Code: 0
