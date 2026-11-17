@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.79"
+VERSION = "2.80"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -188,6 +188,17 @@ def _dev_get(h, path, t=2.5):
         return None
 
 COSMO_LAST = [None]
+# V2.80: shows only the active video of the CosmoStreamer page (like the box app), muted; Janus first, after 15 s without picture Jmuxer
+COSMO_INJECT = """<script>(function(){window.alert=function(m){console.log('alert: '+m)};
+function fix(){var ck=document.cookie||'',mo=(ck.match(/video_player_mode=(\\d)/)||[])[1]||'1',id=mo==='0'?'video_element':'remotevideov1';
+var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';(document.head||document.documentElement).appendChild(st)}
+var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;object-fit:'+(window.ctFill?'fill':'contain')+'!important;background:#000!important;z-index:2147483647!important;transform:none!important}';
+if(st.textContent!=css)st.textContent=css;
+var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;if(v.paused&&v.play)try{v.play()}catch(e){}}
+var m=document.getElementById(id),ok=m&&m.videoWidth>0;window.ctT0=window.ctT0||Date.now();try{parent.postMessage({ctfpv:ok?'ok':(mo==='0'?'Jmuxer':'Janus')},'*')}catch(e){}
+if(!ok&&Date.now()-window.ctT0>15000){document.cookie='video_player_mode='+(mo==='0'?'1':'0')+';path=/;max-age=31536000';location.reload()}}
+if(!/video_player_mode=/.test(document.cookie))document.cookie='video_player_mode=1;path=/;max-age=31536000';
+setInterval(fix,1000);document.addEventListener('DOMContentLoaded',fix)})();</script>"""
 NAVI_LAST = [None]   # V2.0.60: last address the Navi answered on
 
 def devices_scan():
@@ -2150,6 +2161,26 @@ class H(BaseHTTPRequestHandler):
     def log_message(self, *a):
         pass
 
+    def cosmo_proxy(self, path, query):
+        ip = COSMO_LAST[0]
+        if not ip:
+            return self.send(404, b"CosmoStreamer not found", "text/plain")
+        try:
+            with urllib.request.urlopen("http://%s%s%s" % (ip, path, "?" + query if query else ""), timeout=8) as r:
+                d, ct = r.read(), r.headers.get("Content-Type", "application/octet-stream")
+        except Exception as e:
+            return self.send(502, ("CosmoStreamer: %s" % e).encode(), "text/plain")
+        if path.endswith(".js") or "javascript" in ct or "html" in ct or path == "/":
+            t = d.decode("utf-8", "replace")
+            for k in ("window.location.hostname", "document.location.hostname"):
+                t = t.replace(k, '"%s"' % ip)
+            for k in ("window.location.host", "document.location.host"):
+                t = t.replace(k, '"%s"' % ip)
+            if path in ("/", "/index.html", "/index.php"):
+                t = t.replace("</head>", COSMO_INJECT + "</head>", 1)
+            d = t.encode()
+        self.send(200, d, ct)
+
     def send(self, code, body, ctype="application/json", cache=False):
         if isinstance(body, (dict, list)):
             body = json.dumps(body).encode()
@@ -2172,6 +2203,8 @@ class H(BaseHTTPRequestHandler):
     def do_GET(self):
         u = urlparse(self.path)
         p = u.path
+        if p == "/cosmo" or p.startswith("/cosmo/"):   # V2.80: CosmoStreamer page through the tracker (same origin -> only the video is shown)
+            return self.cosmo_proxy(p[6:] or "/", u.query)
         if p.startswith("/tile/"):
             try:
                 z, x, y = [int(v.split(".")[0]) for v in p.split("/")[2:5]]

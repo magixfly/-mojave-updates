@@ -1,18 +1,18 @@
 {
- "ver": "2.79",
+ "ver": "2.80",
  "neu": [
-  "3D view fills up to the top edge also on a Pi with more RAM"
+  "CosmoStreamer video on the Pi: button bottom left MAP -> Split -> FPV -> PiP (like the box)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 120511,
-   "md5": "d5ab9c87ace790ba6a1a20461bb962b9"
+   "s": 123477,
+   "md5": "15d54cfbb4fca0628947199d016bd167"
   },
   {
    "p": "web/index.html",
-   "s": 143101,
-   "md5": "7080e29395605d393826127c25927638"
+   "s": 145514,
+   "md5": "1ba9eb7c5abe337e9b93966e06036bf3"
   }
  ]
 }
