@@ -1,10 +1,11 @@
 {
-  "fw": "V2.13",
+  "fw": "V2.14",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1291696,
-  "md5": "07379aa19cae2782682336dd9841d34c",
+  "groesse": 1301360,
+  "md5": "4fd7363c5cc1fb29e757e225d0f97c1d",
   "neu": [
+    "V2.14: \"Maps on the SD card\" on the web page - tiles per zoom and an overview map of Austria showing where maps are (tap a square: % per zoom, load first)",
     "V2.13: third Wi-Fi (mobile router) and Wi-Fi choice on the web page (Automatic / Home / Phone / Mobile router), remembered in config.txt",
     "V2.12: identical frames are no longer sent to the display, bigger tile memory (28), stronger standstill hold, flicker diagnosis on the web page",
     "V2.11: no more map flicker when standing - map position, heading (<2 deg) and zoom are held still",
