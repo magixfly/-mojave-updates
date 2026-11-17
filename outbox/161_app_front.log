@@ -1,0 +1,10 @@
+### 161_app_front  –  2026-11-17 11:30:03
+### Box: verbunden (192.168.178.235:5555)
+
+box in state:
+None
+busy False
+box {"ok": false, "host": "Carlin box", "ip": "192.168.178.1", "hs": true, "wifi": "", "ver": ""}
+    <string name="host">192.168.229.175</string>
+
+### Exit-Code: 0
