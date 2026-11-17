@@ -5,4 +5,5 @@
     android:accessibilityFlags="flagReportViewIds|flagRetrieveInteractiveWindows"
     android:notificationTimeout="300"
     android:canRetrieveWindowContent="true"
+    android:canRequestEnhancedWebAccessibility="true"
     android:description="@string/a11y_desc"/>

@@ -50,6 +50,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         alive = true;
+        ScreenShare.server(this);                 // V1.65: Box-Bildschirm im Browser (Port 8090)
         requestWindowFeature(1);                  // kein Titelbalken
         getWindow().addFlags(0x80 | 0x400);       // Bildschirm an lassen + Vollbild
         ui = new Handler(Looper.getMainLooper());

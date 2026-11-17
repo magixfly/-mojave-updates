@@ -25,6 +25,7 @@ public class Autostart extends Activity {
         {"ap5", "1", "Hotspot auf 5 GHz festlegen"},
         {"adbAuto", "1", "Debugging über WLAN (ADB) beim Start – Fernwartung"},
         {"mapAuto", "0", "Core Tracker (Karte) beim Start öffnen"},
+        {"share", "1", "Bildschirm im Browser zeigen (Port 8090)"},
     };
 
     @Override protected void onCreate(Bundle b) {
@@ -66,7 +67,16 @@ public class Autostart extends Activity {
     void status() {
         if (st == null) return;
         boolean on = HotspotBoot.apOn(this);
-        st.setText("Hotspot: " + (on ? "an" + band() : "aus") + "\nApp-Version " + ver());
+        st.setText("Hotspot: " + (on ? "an" + band() : "aus") + "\nApp-Version " + ver() + "\nBildschirm im Browser: http://" + ip() + ":" + ScreenShare.PORT);
+    }
+
+    static String ip() {
+        try {
+            for (java.net.NetworkInterface n : java.util.Collections.list(java.net.NetworkInterface.getNetworkInterfaces()))
+                for (java.net.InetAddress a : java.util.Collections.list(n.getInetAddresses()))
+                    if (!a.isLoopbackAddress() && a instanceof java.net.Inet4Address && !n.getName().startsWith("rmnet") && !n.getName().startsWith("ccmni")) return a.getHostAddress();
+        } catch (Throwable t) { }
+        return "Box-IP";
     }
 
     String ver() { try { return getPackageManager().getPackageInfo(getPackageName(), 0).versionName; } catch (Throwable t) { return "?"; } }

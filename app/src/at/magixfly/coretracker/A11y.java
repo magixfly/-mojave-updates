@@ -43,6 +43,7 @@ public class A11y extends AccessibilityService {
             if (t.equals("ap")) doAp(root);
             else if (t.equals("inst")) doInst(root);
             else if (t.equals("band")) doBand(root);
+            else if (t.equals("proj")) doProj(root);
         } catch (Throwable x) { Log.d("CTAP", "a11y: " + x); }
     }
 
@@ -175,7 +176,52 @@ public class A11y extends AccessibilityService {
 
     /** V1.58: Die Bedienungshilfe startet das System beim Hochfahren von selbst – unabhängig davon, ob die App geöffnet wird.
      *  Darum hier Hotspot einschalten + 5 GHz festlegen (läuft nur einmal pro Start). */
+    // ---- V1.65: Bildschirm-Übertragung ----
+    static A11y me;
+
+    /** Dialog „Bildschirm teilen / Jetzt starten“ bestätigen */
+    void doProj(AccessibilityNodeInfo root) {
+        String[] words = {"Jetzt starten", "Start now", "Bildschirm teilen", "Share screen", "Starten", "Start", "Teilen", "Weiter", "Next"};
+        for (String w : words) {
+            for (AccessibilityNodeInfo n : root.findAccessibilityNodeInfosByText(w)) {
+                CharSequence cn = n.getClassName(); String tx = n.getText() == null ? "" : n.getText().toString();
+                if (cn != null && cn.toString().endsWith("Button") && n.isEnabled() && tx.equalsIgnoreCase(w)) {
+                    n.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                    Log.d("CTSS", "Aufnahme-Dialog bestätigt: " + w);
+                    if (!w.equals("Weiter") && !w.equals("Next")) task = null;
+                    return;
+                }
+            }
+        }
+    }
+
+    static boolean key(int a) { A11y s = me; return s != null && s.performGlobalAction(a); }   // 1 = Zurück, 2 = Home, 3 = Apps
+    static boolean tap(float x, float y, long ms) { return gesture(x, y, x, y, ms); }
+    static boolean swipe(float x, float y, float x2, float y2) { return gesture(x, y, x2, y2, 350); }
+
+    /** Tippen/Wischen über dispatchGesture (API 24, per Reflection – android-23-SDK kennt es nicht) */
+    static boolean gesture(float x, float y, float x2, float y2, long ms) {
+        A11y s = me;
+        if (s == null) return false;
+        try {
+            android.graphics.Path p = new android.graphics.Path();
+            p.moveTo(x, y); if (x2 != x || y2 != y) p.lineTo(x2, y2);
+            Class<?> sd = Class.forName("android.accessibilityservice.GestureDescription$StrokeDescription");
+            Object stroke = sd.getConstructor(android.graphics.Path.class, long.class, long.class).newInstance(p, 0L, ms);
+            Class<?> bc = Class.forName("android.accessibilityservice.GestureDescription$Builder");
+            Object b = bc.newInstance();
+            bc.getMethod("addStroke", sd).invoke(b, stroke);
+            Object g = bc.getMethod("build").invoke(b);
+            Class<?> gd = Class.forName("android.accessibilityservice.GestureDescription");
+            Class<?> cb = Class.forName("android.accessibilityservice.AccessibilityService$GestureResultCallback");
+            Object r = AccessibilityService.class.getMethod("dispatchGesture", gd, cb, android.os.Handler.class).invoke(s, g, null, null);
+            return Boolean.TRUE.equals(r);
+        } catch (Throwable t) { Log.d("CTSS", "gesture: " + t); return false; }
+    }
+
     @Override protected void onServiceConnected() {
+        me = this;
+        ScreenShare.server(getApplicationContext());
         Log.d("CTAP", "Bedienungshilfe gestartet");
         HotspotBoot.maybe(getApplicationContext());
         if (!getSharedPreferences("ct", 0).getBoolean("apAuto", true) && getSharedPreferences("ct", 0).getBoolean("mapAuto", false) && !MainActivity.alive)
