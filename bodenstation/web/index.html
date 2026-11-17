@@ -395,7 +395,8 @@ function resize(){
   const c=C.cfg&&+C.cfg.ui_scale;
   S=c>0?c:Math.min(innerWidth/1280,innerHeight/720);
   const ui=$('ui');ui.style.width=innerWidth/S+'px';ui.style.height=innerHeight/S+'px';ui.style.transform=`scale(${S})`;
-  DPR=(window.devicePixelRatio||1)*S;W=cv.clientWidth;H=cv.clientHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);dirty=true}
+  DPR=(window.devicePixelRatio||1)*S*(document.documentElement.classList.contains('v3d')&&!document.getElementById('ctMaps')?.75:1);   // V2.71: Pi 3D = 75 % pixels
+  W=cv.clientWidth;H=cv.clientHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);dirty=true}
 function uiScale(){resize()}
 addEventListener('resize',resize);
 
@@ -1153,7 +1154,8 @@ function isNight(){return !!(C.cfg&&C.cfg.night==='1')}
 function is3d(){return !(C.cfg&&C.cfg.map3d==='0')}   // V2.0.61
 function set3d(on,save){const m=cv.style;['top','left','width','height'].forEach(k=>m.removeProperty(k));document.documentElement.classList.toggle('v3d',on);
   if(on){const t=cv.offsetTop,l=cv.offsetLeft,w=cv.offsetWidth,hh=cv.offsetHeight;   // V2.0.62: flat map area (Pi 230/52, box 262/60), canvas 2.6x taller and 1.8x wider so the far area reaches the horizon
-    m.setProperty('top',(t+hh-hh*3.4)+'px','important');m.setProperty('height',(hh*3.4)+'px','important');m.setProperty('left',(l-w*.7)+'px','important');m.setProperty('width',(w*2.4)+'px','important')}
+    const bx=!!document.getElementById('ctMaps'),fy=bx?3.4:2.4,fx=bx?2.4:1.7;   // V2.71: Pi (1 GB) smaller canvas - full size crashed Chromium (Aw, Snap)
+    m.setProperty('top',(t+hh-hh*fy)+'px','important');m.setProperty('height',(hh*fy)+'px','important');m.setProperty('left',(l-w*(fx-1)/2)+'px','important');m.setProperty('width',(w*fx)+'px','important')}
   if(save){if(C.cfg)C.cfg.map3d=on?'1':'0';j2('/api/set',{map3d:on?1:0})}resize();updMenu()}
 {let rt=0;const re3=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(is3d())set3d(true)},300)};addEventListener('resize',re3);new MutationObserver(re3).observe(document.head,{childList:true,subtree:true,characterData:true})}   // V2.0.62: box app adds its CSS later -> measure again
 function setNight(on,save){document.body.classList.toggle('night',on);if(save){if(C.cfg)C.cfg.night=on?'1':'0';j2('/api/set',{night:on?1:0})}updMenu()}

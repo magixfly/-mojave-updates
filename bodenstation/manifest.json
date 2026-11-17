@@ -1,18 +1,18 @@
 {
- "ver": "2.70",
+ "ver": "2.71",
  "neu": [
-  "New version numbers: Vx.xx (2.70 follows 2.0.69)"
+  "Pi: smaller 3D map (Chromium crashed 'Aw, Snap')"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 120265,
-   "md5": "3a866ff02cfd661c4509e8df1917b503"
+   "md5": "0925db9361d5712e2aab71bc5940a7db"
   },
   {
    "p": "web/index.html",
-   "s": 141352,
-   "md5": "85641450e57c6bd7cb2b693d111eb245"
+   "s": 141640,
+   "md5": "2cea5f686bedeb0bfa56b902f0638447"
   }
  ]
 }
