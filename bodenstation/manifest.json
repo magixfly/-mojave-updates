@@ -1,18 +1,18 @@
 {
- "ver": "2.92",
+ "ver": "2.93",
  "neu": [
-  "Box: EV6 picture hidden in split view"
+  "Scale no longer hidden bottom left; maps status in the ... menu also on the Pi; split: black margin also beside the cards"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "62c201cb1b912fbc2b26778f5bbc994c"
+   "md5": "6ba3df18f3e5ea8a3b3659bf92ee32c2"
   },
   {
    "p": "web/index.html",
-   "s": 150304,
-   "md5": "57fe98f2b6e4c082f44530cb24431799"
+   "s": 150823,
+   "md5": "4e7c2f3fe0fe7cdcdc7688e91dc1be39"
   },
   {
    "p": "web/kia.png",
