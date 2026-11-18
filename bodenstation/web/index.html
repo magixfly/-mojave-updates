@@ -1170,7 +1170,8 @@ function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}
   if(m==='map'){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/';
   $('bFpv').textContent={map:'Split',split:'FPV',full:'PiP',pip:'MAP'}[m];setTimeout(()=>{set3d(is3d());resize()},60)}
 function fpvNext(){setFpv(FPVM[(FPVM.indexOf(fpvMode)+1)%4],true)}
-function fpvPoll(){fetch('/api/devices').then(r=>r.json()).then(r=>{const c=r.d&&r.d.cosmo,on=!!(c&&c.ok)&&!document.getElementById('ctMaps');
+function fpvPoll(){try{const b=$('bFpv'),cs=getComputedStyle(b),rc=b.getBoundingClientRect();fetch('/api/dbg',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cls:document.documentElement.className,disp:cs.display,z:cs.zIndex,r:[rc.left,rc.top,rc.width,rc.height],ih:innerHeight,iw:innerWidth,S,top:document.elementFromPoint(rc.left+20,rc.top+20)?.id})})}catch(e){}
+  fetch('/api/devices').then(r=>r.json()).then(r=>{const c=r.d&&r.d.cosmo,on=!!(c&&c.ok)&&!document.getElementById('ctMaps');
   document.documentElement.classList.toggle('cosmoOn',on);if(!on&&fpvMode!=='map')setFpv('map');else if(on&&fpvMode==='map'&&fpvWant!=='map')setFpv(fpvWant)}).catch(()=>{})}   // V2.0.61
 function set3d(on,save){const m=cv.style,sp3=on&&(document.documentElement.classList.contains('ctsplit')||document.documentElement.classList.contains('fpv-split'));if(sp3)on=false;   // V2.76: box split view = flat map
   ['top','left','width','height'].forEach(k=>m.removeProperty(k));document.documentElement.classList.toggle('v3d',on);

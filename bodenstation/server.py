@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.81"
+VERSION = "2.82"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -2295,6 +2295,13 @@ class H(BaseHTTPRequestHandler):
         global TRACK
         p = urlparse(self.path).path
         b = self.body()
+        if p == "/api/dbg":                     # V2.82: page reports its state (for remote diagnosis)
+            try:
+                with open("/tmp/tracker_dbg.txt", "a") as f:
+                    f.write(time.strftime("%H:%M:%S ") + self.client_address[0] + " " + json.dumps(b)[:2000] + "\n")
+            except Exception:
+                pass
+            return self.send(200, {"ok": True})
         if p == "/api/launch":                  # V2.0.3: start menu -> other program (only one big program at a time, 1 GB RAM)
             app = str(b.get("app", ""))
             if app == "desktop":

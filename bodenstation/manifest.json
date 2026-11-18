@@ -1,18 +1,18 @@
 {
- "ver": "2.81",
+ "ver": "2.82",
  "neu": [
-  "TEMP label next to CPU / RAM"
+  "Diagnosis for the video button"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 123477,
-   "md5": "87398191bf0b579861dc46b7a0379ef6"
+   "s": 123874,
+   "md5": "edcb87a948fca5178b024a0d0f1befe9"
   },
   {
    "p": "web/index.html",
-   "s": 145519,
-   "md5": "016f5849867a6183cc58fe14082bf146"
+   "s": 145899,
+   "md5": "f2a9ec7911fdebde619aa4a04b63126e"
   }
  ]
 }
