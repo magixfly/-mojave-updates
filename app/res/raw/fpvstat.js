@@ -47,7 +47,7 @@
     });
   }, 2000);
   // Jmuxer: plays from a buffer and drifts behind live (2 s and more) - keep it close to live:
-  // > 1 s behind = jump to the newest frame, 0.25-1 s = play 25 % faster until caught up
+  // behind = play up to 2x faster until caught up (V3.08: no seeking)
   window.ctLag = null;
   setInterval(function () {
     if (mode() !== '0') { window.ctLag = null; return; }
@@ -56,9 +56,8 @@
     var end = v.buffered.end(v.buffered.length - 1), lag = end - v.currentTime;
     window.ctLag = lag;
     try {
-      if (lag > 1.0) { v.currentTime = end - 0.1; v.playbackRate = 1; }
-      else if (lag > 0.25) v.playbackRate = 1.25;
-      else v.playbackRate = 1;
+      // no jumping (seeking in the stream gave a black picture) - only play faster until caught up
+      v.playbackRate = lag > 1.5 ? 2 : lag > 0.6 ? 1.5 : lag > 0.25 ? 1.2 : 1;
     } catch (e) {}
   }, 250);
   var box = document.createElement('div');

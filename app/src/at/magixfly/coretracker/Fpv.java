@@ -420,7 +420,7 @@ class Fpv {
 
     /** Janus zuerst; kommt nach 12 s kein Bild, auf Jmuxer (Modus 0) umschalten. Nur das aktive Video groß zeigen, stumm. */
     static final String JS = "(function(){"
-        + "window.alert=function(m){console.log('alert: '+m);};var ck='';try{ck=document.cookie;}catch(e){return 'none';}var mo=(ck.match(/video_player_mode=(\\d)/)||[])[1]||'1';var id=mo==='0'?'video_element':'remotevideov1';"
+        + "window.alert=function(m){console.log('alert: '+m);};var ck='';try{ck=document.cookie;}catch(e){return 'none';}var mo=(ck.match(/video_player_mode=(\\d)/)||[])[1]||'1';var id=mo==='1'?'remotevideov1':'video_element';"
         + "var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';document.head.appendChild(st);}"
         + "var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
         + "#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
