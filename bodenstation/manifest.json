@@ -1,18 +1,18 @@
 {
- "ver": "2.99",
+ "ver": "3.00",
  "neu": [
-  "Glass: rounded square buttons (AUTO ZOOM readable)"
+  "Cosmo video on the Pi smoother: map 5 fps in PiP, no glass blur while video runs, Jmuxer player first"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123584,
-   "md5": "41eac29e7629c997f786e2acdf85a361"
+   "md5": "7f64e5c2c07c842628efa70a544587ef"
   },
   {
    "p": "web/index.html",
-   "s": 157687,
-   "md5": "8226dfbc7e411ac3c3d80880d6b70c9e"
+   "s": 158006,
+   "md5": "eb0448c8e9d7a5c3aee60acfa8a85b78"
   },
   {
    "p": "web/kia.png",
