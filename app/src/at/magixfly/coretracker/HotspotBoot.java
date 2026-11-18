@@ -29,11 +29,21 @@ class HotspotBoot {
             try {
                 Thread.sleep(20000);
                 if (apOn(c)) { Log.d("CTAP", "Hotspot schon an"); A11y.startBand(c); return; }   // V1.57: 5 GHz festlegen
+                if (wifiConnected(c)) { Log.d("CTAP", "WLAN verbunden (z. B. Heim-WLAN) -> kein Hotspot"); return; }   // V1.82: zu Hause nicht aus dem WLAN werfen
                 A11y.want("ap");
                 c.startActivity(new android.content.Intent("android.settings.TETHER_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
                 Log.d("CTAP", "Hotspot-Seite geöffnet");
             } catch (Throwable t) { Log.d("CTAP", "Hotspot-Fehler: " + t); }
         } }).start();
+    }
+
+    /** V1.82: ist die Box als Client mit einem WLAN verbunden? */
+    static boolean wifiConnected(Context c) {
+        try {
+            android.net.ConnectivityManager cm = (android.net.ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+            android.net.NetworkInfo ni = cm.getNetworkInfo(android.net.ConnectivityManager.TYPE_WIFI);
+            return ni != null && ni.isConnected();
+        } catch (Throwable t) { return false; }
     }
 
     /** Hotspot an? (versteckte WifiManager-Methode) */
