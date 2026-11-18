@@ -1,0 +1,12 @@
+### 293_jm3  –  2026-11-18 12:37:03
+### Box: verbunden (192.168.178.235:5555)
+
+12:20:24 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 9 freezes / 10 min \u00b7 max 1.2 s \u00b7 loss 2.0 %", "dec": null, "drop": 1428, "lag": null, "n10": 9, "max": 1185, "all": 9, "loss": 2.001903069619754, "mins": 2, "player": "Janus"}}
+12:21:24 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 9 freezes / 10 min \u00b7 max 1.2 s \u00b7 loss 1.4 %", "dec": null, "drop": 2797, "lag": null, "n10": 9, "max": 1185, "all": 9, "loss": 1.368328315551424, "mins": 3, "player": "Janus"}}
+%Cpu(s): 55.4 us, 24.8 sy,  0.0 ni, 17.6 id,  0.0 wa,  0.0 hi,  2.2 si,  0.0 st 
+ 132382 user1     20   0  199.9g 245276 157212 R 103.0   6.3  12:13.51 chromium
+ 132318 user1     20   0   52.9g 169540 115604 R  65.0   4.4   4:41.78 chromium
+ 132320 user1     20   0   52.5g 106844  85544 S  23.1   2.7   1:41.12 chromium
+temp=68.1'C
+
+### Exit-Code: 0
