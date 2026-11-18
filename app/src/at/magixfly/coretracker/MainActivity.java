@@ -43,6 +43,19 @@ public class MainActivity extends Activity {
     int barWidthPx = 600;
     int repN = 0;
 
+    /** V1.75: App schließen bzw. neu starten (Menü der Box) */
+    static void quit(android.app.Activity a, boolean restart) {
+        if (restart) {
+            try {
+                android.content.Intent i = new android.content.Intent(a, MainActivity.class).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                android.app.PendingIntent pi = android.app.PendingIntent.getActivity(a, 9, i, 0x04000000 | 0x08000000);   // IMMUTABLE | CANCEL_CURRENT
+                ((android.app.AlarmManager) a.getSystemService(ALARM_SERVICE)).set(android.app.AlarmManager.RTC, System.currentTimeMillis() + 800, pi);
+            } catch (Throwable t) { android.util.Log.d("CTAP", "restart: " + t); }
+        }
+        a.finishAndRemoveTask();
+        if (restart) android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
     static volatile boolean alive = false;   // V1.59: Karte läuft (für die Rückkehr nach dem Hotspot-Schalten)
     @Override protected void onDestroy() { alive = false; super.onDestroy(); }
 

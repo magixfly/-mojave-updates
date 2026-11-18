@@ -363,7 +363,8 @@ class Fpv {
             @Override public boolean onConsoleMessage(android.webkit.ConsoleMessage m) { android.util.Log.d("CTFPV", m.message() + " @" + m.lineNumber()); return true; }
         });
         web.setWebViewClient(new WebViewClient() {
-            @Override public void onPageFinished(WebView v, String url) { fix(); }
+            @Override public void onPageStarted(WebView v, String url, android.graphics.Bitmap f) { stat(v); }   // V1.75: Hänger-Messung früh (RTCPeerConnection merken)
+            @Override public void onPageFinished(WebView v, String url) { stat(v); fix(); }
             @Override public void onReceivedError(WebView v, int code, String desc, String url) { info.setVisibility(View.VISIBLE); info.setText("CosmoStreamer \u2717 not reachable"); }
         });
         box.addView(web, 0, new FrameLayout.LayoutParams(-1, -1));
@@ -371,9 +372,36 @@ class Fpv {
         corner = new TextView(a); corner.setText("\u25E2"); corner.setTextSize(14); corner.setTextColor(0xE64DB8FF); corner.setIncludeFontPadding(false);   // V1.70: kleines Dreieck = Größe ziehen
         box.addView(corner, new FrameLayout.LayoutParams(-2, -2, Gravity.RIGHT | Gravity.BOTTOM));
         corner.setVisibility(mode == PIP ? View.VISIBLE : View.GONE);   // V1.71: nur im Bild-im-Bild
-        try { android.webkit.CookieManager.getInstance().setCookie(base, "video_player_mode=1; path=/"); } catch (Throwable t) { }
+        try {   // V1.75: gewählter Player (Janus / Pion / Jmuxer) statt immer Janus
+            String pl = player();
+            android.webkit.CookieManager.getInstance().setCookie(base, "video_player_mode=" + pl + "; path=/; max-age=31536000");
+            android.webkit.CookieManager.getInstance().setCookie(base, "ct_player=" + pl + "; path=/; max-age=31536000");
+        } catch (Throwable t) { }
         web.loadUrl(base + "/");
         keepFixing();
+    }
+
+    // ---- V1.75: Player-Auswahl + Hänger-Messung ----
+    static final String[] PLN = {"Jmuxer", "Janus", "Pion"};
+    String player() { return a.prefs.getString("player", "1"); }
+    String playerName() { try { return PLN[Integer.parseInt(player())]; } catch (Throwable t) { return "Janus"; } }
+    void nextPlayer() {
+        String n = player().equals("1") ? "2" : player().equals("2") ? "0" : "1";
+        a.prefs.edit().putString("player", n).apply();
+        post(new Runnable() { public void run() { if (web != null) { stopWeb(); startWeb(); } } });
+    }
+    static String STAT;
+    void stat(WebView v) {
+        try {
+            if (STAT == null) {
+                int id = a.getResources().getIdentifier("fpvstat", "raw", a.getPackageName());
+                java.io.InputStream in = a.getResources().openRawResource(id);
+                java.io.ByteArrayOutputStream o = new java.io.ByteArrayOutputStream(); byte[] b = new byte[4096]; int n;
+                while ((n = in.read(b)) > 0) o.write(b, 0, n);
+                in.close(); STAT = o.toString("UTF-8");
+            }
+            v.evaluateJavascript(STAT, null);
+        } catch (Throwable t) { android.util.Log.d("CTFPV", "stat: " + t); }
     }
 
     void stopWeb() {
@@ -402,7 +430,7 @@ class Fpv {
         + "v.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';if(v.paused&&v.play)try{v.play();}catch(e){}}"
         + "var m=document.getElementById(id);window.ctT0=window.ctT0||Date.now();var ok=m&&m.videoWidth>0;"
         + "if(!window.ctdbg||Date.now()-window.ctdbg>6000){window.ctdbg=Date.now();console.log('FPVSTATE id='+id+' rs='+(m&&m.readyState)+' w='+(m&&m.videoWidth));}"
-        + "if(!ok&&Date.now()-window.ctT0>15000){var nm=mo==='0'?'1':'0';console.log('FPV: kein Bild -> Modus '+nm);document.cookie='video_player_mode='+nm+';path=/;max-age=31536000';location.reload();}"
+        + "if(!ok&&Date.now()-window.ctT0>15000){var pf=(ck.match(/ct_player=(\\d)/)||[])[1]||mo,nm=mo===pf?(pf==='0'?'1':'0'):pf;console.log('FPV: kein Bild -> Modus '+nm);document.cookie='video_player_mode='+nm+';path=/;max-age=31536000';location.reload();}"
         + "return ok?'ok':(mo==='0'?'Jmuxer':'Janus');})()";
 
     boolean fill = false;
