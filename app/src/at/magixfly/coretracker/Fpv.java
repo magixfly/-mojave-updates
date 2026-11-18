@@ -33,7 +33,7 @@ class Fpv {
     TextView info;
     FrameLayout box;           // Rahmen für das FPV-Bild (Vollbild oder klein)
     WebView web;
-    View tapCatcher;           // im Bild-im-Bild: Antippen = Vollbild
+    View tapCatcher; TextView corner;           // im Bild-im-Bild: Antippen = Vollbild
     volatile String base = null;
     int mode = MAP;
     long lastScan = 0;
@@ -272,6 +272,7 @@ class Fpv {
             tapCatcher.setVisibility(View.VISIBLE);
         }
         box.setLayoutParams(lp);
+        if (corner != null) corner.setVisibility(m == PIP ? View.VISIBLE : View.GONE);
         box.setAlpha(m == PIP ? ALPHA[Math.max(0, Math.min(2, a.prefs.getInt("pipA", 0)))] : 1f);
         box.setVisibility(View.VISIBLE);
         box.bringToFront();
@@ -280,13 +281,14 @@ class Fpv {
 
     // ---- V1.37: Bild-im-Bild verschieben (ziehen), Größe (doppeltippen), Vollbild (tippen) ----
     static final float[] SIZES = {0.25f, 0.34f, 0.45f};
-    float dx, dy; int sx, sy; boolean drag; long lastUp, downT; Runnable single;
+    float dx, dy; int sx, sy, sw; boolean drag, resize; long lastUp, downT; Runnable single;
     static final float[] ALPHA = {1f, 0.8f, 0.6f};   // V1.46: lang drücken = Deckkraft 100/80/60 %
 
     FrameLayout.LayoutParams pipParams() {
         int W = root.getWidth(), H = root.getHeight();
         int si = Math.max(0, Math.min(2, a.prefs.getInt("pipS", 1)));
-        int w = Math.round(W * SIZES[si]), h = w * 9 / 16;
+        int w = a.prefs.getInt("pipW", Math.round(W * SIZES[si]));   // V1.70: Größe frei (Ecke ziehen)
+        w = Math.max(240, Math.min(W, w)); int h = w * 9 / 16; if (h > H) { h = H; w = h * 16 / 9; }
         int x = a.prefs.getInt("pipX", W - w - 100), y = a.prefs.getInt("pipY", 68);
         x = Math.max(0, Math.min(W - w, x)); y = Math.max(0, Math.min(H - h, y));
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(w, h, Gravity.LEFT | Gravity.TOP);
@@ -298,12 +300,17 @@ class Fpv {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) box.getLayoutParams();
         switch (e.getActionMasked()) {
             case android.view.MotionEvent.ACTION_DOWN:
-                dx = e.getRawX(); dy = e.getRawY(); sx = lp.leftMargin; sy = lp.topMargin; drag = false; downT = System.currentTimeMillis();
+                dx = e.getRawX(); dy = e.getRawY(); sx = lp.leftMargin; sy = lp.topMargin; sw = lp.width; drag = false; downT = System.currentTimeMillis();
+                resize = e.getX() > lp.width - 70 && e.getY() > lp.height - 70;   // V1.70: untere rechte Ecke = Größe
                 return true;
             case android.view.MotionEvent.ACTION_MOVE:
                 float mx = e.getRawX() - dx, my = e.getRawY() - dy;
                 if (!drag && Math.abs(mx) + Math.abs(my) > 24) drag = true;
-                if (drag) {
+                if (drag && resize) {
+                    int W = root.getWidth(), H = root.getHeight();
+                    int w = Math.max(240, Math.min(Math.min(W - lp.leftMargin, (H - lp.topMargin) * 16 / 9), sw + Math.round(Math.max(mx, my * 16f / 9f))));
+                    lp.width = w; lp.height = w * 9 / 16; box.setLayoutParams(lp);
+                } else if (drag) {
                     lp.leftMargin = Math.max(0, Math.min(root.getWidth() - lp.width, sx + Math.round(mx)));
                     lp.topMargin = Math.max(0, Math.min(root.getHeight() - lp.height, sy + Math.round(my)));
                     box.setLayoutParams(lp);
@@ -311,7 +318,7 @@ class Fpv {
                 return true;
             case android.view.MotionEvent.ACTION_UP:
                 if (drag) {
-                    a.prefs.edit().putInt("pipX", lp.leftMargin).putInt("pipY", lp.topMargin).apply();
+                    a.prefs.edit().putInt("pipX", lp.leftMargin).putInt("pipY", lp.topMargin).putInt("pipW", lp.width).apply();
                     return true;
                 }
                 long now = System.currentTimeMillis();
@@ -323,7 +330,7 @@ class Fpv {
                 }
                 if (now - lastUp < 350 && single != null) {          // Doppeltippen: Größe wechseln
                     a.ui.removeCallbacks(single); single = null; lastUp = 0;
-                    a.prefs.edit().putInt("pipS", (a.prefs.getInt("pipS", 1) + 1) % 3)
+                    a.prefs.edit().remove("pipW").putInt("pipS", (a.prefs.getInt("pipS", 1) + 1) % 3)
                         .putInt("pipX", lp.leftMargin + lp.width).putInt("pipY", lp.topMargin).apply();
                     FrameLayout.LayoutParams n = pipParams();
                     n.leftMargin = Math.max(0, Math.min(root.getWidth() - n.width, lp.leftMargin + lp.width - n.width));  // rechte Kante bleibt
@@ -361,6 +368,8 @@ class Fpv {
         });
         box.addView(web, 0, new FrameLayout.LayoutParams(-1, -1));
         box.addView(tapCatcher, new FrameLayout.LayoutParams(-1, -1));
+        corner = new TextView(a); corner.setText("\u25E2"); corner.setTextSize(14); corner.setTextColor(0xE64DB8FF); corner.setIncludeFontPadding(false);   // V1.70: kleines Dreieck = Größe ziehen
+        box.addView(corner, new FrameLayout.LayoutParams(-2, -2, Gravity.RIGHT | Gravity.BOTTOM));
         try { android.webkit.CookieManager.getInstance().setCookie(base, "video_player_mode=1; path=/"); } catch (Throwable t) { }
         web.loadUrl(base + "/");
         keepFixing();
