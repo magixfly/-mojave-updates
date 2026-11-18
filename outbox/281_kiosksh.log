@@ -1,0 +1,44 @@
+### 281_kiosksh  –  2026-11-18 11:59:05
+### Box: verbunden (192.168.178.235:5555)
+
+#!/bin/bash
+# V2.0.13: starts Chromium full screen on the active display
+#   touch display: 1280x720 | HDMI monitor connected: its own resolution (e.g. Full HD), page scaled so it looks the same, only sharper
+cd "$(dirname "$(readlink -f "$0")")"
+export XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-/run/user/$(id -u)} WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-0}
+URL=${1:-http://localhost:8080/launcher.html}
+W=1280; H=720; SF=1
+HD=$(grep -l '^connected' /sys/class/drm/card*-HDMI-A-*/status 2>/dev/null | head -1 | sed 's#.*/card[0-9]*-\(HDMI-A-[0-9]\)/status#\1#')
+if ! pgrep -x kanshi >/dev/null; then       # no kanshi running -> switch the outputs ourselves
+  if [ -n "$HD" ]; then wlr-randr --output "$HD" --on --pos 0,0 --output DSI-1 --off
+  else wlr-randr --output DSI-1 --on --mode 720x1280 --pos 0,0 --transform 90; fi
+fi
+if [ -n "$HD" ]; then
+  M=""
+  for i in $(seq 1 40); do   # wait until kanshi has switched to the HDMI monitor
+    M=$(wlr-randr 2>/dev/null | awk '/^HDMI/{h=1;next} /^[^ ]/{h=0} h&&/Enabled: no/{exit} h&&/current/{print $1;exit}')
+    [ -n "$M" ] && break; sleep 0.25
+  done
+  if [ -n "$M" ]; then
+    W=${M%x*}; H=${M#*x}
+    SF=$(awk "BEGIN{s=$W/1280; t=$H/720; if(t<s)s=t; printf \"%.3f\", s}")
+  fi
+else
+  # V2.0.3: wait until kanshi has rotated the display, else Chromium keeps the old window size (not fullscreen)
+  for i in $(seq 1 40); do wlr-randr 2>/dev/null | grep -q "Transform: [0-9]" && break; sleep 0.25; done
+fi
+sleep 1
+B=""
+for c in chromium-browser chromium; do command -v $c >/dev/null && B=$c && break; done
+if [ -z "$B" ]; then echo "Chromium not found: sudo apt install chromium"; exit 1; fi
+echo "$(date +%T) kiosk $W x $H scale $SF $URL"
+exec $B --kiosk --start-fullscreen --disable-features=Translate --window-position=0,0 --window-size=$W,$H --force-device-scale-factor=$SF --renderer-process-limit=1 --process-per-site --disable-extensions --disable-component-update --disk-cache-size=1048576 --js-flags=--max-old-space-size=192 --noerrdialogs --disable-infobars --disable-pinch --overscroll-history-navigation=0 \
+  --check-for-update-interval=31536000 --disable-session-crashed-bubble --incognito --password-store=basic --autoplay-policy=no-user-gesture-required \
+  "$URL"
+/home/user1/Bodenstation/hdmi_watch.sh
+/home/user1/Bodenstation/kiosk.sh
+/home/user1/Bodenstation/startmenu.sh
+/home/user1/Bodenstation/start.sh
+/home/user1/Bodenstation/touchmode.sh
+
+### Exit-Code: 0
