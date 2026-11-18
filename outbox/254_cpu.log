@@ -1,0 +1,29 @@
+### 254_cpu  –  2026-11-18 09:26:05
+### Box: verbunden (192.168.178.235:5555)
+
+top - 09:26:07 up  6:29,  2 users,  load average: 9.54, 7.11, 5.70
+Tasks: 220 total,   3 running, 217 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 59.8 us, 21.5 sy,  0.0 ni, 17.9 id,  0.0 wa,  0.0 hi,  0.8 si,  0.0 st 
+MiB Mem :   3795.6 total,   1848.1 free,    931.9 used,   1222.1 buff/cache     
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   2863.7 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   1970 user1     20   0  199.9g 248852 159036 R 101.5   6.4 169:42.31 chromium
+   1862 user1     20   0   52.9g 210440 125532 R  93.6   5.4      8,48 chromium
+   1324 user1     20   0   52.8g 276344 227888 S  22.2   7.1  38:13.80 chromium
+   1867 user1     20   0   52.5g 107648  85432 S  18.2   2.8  15:58.80 chromium
+   1099 user1     20   0  508620 100892  73588 S  11.3   2.6  22:46.82 labwc
+     66 root       0 -20       0      0      0 I   8.9   0.0   5:06.79 kworker+
+   1359 user1     20   0 2036608  40240  13020 S   5.4   1.0  12:44.39 python3
+ 329398 user1     20   0   52.6g  79656  63752 S   5.4   2.0   1:25.16 chromium
+   1104 user1     20   0  108084  14672   7736 S   3.9   0.4   0:58.99 pipewir+
+    PID %CPU   RSS COMMAND
+   1862  136 210368 /usr/lib/chromium/chromium --type=gpu-process --gpu-recent-crash-count=0 --disable-dev-shm-usage --enable-gpu-rasterization --ozone-platform=wayland --render-node-override=/dev/dri
+ 365944  133  3560 ps -eo pid,pcpu,rss,args --sort=-pcpu
+   1970 43.6 248868 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --change-stack-guard-on-fork=enabl
+   1324  9.8 276344 /usr/lib/chromium/chromium --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disa
+ 365602  6.9  3272 bash bridge.sh
+   1099  5.8 100892 /usr/bin/labwc -m
+   1867  4.1 107736 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --render
+
+### Exit-Code: 0
