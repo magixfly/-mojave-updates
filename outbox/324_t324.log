@@ -1,0 +1,12 @@
+### 324_t324  –  2026-11-18 20:31:03
+### Box: verbunden (192.168.178.235:5555)
+
+3.24 läuft
+night=0   # 1 = night mode (darker map, menu)
+fpv_mode=map   # V3.24: FPV view on the Pi (map, f
+pip_pos=   # V3.24: position/size of the FPV pictu
+theme=glass   # V2.98: look of the tracker: glass 
+map3d=1   # V2.0.61: 1 = 3D view (tilted satellite
+Running as unit: run-p1623514-i1623515.service; invocation ID: ea6fb0659bff42fb9351dcd06dfa134a
+
+### Exit-Code: 0
