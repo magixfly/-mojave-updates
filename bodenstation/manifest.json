@@ -1,7 +1,7 @@
 {
- "ver": "3.20",
+ "ver": "3.21",
  "neu": [
-  "Home position (VGPS) also in the Media WLAN; box split: Core line not under the video"
+  "No battery bar on top (tile only); iPhone 3D canvas size; car never shows plane icon"
  ],
  "dateien": [
   {
@@ -12,7 +12,7 @@
   {
    "p": "server.py",
    "s": 125621,
-   "md5": "83328531ebf2183e159c8a67a8ebb26f"
+   "md5": "25da7b2ad60d2fdef1b315fb022e3316"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 163237,
-   "md5": "7bba529f3c91a057c43eb0234048234d"
+   "s": 163598,
+   "md5": "64171a66b135cc7137be1f1c064eb2ae"
   },
   {
    "p": "web/kia.png",

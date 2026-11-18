@@ -445,7 +445,8 @@ function resize(){
   S=c>0?c:Math.min(innerWidth/1280,innerHeight/720);
   const ui=$('ui');ui.style.width=innerWidth/S+'px';ui.style.height=innerHeight/S+'px';ui.style.transform=`scale(${S})`;
   DPR=(window.devicePixelRatio||1)*S*(document.documentElement.classList.contains('v3d')&&!document.getElementById('ctMaps')&&(navigator.deviceMemory||4)<2?.75:1);   // V2.71: Pi 3D = 75 % pixels
-  W=cv.clientWidth;H=cv.clientHeight;cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);dirty=true}
+  W=cv.clientWidth;H=cv.clientHeight;if(W*H*DPR*DPR>15e6)DPR=Math.sqrt(15e6/(W*H));   // V3.21: Safari (iPhone) draws no canvas above ~16 Mpixel -> black corner in 3D
+  cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);dirty=true}
 function uiScale(){resize()}
 addEventListener('resize',resize);
 
@@ -644,7 +645,7 @@ function applySlots(){const a=slotCfg(1),b=slotCfg(2);
   if(c1!==C1COL||c2!==C2COL)dirty=true;
   C1COL=c1;N1COL=c1==='#1a8cff'?'#5aaeff':c1;CARIMG1=c1==='#1a8cff'?null:tintCar(c1);
   C2COL=c2;C2NAME=c2==='#d4ff00'?'#39ff14':c2;CARIMG2=tintCar(c2);
-  [[1,a],[2,b]].forEach(([n,s])=>{const v=UICON[n]!=null?UICON[n]:s&&s.sym!=null?s.sym:1;if(ICON[n]!==v){ICON[n]=v;dirty=true}})}   // V2.96: own choice first, default = car
+  [[1,a],[2,b]].forEach(([n,s])=>{let v=UICON[n]!=null?UICON[n]:s&&s.sym!=null?s.sym:1;if(v===2&&!(s&&s.type==='plane'))v=1;   /* V3.21: a car never shows the plane icon */if(ICON[n]!==v){ICON[n]=v;dirty=true}})}   // V2.96: own choice first, default = car
 let TWO=false,FOL=1,track2=[],track2n=0,LP=null,track1mac=undefined;const XT={};const ICON=[0,0,0],CARPOS=[null,null,null];
 function scr(x,y,sc,oy){const c=Math.cos(V.rot),s=Math.sin(V.rot);x*=sc;y*=sc;return [W/2+MOFF.x+x*c-y*s,H/2+oy+x*s+y*c]}
 function mapName(n,d){const sc=slotCfg(n);const nm=sc&&sc.name?sc.name.toUpperCase():carName(n);
@@ -1005,7 +1006,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
   // GPS tile: coordinates (tap = QR), satellites, trip
   {const tr=st.trip||0;$('vTrip').textContent='trip '+(tr<1000?Math.round(tr)+' m':(tr/1000).toFixed(2)+' km')+(st.lat!=null&&st.alt!=null?' · alt '+Math.round(st.alt)+' m':'')}
   $('vSats').textContent=(st.lat!=null?(st.vgps?'VGPS · ':'')+st.sats+' sats':'no GPS')+(st.me?(st.me.nofix?' · me no fix':' · me '+st.me.sats):'');cls($('vSats'),st.vgps?'mid':(st.lat!=null&&st.sats<6?'bad':null));
-  const w=$('warn');w.textContent=st.warn||'';w.style.display=st.warn?'block':'none';
+  const w=$('warn'),wt=(st.warn||'').split(' · ').filter(x=>x&&!/BATTERY/.test(x)).join(' · ');w.textContent=wt;w.style.display=wt?'block':'none';   // V3.21: battery alarm only in the BATTERY tile on the left (red), no extra bar
   playHud();
   {const t1=!!(st.test&&(st.test_cars||TESTN||1)===1&&!st.car2);$('mTest').textContent='Test ride: '+(t1?'on':'off');$('mTest').classList.toggle('pri',t1)}   // V1.9.15: only one of the two shows on
   {const t2=!!(st.test&&(st.car2||(st.test_cars||TESTN)===2));$('mTest2').textContent='Test ride 2 cars: '+(t2?'on':'off');$('mTest2').classList.toggle('pri',t2)}
