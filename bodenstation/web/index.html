@@ -729,6 +729,7 @@ function smoothStep(SM_=SM){const SM=SM_,B=SM.buf;
 let lastKey='',lastDraw=0;
 function loop(){
   requestAnimationFrame(loop);
+  if(typeof fpvMode!=='undefined'&&fpvMode==='full'){dirty=true;return}   // V3.09: map hidden behind full-screen FPV -> don't draw (CPU for the video)
   const now=performance.now();
   {const k=document.getElementById('kiaOv');if(k&&k.style.display!=='none'&&getComputedStyle(k).display!=='none'&&now-lastDraw<1000)return}   // V3.02: status view open -> map behind it 1 fps
   if(now-lastDraw<(document.documentElement.classList.contains('fpv-pip')&&!document.getElementById('ctMaps')?200:33))return;   // max. 30 fps (V3.00: Pi with PiP video 5 fps, CPU for the video)

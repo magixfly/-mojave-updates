@@ -1,24 +1,24 @@
 {
- "ver": "3.08",
+ "ver": "3.09",
  "neu": [
-  "FPV: Pion player shows the picture (was black)",
-  "Jmuxer catch-up without jumping (was black)"
+  "Map is not drawn while FPV is full screen (more CPU for the video)",
+  "FPV log: decoder (hardware/software) and dropped frames"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 124266,
-   "md5": "4941cd6f3f86cb6891c0fb50c9b58442"
+   "md5": "845e22a8a5ae892a4e515a371162c53f"
   },
   {
    "p": "web/fpvstat.js",
-   "s": 5059,
-   "md5": "7f47849477295ce160de34184f24f0ad"
+   "s": 5357,
+   "md5": "db8e171dfc843ad179ce42937a92c744"
   },
   {
    "p": "web/index.html",
-   "s": 160208,
-   "md5": "8ac83f6009fc7157438330a9a4b769c0"
+   "s": 160360,
+   "md5": "7458c31f92d1bc71093a8d5f31a5576d"
   },
   {
    "p": "web/kia.png",

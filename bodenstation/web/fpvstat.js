@@ -41,6 +41,8 @@
             var l = s.packetsLost - lost0, rc = s.packetsReceived - recv0;
             loss = rc + l > 0 ? 100 * l / (rc + l) : 0;
             if (s.freezeCount !== undefined) fz = s.freezeCount;
+            if (s.decoderImplementation) window.ctDec = s.decoderImplementation + (s.powerEfficientDecoder ? ' (HW)' : s.powerEfficientDecoder === false ? ' (SW)' : '');
+            if (s.framesDropped !== undefined) window.ctDrop = s.framesDropped;
           }
         });
       }).catch(function () {});
@@ -69,7 +71,7 @@
     if (loss !== null && mode() !== '0') s += ' · loss ' + loss.toFixed(1) + ' %';
     if (window.ctLag !== null) s += ' · buffer ' + window.ctLag.toFixed(1) + ' s';
     box.style.color = w.length ? (mx > 700 ? '#f87171' : '#fbbf24') : '#4ade80';
-    return { s: s, lag: window.ctLag, n10: w.length, max: mx, all: ev.length, loss: loss, mins: Math.round((n - t0) / 60000) };
+    return { s: s, dec: window.ctDec || null, drop: window.ctDrop, lag: window.ctLag, n10: w.length, max: mx, all: ev.length, loss: loss, mins: Math.round((n - t0) / 60000) };
   }
   setInterval(function () { if (!box.parentNode && document.body) document.body.appendChild(box); var t = text(); box.textContent = t.s; box.style.display = window.ctStatHide ? 'none' : ''; }, 1000);
   setInterval(function () {
