@@ -1,0 +1,16 @@
+### 327_cfg  –  2026-11-18 22:25:03
+### Box: verbunden (192.168.178.235:5555)
+
+night=0   # 1 = night mode (da
+theme=glass   # V2.98: look of
+map3d=1   # V2.0.61: 1 = 3D vi
+orientation=north   # north = 
+-rw-rw-r-- 1 user1 user1 6585 2026-11-18 22:24:56.049315318 +0100 config.txt
+-rw-rw-r-- 1 user1 user1 6585 2026-11-18 22:18:25.378350637 +0100 config.txt.bak
+server.log
+./config.txt.bak
+./config.txt
+1
+user1       1344  2.8  1.0 2111768 40812 ?       Sl   14:48  13:00 /usr/bin/python3 /home/user1/Bodenstation/server.py
+
+### Exit-Code: 0
