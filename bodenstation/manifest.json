@@ -1,13 +1,13 @@
 {
- "ver": "3.11",
+ "ver": "3.12",
  "neu": [
-  "FPV Jmuxer: 60-fps change removed again (black picture)"
+  "Pi video: Janus is now the default player (measured: Jmuxer dropped over half of the frames, Janus about 2 %)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 124266,
-   "md5": "3d174c8150f8a3259724258bc80aedfe"
+   "md5": "c3e4122937af2e1e64b6288e2d58e878"
   },
   {
    "p": "web/fpvstat.js",
@@ -17,7 +17,7 @@
   {
    "p": "web/index.html",
    "s": 160360,
-   "md5": "7458c31f92d1bc71093a8d5f31a5576d"
+   "md5": "19f395da28c404efa6d796e0d876803a"
   },
   {
    "p": "web/kia.png",

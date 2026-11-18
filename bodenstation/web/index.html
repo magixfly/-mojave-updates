@@ -1225,7 +1225,7 @@ function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}
 setInterval(()=>{const f=$('fpvIf'),k=document.getElementById('kiaOv'),hid=document.hidden||(k&&getComputedStyle(k).display!=='none');
   if(fpvMode==='map'||hid){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/'},1000);
 // V3.05: choose the CosmoStreamer player (Janus / Pion / Jmuxer) - remembered; the video shows freezes and packet loss
-const PLN={'0':'Jmuxer','1':'Janus','2':'Pion'};function plCur(){return (document.cookie.match(/ct_player=(\d)/)||document.cookie.match(/video_player_mode=(\d)/)||[])[1]||'0'}
+const PLN={'0':'Jmuxer','1':'Janus','2':'Pion'};function plCur(){return (document.cookie.match(/ct_player=(\d)/)||document.cookie.match(/video_player_mode=(\d)/)||[])[1]||'1'}
 function plShow(){const b=$('mPlayer');if(!b)return;b.textContent='FPV player: '+PLN[plCur()];b.style.display=document.getElementById('ctMaps')||!document.documentElement.classList.contains('cosmoOn')?'none':''}
 $('mPlayer').onclick=()=>{const n={'1':'2','2':'0','0':'1'}[plCur()];['ct_player','video_player_mode'].forEach(k=>document.cookie=k+'='+n+';path=/;max-age=31536000');plShow();const f=$('fpvIf');if(f.getAttribute('src')){f.removeAttribute('src');setTimeout(()=>{if(fpvMode!=='map')f.src='/cosmo/'},300)}};setInterval(plShow,2000);
 function fpvNext(){const i=FPVM.indexOf(fpvMode);setFpv(FPVM[((i<0?0:i)+1)%FPVM.length],true)}
