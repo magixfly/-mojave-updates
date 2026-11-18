@@ -1,0 +1,17 @@
+### 238_box_neu  –  2026-11-18 01:56:03
+### Box: verbunden (192.168.178.235:5555)
+
+11-18 01:56:19.397  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [16178, 16210] has no GoP, dropping frame.
+11-18 01:56:19.397  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [16145, 16177] has no GoP, dropping frame.
+11-18 01:56:19.397  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [16111, 16144] has no GoP, dropping frame.
+11-18 01:56:19.397  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [16078, 16110] has no GoP, dropping frame.
+11-18 01:56:19.397  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [16045, 16077] has no GoP, dropping frame.
+11-18 01:56:19.398  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [16012, 16044] has no GoP, dropping frame.
+11-18 01:56:19.398  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [15979, 16011] has no GoP, dropping frame.
+11-18 01:56:19.398  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [15945, 15978] has no GoP, dropping frame.
+11-18 01:56:19.398  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [15911, 15944] has no GoP, dropping frame.
+11-18 01:56:19.398  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [15878, 15910] has no GoP, dropping frame.
+11-18 01:56:19.398  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [15844, 15877] has no GoP, dropping frame.
+11-18 01:56:19.398  5001  5225 W chromium: [WARNING:third_party/webrtc/modules/video_coding/rtp_seq_num_only_ref_finder.cc:90] Generic frame with packet range [15811, 15843] has no GoP, dropping frame.
+
+### Exit-Code: 0
