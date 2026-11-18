@@ -1147,10 +1147,11 @@ function findHud(){if(!FIND.on)return;
 async function init(){
   resize();
   try{V.head=localStorage.ori==='h'}catch(e){}
-  try{const c=await j('/api/config');Object.assign(C,{max_zoom:+c.max_zoom,start_zoom:+c.start_zoom,orientation:c.orientation,cell_warn:+c.cell_warn,car_size:+c.car_size||1,auto_zoom:+c.auto_zoom,auto_zoom_out:+c.auto_zoom_out,auto_zoom_kmh:+c.auto_zoom_kmh||60});
+  try{let c=null;for(let i=0;i<40&&!c;i++){try{c=await j('/api/config')}catch(e){$('ver').textContent='waiting for server '+Math.round(i*100/40)+' %';await new Promise(r=>setTimeout(r,1000))}}if(!c)throw 0;   /* V3.24: after a reboot the page can be faster than the server - wait instead of demo defaults (glass, 3D...) */Object.assign(C,{max_zoom:+c.max_zoom,start_zoom:+c.start_zoom,orientation:c.orientation,cell_warn:+c.cell_warn,car_size:+c.car_size||1,auto_zoom:+c.auto_zoom,auto_zoom_out:+c.auto_zoom_out,auto_zoom_kmh:+c.auto_zoom_kmh||60});
     V.lat=+(c.map_lat||c.test_lat);V.lon=+(c.map_lon||c.test_lon);   /* V3.15: start at the last real position */C.cfg=c;document.body.classList.toggle('win',!!c.win);   // V2.0.24: English only (German removed)
     $('pRad').value=c.preload_radius_m;$('pZ').value=c.preload_zmax;
-    try{if(!localStorage.ori)V.head=c.orientation==='heading'}catch(e){V.head=c.orientation==='heading'}}
+    try{if(!localStorage.ori)V.head=c.orientation==='heading'}catch(e){V.head=c.orientation==='heading'}
+    if(!document.getElementById('ctMaps')){let lf=null,lp=null;try{lf=localStorage.fpvMode;lp=localStorage.pipPos}catch(e){}if(!lf&&FPVM.includes(c.fpv_mode)){fpvWant=c.fpv_mode}if(!lp&&c.pip_pos){try{PIP=JSON.parse(c.pip_pos)}catch(e){}}}}   // V3.24: FPV view + PiP from the Pi (kiosk browser forgets localStorage)
   catch(e){DEMO=true;C.max_zoom=19;demoInit()}
   setNight(isNight());set3d(is3d());setTheme(curTheme());loadIcons();V.z=C.start_zoom;{let s=null;try{s=localStorage.getItem('az')}catch(e){}setAz(s===null?C.auto_zoom:s==='1')}$('ver').textContent=DEMO?'demo':'V'+((C.cfg&&C.cfg.version)||'');uiScale();
   if(V.head){$('bOri').textContent='▲';$('bOri').classList.add('on')}
@@ -1229,7 +1230,7 @@ function curTheme(){return (C.cfg&&C.cfg.theme)==='hud'?'hud':'glass'}
 function setTheme(t,save){const de=document.documentElement;de.classList.toggle('th-glass',t==='glass');de.classList.toggle('th-hud',t==='hud');$('mTheme').textContent='Style: '+(t==='hud'?'HUD':'Glass');if(save){if(C.cfg)C.cfg.theme=t;j2('/api/set',{theme:t})}dirty=true}   // V2.98
 // V2.80: CosmoStreamer video on the Pi - MAP -> Split -> FPV -> PiP; the iframe only exists outside MAP (saves memory)
 const FPVM=['map','full','pip'];/* V2.85: no split on the Pi */let fpvMode='map',fpvWant='map';try{fpvWant=localStorage.fpvMode||'map'}catch(e){}if(!FPVM.includes(fpvWant))fpvWant='map';
-function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}catch(e){}}const de=document.documentElement;
+function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}catch(e){}if(!document.getElementById('ctMaps'))j2('/api/set',{fpv_mode:m})}const de=document.documentElement;
   FPVM.forEach(k=>de.classList.toggle('fpv-'+k,k===m&&k!=='map'));const f=$('fpvIf');
   if(m==='map'){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/';
   $('bFpv').textContent={map:'FPV',full:'PiP',pip:'MAP'}[m];pipApply();setTimeout(()=>{set3d(is3d());resize()},60)}
@@ -1256,7 +1257,7 @@ function pipApply(){setTimeout(mapOffCalc,30);const b=$('fpvBox').style;if(fpvMo
    const U=$('ui'),W0=U.clientWidth,H0=U.clientHeight;let l=st.l,t=st.t,w=st.w,hh=st.h;
    if(st.mode==='rs'){const ar=pipAr();w=Math.max(200,Math.min(W0-l,(H0-t)*ar,st.w+Math.max(dx,dy*ar)));hh=w/ar}else{l=Math.max(0,Math.min(W0-w,st.l+dx));t=Math.max(0,Math.min(H0-hh,st.t+dy))}
    PIP={l:Math.round(l),t:Math.round(t),w:Math.round(w),h:Math.round(hh)};pipApply()};
- const up=e=>{if(!st)return;const m=st.moved;st=null;if(m){try{localStorage.pipPos=JSON.stringify(PIP)}catch(_){}}else{window.pipTap=Date.now();setFpv('full',true)}};
+ const up=e=>{if(!st)return;const m=st.moved;st=null;if(m){try{localStorage.pipPos=JSON.stringify(PIP)}catch(_){}j2('/api/set',{pip_pos:JSON.stringify(PIP)})}else{window.pipTap=Date.now();setFpv('full',true)}};
  box.addEventListener('pointerdown',e=>down(e,'mv'));rs.addEventListener('pointerdown',e=>down(e,'rs'));
  addEventListener('pointermove',move);addEventListener('pointerup',up);addEventListener('pointercancel',up)})();
 function fpvPoll(){fetch('/api/devices').then(r=>r.json()).then(r=>{const c=r.d&&r.d.cosmo,on=!!(c&&c.ok)&&!document.getElementById('ctMaps');
