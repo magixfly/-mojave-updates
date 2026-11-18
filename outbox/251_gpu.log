@@ -1,0 +1,48 @@
+### 251_gpu  –  2026-11-18 09:07:05
+### Box: verbunden (192.168.178.235:5555)
+
+chromium-browser chromium; do command -v $c >/dev/null && B=$c && break; done
+chromium
+--force-renderer-accessibility
+--enable-remote-extensions
+--show-component-extension-options
+--enable-gpu-rasterization
+--no-default-browser-check
+--disable-pings
+--media-router=0
+--disable-dev-shm-usage
+--enable-remote-extensions
+--load-extension
+--use-angle=gles
+--kiosk
+--start-fullscreen
+--disable-features=Translate
+--window-position=0,0
+--window-size=1280,720
+--force-device-scale-factor=1
+--renderer-process-limit=1
+--process-per-site
+--disable-extensions
+--disable-component-update
+--disk-cache-size=1048576
+--js-flags=--max-old-space-size=192
+--noerrdialogs
+--disable-infobars
+--disable-pinch
+--overscroll-history-navigation=0
+--check-for-update-interval=31536000
+--disable-session-crashed-bubble
+--incognito
+/dev/video10
+/dev/video11
+/dev/video12
+/dev/video13
+/dev/video14
+/dev/video15
+/dev/video16
+/dev/video18
+/dev/video19
+gpu=76M
+dtoverlay=vc4-kms-v3d
+
+### Exit-Code: 0
