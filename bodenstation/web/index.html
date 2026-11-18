@@ -617,7 +617,7 @@ function applySlots(){const a=slotCfg(1),b=slotCfg(2);
   if(c1!==C1COL||c2!==C2COL)dirty=true;
   C1COL=c1;N1COL=c1==='#1a8cff'?'#5aaeff':c1;CARIMG1=c1==='#1a8cff'?null:tintCar(c1);
   C2COL=c2;C2NAME=c2==='#d4ff00'?'#39ff14':c2;CARIMG2=tintCar(c2);
-  if(a&&ICON[1]!==a.sym){ICON[1]=a.sym;dirty=true}if(b&&ICON[2]!==b.sym){ICON[2]=b.sym;dirty=true}}
+  [[1,a],[2,b]].forEach(([n,s])=>{const v=UICON[n]!=null?UICON[n]:s&&s.sym!=null?s.sym:1;if(ICON[n]!==v){ICON[n]=v;dirty=true}})}   // V2.96: own choice first, default = car
 let TWO=false,FOL=1,track2=[],track2n=0,LP=null,track1mac=undefined;const XT={};const ICON=[0,0,0],CARPOS=[null,null,null];
 function scr(x,y,sc,oy){const c=Math.cos(V.rot),s=Math.sin(V.rot);x*=sc;y*=sc;return [W/2+MOFF.x+x*c-y*s,H/2+oy+x*s+y*c]}
 function mapName(n,d){const sc=slotCfg(n);const nm=sc&&sc.name?sc.name.toUpperCase():carName(n);
@@ -660,8 +660,9 @@ function drawIcon0(k,col,edge,img){ctx.fillStyle=col;ctx.strokeStyle=edge||'#fff
     ctx.restore()}
   else{ctx.moveTo(0,-20);ctx.lineTo(13,14);ctx.lineTo(0,7);ctx.lineTo(-13,14);ctx.closePath();ctx.fill();ctx.stroke()}}
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function loadIcons(){const v=(C.cfg&&C.cfg.icons)||'',p=v.split('|');if(p[0]!==today())return;(p[1]||'').split(',').forEach(x=>{const q=x.split(':');if(+q[0]>=1&&+q[0]<=2)ICON[+q[0]]=(+q[1])%3})}
-function saveIcons(){const v=today()+'|1:'+ICON[1]+',2:'+ICON[2];if(C.cfg)C.cfg.icons=v;j2('/api/set',{icons:v})}
+const UICON=[null,null,null];
+function loadIcons(){const v=(C.cfg&&C.cfg.icons)||'',p=v.split('|');if(p[0]!=='v2')return;(p[1]||'').split(',').forEach(x=>{const q=x.split(':');if(+q[0]>=1&&+q[0]<=2&&q[1]!==''){ICON[+q[0]]=UICON[+q[0]]=(+q[1])%3}})}   // V2.96: choice is kept (not only today)
+function saveIcons(){const v='v2|1:'+ICON[1]+',2:'+ICON[2];if(C.cfg)C.cfg.icons=v;j2('/api/set',{icons:v})}
 function fitPts(a,b){V.lat=(a[0]+b[0])/2;V.lon=(a[1]+b[1])/2;
   const z0=20,dx=Math.abs(lon2x(a[1],z0)-lon2x(b[1],z0)),dy=Math.abs(lat2y(a[0],z0)-lat2y(b[0],z0));
   const r=Math.max(Math.hypot(dx,dy),1),fit=z0-Math.log2(r/(Math.min(W,H)*0.55));V.z=Math.max(3,Math.min(C.max_zoom,fit,19));V.zoff=0}
@@ -849,6 +850,11 @@ function vrows(){const L=[[1,st,C1COL]].concat(st.vs.map((c,i)=>[i?c.n:2,c,i?col
     ${w.length?`<div class="l3">${w.join(' · ')}</div>`:''}</div>`}).join('')}
 $('carsN').addEventListener('click',e=>{const r=e.target.closest('.vr');if(!r)return;const f=+r.dataset.f;FOL=FOL===f?0:f;setFollow(true);dirty=true;hud2()});
 $('car2').onclick=()=>{FOL=FOL===2?0:2;setFollow(true);dirty=true;hud2()};
+// V2.96: long press on a car card = symbol arrow -> car -> plane (works in 3D too)
+['car1','car2'].forEach((id,i)=>{const n=i+1,el=$(id);let t=null,fired=false;
+  el.addEventListener('pointerdown',()=>{fired=false;clearTimeout(t);t=setTimeout(()=>{fired=true;ICON[n]=UICON[n]=(ICON[n]+1)%3;saveIcons();dirty=true;try{navigator.vibrate&&navigator.vibrate(40)}catch(e){}},700)});
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>el.addEventListener(ev,()=>clearTimeout(t)));
+  el.addEventListener('click',e=>{if(fired){e.stopImmediatePropagation();e.preventDefault();fired=false}},true)});
 const CW=()=>st.lim?st.lim.cell_warn:C.cell_warn, CP=()=>st.lim?st.lim.cell_pre:C.cell_warn+.15, LW=()=>st.lim?st.lim.lq_warn:50;
 /* V2.0.13: while a saved ride is shown, the tiles show its values at the slider time */
 const ST=()=>st;

@@ -1,18 +1,18 @@
 {
- "ver": "2.95",
+ "ver": "2.96",
  "neu": [
-  "STATUS in blue glass; buttons closer; scale below the buttons"
+  "Car 2 shown as car by default; long press on a car card changes the symbol (arrow, car, plane), choice is kept"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 123874,
-   "md5": "5ccaf3afb8432fbeab8e0210d1dcb64a"
+   "s": 123879,
+   "md5": "7f21a150a4eea60bd30582ba00fa81e6"
   },
   {
    "p": "web/index.html",
-   "s": 152837,
-   "md5": "4e854eefe093ebfd170fe14a8f81759a"
+   "s": 153601,
+   "md5": "fb574645035b664dbbc9410b874123d8"
   },
   {
    "p": "web/kia.png",

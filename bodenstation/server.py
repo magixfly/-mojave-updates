@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.95"
+VERSION = "2.96"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -2380,7 +2380,7 @@ class H(BaseHTTPRequestHandler):
                     CFG["auto_zoom_out"] = str(v); ok["auto_zoom_out"] = v
                 except Exception:
                     pass
-            if isinstance(b.get("icons"), str) and re.fullmatch(r"[0-9-]{10}\|[0-9:,]{0,40}", b["icons"]):   # V1.9 map symbols
+            if isinstance(b.get("icons"), str) and re.fullmatch(r"([0-9-]{10}|v2)\|[0-9:,]{0,40}", b["icons"]):   # V1.9 map symbols
                 CFG["icons"] = b["icons"]; ok["icons"] = b["icons"]
             if ok:
                 save_cfg(CFG)
