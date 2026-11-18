@@ -1,0 +1,30 @@
+### 256_t302  –  2026-11-18 09:32:04
+### Box: verbunden (192.168.178.235:5555)
+
+3.02 läuft
+top - 09:37:49 up  6:40,  2 users,  load average: 0.87, 3.37, 4.75
+Tasks: 223 total,   1 running, 222 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  4.0 us,  1.1 sy,  0.0 ni, 94.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st 
+MiB Mem :   3795.6 total,   2062.7 free,    715.2 used,   1168.9 buff/cache     
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   3080.4 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   1095 user1     20   0    8548   4748   3548 S   1.0   0.1   2:54.15 dbus-da+
+ 374495 user1     20   0   10148   5332   3324 R   1.0   0.1   0:00.03 top
+     66 root       0 -20       0      0      0 I   0.5   0.0   5:50.73 kworker+
+   1359 user1     20   0 1666576  37468  13020 S   0.5   1.0  13:13.75 python3
+      1 root      20   0   25296  14620  10432 S   0.0   0.4   0:03.33 systemd
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.05 kthreadd
+      3 root      20   0       0      0      0 S   0.0   0.0   0:00.00 pool_wo+
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+
+      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker+
+    PID %CPU   RSS COMMAND
+   1862  133 193388 /usr/lib/chromium/chromium --type=gpu-process --gpu-recent-crash-count=0 --disable-dev-shm-usage --enable-gpu-rasterization --ozone-platform=wayland --render-node-override=/dev/dri
+   1970 44.2 196728 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --change-stack-guard-on-fork=enabl
+   1324  9.9 276092 /usr/lib/chromium/chromium --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disa
+   1099  5.8 100892 /usr/bin/labwc -m
+   1867  4.3 107108 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --render
+ 329398  3.7 80460 /usr/lib/chromium/chromium --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --render-node
+   1359  3.3 37468 /usr/bin/python3 /home/user1/Bodenstation/server.py
+
+### Exit-Code: 0
