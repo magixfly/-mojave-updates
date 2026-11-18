@@ -1,18 +1,18 @@
 {
- "ver": "2.98",
+ "ver": "2.99",
  "neu": [
-  "Two styles: Liquid Glass and HUD Neon, switch in the ... menu (Style)"
+  "Glass: rounded square buttons (AUTO ZOOM readable)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123584,
-   "md5": "8d07202f470d42a9509b0b1aa39266f8"
+   "md5": "41eac29e7629c997f786e2acdf85a361"
   },
   {
    "p": "web/index.html",
-   "s": 157686,
-   "md5": "70c851988576cd5746ec2ac63237d1bb"
+   "s": 157687,
+   "md5": "8226dfbc7e411ac3c3d80880d6b70c9e"
   },
   {
    "p": "web/kia.png",
