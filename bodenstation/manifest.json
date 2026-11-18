@@ -1,18 +1,23 @@
 {
- "ver": "2.90",
+ "ver": "2.91",
  "neu": [
-  "Status page: same font size, no Wi-Fi word, V1.69; box: maps status in the ... menu, bigger small texts"
+  "Status page: swinging EV6 picture instead of 'Display on Kia'; box: small EV6 in the top bar"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "d6d7c1dc681f741eb4133104797619ef"
+   "md5": "7f6fbd819c147d2059a93aac3e28667e"
   },
   {
    "p": "web/index.html",
-   "s": 149319,
-   "md5": "527f32cb19e2e8cfb08d023cf59654f8"
+   "s": 150259,
+   "md5": "178a694aa7e3df93de5d9d655e02f2fd"
+  },
+  {
+   "p": "web/kia.png",
+   "s": 247521,
+   "md5": "0f09830d6a093d80dbf36bd8c60c602f"
   }
  ]
 }
