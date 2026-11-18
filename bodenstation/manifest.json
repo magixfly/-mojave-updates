@@ -1,8 +1,7 @@
 {
  "ver": "3.05",
  "neu": [
-  "FPV video: freeze and packet-loss meter (top left in the video)",
-  "Menu: FPV player Janus / Pion / Jmuxer (remembered)"
+  "Status view: Kia box is now called KIA Entertainment"
  ],
  "dateien": [
   {
@@ -11,19 +10,19 @@
    "md5": "6fce83ae6673f806a6eb2e3c67ad1e67"
   },
   {
+   "p": "web/fpvstat.js",
+   "s": 4190,
+   "md5": "f65706efaabe2776f6d80c5956e85c11"
+  },
+  {
    "p": "web/index.html",
-   "s": 160198,
-   "md5": "122db927e9e850702f06befbf19ac7f8"
+   "s": 160208,
+   "md5": "8ac83f6009fc7157438330a9a4b769c0"
   },
   {
    "p": "web/kia.png",
    "s": 247521,
    "md5": "0f09830d6a093d80dbf36bd8c60c602f"
-  },
-  {
-   "p": "web/fpvstat.js",
-   "s": 4190,
-   "md5": "f65706efaabe2776f6d80c5956e85c11"
   }
  ]
 }
