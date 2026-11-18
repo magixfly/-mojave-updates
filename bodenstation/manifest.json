@@ -1,18 +1,18 @@
 {
- "ver": "2.86",
+ "ver": "2.87",
  "neu": [
-  "PiP keeps the aspect ratio of the CosmoStreamer video when resizing"
+  "PiP: smaller corner triangle (same touch area)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "663c9af020aeba3283367c4a4e5a81d2"
+   "md5": "8732e4335d1f99c77c72ffb237ff474e"
   },
   {
    "p": "web/index.html",
-   "s": 147948,
-   "md5": "244fad1de91751a67444ee662803f792"
+   "s": 147981,
+   "md5": "6064f8bdd224678258653314c4042551"
   }
  ]
 }
