@@ -1,18 +1,18 @@
 {
- "ver": "2.87",
+ "ver": "2.88",
  "neu": [
-  "PiP: smaller corner triangle (same touch area)"
+  "With PiP the car is centered in the free part of the map"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "8732e4335d1f99c77c72ffb237ff474e"
+   "md5": "390bd3eb4658b86c7bacbc9ee6d46ce9"
   },
   {
    "p": "web/index.html",
-   "s": 147981,
-   "md5": "6064f8bdd224678258653314c4042551"
+   "s": 148859,
+   "md5": "39910321716ca4668891a47cc4d4dfe0"
   }
  ]
 }
