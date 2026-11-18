@@ -436,7 +436,7 @@ class Fpv {
     void fix() {
         if (web == null) return;
         web.evaluateJavascript("window.ctFill=" + fill + ";window.ctZoom=" + (mode == FULL ? "1.2" : "0") + ";", null);
-        a.web.evaluateJavascript("document.documentElement.classList.toggle('ctsplit'," + (mode == SPLIT) + ")", null);
+        a.web.evaluateJavascript("document.documentElement.classList.toggle('ctsplit'," + (mode == SPLIT) + ");window.ctVW=" + (splitW() / a.getResources().getDisplayMetrics().density), null);   // V1.86: Videobreite für die Core-Zeile
         web.evaluateJavascript("JSON.stringify([window.ctFps==null?null:window.ctFps,window.ctMbit==null?null:window.ctMbit])", new android.webkit.ValueCallback<String>() {   // V1.85: fps / Mbit/s ins ...-Menü der Karte
             public void onReceiveValue(String r) {
                 try { String j = new org.json.JSONTokener(r).nextValue().toString(); org.json.JSONArray x = new org.json.JSONArray(j);
