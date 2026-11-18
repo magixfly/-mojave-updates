@@ -1,0 +1,7 @@
+### 232_kiosk_neu  –  2026-11-18 01:21:03
+### Box: verbunden (192.168.178.235:5555)
+
+Running as unit: run-p98326-i98327.service; invocation ID: 37d7cef1724a4af7b058bcea6f600d08
+98327 /usr/lib/chromium/chromium --force-renderer-accessibility --enable-remote-extensions --show-component-extension-op
+
+### Exit-Code: 0
