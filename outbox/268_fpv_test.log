@@ -1,0 +1,14 @@
+### 268_fpv_test  –  2026-11-18 10:54:05
+### Box: verbunden (192.168.178.235:5555)
+
+== Ping Tracker (5 GHz) -> Cosmo
+192.168.178.159: 300 packets transmitted, 300 received, 0% packet loss, time 6205ms rtt min/avg/max/mdev = 2.873/10.894/35.291/5.315 ms, pipe 2 
+192.168.178.175: 300 packets transmitted, 0 received, +252 errors, 100% packet loss, time 387092ms pipe 3 
+== Ping Box (2,4 GHz) -> Cosmo
+192.168.178.159: 300 packets transmitted, 300 received, 0% packet loss, time 6265ms rtt min/avg/max/mdev = 3.861/9.671/52.809/6.754 ms, pipe 3 
+192.168.178.175: 300 packets transmitted, 0 received, +136 errors, 100% packet loss, time 78200ms pipe 10 
+16
+name="player">1
+== Box Player 1
+
+### Exit-Code: 124
