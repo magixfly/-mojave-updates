@@ -1,18 +1,18 @@
 {
- "ver": "3.01",
+ "ver": "3.02",
  "neu": [
-  "Pi: video stops while the status view is open (ran on invisibly and used the CPU)"
+  "Status view lighter: map behind it paused, EV6 animation without per-frame effects"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123584,
-   "md5": "597e384cbe38654516adfddf8913228c"
+   "md5": "901fb048cdc27be08576016f233166af"
   },
   {
    "p": "web/index.html",
-   "s": 158402,
-   "md5": "98b7ba9e1c7afb30dfb0e9e19ded9cf9"
+   "s": 158688,
+   "md5": "01c4f0007afd26df6a557c385683dd70"
   },
   {
    "p": "web/kia.png",
