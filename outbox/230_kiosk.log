@@ -1,0 +1,11 @@
+### 230_kiosk  –  2026-11-18 01:19:02
+### Box: verbunden (192.168.178.235:5555)
+
+/home/user1/Bodenstation/hdmi_watch.sh
+/home/user1/Bodenstation/kiosk.sh
+/home/user1/Bodenstation/startmenu.sh
+/home/user1/Bodenstation/start.sh
+/home/user1/Bodenstation/touchmode.sh
+10:# wait until the program answers (max 15 s)
+
+### Exit-Code: 0
