@@ -1,0 +1,7 @@
+### 318_mojave  –  2026-11-18 18:44:07
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+{"ok": true, "s": {"slot": 1, "type": "car", "sym": 1, "col": "22c55e", "name": "MOJAVE", "pilot": "", "mac": "46:E8:8D:5C:B4:65"}}
+senders=46:E8:8D:5C:B4:65/1/car/1/22c55e/MOJAVE/   # Known senders (menu Sender): MAC/slot/type/symbol/colour/name/pilot
+
+### Exit-Code: 0
