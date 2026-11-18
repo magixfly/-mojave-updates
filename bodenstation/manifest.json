@@ -1,18 +1,18 @@
 {
- "ver": "2.89",
+ "ver": "2.90",
  "neu": [
-  "Button KIA renamed to STATUS"
+  "Status page: same font size, no Wi-Fi word, V1.69; box: maps status in the ... menu, bigger small texts"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "ad73c961106cfaaac97f1ef67eafc487"
+   "md5": "d6d7c1dc681f741eb4133104797619ef"
   },
   {
    "p": "web/index.html",
-   "s": 148862,
-   "md5": "c675844bc5b82b9ea36737f5801cbe07"
+   "s": 149319,
+   "md5": "527f32cb19e2e8cfb08d023cf59654f8"
   }
  ]
 }
