@@ -390,7 +390,7 @@ class Fpv {
     void nextPlayer() { }   // V1.81: kein Player-Wechsel mehr
     static String STAT;
     void stat(WebView v) {
-        if (true) return;   // V1.81: Hänger-Anzeige (rote Zeile) ausgebaut
+        // V1.84: wieder an – zeigt jetzt nur noch fps / Mbit/s (Stream läuft)
         try {
             if (STAT == null) {
                 int id = a.getResources().getIdentifier("fpvstat", "raw", a.getPackageName());
