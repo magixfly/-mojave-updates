@@ -1,0 +1,9 @@
+### 261_box  –  2026-11-18 10:27:03
+### Box: verbunden (192.168.178.235:5555)
+
+box: {'ok': True, 'host': 'Carlin box', 'ip': '192.168.178.235', 'hs': False, 'wifi': 'Box: Optimus Prime 2.4 GHz', 'ver': '1.74'}
+27536
+    topResumedActivity=ActivityRecord{f148491 u0 at.magixfly.coretracker/.MainActivity t2049}
+  ResumedActivity: ActivityRecord{f148491 u0 at.magixfly.coretracker/.MainActivity t2049}
+
+### Exit-Code: 0
