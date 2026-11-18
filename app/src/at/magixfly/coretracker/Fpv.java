@@ -383,15 +383,12 @@ class Fpv {
 
     // ---- V1.75: Player-Auswahl + Hänger-Messung ----
     static final String[] PLN = {"Jmuxer", "Janus", "Pion"};
-    String player() { return a.prefs.getString("player", "1"); }
+    String player() { return "1"; }   // V1.81: nur Janus (Pion/Jmuxer ausgebaut)
     String playerName() { try { return PLN[Integer.parseInt(player())]; } catch (Throwable t) { return "Janus"; } }
-    void nextPlayer() {
-        String n = player().equals("1") ? "2" : player().equals("2") ? "0" : "1";
-        a.prefs.edit().putString("player", n).apply();
-        post(new Runnable() { public void run() { if (web != null) { stopWeb(); startWeb(); } } });
-    }
+    void nextPlayer() { }   // V1.81: kein Player-Wechsel mehr
     static String STAT;
     void stat(WebView v) {
+        if (true) return;   // V1.81: Hänger-Anzeige (rote Zeile) ausgebaut
         try {
             if (STAT == null) {
                 int id = a.getResources().getIdentifier("fpvstat", "raw", a.getPackageName());
@@ -430,7 +427,7 @@ class Fpv {
         + "v.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';if(v.paused&&v.play)try{v.play();}catch(e){}}"
         + "var m=document.getElementById(id);window.ctT0=window.ctT0||Date.now();var ok=m&&m.videoWidth>0;"
         + "if(!window.ctdbg||Date.now()-window.ctdbg>6000){window.ctdbg=Date.now();console.log('FPVSTATE id='+id+' rs='+(m&&m.readyState)+' w='+(m&&m.videoWidth));}"
-        + "if(!ok&&Date.now()-window.ctT0>45000){console.log('FPV: kein Bild mit Modus '+mo+' nach 45 s');var pf=(ck.match(/ct_player=(\\d)/)||[])[1]||mo,nm=mo===pf?(pf==='0'?'1':'0'):pf;console.log('FPV: kein Bild -> Modus '+nm);document.cookie='video_player_mode='+nm+';path=/;max-age=31536000';location.reload();}"
+        + "if(!ok&&Date.now()-window.ctT0>45000){console.log('FPV: kein Bild mit Modus '+mo+' nach 45 s');var nm='1';console.log('FPV: kein Bild -> Modus '+nm);document.cookie='video_player_mode='+nm+';path=/;max-age=31536000';location.reload();}"
         + "return ok?'ok':(mo==='0'?'Jmuxer':'Janus');})()";
 
     boolean fill = false;
