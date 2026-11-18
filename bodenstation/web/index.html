@@ -305,6 +305,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
   <div class="b" id="bMenu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg></div>
 </div>
 
+<div id="azPop" style="display:none;position:absolute;z-index:40;align-items:center;gap:10px;padding:8px 10px;border-radius:14px;background:rgba(16,22,29,.92);border:1px solid var(--line);box-shadow:0 6px 24px rgba(0,0,0,.5)"><b id="azM" class="mb" style="width:64px;height:64px;font-size:34px;display:flex;align-items:center;justify-content:center;padding:0">−</b><span id="azV" style="min-width:150px;text-align:center;font-size:17px;font-weight:700"></span><b id="azP" class="mb" style="width:64px;height:64px;font-size:34px;display:flex;align-items:center;justify-content:center;padding:0">+</b></div>   <!-- V3.19: auto zoom level = long press on AUTO ZOOM -->
 <div id="menu">
   <h3>MAP PRELOAD (AROUND MAP CENTRE)</h3>
   <div class="row">
@@ -331,6 +332,8 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <button class="mb" id="mWifiScan">Search networks</button>
     <div id="wifiNew"></div>
   </div>
+  <h3>FPV VIDEO</h3>
+  <div class="row"><div id="fpvInfo" style="font-size:16px;color:var(--mut)">no video</div></div>
   <h3>DEVICES (IP / HOST NAME)</h3>
   <div class="row">
     <div id="devs"></div>
@@ -356,8 +359,6 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <button class="mb" id="mName1"></button>
     <button class="mb" id="mName2"></button>
     <button class="mb" id="mNames">Names on the map: on</button>
-    <label>Auto zoom: how far it zooms out when fast</label>
-    <div class="stp"><b id="azM">−</b><span id="azV"></span><b id="azP">+</b></div>
     <label>Range warning (distance from home)</label>
     <div class="seg" id="sRange"><b data-v="0">off</b><b data-v="300">300 m</b><b data-v="500">500 m</b><b data-v="1000">1 km</b><b data-v="2000">2 km</b></div>
     <button class="mb" id="mLock">Lock screen</button>
@@ -811,7 +812,12 @@ $('bOut').onclick=()=>zoomTo(Math.round(V.z)-1);
 $('bFol').onclick=()=>setFollow(true);
 function azIcon(){const e=$('azF');if(e)e.textContent=(+C.auto_zoom_out||0).toFixed(1)}   // V1.9.9: strength in the button
 function setAz(on,save){C.auto_zoom=on?1:0;azIcon();$('bAz').classList.toggle('on',!!on);try{localStorage.setItem('az',on?'1':'0')}catch(e){}if(save)j2('/api/set',{auto_zoom:on?1:0})}
-$('bAz').onclick=()=>setAz(!C.auto_zoom,true);
+$('bAz').onclick=()=>{if(Date.now()-(window.azLP||0)<800)return;setAz(!C.auto_zoom,true)};
+{let t=0,ht=0;const p=()=>$('azPop'),hide=()=>{p().style.display='none'},keep=()=>{clearTimeout(ht);ht=setTimeout(hide,6000)};   // V3.19: long press on AUTO ZOOM = - / + beside it
+ const show=()=>{window.azLP=Date.now();const b=$('bAz'),u=$('ui').getBoundingClientRect(),r=b.getBoundingClientRect(),e=p();azShow();e.style.display='flex';
+   e.style.left=((r.left-u.left)/S-e.offsetWidth-10)+'px';e.style.top=((r.top-u.top)/S+(r.height/S-e.offsetHeight)/2)+'px';keep()};
+ $('bAz').addEventListener('pointerdown',()=>{clearTimeout(t);t=setTimeout(show,600)});['pointerup','pointercancel','pointerleave'].forEach(k=>$('bAz').addEventListener(k,()=>clearTimeout(t)));
+ $('azPop').addEventListener('pointerdown',e=>{e.stopPropagation();keep()});addEventListener('pointerdown',e=>{if(!$('azPop').contains(e.target)&&e.target!==$('bAz'))hide()})}
 function oriBtn(){const b=$('bOri');if(V.head){b.textContent='▲'}else if(V.urot){b.innerHTML='<span style="display:inline-block;transform:rotate('+V.urot+'rad)">N</span>'}else b.textContent='N'}
 $('bOri').onclick=()=>{if(!V.head&&V.urot){V.urot=0;oriBtn();dirty=true;return}   /* V2.0.14: turned north map -> tap N = north up again */
   V.head=!V.head;oriBtn();$('bOri').classList.toggle('on',V.head);try{localStorage.ori=V.head?'h':'n'}catch(e){}j2('/api/set',{orientation:V.head?'heading':'north'})};
@@ -1265,7 +1271,7 @@ function setNight(on,save){document.body.classList.toggle('night',on);if(save){i
 $('mNight').onclick=()=>setNight(!isNight(),true);{const sc=$('scale');if(sc&&sc.parentNode.id==='side')$('ui').appendChild(sc)}   // V2.93: scale out of the side column (was hidden bottom left)
 $('m3d').onclick=()=>set3d(!is3d(),true);$('mTheme').onclick=()=>setTheme(curTheme()==='hud'?'glass':'hud',true);$('mMaps').onclick=()=>{const c=document.getElementById('ctMaps')||$('boxst');if(c)c.click()};setInterval(()=>{const c=document.getElementById('ctMaps'),bs=$('boxst'),b=$('mMaps'),src=c||(bs&&bs.textContent.trim()?bs:null);b.style.display=src?'':'none';if(src){const t=(src.textContent||'').trim()||'Maps';if(b.textContent!==t)b.textContent=t}},1000);$('bFpv').onclick=fpvNext;$('fpvBox').onclick=()=>{if(fpvMode==='full'&&Date.now()-(window.pipTap||0)>500)fpvNext()};setTimeout(fpvPoll,3000);setInterval(fpvPoll,15000);
 $('mCore').onclick=()=>{const v=coreShow()?'0':'1';if(C.cfg)C.cfg.core_show=v;j2('/api/set',{core_show:+v});updMenu();hud()};
-function azShow(){azIcon();const v=+C.auto_zoom_out||0;$('azV').innerHTML=v<=0?'off':`${v.toFixed(1)} levels · <span style="color:var(--mut)">${(2**v).toFixed(1)}× wider at ${C.auto_zoom_kmh} km/h</span>`}
+function azShow(){azIcon();const v=+C.auto_zoom_out||0;$('azV').innerHTML=v<=0?'off':`${v.toFixed(1)}<br><span style="color:var(--mut);font-size:13px">${(2**v).toFixed(1)}× wider at ${C.auto_zoom_kmh} km/h</span>`}
 function azStep(d){C.auto_zoom_out=Math.max(0,Math.min(3,Math.round(((+C.auto_zoom_out||0)+d)*10)/10));if(C.cfg)C.cfg.auto_zoom_out=String(C.auto_zoom_out);azShow();j2('/api/set',{auto_zoom_out:C.auto_zoom_out});dirty=true}
 $('azM').onclick=()=>azStep(-0.1);$('azP').onclick=()=>azStep(0.1);
 function mapNames(){return !(C.cfg&&C.cfg.map_names==='0')}
@@ -1439,5 +1445,9 @@ document.head.appendChild(st)}
  const on=/^Maps\s/.test(x)&&!/complete|paused|waiting|full|Touch/.test(x)&&now-chg<10000;   // text changes while MB count grows
  img.style.animationPlayState=on?'running':'paused'},1000)})();
 </script>
+<script>/* V3.19: frames + data rate of the FPV stream (from the video page) for the ... menu */
+function ctFpvSet(f,m){window.ctFpvT=Date.now();const e=document.getElementById('fpvInfo');if(e)e.textContent=(f==null?'–':f)+' fps'+(m!=null?' · '+(+m).toFixed(1)+' Mbit/s':'')}
+addEventListener('message',e=>{const d=e.data;if(d&&d.ctinfo)ctFpvSet(d.ctinfo.fps,d.ctinfo.mbit)});
+setInterval(()=>{if(Date.now()-(window.ctFpvT||0)>5000){const e=document.getElementById('fpvInfo');if(e)e.textContent='no video'}},2000);</script>
 </body>
 </html>

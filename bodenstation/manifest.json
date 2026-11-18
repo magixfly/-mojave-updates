@@ -1,7 +1,7 @@
 {
- "ver": "3.18",
+ "ver": "3.19",
  "neu": [
-  "Battery % capped by resting cell voltage; CPU/RAM without bars; battery warning only as red bar"
+  "FPV heartbeat dot; fps/Mbit in ... menu; auto zoom level by long press"
  ],
  "dateien": [
   {
@@ -12,17 +12,17 @@
   {
    "p": "server.py",
    "s": 125355,
-   "md5": "0d41ca531780dfdb564574884f3b9876"
+   "md5": "706b61edaa497347da2e7e5a8db92391"
   },
   {
    "p": "web/fpvstat.js",
-   "s": 6230,
-   "md5": "ebc5ae2d9c729ebe4d5f435ab59f5b4b"
+   "s": 6261,
+   "md5": "48c57f29f38c20dd63c5ce0563289d45"
   },
   {
    "p": "web/index.html",
-   "s": 160748,
-   "md5": "9c492eabf9f687b1dee90248e792bfc2"
+   "s": 162808,
+   "md5": "dfeee4d477f472bcd68d71c83f1f1f11"
   },
   {
    "p": "web/kia.png",
