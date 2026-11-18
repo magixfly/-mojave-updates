@@ -349,7 +349,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <div class="seg noWin" id="sBright"><b data-v="20">20 %</b><b data-v="40">40 %</b><b data-v="70">70 %</b><b data-v="100">100 %</b></div>
     <label>Track length (live + replay) · how much of the line stays visible</label>
     <div style="display:flex;gap:10px;align-items:center"><button class="mb" id="mTlM" style="width:90px;font-size:30px">−</button><b id="mTl" style="flex:1;text-align:center;font-size:26px"></b><button class="mb" id="mTlP" style="width:90px;font-size:30px">+</button></div>
-    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="m3d">3D view: on</button><button class="mb" id="mTheme">Style: Glass</button><button class="mb" id="mMaps" style="display:none">Maps</button>
+    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="m3d">3D view: on</button><button class="mb" id="mTheme">Style: Glass</button><button class="mb" id="mMaps" style="display:none">Maps</button><button class="mb" id="mPlayer">FPV player: Janus</button>
     <button class="mb" id="mCore">Core info: on</button>
     <button class="mb" id="mSound">Warning sound: on</button>
     <label>Drivers</label>
@@ -1223,6 +1223,10 @@ function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}
 // V3.01: video only when it can be seen - status view open or page hidden -> stop the video (it ran on invisibly at ~100 % CPU)
 setInterval(()=>{const f=$('fpvIf'),k=document.getElementById('kiaOv'),hid=document.hidden||(k&&getComputedStyle(k).display!=='none');
   if(fpvMode==='map'||hid){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/'},1000);
+// V3.05: choose the CosmoStreamer player (Janus / Pion / Jmuxer) - remembered; the video shows freezes and packet loss
+const PLN={'0':'Jmuxer','1':'Janus','2':'Pion'};function plCur(){return (document.cookie.match(/ct_player=(\d)/)||document.cookie.match(/video_player_mode=(\d)/)||[])[1]||'0'}
+function plShow(){const b=$('mPlayer');if(!b)return;b.textContent='FPV player: '+PLN[plCur()];b.style.display=document.getElementById('ctMaps')||!document.documentElement.classList.contains('cosmoOn')?'none':''}
+$('mPlayer').onclick=()=>{const n={'1':'2','2':'0','0':'1'}[plCur()];['ct_player','video_player_mode'].forEach(k=>document.cookie=k+'='+n+';path=/;max-age=31536000');plShow();const f=$('fpvIf');if(f.getAttribute('src')){f.removeAttribute('src');setTimeout(()=>{if(fpvMode!=='map')f.src='/cosmo/'},300)}};setInterval(plShow,2000);
 function fpvNext(){const i=FPVM.indexOf(fpvMode);setFpv(FPVM[((i<0?0:i)+1)%FPVM.length],true)}
 // V2.85: PiP like on the box - drag to move, corner = size, tap = full screen; position/size remembered
 let PIP=null;try{PIP=JSON.parse(localStorage.pipPos||'null')}catch(e){}

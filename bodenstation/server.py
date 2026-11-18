@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.04"
+VERSION = "3.05"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -190,14 +190,14 @@ def _dev_get(h, path, t=2.5):
 
 COSMO_LAST = [None]
 # V2.80: shows only the active video of the CosmoStreamer page (like the box app), muted; Janus first, after 15 s without picture Jmuxer
-COSMO_INJECT = """<script>(function(){window.alert=function(m){console.log('alert: '+m)};
+COSMO_INJECT = """<script src="/fpvstat.js"></script><script>(function(){window.alert=function(m){console.log('alert: '+m)};
 function fix(){var ck=document.cookie||'',mo=(ck.match(/video_player_mode=(\\d)/)||[])[1]||'1',id=mo==='0'?'video_element':'remotevideov1';
 var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';(document.head||document.documentElement).appendChild(st)}
 var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;max-width:none!important;max-height:none!important;object-fit:'+(window.ctFill?'fill':'contain')+'!important;background:#000!important;z-index:2147483647!important;transform:none!important}';
 if(st.textContent!=css)st.textContent=css;
 var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;if(v.paused&&v.play)try{v.play()}catch(e){}}
 var m=document.getElementById(id),ok=m&&m.videoWidth>0;window.ctT0=window.ctT0||Date.now();try{parent.postMessage({ctfpv:ok?'ok':(mo==='0'?'Jmuxer':'Janus')},'*')}catch(e){}
-if(!ok&&Date.now()-window.ctT0>15000){document.cookie='video_player_mode='+(mo==='0'?'1':'0')+';path=/;max-age=31536000';location.reload()}}
+if(!ok&&Date.now()-window.ctT0>15000){var pf=(document.cookie.match(/ct_player=(\\d)/)||[])[1]||mo,nx=mo===pf?(pf==='0'?'1':'0'):pf;document.cookie='video_player_mode='+nx+';path=/;max-age=31536000';location.reload()}}
 if(!/video_player_mode=/.test(document.cookie))document.cookie='video_player_mode=0;path=/;max-age=31536000';
 setInterval(fix,1000);document.addEventListener('DOMContentLoaded',fix)})();</script>"""
 NAVI_LAST = [None]   # V2.0.60: last address the Navi answered on
