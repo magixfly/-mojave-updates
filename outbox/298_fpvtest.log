@@ -1,0 +1,20 @@
+### 298_fpvtest  –  2026-11-18 16:34:03
+### Box: verbunden (192.168.178.235:5555)
+
+== Modus 0 (Jmuxer) CPU chromium je 3 s: 273.3 316.6 300.1 371.3 226.7 328.5 318.5 315.5 300.1 299.8
+    420.541141:INFO:CONSOLE:4] "FPVQ video_element 1920x1080 tot=234 drop=132 t=7.7", source: http://127.0.0.1:8099/?m=0 (4)
+    25.577740:INFO:CONSOLE:4] "FPVQ video_element 1920x1080 tot=331 drop=191 t=10.9", source: http://127.0.0.1:8099/?m=0 (4)
+    30.492875:INFO:CONSOLE:4] "FPVQ video_element 1920x1080 tot=434 drop=253 t=14.3", source: http://127.0.0.1:8099/?m=0 (4)
+    63435.516272:INFO:CONSOLE:4] "FPVQ video_element 1920x1080 tot=61 drop=40 t=2.0", source: http://127.0.0.1:8099/?m=0 (4)
+== Modus 1 (Janus) CPU chromium je 3 s: 246.7 286.6 258.2 249.8 184.7 230.9 233.4 285.6 266.7 309.2
+    456.580539:INFO:CONSOLE:4] "FPVQ remotevideov1 1920x1080 tot=277 drop=12 t=11.4", source: http://127.0.0.1:8099/?m=1 (4)
+    501.528550:INFO:CONSOLE:4] "FPVQ remotevideov1 1920x1080 tot=397 drop=14 t=16.3", source: http://127.0.0.1:8099/?m=1 (4)
+    506.525387:INFO:CONSOLE:4] "FPVQ remotevideov1 1920x1080 tot=526 drop=16 t=21.3", source: http://127.0.0.1:8099/?m=1 (4)
+    511.539569:INFO:CONSOLE:4] "FPVQ remotevideov1 1920x1080 tot=650 drop=16 t=26.3", source: http://127.0.0.1:8099/?m=1 (4)
+== Modus 2 (Pion) CPU chromium je 3 s: 195 321.4 199.9 253.5 300 200.1 183.3 192.4 191 249.9
+    63532.527182:INFO:CONSOLE:4] "FPVQ video_element 1920x1080 tot=75 drop=3 t=11.1", source: http://127.0.0.1:8099/?m=2 (4)
+    63537.527111:INFO:CONSOLE:4] "FPVQ video_element 1920x1080 tot=77 drop=3 t=16.1", source: http://127.0.0.1:8099/?m=2 (4)
+    63542.532100:INFO:CONSOLE:4] "FPVQ video_element 1920x1080 tot=86 drop=4 t=21.1", source: http://127.0.0.1:8099/?m=2 (4)
+    3547.528320:INFO:CONSOLE:4] "FPVQ video_element 1920x1080 tot=126 drop=8 t=26.1", source: http://127.0.0.1:8099/?m=2 (4)
+
+### Exit-Code: 0
