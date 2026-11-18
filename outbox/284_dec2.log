@@ -1,0 +1,13 @@
+### 284_dec2  –  2026-11-18 12:07:04
+### Box: verbunden (192.168.178.235:5555)
+
+12:07:45 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 15 freezes / 10 min \u00b7 max 1.8 s \u00b7 loss 0.2 %", "dec": null, "drop": 100, "lag": null, "n10": 15, "max": 1766, "all": 15, "loss": 0.24654488029950639, "mins": 2, "player": "Janus"}}
+%Cpu(s): 52.2 us, 23.1 sy,  0.0 ni, 23.1 id,  0.0 wa,  0.0 hi,  1.5 si,  0.0 st 
+   1961 user1     20   0  199.9g 247748 158388 R  97.5   6.4  86:19.10 chromium
+   1848 user1     20   0   52.9g 179028 123036 R  65.7   4.6  50:41.15 chromium
+   1294 user1     20   0   52.8g 277708 228756 R  21.9   7.1  19:41.35 chromium
+   1854 user1     20   0   52.5g 110004  85576 S  21.6   2.8  17:22.63 chromium
+     66 root       0 -20       0      0      0 I  15.2   0.0  11:51.03 kworker+
+temp=69.6'C
+
+### Exit-Code: 0
