@@ -1,13 +1,13 @@
 {
- "ver": "3.05",
+ "ver": "3.06",
  "neu": [
-  "Status view: Kia box is now called KIA Entertainment"
+  "FPV: the chosen player gets 45 s before switching to the fallback"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 124083,
-   "md5": "6fce83ae6673f806a6eb2e3c67ad1e67"
+   "s": 124266,
+   "md5": "8affd89c7969315500141443121520c3"
   },
   {
    "p": "web/fpvstat.js",

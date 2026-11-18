@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.05"
+VERSION = "3.06"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -197,7 +197,7 @@ var css='html,body{background:#000!important;overflow:hidden!important}body *{vi
 if(st.textContent!=css)st.textContent=css;
 var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;if(v.paused&&v.play)try{v.play()}catch(e){}}
 var m=document.getElementById(id),ok=m&&m.videoWidth>0;window.ctT0=window.ctT0||Date.now();try{parent.postMessage({ctfpv:ok?'ok':(mo==='0'?'Jmuxer':'Janus')},'*')}catch(e){}
-if(!ok&&Date.now()-window.ctT0>15000){var pf=(document.cookie.match(/ct_player=(\\d)/)||[])[1]||mo,nx=mo===pf?(pf==='0'?'1':'0'):pf;document.cookie='video_player_mode='+nx+';path=/;max-age=31536000';location.reload()}}
+var ch=/ct_player=\\d/.test(document.cookie);if(!ok&&Date.now()-window.ctT0>(ch?45000:15000)){try{fetch('/api/dbg',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fpvnopic:mo})})}catch(e){}var pf=(document.cookie.match(/ct_player=(\\d)/)||[])[1]||mo,nx=mo===pf?(pf==='0'?'1':'0'):pf;document.cookie='video_player_mode='+nx+';path=/;max-age=31536000';location.reload()}}
 if(!/video_player_mode=/.test(document.cookie))document.cookie='video_player_mode=0;path=/;max-age=31536000';
 setInterval(fix,1000);document.addEventListener('DOMContentLoaded',fix)})();</script>"""
 NAVI_LAST = [None]   # V2.0.60: last address the Navi answered on
