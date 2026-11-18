@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.03"
+VERSION = "3.04"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1241,6 +1241,13 @@ def sys_load():
     try:
         with open("/sys/class/thermal/thermal_zone0/temp") as f:
             d["temp"] = round(int(f.read()) / 1000.0)
+    except Exception:
+        pass
+    try:                                      # V3.04: power supply / throttling of the Pi
+        if now - SYS.get("thr_t", 0) > 10:
+            SYS["thr"] = int(subprocess.run(["vcgencmd", "get_throttled"], capture_output=True, text=True, timeout=2).stdout.strip().split("=")[1], 16)
+            SYS["thr_t"] = now
+        d["thr"] = SYS.get("thr")
     except Exception:
         pass
     SYS["d"], SYS["t"] = d, now

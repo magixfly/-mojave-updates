@@ -1,18 +1,18 @@
 {
- "ver": "3.03",
+ "ver": "3.04",
  "neu": [
-  "Fix 3.02 (page did not start); no EV6 in the status view"
+  "Status view: CPU, RAM, TEMP and power supply (POWER OK / was low / low now)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 123584,
-   "md5": "715f2a33d03ecd5f9185c96b6c92a26f"
+   "s": 123970,
+   "md5": "2da328428f0db33d9507f349dd8c9a7a"
   },
   {
    "p": "web/index.html",
-   "s": 158478,
-   "md5": "59f3b2b76fea6b1682fa3d7f5d355e84"
+   "s": 159302,
+   "md5": "8cb9649ee2e79a30ae3c05bfbe1ba718"
   },
   {
    "p": "web/kia.png",
