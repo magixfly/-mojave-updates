@@ -1,18 +1,18 @@
 {
- "ver": "3.00",
+ "ver": "3.01",
  "neu": [
-  "Cosmo video on the Pi smoother: map 5 fps in PiP, no glass blur while video runs, Jmuxer player first"
+  "Pi: video stops while the status view is open (ran on invisibly and used the CPU)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123584,
-   "md5": "7f64e5c2c07c842628efa70a544587ef"
+   "md5": "597e384cbe38654516adfddf8913228c"
   },
   {
    "p": "web/index.html",
-   "s": 158006,
-   "md5": "eb0448c8e9d7a5c3aee60acfa8a85b78"
+   "s": 158402,
+   "md5": "98b7ba9e1c7afb30dfb0e9e19ded9cf9"
   },
   {
    "p": "web/kia.png",

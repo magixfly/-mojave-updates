@@ -1215,6 +1215,9 @@ function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}
   FPVM.forEach(k=>de.classList.toggle('fpv-'+k,k===m&&k!=='map'));const f=$('fpvIf');
   if(m==='map'){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/';
   $('bFpv').textContent={map:'FPV',full:'PiP',pip:'MAP'}[m];pipApply();setTimeout(()=>{set3d(is3d());resize()},60)}
+// V3.01: video only when it can be seen - status view open or page hidden -> stop the video (it ran on invisibly at ~100 % CPU)
+setInterval(()=>{const f=$('fpvIf'),k=document.getElementById('kiaOv'),hid=document.hidden||(k&&getComputedStyle(k).display!=='none');
+  if(fpvMode==='map'||hid){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/'},1000);
 function fpvNext(){const i=FPVM.indexOf(fpvMode);setFpv(FPVM[((i<0?0:i)+1)%FPVM.length],true)}
 // V2.85: PiP like on the box - drag to move, corner = size, tap = full screen; position/size remembered
 let PIP=null;try{PIP=JSON.parse(localStorage.pipPos||'null')}catch(e){}
