@@ -128,7 +128,10 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    protected void onResume() { super.onResume(); hideBars(); }
+    protected void onResume() { super.onResume(); hideBars();
+        try { if (web != null) web.onResume(); if (fpv != null && fpv.web != null) fpv.web.onResume(); } catch (Throwable t) { } }   // V1.74: weiter, wenn wieder vorne
+    @Override protected void onPause() { super.onPause();
+        try { if (web != null) web.onPause(); if (fpv != null && fpv.web != null) fpv.web.onPause(); } catch (Throwable t) { } }   // V1.74: im Hintergrund Karte und Video anhalten (Kartendownload und Status laufen weiter)
 
     @Override
     public void onWindowFocusChanged(boolean f) { super.onWindowFocusChanged(f); if (f) hideBars(); }
