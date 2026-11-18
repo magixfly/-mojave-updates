@@ -370,6 +370,7 @@ class Fpv {
         box.addView(tapCatcher, new FrameLayout.LayoutParams(-1, -1));
         corner = new TextView(a); corner.setText("\u25E2"); corner.setTextSize(14); corner.setTextColor(0xE64DB8FF); corner.setIncludeFontPadding(false);   // V1.70: kleines Dreieck = Größe ziehen
         box.addView(corner, new FrameLayout.LayoutParams(-2, -2, Gravity.RIGHT | Gravity.BOTTOM));
+        corner.setVisibility(mode == PIP ? View.VISIBLE : View.GONE);   // V1.71: nur im Bild-im-Bild
         try { android.webkit.CookieManager.getInstance().setCookie(base, "video_player_mode=1; path=/"); } catch (Throwable t) { }
         web.loadUrl(base + "/");
         keepFixing();
