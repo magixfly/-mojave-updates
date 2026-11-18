@@ -1,0 +1,10 @@
+### 276_pion  –  2026-11-18 11:41:05
+### Box: verbunden (192.168.178.235:5555)
+
+4089 outbox/276_pion.js.log
+62:		document.getElementById('video_element').srcObject = event.streams[0];
+76:	player_pion_params.socket = new WebSocket(player_pion_params.current_url);
+113:	$("#video_element").css("display", "block");
+120:	$("#video_element").css("display", "none");
+
+### Exit-Code: 0
