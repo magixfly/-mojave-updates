@@ -1,0 +1,10 @@
+### 286_hwdec  –  2026-11-18 12:10:05
+### Box: verbunden (192.168.178.235:5555)
+
+enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoDecodeLinuxZeroCopyGL,WebRtcHWDecoding
+Running as unit: run-p127414-i127415.service; invocation ID: d26b9330e24d4316a42bd69a8ecd5cf0
+11
+12:10:09 kiosk 1280 x 720 scale 1 http://localhost:8080/launcher.html
+Failed to open file 'outbox/286_pi.png' for writing: No such file or directory
+
+### Exit-Code: 1
