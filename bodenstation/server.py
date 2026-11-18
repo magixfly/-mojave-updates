@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.19"
+VERSION = "3.20"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -77,7 +77,7 @@ DEFAULTS = [
     ("vgps_lat", "48.1872125", "VGPS position (Core: 5JP7+VGQ St. Poelten)"),
     ("vgps_lon", "15.6138594", ""),
     ("vgps_sats", "12", "Satellites shown for VGPS"),
-    ("vgps_ssid", "Optimus Prime", "VGPS only in this WLAN (empty = always when no fix)"),
+    ("vgps_ssid", "Optimus Prime,Media", "VGPS only in these WLANs, comma separated (empty = always when no fix)"),
     ("names", "Thorsten,Mario", "Driver names of car 1 and car 2 (tap the name in the tracker to change), saved with each ride"),
     ("ride_min_m", "100", "Ride list: a ride/flight counts from this distance in metres ..."),
     ("ride_min_kmh", "20", "... AND this top speed in km/h (standing at home is not listed)"),
@@ -121,6 +121,8 @@ def save_cfg(cfg):
             f.write(f"{k}={cfg.get(k, '')}" + (f"   # {c}" if c else "") + "\n")
 
 CFG = load_cfg()
+if CFG.get("vgps_ssid", "").strip() == "Optimus Prime":   # V3.20: the 5 GHz home WLAN counts as home too
+    CFG["vgps_ssid"] = "Optimus Prime,Media"; save_cfg(CFG)
 def ci(k): return int(float(CFG[k]))
 def cf(k): return float(CFG[k])
 
@@ -823,12 +825,12 @@ def wifi_thread():
                         ssid = line[4:].strip()
             if ssid:
                 break
-        want = CFG.get("vgps_ssid", "").strip()
+        want = [x.strip() for x in CFG.get("vgps_ssid", "").split(",") if x.strip()]   # V3.20: several home WLANs (comma)
         try:                                     # V1.9.5: network cable plugged in = at home too
             lan = open("/sys/class/net/eth0/carrier").read().strip() == "1"
         except Exception:
             lan = False
-        HOME_WIFI["ok"] = (not want) or ssid == want or lan
+        HOME_WIFI["ok"] = (not want) or ssid in want or lan
         HOME_WIFI["ssid"] = ssid
         # WLAN quality: signal (dBm) and ping time to the router (ms)
         sig = ms = None

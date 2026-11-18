@@ -1449,5 +1449,8 @@ document.head.appendChild(st)}
 function ctFpvSet(f,m){window.ctFpvT=Date.now();const e=document.getElementById('fpvInfo');if(e)e.textContent=(f==null?'–':f)+' fps'+(m!=null?' · '+(+m).toFixed(1)+' Mbit/s':'')}
 addEventListener('message',e=>{const d=e.data;if(d&&d.ctinfo)ctFpvSet(d.ctinfo.fps,d.ctinfo.mbit)});
 setInterval(()=>{if(Date.now()-(window.ctFpvT||0)>5000){const e=document.getElementById('fpvInfo');if(e)e.textContent='no video'}},2000);</script>
+<script>/* V3.20: box split view - Core line only as wide as the visible map (not under the video) */
+setInterval(()=>{const c=document.getElementById('core');if(!c)return;const sp=document.documentElement.classList.contains('ctsplit')&&window.ctVW>0;
+  const mw=sp?Math.max(200,(innerWidth-window.ctVW)/S-c.offsetLeft-12)+'px':'';if(c.style.maxWidth!==mw){c.style.maxWidth=mw;c.style.whiteSpace=sp?'normal':''}},1000);</script>
 </body>
 </html>

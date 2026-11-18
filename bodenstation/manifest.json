@@ -1,7 +1,7 @@
 {
- "ver": "3.19",
+ "ver": "3.20",
  "neu": [
-  "FPV heartbeat dot; fps/Mbit in ... menu; auto zoom level by long press"
+  "Home position (VGPS) also in the Media WLAN; box split: Core line not under the video"
  ],
  "dateien": [
   {
@@ -11,8 +11,8 @@
   },
   {
    "p": "server.py",
-   "s": 125355,
-   "md5": "706b61edaa497347da2e7e5a8db92391"
+   "s": 125621,
+   "md5": "83328531ebf2183e159c8a67a8ebb26f"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 162808,
-   "md5": "dfeee4d477f472bcd68d71c83f1f1f11"
+   "s": 163237,
+   "md5": "7bba529f3c91a057c43eb0234048234d"
   },
   {
    "p": "web/kia.png",
