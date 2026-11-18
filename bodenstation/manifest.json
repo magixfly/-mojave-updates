@@ -1,7 +1,7 @@
 {
- "ver": "3.15",
+ "ver": "3.16",
  "neu": [
-  "Without GPS the map starts at the last real position (kept only on this Pi)"
+  "3D map: wider canvas on wide screens (iPhone), no black corner"
  ],
  "dateien": [
   {
@@ -12,7 +12,7 @@
   {
    "p": "server.py",
    "s": 124655,
-   "md5": "349bd43378413d08f2a690c21f14a5af"
+   "md5": "fb478ffc168c9159b258e4405b5b6372"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 160600,
-   "md5": "4f91d4f98b4cc0a6ce10b08ac6e032ac"
+   "s": 160766,
+   "md5": "51281bb76bf67b6cb65e54f11ca68ff5"
   },
   {
    "p": "web/kia.png",
