@@ -1,0 +1,28 @@
+### 227_check  –  2026-11-18 01:14:02
+### Box: verbunden (192.168.178.235:5555)
+
+{"ver": "2.83", "src": "USB", "dev": "/dev/ttyACM0", "age": 0.2, "lat": null, "l
+3075 /usr/bin/python3 /home/user1/Bodenstation/server.py
+adbx
+Bodenstation
+carlin-bridge
+carlin-bridge.err
+carlin-bridge.log
+carlin-run.sh
+ct122.apk
+ct123.apk
+ct124.apk
+ct125.apk
+Desktop
+Documents
+Downloads
+espbackup
+fl.sh
+Music
+Pictures
+Public
+st.sh
+Templates
+-- No entries --
+
+### Exit-Code: 0
