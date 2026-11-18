@@ -1,0 +1,8 @@
+### 272_jmtest  –  2026-11-18 11:19:10
+### Box: verbunden (192.168.178.235:5555)
+
+11:15:02 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 84 freezes / 10 min \u00b7 max 1.7 s \u00b7 loss 0.2 %", "n10": 84, "max": 1724, "all": 180, "loss": 0.175366
+11:16:50 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 6 freezes / 10 min \u00b7 max 1.8 s \u00b7 loss 0.1 %", "n10": 6, "max": 1750, "all": 6, "loss": 0.1375332741
+11:17:50 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 14 freezes / 10 min \u00b7 max 1.8 s \u00b7 loss 0.2 %", "n10": 14, "max": 1750, "all": 14, "loss": 0.2062285
+
+### Exit-Code: 0
