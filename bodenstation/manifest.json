@@ -1,7 +1,7 @@
 {
- "ver": "3.24",
+ "ver": "3.25",
  "neu": [
-  "Settings survive a reboot: wait for the server instead of demo defaults; FPV view and PiP saved on the Pi"
+  "Menu: Restart button next to Check now"
  ],
  "dateien": [
   {
@@ -12,7 +12,7 @@
   {
    "p": "server.py",
    "s": 126175,
-   "md5": "096cd23c828d6047d7151877de6ba2ca"
+   "md5": "eb92b3a72bf0be5a71614a200e540a2f"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 164397,
-   "md5": "07616171c34926e2b179d8038841214c"
+   "s": 165022,
+   "md5": "644573bed05a49a6adf6649aa94b15cb"
   },
   {
    "p": "web/kia.png",

@@ -375,7 +375,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <div id="updT" style="font-size:18px;line-height:1.45"></div>
     <div id="updN" style="font-size:15px;color:var(--mut);line-height:1.4"></div>
     <div class="bar" id="updBar" style="display:none"><i></i><span></span></div>
-    <div style="display:flex;gap:10px"><button class="mb" id="updC" style="flex:1">Check now</button><button class="mb pri" id="updI" style="flex:1.3;display:none">Install update</button></div>
+    <div style="display:flex;gap:10px"><button class="mb" id="updC" style="flex:1">Check now</button><button class="mb pri" id="updI" style="flex:1.3;display:none">Install update</button><button class="mb" id="updR" style="flex:1">Restart</button></div>
   </div>
   <h3>INFO</h3>
   <div id="info"></div>
@@ -1080,6 +1080,10 @@ function vcmp(a,b){const x=String(a).replace(/^v/i,'').split('.').map(Number),y=
 async function updLoad(){try{updShow(await j('/api/update'))}catch(e){$('updT').textContent='restarting …';clearTimeout(updTm);updTm=setTimeout(()=>updLoad(),1000)}}
 $('updC').onclick=async()=>{$('updT').textContent='checking …';try{updShow(await j2('/api/update',{check:1}))}catch(e){}};
 $('updI').onclick=async()=>{try{updShow(await j2('/api/update',{install:1}))}catch(e){}};
+{let arm=0;$('updR').onclick=async()=>{   // V3.25: restart the tracker program + reload the page (2nd tap within 4 s)
+  if(Date.now()-arm>4000){arm=Date.now();$('updR').textContent='Tap again';setTimeout(()=>{$('updR').textContent='Restart'},4000);return}
+  $('updR').textContent='Restarting …';try{await j2('/api/restart',{})}catch(e){}
+  for(let i=1;i<=30;i++){await new Promise(r=>setTimeout(r,1000));$('updT').textContent='restarting … '+Math.round(i*100/30)+' %';if(i>3){try{await j('/api/config');location.reload();return}catch(e){}}}location.reload()}}
 // V2.0.23: open the web page of the Core / Navi inside the tracker (full screen), big button back to the tracker
 var WEBON=false;
 function webOpen(url,title){WEBON=true;$('menu').style.display='none';$('webT').textContent=title+' · '+url.replace(/^http:\/\/|\/$/g,'');$('webL').style.display='';
