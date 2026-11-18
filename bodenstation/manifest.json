@@ -1,18 +1,19 @@
 {
- "ver": "3.07",
+ "ver": "3.08",
  "neu": [
-  "FPV Jmuxer: stays close to live (jumps / plays faster when behind), buffer shown in the video"
+  "FPV: Pion player shows the picture (was black)",
+  "Jmuxer catch-up without jumping (was black)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 124266,
-   "md5": "b2fc48ddfb964ba86064fff6118b0a3c"
+   "md5": "4941cd6f3f86cb6891c0fb50c9b58442"
   },
   {
    "p": "web/fpvstat.js",
-   "s": 5052,
-   "md5": "fad31757c9518913d221609d139a1b39"
+   "s": 5059,
+   "md5": "7f47849477295ce160de34184f24f0ad"
   },
   {
    "p": "web/index.html",
