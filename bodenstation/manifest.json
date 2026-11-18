@@ -1,19 +1,18 @@
 {
- "ver": "3.09",
+ "ver": "3.10",
  "neu": [
-  "Map is not drawn while FPV is full screen (more CPU for the video)",
-  "FPV log: decoder (hardware/software) and dropped frames"
+  "FPV Jmuxer: plays at the real 60 fps (CosmoStreamer used 30 fps -> ever growing delay)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 124266,
-   "md5": "845e22a8a5ae892a4e515a371162c53f"
+   "md5": "268c26ce247864264df79487290b9371"
   },
   {
    "p": "web/fpvstat.js",
-   "s": 5357,
-   "md5": "db8e171dfc843ad179ce42937a92c744"
+   "s": 6164,
+   "md5": "8e572bff046a028ab108e20173637f15"
   },
   {
    "p": "web/index.html",
