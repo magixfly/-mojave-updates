@@ -1,0 +1,78 @@
+# Mojave Ground Station V3.13 - settings (read at start)
+port=8080   # Web port of the ground station page
+serial=auto   # auto = first /dev/ttyACM* or /dev/ttyUSB*, then /dev/serial0 (ESP on the GPIO UART), or e.g. /dev/ttyACM0
+baud=115200   # Serial speed (USB from MT12/ESP32 ignores it)
+test=0   # 1 = start with simulated test ride
+test_ride=demo_ride.csv   # Demo ride played in test mode (empty or missing = circle around test_lat/test_lon)
+test_lat=48.2268   # Centre of the test ride
+test_lon=15.6485
+tiles_dir=tiles   # Tile folder (ki = AI tiles first, then ortho)
+online=1   # 1 = load missing tiles from the internet and keep them
+online_url=https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg   # Aerial photo basemap.at
+online_url2=https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}   # Fallback Esri
+online_timeout_s=10   # Seconds to wait for one internet tile
+ipv4_only=1   # 1 = download tiles only via IPv4 (faster in WLAN/hotspot)
+online_max_zoom=19   # Highest zoom loaded from the internet
+max_zoom=21   # Highest zoom on screen (20/21 = AI tiles or enlarged)
+still_kmh=2   # Below this speed the car counts as standing: map/arrow do not move
+still_jump_m=15   # ...unless the position jumps more than this (car carried away)
+still_jump_disarmed_m=60   # Disarmed and slower than 20 km/h: keep the position unless it jumps more than this (GPS jitter indoors)
+freeze_disarmed=1   # 1 = also stand still while the car is disarmed (mode OK/WAIT/...*)
+auto_zoom=1   # 1 = zoom out a little when driving fast (like a car navi), back in when standing
+auto_zoom_out=0.7   # Zoom levels out at auto_zoom_kmh
+auto_zoom_kmh=70   # Speed for the full zoom out
+usb_import=1   # 1 = copy tiles from a USB stick to the SD card automatically (only missing ones)
+usb_dir=/media/user1   # Where USB sticks are mounted
+batt_mah=6000   # Capacity of the car battery in mAh for x % left (0 = off; taken from the Core)
+range_warn_m=0   # Warn when the car is farther from home than this (m, 0 = off)
+sound=1   # 1 = warning beeps (3.5 mm jack / HDMI)
+core_live=1   # 1 = read temperatures and battery % from the Core over WLAN when reachable
+core_radio=1   # 1 = use the Core radio broadcast (ESP-NOW, Core V2.72+) heard by the ESP receiver - works without WLAN
+core_show=1   # 1 = show the Core line on the map (menu Core info)
+night=0   # 1 = night mode (darker map, menu)
+theme=glass   # V2.98: look of the tracker: glass (Liquid Glass) or hud (HUD Neon), menu Style
+map3d=1   # V2.0.61: 1 = 3D view (tilted satellite map like a car navigation, menu 3D view)
+me_gps=1   # 1 = use the GPS module on the ESP receiver as own position (pilot / ground station)
+me_timeout_s=5   # Own GPS older than this = not shown
+bright=100   # Display brightness in % (set with the menu)
+car_size=1.0   # Size of the car arrow on the map (1.5 = old size)
+wifi_dev=wlan0   # WLAN device for the quality display
+start_zoom=17
+orientation=north   # north = north up, heading = driving direction up
+cells=auto   # auto = below 16.9 V 4S, above 6S; or a number
+cell_pre=3.65   # Pre-warning (orange) below this cell voltage
+cell_warn=3.50   # Warning (red) below this cell voltage
+cell_warn_s=3   # ... for at least this many seconds
+lq_warn=50   # Warning below this link quality in % (0 = off)
+core_sync=1   # 1 = take warning limits from the Core (/api/cfg) when reachable, saved here
+core_hosts=192.168.178.213 mojave.local   # Core addresses, separated by spaces
+navi_hosts=   # V2.0.60: extra Navi addresses, separated by spaces (normally found automatically)
+home_min_sats=6   # Home point is set at first fix with this many satellites
+link_timeout_s=2   # No data for this long = link lost
+preload_radius_m=1000   # Default radius for map preload
+preload_zmin=12
+preload_zmax=19
+log=1   # 1 = write every ride as CSV into logs/
+vgps=1   # 1 = test GPS (VGPS) at home: fixed position when the real GPS has no fix (like the Core)
+vgps_lat=48.1872125   # VGPS position (Core: 5JP7+VGQ St. Poelten)
+vgps_lon=15.6138594
+vgps_sats=12   # Satellites shown for VGPS
+vgps_ssid=Optimus Prime   # VGPS only in this WLAN (empty = always when no fix)
+names=Thorsten,Mario   # Driver names of car 1 and car 2 (tap the name in the tracker to change), saved with each ride
+ride_min_m=100   # Ride list: a ride/flight counts from this distance in metres ...
+ride_min_kmh=20   # ... AND this top speed in km/h (standing at home is not listed)
+ride_min_s=60   # V2.0.12: ... AND it lasted at least this many seconds
+gap_s=15   # V2.0.15: track/replay: no position for this many seconds -> gap instead of a straight line
+ride_gap_s=10   # V2.0.11: no telemetry for this many seconds -> the ride/flight is finished, the next data start a new one
+map_names=1   # 1 = show the driver names next to the cars on the map (menu)
+icons=   # Map symbol per car (long tap): date|1:0,2:1 (0 arrow, 1 car, 2 plane), only valid on that day
+senders=   # Known senders (menu Sender): MAC/slot/type/symbol/colour/name/pilot;... slot 1 = prefers the main view, 2 = shown, 0 = hidden; type car/plane; symbol 0 arrow 1 car 2 plane; name = model, pilot = driver/pilot
+sender_auto=1   # 1 = a new sender (ESP firmware 1.3+) is shown automatically (0 = only senders set up in the menu)
+log_stop_s=3   # V2.0.11: after DISARM the log keeps running this many seconds; armed again within this time = same ride, later = the ride/flight is finished
+log_disarmed=0   # V2.0.8: 0 = arming starts a new ride/flight and nothing is logged while DISARMED (flight controller); 1 = log always
+trail_m=100   # V2.0.7: live tracks: the newest metres fully visible, then fading out over the same distance (0 = whole track)
+max_vehicles=6   # V2.0.6: how many vehicles (senders) are shown at the same time (2..6)
+veh_timeout_s=300   # V2.0.6: a vehicle without telemetry for this long frees its place (its last position stays until another one takes it)
+lang=en   # Language of the screen: en = English, de = Deutsch (menu: Language)
+launcher_s=10   # Start menu after power on: seconds until the tracker starts by itself (0 = no start menu)
+ui_scale=0   # 0 = fit screen automatically (layout for 1280x720), or e.g. 1.2 = bigger
