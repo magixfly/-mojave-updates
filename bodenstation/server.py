@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "2.96"
+VERSION = "2.97"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -262,12 +262,7 @@ def devices_scan():
                 cand.append(ip)
         skip = {core.get("ip"), BOX.get("ip")}
         try:
-            for l in subprocess.run(["ip", "neigh"], capture_output=True, text=True, timeout=3).stdout.splitlines():
-                f = l.split()
-                if f and "FAILED" not in l and re.match(r"^\d+\.\d+\.\d+\.\d+$", f[0]) and f[0] not in cand and f[0] not in skip:
-                    cand.append(f[0])
-            pre = [x[1] for x in ips if not x[1].startswith("127.")][0].rsplit(".", 1)[0]
-            cand += [pre + ".%d" % i for i in range(2, 21) if pre + ".%d" % i not in cand and pre + ".%d" % i not in skip]
+            pass   # V2.97: no address sweep for the Navi any more (search shorter)
         except Exception:
             pass
         for i, h in enumerate(cand):
@@ -294,13 +289,12 @@ def devices_scan():
         out["box"] = {"ok": box_ok or hs, "host": "Carlin box", "ip": bip, "hs": hs, "wifi": BOX.get("wifi") or "", "ver": BOX.get("ver") or ""}   # hs: the box is the hotspot
         cos = {"ok": False, "host": "cosmostreamer.local", "ip": None}
         cand = ([COSMO_LAST[0]] if COSMO_LAST[0] else []) + ["cosmostreamer.local"]
-        try:                                      # V2.0.58: alle bekannten Nachbarn im Netz (statt nur .2–.20)
-            for l in subprocess.run(["ip", "neigh"], capture_output=True, text=True, timeout=3).stdout.splitlines():
+        try:                                      # V2.0.58: alle bekannten Nachbarn im Netz (V2.97: nur wenn noch keine Adresse bekannt)
+            for l in ([] if COSMO_LAST[0] else subprocess.run(["ip", "neigh"], capture_output=True, text=True, timeout=3).stdout.splitlines()):
                 f = l.split()
                 if f and "FAILED" not in l and re.match(r"^\d+\.\d+\.\d+\.\d+$", f[0]) and f[0] not in cand and f[0] != bip:
                     cand.append(f[0])
-            pre = [x[1] for x in ips if not x[1].startswith("127.")][0].rsplit(".", 1)[0]
-            cand += [pre + ".%d" % i for i in range(2, 21) if pre + ".%d" % i not in cand]
+            pass   # V2.97: no .2-.20 sweep
         except Exception:
             pass
         for h in cand:

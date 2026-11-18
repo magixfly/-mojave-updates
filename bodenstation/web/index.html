@@ -84,6 +84,14 @@ html.ctsplit body #ui > #scale,html.ctsplit body #scale{bottom:calc(2.5% + 10px)
 html body #kiaBtn{color:#bfe6ff!important}   /* V2.95: STATUS in blue glass */
 #btns{gap:7px!important}
 html body #ui > #scale{right:14px!important;left:auto!important;bottom:10px!important}   /* V2.95: scale below the button column */
+/* V2.97: glass also for car cards, replay bar, 2nd scale; box chips with inner spacing; EV6 hidden while a warning is shown */
+html body .car{background:var(--gl)!important;box-shadow:var(--gs)!important;backdrop-filter:blur(14px) saturate(150%);border-width:1.5px!important}
+html body #play{background:linear-gradient(150deg,rgba(30,42,58,.62),rgba(10,14,20,.55))!important;border:1.5px solid var(--gb)!important;box-shadow:var(--gs)!important;backdrop-filter:blur(12px) saturate(160%);border-radius:14px!important}
+html body #play b{background:rgba(255,255,255,.04);border-color:rgba(140,205,255,.3)!important}
+html body #scale2{background:rgba(12,18,26,.45);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:3px 8px;box-shadow:var(--gs)}
+html body #top #esp,html body #top #sys,html body #top #wifi,html body #top #ctNet{padding:0 14px!important}
+html body #top #sys{gap:14px!important}
+body:has(#warn:not([style*="none"]):not(:empty)) #sideCar{display:none!important}
 #sideCar{display:none;position:fixed;left:440px;top:7px;width:150px;height:56px;perspective:600px;text-align:center;pointer-events:none;z-index:7}#sideCar img{height:50px;animation:kspin 9s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(74,222,128,.3));}@keyframes kspin{0%{transform:rotateY(-28deg)}50%{transform:rotateY(28deg)}100%{transform:rotateY(-28deg)}}
 /* V2.80: CosmoStreamer video on the Pi (MAP -> Split -> FPV -> PiP), like the box app */
 #bFpv{position:absolute;left:10px;bottom:10px;width:210px;height:54px;display:none;z-index:899;border:2px solid rgba(77,184,255,.6);border-radius:12px;background:#0b0f14;color:#4ade80;font-weight:700;font-size:24px;font-family:inherit}

@@ -1,18 +1,18 @@
 {
- "ver": "2.96",
+ "ver": "2.97",
  "neu": [
-  "Car 2 shown as car by default; long press on a car card changes the symbol (arrow, car, plane), choice is kept"
+  "Shorter device search; glass look for car cards, replay bar, scale; box: spacing inside the top chips, EV6 hidden during warnings"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 123879,
-   "md5": "7f21a150a4eea60bd30582ba00fa81e6"
+   "s": 123349,
+   "md5": "4e9e1b681da660a98757c61020c64030"
   },
   {
    "p": "web/index.html",
-   "s": 153601,
-   "md5": "fb574645035b664dbbc9410b874123d8"
+   "s": 154616,
+   "md5": "f913cc152f3516b0a71d9d841d835e62"
   },
   {
    "p": "web/kia.png",
