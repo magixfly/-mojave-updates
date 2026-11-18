@@ -449,18 +449,20 @@ function uiScale(){resize()}
 addEventListener('resize',resize);
 
 // ------------------------------------------------ tiles
-const tiles=new Map();let loading=0;const MAXLOAD=8;const want=[];const MAXTILES=180;   // V2.0.1: was 500-700
+const tiles=new Map();let loading=0;const MAXLOAD=8;const want=[];const MAXTILES=(navigator.deviceMemory||4)>=2?420:180;   // V2.0.1: was 500-700 (V3.14: Pi with 4 GB keeps more tiles -> less reloading)
 function tileUrl(z,x,y){return DEMO?DEMO_URL.replace('{z}',z).replace('{x}',x).replace('{y}',y):`/tile/${z}/${x}/${y}`}
 // V2.0.17: list of the AI tiles that exist - above the internet zoom, tiles that are not in it are not asked for at all
 let KIC=null;function kiLoad(){if(DEMO)return;fetch('/api/kicover').then(r=>r.json()).then(d=>{KIC=d;dirty=true}).catch(()=>{})}
 setTimeout(kiLoad,1500);setInterval(kiLoad,300000);
 function kiHas(z,x,y){const c=KIC[z]&&KIC[z][x];if(!c)return false;for(const r of c)if(y>=r[0]&&y<=r[1])return true;return false}
-function getTile(z,x,y){
+let TCX=0,TCY=0,TCZ=0;   // V3.14: centre tile of the view - nearest tiles load first
+function getTile(z,x,y,ring){
   const k=z+'/'+x+'/'+y;let t=tiles.get(k);
   if(t){t.used=frame;if(t.st===3&&performance.now()>t.retry){t.st=0}else return t}
   if(!t){t={st:0,used:frame};tiles.set(k,t)}
   if(t.st===0&&KIC&&!DEMO&&z>(+((C.cfg||{}).online_max_zoom)||19)&&!kiHas(z,x,y)){t.st=3;t.fail=9;t.retry=performance.now()+300000;return t}
   if(t.st===0){t.st=1;want.push([z,x,y,t])}
+  t.pri=(ring?1e6:0)+(z===TCZ?(x-TCX)*(x-TCX)+(y-TCY)*(y-TCY):5e5);   // V3.14: visible before ring, near before far
   return t;
 }
 // V2.0.7: a tile that keeps failing (no internet, not in cache) is retried less and less often (2.5 s ... 60 s)
@@ -477,13 +479,14 @@ function strokeTrail(tr,n1,k,cx,cy,col,lw){const T=trailA(tr,n1);let p=proj(tr[T
 function tFail(t,z){t.fail=(t.fail||0)+1;if(z>(+((C.cfg||{}).online_max_zoom)||19))t.fail=Math.max(t.fail,5);   // above the internet zoom only AI tiles exist -> a missing one stays missing
   t.st=3;t.retry=performance.now()+Math.min(60000,2500*2**(t.fail-1))}
 function pump(){
+  if(want.length>1)want.sort((p,q)=>(p[3].pri||0)-(q[3].pri||0));   // V3.14
   while(loading<MAXLOAD&&want.length){
     const [z,x,y,t]=want.shift();
     if(t.used<frame-2){t.st=0;continue}
     loading++;const im=new Image();im.crossOrigin='anonymous';let done=false;
     // V2.0.1: a tile request that never answers must not block the map for ever (map stuck at x %)
     const to=setTimeout(()=>{if(done)return;done=true;im.onload=im.onerror=null;im.src='';loading--;tFail(t,z);dirty=true;pump()},8000);
-    im.onload=()=>{if(done)return;done=true;clearTimeout(to);loading--;t.img=im;t.st=2;dirty=true;pump()};
+    im.onload=()=>{if(done)return;done=true;clearTimeout(to);loading--;const ok=()=>{t.img=im;t.st=2;dirty=true;pump()};(im.decode?im.decode():Promise.resolve()).then(ok,ok)};   // V3.14: decode the picture before drawing (no stutter while the map is drawn)
     im.onerror=()=>{if(done)return;done=true;clearTimeout(to);loading--;if(DEMO)DEMO_BLOCKED=true;tFail(t,z);dirty=true;pump()};
     im.src=tileUrl(z,x,y);
   }
@@ -516,9 +519,10 @@ function draw(){
   const ca=Math.abs(Math.cos(V.rot)),sa=Math.abs(Math.sin(V.rot)),hw=(W/2+Math.abs(MOFF.x))/sc+2,hh=(H/2+Math.abs(oy))/sc+2,ex=ca*hw+sa*hh,ey=sa*hw+ca*hh;
   const vx0=Math.floor((cx-ex)/TS),vx1=Math.floor((cx+ex)/TS),vy0=Math.floor((cy-ey)/TS),vy1=Math.floor((cy+ey)/TS);
   ctx.imageSmoothingEnabled=true;
+  TCX=Math.floor(cx/TS);TCY=Math.floor(cy/TS);TCZ=tz;
   for(let ty=y0;ty<=y1;ty++)for(let tx=x0;tx<=x1;tx++){
     const wx=((tx%n)+n)%n,dx=tx*TS-cx,dy=ty*TS-cy;
-    if(tx<vx0||tx>vx1||ty<vy0||ty>vy1){const t=getTile(tz,wx,ty);continue}
+    if(tx<vx0||tx>vx1||ty<vy0||ty>vy1){getTile(tz,wx,ty,1);continue}
     const t=getTile(tz,wx,ty);need++;
     if(t.st===2){ctx.drawImage(t.img,dx,dy,TS+.6,TS+.6);have++;continue}
     if(t.st!==3&&t.fail>=2)have++;   // V2.0.7: retrying a known-missing tile does not hold the bar

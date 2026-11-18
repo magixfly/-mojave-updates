@@ -1,7 +1,7 @@
 {
- "ver": "3.13",
+ "ver": "3.14",
  "neu": [
-  "Only Janus player (Jmuxer/Pion removed); lighter: no piled-up data requests, slower polling during video/status, only 2 fps redraw without fresh data"
+  "Map: nearest visible tiles load first, pictures decoded before drawing (no stutter), more tiles kept on a 4 GB Pi"
  ],
  "dateien": [
   {
@@ -12,7 +12,7 @@
   {
    "p": "server.py",
    "s": 123830,
-   "md5": "aeb49ddcf9c89c51c9c405a2bbe127b3"
+   "md5": "0a09ade0ea993b18f754aadb822e573c"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 159951,
-   "md5": "e33334009a696e919ed839c484a0f5c7"
+   "s": 160527,
+   "md5": "f441c23d15c619a4cc310beb0f7e7e40"
   },
   {
    "p": "web/kia.png",
