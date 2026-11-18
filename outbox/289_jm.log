@@ -1,0 +1,15 @@
+### 289_jm  –  2026-11-18 12:19:04
+### Box: verbunden (192.168.178.235:5555)
+
+12:12:47 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 7 freezes / 10 min \u00b7 max 2.3 s \u00b7 loss 0.3 %", "dec": null, "drop": 102, "lag": null, "n10": 7, "max": 2293, "all": 7, "loss": 0.3492369930911812, "mins": 1, "player": "Janus"}}
+12:13:47 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 17 freezes / 10 min \u00b7 max 2.3 s \u00b7 loss 0.4 %", "dec": null, "drop": 268, "lag": null, "n10": 17, "max": 2293, "all": 17, "loss": 0.35017902705881115, "mins": 2, "player": "Janus"}}
+12:14:47 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 17 freezes / 10 min \u00b7 max 2.3 s \u00b7 loss 0.4 %", "dec": null, "drop": 1589, "lag": null, "n10": 17, "max": 2293, "all": 17, "loss": 0.35916778365422913, "mins": 3, "player": "Janus"}}
+%Cpu(s): 54.0 us, 20.0 sy,  0.0 ni, 24.3 id,  0.1 wa,  0.0 hi,  1.6 si,  0.0 st 
+ 132382 user1     20   0  199.9g 270900 179180 R 116.4   7.0   3:04.63 chromium
+ 132318 user1     20   0   52.9g 188224 134604 S  58.3   4.8   1:44.63 chromium
+ 132320 user1     20   0   52.5g 105648  85136 S  21.3   2.7   0:30.81 chromium
+player-pion.js
+player-webrtc.js
+player-websockets.js
+
+### Exit-Code: 0
