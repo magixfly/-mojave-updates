@@ -258,11 +258,11 @@ class Fpv {
             return;
         }
         startWeb();
-        web.evaluateJavascript("window.ctFill=" + (m == SPLIT) + ";", null);
+        web.evaluateJavascript("window.ctFill=" + (m == SPLIT) + ";window.ctZoom=" + (m == FULL ? "1.2" : "0") + ";", null);   // V1.73: Vollbild 20 % größer, Überstand abgeschnitten
         fill = (m == SPLIT);
         FrameLayout.LayoutParams lp;
         if (m == FULL) {
-            lp = new FrameLayout.LayoutParams(-1, -1);
+            lp = new FrameLayout.LayoutParams(-1, Math.round(root.getHeight() * 0.95f), Gravity.CENTER_VERTICAL);   // V1.73: 95 % Höhe, schwarzer Rand oben/unten
             tapCatcher.setVisibility(View.GONE);
         } else if (m == SPLIT) {
             lp = new FrameLayout.LayoutParams(vw, splitH(vw), Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -396,7 +396,7 @@ class Fpv {
         + "var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';document.head.appendChild(st);}"
         + "var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
         + "#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
-        + "max-width:none!important;max-height:none!important;object-fit:'+(window.ctFill?'fill':'contain')+'!important;background:#000!important;z-index:2147483647!important;transform:none!important}';"
+        + "max-width:none!important;max-height:none!important;object-fit:'+(window.ctFill?'fill':'contain')+'!important;background:#000!important;z-index:2147483647!important;transform:'+(window.ctZoom?'scale('+window.ctZoom+')':'none')+'!important}html,body{overflow:hidden!important}';"
         + "if(st.textContent!=css)st.textContent=css;"
         + "var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;"
         + "v.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';if(v.paused&&v.play)try{v.play();}catch(e){}}"
@@ -408,7 +408,7 @@ class Fpv {
     boolean fill = false;
     void fix() {
         if (web == null) return;
-        web.evaluateJavascript("window.ctFill=" + fill + ";", null);
+        web.evaluateJavascript("window.ctFill=" + fill + ";window.ctZoom=" + (mode == FULL ? "1.2" : "0") + ";", null);
         a.web.evaluateJavascript("document.documentElement.classList.toggle('ctsplit'," + (mode == SPLIT) + ")", null);
         web.evaluateJavascript(JS, new android.webkit.ValueCallback<String>() {
             public void onReceiveValue(String n) {
