@@ -70,14 +70,14 @@ display:flex;align-items:center;justify-content:center;font-size:34px;font-weigh
 #lockPill span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800}
 body.night #map{filter:brightness(.55) saturate(.8)}
 /* V2.80: CosmoStreamer video on the Pi (MAP -> Split -> FPV -> PiP), like the box app */
-#bFpv{position:absolute;left:10px;bottom:10px;width:210px;height:54px;display:none;z-index:6;border:2px solid rgba(77,184,255,.6);border-radius:12px;background:#0b0f14;color:#4ade80;font-weight:700;font-size:24px;font-family:inherit}
+#bFpv{position:fixed;left:10px;bottom:10px;width:210px;height:54px;display:none;z-index:899;border:2px solid rgba(77,184,255,.6);border-radius:12px;background:#0b0f14;color:#4ade80;font-weight:700;font-size:24px;font-family:inherit}
 html.cosmoOn #bFpv{display:block}
 #fpvBox{display:none;position:absolute;background:#000;z-index:5;overflow:hidden}
 #fpvBox iframe{width:100%;height:100%;border:0;pointer-events:none;background:#000}
 html.fpv-split #fpvBox{display:block;left:calc(230px + (100% - 230px)*.42);top:52px;right:0;bottom:0}
 html.fpv-split #map{width:calc((100% - 230px)*.42)!important;right:auto!important}
 html.fpv-full #fpvBox{display:block;left:0;top:0;right:0;bottom:0;z-index:20}
-html.fpv-full #bFpv{z-index:21;opacity:.7}
+html.fpv-full #bFpv{opacity:.7}
 html.fpv-pip #fpvBox{display:block;right:100px;top:64px;width:36%;height:36%;border:2px solid rgba(77,184,255,.6);border-radius:10px}
 /* V2.0.61: 3D view - tilted map like a car navigation (Pi and Kia box) */
 html.v3d body{background:linear-gradient(180deg,#22324a 0,#10161d 38%)}
@@ -227,7 +227,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
 </head>
 <body>
 <div id="ui">
-<canvas id="map"></canvas><div id="fpvBox"><iframe id="fpvIf" allow="autoplay"></iframe></div><button id="bFpv">Split</button>
+<canvas id="map"></canvas><div id="fpvBox"><iframe id="fpvIf" allow="autoplay"></iframe></div>
 
 <div id="top"><span id="dot"></span><b>CORE TRACKER</b><span id="ver" style="color:var(--mut);font-size:19px;font-weight:400"></span><span id="bInfo"></span><span id="src"></span><span id="chips"></span><span id="dlst" style="color:var(--acc);font-size:17px;font-weight:700;font-variant-numeric:tabular-nums"></span>
 <span class="sp"></span><span id="boxst" title="Carlin box in the car: map download (tap = stop / start)"></span><span id="cl" title="Claude is connected remotely (Pi Connect)"><i></i>CLAUDE</span><span id="sys" title="Pi: CPU / RAM / temperature"></span><span id="esp"></span><span id="wifi"></span><span id="snd" title="Warning sound on/off"></span><span id="clock"></span></div>
@@ -868,7 +868,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
    cls($('vMah'),st.left==null?null:st.left<20?'bad':st.left<35?'mid':null)}
   {const e=$('att');e.dataset.hdg=(st.hdg!=null&&st.lat!=null)?Math.round(st.hdg):'';   // V2.0.48: heading for the box compass (not shown)
    if(st.mode||st.pitch||st.roll){const r=st.roll||0,p=st.pitch||0,flip=Math.abs(r)>100||Math.abs(p)>100;
-     e.innerHTML=[st.mode&&!document.getElementById('ctMaps')?`<span style="color:${modeCol(st.mode)}">${modeTxt(st.mode,st.sats,st.lat)}</span>`:'',flip?'<span style="color:var(--red)">UPSIDE DOWN</span>':''].filter(x=>x).join(' · ');e.style.display=e.innerHTML?'':'none';e.classList.toggle('flip',flip)}else e.style.display='none'}   // V2.0.47: no pitch/roll/heading
+     e.innerHTML=[false&&st.mode?`<span style="color:${modeCol(st.mode)}">${modeTxt(st.mode,st.sats,st.lat)}</span>`:'',flip?'<span style="color:var(--red)">UPSIDE DOWN</span>':''].filter(x=>x).join(' · ');e.style.display=e.innerHTML?'':'none';e.classList.toggle('flip',flip)}else e.style.display='none'}   // V2.0.47: no pitch/roll/heading
   {const n=st.dl||0,e=$('dlst'),pr=st.pre,pc=pr&&pr.total?Math.floor(pr.done/pr.total*100):0;   // V2.0.16: background map preload with progress bar
    const h=(pr?`<span title="map preload ${pr.done}/${pr.total}">↓ Preload <span style="display:inline-block;width:70px;height:14px;border-radius:7px;background:#2a3440;vertical-align:-1px;position:relative;overflow:hidden"><span style="position:absolute;left:0;top:0;bottom:0;width:${pc}%;background:var(--acc)"></span><span style="position:absolute;inset:0;font-size:11px;line-height:14px;text-align:center;color:#fff">${pc} %</span></span> <span style="color:var(--mut);font-size:15px">${pr.done} of ${pr.total}</span></span>`:(MAPS||n)?((MAPS?'Map '+MAPP+' %':'Map')+(n?' · ↓ '+n+' from internet':'')):'');e.style.whiteSpace='nowrap';
    if(e.dataset.h!==h){e.dataset.h=h;e.innerHTML=h}}
@@ -1170,8 +1170,7 @@ function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}
   if(m==='map'){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/';
   $('bFpv').textContent={map:'Split',split:'FPV',full:'PiP',pip:'MAP'}[m];setTimeout(()=>{set3d(is3d());resize()},60)}
 function fpvNext(){setFpv(FPVM[(FPVM.indexOf(fpvMode)+1)%4],true)}
-function fpvPoll(){try{const b=$('bFpv'),cs=getComputedStyle(b),rc=b.getBoundingClientRect();fetch('/api/dbg',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cls:document.documentElement.className,disp:cs.display,z:cs.zIndex,r:[rc.left,rc.top,rc.width,rc.height],ih:innerHeight,iw:innerWidth,S,top:document.elementFromPoint(rc.left+20,rc.top+20)?.id})})}catch(e){}
-  fetch('/api/devices').then(r=>r.json()).then(r=>{const c=r.d&&r.d.cosmo,on=!!(c&&c.ok)&&!document.getElementById('ctMaps');
+function fpvPoll(){fetch('/api/devices').then(r=>r.json()).then(r=>{const c=r.d&&r.d.cosmo,on=!!(c&&c.ok)&&!document.getElementById('ctMaps');
   document.documentElement.classList.toggle('cosmoOn',on);if(!on&&fpvMode!=='map')setFpv('map');else if(on&&fpvMode==='map'&&fpvWant!=='map')setFpv(fpvWant)}).catch(()=>{})}   // V2.0.61
 function set3d(on,save){const m=cv.style,sp3=on&&(document.documentElement.classList.contains('ctsplit')||document.documentElement.classList.contains('fpv-split'));if(sp3)on=false;   // V2.76: box split view = flat map
   ['top','left','width','height'].forEach(k=>m.removeProperty(k));document.documentElement.classList.toggle('v3d',on);
@@ -1357,5 +1356,6 @@ document.head.appendChild(st)}
  const on=/^Maps\s/.test(x)&&!/complete|paused|waiting|full|Touch/.test(x)&&now-chg<10000;   // text changes while MB count grows
  img.style.animationPlayState=on?'running':'paused'},1000)})();
 </script>
+<button id="bFpv">Split</button>
 </body>
 </html>
