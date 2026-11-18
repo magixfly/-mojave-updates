@@ -1,18 +1,18 @@
 {
- "ver": "3.06",
+ "ver": "3.07",
  "neu": [
-  "FPV: the chosen player gets 45 s before switching to the fallback"
+  "FPV Jmuxer: stays close to live (jumps / plays faster when behind), buffer shown in the video"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 124266,
-   "md5": "8affd89c7969315500141443121520c3"
+   "md5": "b2fc48ddfb964ba86064fff6118b0a3c"
   },
   {
    "p": "web/fpvstat.js",
-   "s": 4190,
-   "md5": "f65706efaabe2776f6d80c5956e85c11"
+   "s": 5052,
+   "md5": "fad31757c9518913d221609d139a1b39"
   },
   {
    "p": "web/index.html",
