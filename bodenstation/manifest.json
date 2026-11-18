@@ -1,18 +1,18 @@
 {
- "ver": "3.02",
+ "ver": "3.03",
  "neu": [
-  "Status view lighter: map behind it paused, EV6 animation without per-frame effects"
+  "Fix 3.02 (page did not start); no EV6 in the status view"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123584,
-   "md5": "901fb048cdc27be08576016f233166af"
+   "md5": "715f2a33d03ecd5f9185c96b6c92a26f"
   },
   {
    "p": "web/index.html",
-   "s": 158688,
-   "md5": "01c4f0007afd26df6a557c385683dd70"
+   "s": 158478,
+   "md5": "59f3b2b76fea6b1682fa3d7f5d355e84"
   },
   {
    "p": "web/kia.png",
