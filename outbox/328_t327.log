@@ -1,0 +1,13 @@
+### 328_t327  –  2026-11-18 22:29:03
+### Box: verbunden (192.168.178.235:5555)
+
+3.27 läuft
+{"theme": "hud", "map3d": "0"}
+{"ok": true, "s": {"slot": 1, "type": "car", "sym": 1, "col": "1a8cff", "name": "MOJAVE", "pilot": "", "mac": "46:E8:8D:5C:B4:65"}}
+theme=hud   # V2.98: look of the tracker: glass (Liquid Glass) or hud (HUD Neon), menu Style
+map3d=0   # V2.0.61: 1 = 3D view (tilted satellite map like a car navigation, menu 3D view)
+names=Thorsten,Mario   # Driver names of car 1 and car 2 (tap the name in the tracker to change), saved with each ride
+icons=   # Map symbol per car (long tap): date|1:0,2:1 (0 arrow, 1 car, 2 plane), only valid on that day
+senders=46:E8:8D:5C:B4:65/1/car/1/1a8cff/MOJAVE/   # Known senders (menu Sender): MAC/slot/type/symbol/colour/name/pilot;... slot 1 = prefers the main view, 2 =
+
+### Exit-Code: 0
