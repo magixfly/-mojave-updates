@@ -262,7 +262,8 @@ class Fpv {
         fill = (m == SPLIT);
         FrameLayout.LayoutParams lp;
         if (m == FULL) {
-            lp = new FrameLayout.LayoutParams(-1, Math.round(root.getHeight() * 0.95f), Gravity.CENTER_VERTICAL);   // V1.73: 95 % Höhe, schwarzer Rand oben/unten
+            lp = new FrameLayout.LayoutParams(-1, -1);   // V1.83: ganzer Bildschirm schwarz (oben Leiste/unten Karte nicht mehr sichtbar)
+            int pv = Math.round(root.getHeight() * 0.025f); box.setPadding(0, pv, 0, pv);   // Video 95 % hoch
             tapCatcher.setVisibility(View.GONE);
         } else if (m == SPLIT) {
             lp = new FrameLayout.LayoutParams(vw, splitH(vw), Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -271,6 +272,7 @@ class Fpv {
             lp = pipParams();
             tapCatcher.setVisibility(View.VISIBLE);
         }
+        if (m != FULL) box.setPadding(0, 0, 0, 0);
         box.setLayoutParams(lp);
         if (corner != null) corner.setVisibility(m == PIP ? View.VISIBLE : View.GONE);
         box.setAlpha(m == PIP ? ALPHA[Math.max(0, Math.min(2, a.prefs.getInt("pipA", 0)))] : 1f);
@@ -421,7 +423,7 @@ class Fpv {
         + "var st=document.getElementById('ctfpv');if(!st){st=document.createElement('style');st.id='ctfpv';document.head.appendChild(st);}"
         + "var css='html,body{background:#000!important;overflow:hidden!important}body *{visibility:hidden!important}"
         + "#'+id+'{display:block!important;visibility:visible!important;position:fixed!important;left:0!important;top:0!important;width:100vw!important;height:100vh!important;"
-        + "max-width:none!important;max-height:none!important;object-fit:'+(window.ctFill?'fill':'contain')+'!important;background:#000!important;z-index:2147483647!important;transform:'+(window.ctZoom?'scale('+window.ctZoom+')':'none')+'!important}html,body{overflow:hidden!important}';"
+        + "max-width:none!important;max-height:none!important;object-fit:'+(window.ctFill?'fill':'contain')+'!important;background:#000!important;z-index:2147483647!important;transform:'+(window.ctZoom?'scale('+window.ctZoom+',1)':'none')+'!important}html,body{overflow:hidden!important}';"
         + "if(st.textContent!=css)st.textContent=css;"
         + "var vs=document.querySelectorAll('video,audio');for(var k=0;k<vs.length;k++){var v=vs[k];v.muted=true;v.volume=0;"
         + "v.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';if(v.paused&&v.play)try{v.play();}catch(e){}}"
