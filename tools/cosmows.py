@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Mini-WebSocket-Client für den CosmoStreamer (Port 8081): sendet JSON-Befehle, gibt Text-Antworten aus (Passwörter maskiert)."""
 import socket, base64, os, struct, sys, json, time, re
-host = sys.argv[1]; cmds = sys.argv[2:]; wait = 25
+host = sys.argv[1]; cmds = sys.argv[2:]; wait = 20
 s = socket.create_connection((host, 8081), timeout=5)
 key = base64.b64encode(os.urandom(16)).decode()
 s.send(("GET / HTTP/1.1\r\nHost: %s:8081\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Key: %s\r\nSec-WebSocket-Version: 13\r\nOrigin: http://%s\r\n\r\n" % (host, key, host)).encode())
