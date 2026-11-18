@@ -1,0 +1,10 @@
+### 297_cs  –  2026-11-18 16:30:04
+### Box: verbunden (192.168.178.235:5555)
+
+cosmo: {'ok': True, 'host': 'cosmostreamer.local', 'ip': '192.168.178.175'}
+{"ver": "3.11", "src": "USB", "dev": "/d
+192.168.178.159: 
+192.168.178.175: <title>Cosmostreamer NG - 192.168.178.175
+    <string name="cosmo">192.168.178.175</string>
+
+### Exit-Code: 0
