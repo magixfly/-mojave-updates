@@ -1,18 +1,18 @@
 {
- "ver": "2.97",
+ "ver": "2.98",
  "neu": [
-  "Shorter device search; glass look for car cards, replay bar, scale; box: spacing inside the top chips, EV6 hidden during warnings"
+  "Two styles: Liquid Glass and HUD Neon, switch in the ... menu (Style)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 123349,
-   "md5": "4e9e1b681da660a98757c61020c64030"
+   "s": 123584,
+   "md5": "8d07202f470d42a9509b0b1aa39266f8"
   },
   {
    "p": "web/index.html",
-   "s": 154616,
-   "md5": "f913cc152f3516b0a71d9d841d835e62"
+   "s": 157686,
+   "md5": "70c851988576cd5746ec2ac63237d1bb"
   },
   {
    "p": "web/kia.png",

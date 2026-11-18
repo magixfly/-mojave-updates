@@ -92,6 +92,19 @@ html body #scale2{background:rgba(12,18,26,.45);backdrop-filter:blur(10px);borde
 html body #top #esp,html body #top #sys,html body #top #wifi,html body #top #ctNet{padding:0 14px!important}
 html body #top #sys{gap:14px!important}
 body:has(#warn:not([style*="none"]):not(:empty)) #sideCar{display:none!important}
+/* V2.98: styles - Liquid Glass (default) and HUD Neon, menu "Style" */
+html.th-glass body .t,html.th-glass body .car{background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.5)!important;border-radius:22px!important;backdrop-filter:blur(8px) saturate(200%) contrast(1.1);-webkit-backdrop-filter:blur(8px) saturate(200%) contrast(1.1);box-shadow:inset 2px 2px 1px rgba(255,255,255,.4),inset -2px -2px 2px rgba(255,255,255,.14),0 12px 28px rgba(0,0,0,.35)!important}
+html.th-glass body #btns > *,html.th-glass body #bFpv,html.th-glass body #kiaBtn,html.th-glass body #play,html.th-glass body #ui > #scale{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.55)!important;backdrop-filter:blur(8px) saturate(200%) contrast(1.1);-webkit-backdrop-filter:blur(8px) saturate(200%) contrast(1.1);box-shadow:inset 2px 2px 1px rgba(255,255,255,.45),inset -2px -2px 2px rgba(255,255,255,.16),0 12px 28px rgba(0,0,0,.35)!important}
+html.th-glass body #btns > *{border-radius:50%!important}
+html.th-glass body #top #esp,html.th-glass body #top #sys,html.th-glass body #top #wifi,html.th-glass body #top #ctNet,html.th-glass body #top #snd{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.4)!important;border-radius:16px!important;box-shadow:inset 1px 1px 1px rgba(255,255,255,.35)!important}
+html.th-hud body{--acc:#00e5ff}
+html.th-hud body #map{filter:brightness(.62) saturate(.75)}
+html.th-hud body .t,html.th-hud body .car,html.th-hud body #btns > *,html.th-hud body #bFpv,html.th-hud body #kiaBtn,html.th-hud body #play,html.th-hud body #ui > #scale{background:rgba(5,8,12,.6)!important;border:1px solid rgba(0,229,255,.8)!important;border-radius:4px!important;box-shadow:0 0 12px rgba(0,229,255,.4),inset 0 0 14px rgba(0,229,255,.1)!important;backdrop-filter:none!important;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
+html.th-hud body .t .l,html.th-hud body .car .l,html.th-hud body #btns > *{color:#00e5ff!important}
+html.th-hud body .t .v{text-shadow:0 0 10px rgba(0,229,255,.7)}
+html.th-hud body #top{background:rgba(3,6,10,.92)!important;border-bottom:1px solid rgba(0,229,255,.5)!important}
+html.th-hud body #top #esp,html.th-hud body #top #sys,html.th-hud body #top #wifi,html.th-hud body #top #ctNet,html.th-hud body #top #snd{background:transparent!important;border:1px solid rgba(0,229,255,.6)!important;border-radius:3px!important;box-shadow:0 0 8px rgba(0,229,255,.3)!important}
+html.th-hud body #side{background:rgba(3,6,10,.94)!important}
 #sideCar{display:none;position:fixed;left:440px;top:7px;width:150px;height:56px;perspective:600px;text-align:center;pointer-events:none;z-index:7}#sideCar img{height:50px;animation:kspin 9s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(74,222,128,.3));}@keyframes kspin{0%{transform:rotateY(-28deg)}50%{transform:rotateY(28deg)}100%{transform:rotateY(-28deg)}}
 /* V2.80: CosmoStreamer video on the Pi (MAP -> Split -> FPV -> PiP), like the box app */
 #bFpv{position:absolute;left:10px;bottom:10px;width:210px;height:54px;display:none;z-index:899;border:2px solid rgba(77,184,255,.6);border-radius:12px;background:#0b0f14;color:#4ade80;font-weight:700;font-size:24px;font-family:inherit}
@@ -335,7 +348,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <div class="seg noWin" id="sBright"><b data-v="20">20 %</b><b data-v="40">40 %</b><b data-v="70">70 %</b><b data-v="100">100 %</b></div>
     <label>Track length (live + replay) · how much of the line stays visible</label>
     <div style="display:flex;gap:10px;align-items:center"><button class="mb" id="mTlM" style="width:90px;font-size:30px">−</button><b id="mTl" style="flex:1;text-align:center;font-size:26px"></b><button class="mb" id="mTlP" style="width:90px;font-size:30px">+</button></div>
-    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="m3d">3D view: on</button><button class="mb" id="mMaps" style="display:none">Maps</button>
+    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="m3d">3D view: on</button><button class="mb" id="mTheme">Style: Glass</button><button class="mb" id="mMaps" style="display:none">Maps</button>
     <button class="mb" id="mCore">Core info: on</button>
     <button class="mb" id="mSound">Warning sound: on</button>
     <label>Drivers</label>
@@ -1121,7 +1134,7 @@ async function init(){
     $('pRad').value=c.preload_radius_m;$('pZ').value=c.preload_zmax;
     try{if(!localStorage.ori)V.head=c.orientation==='heading'}catch(e){V.head=c.orientation==='heading'}}
   catch(e){DEMO=true;C.max_zoom=19;demoInit()}
-  setNight(isNight());set3d(is3d());loadIcons();V.z=C.start_zoom;{let s=null;try{s=localStorage.getItem('az')}catch(e){}setAz(s===null?C.auto_zoom:s==='1')}$('ver').textContent=DEMO?'demo':'V'+((C.cfg&&C.cfg.version)||'');uiScale();
+  setNight(isNight());set3d(is3d());setTheme(curTheme());loadIcons();V.z=C.start_zoom;{let s=null;try{s=localStorage.getItem('az')}catch(e){}setAz(s===null?C.auto_zoom:s==='1')}$('ver').textContent=DEMO?'demo':'V'+((C.cfg&&C.cfg.version)||'');uiScale();
   if(V.head){$('bOri').textContent='▲';$('bOri').classList.add('on')}
   setInterval(poll,150);poll();loop();
 }
@@ -1193,6 +1206,8 @@ function seg(id,val,fn){const el=$(id);el.querySelectorAll('b').forEach(b=>{b.cl
 async function j2(u,b){try{return await (await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)})).json()}catch(e){return {}}}
 function isNight(){return !!(C.cfg&&C.cfg.night==='1')}
 function is3d(){return !(C.cfg&&C.cfg.map3d==='0')}
+function curTheme(){return (C.cfg&&C.cfg.theme)==='hud'?'hud':'glass'}
+function setTheme(t,save){const de=document.documentElement;de.classList.toggle('th-glass',t==='glass');de.classList.toggle('th-hud',t==='hud');$('mTheme').textContent='Style: '+(t==='hud'?'HUD':'Glass');if(save){if(C.cfg)C.cfg.theme=t;j2('/api/set',{theme:t})}dirty=true}   // V2.98
 // V2.80: CosmoStreamer video on the Pi - MAP -> Split -> FPV -> PiP; the iframe only exists outside MAP (saves memory)
 const FPVM=['map','full','pip'];/* V2.85: no split on the Pi */let fpvMode='map',fpvWant='map';try{fpvWant=localStorage.fpvMode||'map'}catch(e){}if(!FPVM.includes(fpvWant))fpvWant='map';
 function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}catch(e){}}const de=document.documentElement;
@@ -1232,7 +1247,7 @@ function set3d(on,save){const m=cv.style,sp3=on&&(document.documentElement.class
 {let rt=0;const re3=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(is3d())set3d(true)},300)};addEventListener('resize',re3);new MutationObserver(re3).observe(document.head,{childList:true,subtree:true,characterData:true});let wasSp=null;new MutationObserver(()=>{const s=document.documentElement.classList.contains('ctsplit');if(s!==wasSp){wasSp=s;clearTimeout(rt);rt=setTimeout(()=>set3d(is3d()),200)}}).observe(document.documentElement,{attributes:true,attributeFilter:['class']})}   // V2.76: split on/off -> flat/3D again   // V2.0.62: box app adds its CSS later -> measure again
 function setNight(on,save){document.body.classList.toggle('night',on);if(save){if(C.cfg)C.cfg.night=on?'1':'0';j2('/api/set',{night:on?1:0})}updMenu()}
 $('mNight').onclick=()=>setNight(!isNight(),true);{const sc=$('scale');if(sc&&sc.parentNode.id==='side')$('ui').appendChild(sc)}   // V2.93: scale out of the side column (was hidden bottom left)
-$('m3d').onclick=()=>set3d(!is3d(),true);$('mMaps').onclick=()=>{const c=document.getElementById('ctMaps')||$('boxst');if(c)c.click()};setInterval(()=>{const c=document.getElementById('ctMaps'),bs=$('boxst'),b=$('mMaps'),src=c||(bs&&bs.textContent.trim()?bs:null);b.style.display=src?'':'none';if(src){const t=(src.textContent||'').trim()||'Maps';if(b.textContent!==t)b.textContent=t}},1000);$('bFpv').onclick=fpvNext;$('fpvBox').onclick=()=>{if(fpvMode==='full'&&Date.now()-(window.pipTap||0)>500)fpvNext()};setTimeout(fpvPoll,3000);setInterval(fpvPoll,15000);
+$('m3d').onclick=()=>set3d(!is3d(),true);$('mTheme').onclick=()=>setTheme(curTheme()==='hud'?'glass':'hud',true);$('mMaps').onclick=()=>{const c=document.getElementById('ctMaps')||$('boxst');if(c)c.click()};setInterval(()=>{const c=document.getElementById('ctMaps'),bs=$('boxst'),b=$('mMaps'),src=c||(bs&&bs.textContent.trim()?bs:null);b.style.display=src?'':'none';if(src){const t=(src.textContent||'').trim()||'Maps';if(b.textContent!==t)b.textContent=t}},1000);$('bFpv').onclick=fpvNext;$('fpvBox').onclick=()=>{if(fpvMode==='full'&&Date.now()-(window.pipTap||0)>500)fpvNext()};setTimeout(fpvPoll,3000);setInterval(fpvPoll,15000);
 $('mCore').onclick=()=>{const v=coreShow()?'0':'1';if(C.cfg)C.cfg.core_show=v;j2('/api/set',{core_show:+v});updMenu();hud()};
 function azShow(){azIcon();const v=+C.auto_zoom_out||0;$('azV').innerHTML=v<=0?'off':`${v.toFixed(1)} levels · <span style="color:var(--mut)">${(2**v).toFixed(1)}× wider at ${C.auto_zoom_kmh} km/h</span>`}
 function azStep(d){C.auto_zoom_out=Math.max(0,Math.min(3,Math.round(((+C.auto_zoom_out||0)+d)*10)/10));if(C.cfg)C.cfg.auto_zoom_out=String(C.auto_zoom_out);azShow();j2('/api/set',{auto_zoom_out:C.auto_zoom_out});dirty=true}
