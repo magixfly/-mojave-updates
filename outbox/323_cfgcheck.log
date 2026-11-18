@@ -1,0 +1,13 @@
+### 323_cfgcheck  –  2026-11-18 20:29:04
+### Box: verbunden (192.168.178.235:5555)
+
+auto_zoom=1   # 1 = zoom out a little wh
+sound=1   # 1 = warning beeps (3.5 mm ja
+night=0   # 1 = night mode (darker map, 
+theme=hud   # V2.98: look of the tracker
+map3d=1   # V2.0.61: 1 = 3D view (tilted
+orientation=north   # north = north up, 
+-rw-rw-r-- 1 user1 user1 6437 Nov 18 20:26 config.txt
+{"ver": "3.23", "src": "USB", "dev": "/d
+
+### Exit-Code: 0
