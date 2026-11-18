@@ -1,0 +1,12 @@
+### 263_app175  –  2026-11-18 10:29:19
+### Box: verbunden (192.168.178.235:5555)
+
+Success
+    versionName=1.75
+11-18 10:30:05.568   538   538 D CTFPV   : FPVSTATE id=video_element rs=4 w=1920 @1
+11-18 10:30:11.597   538   538 D CTFPV   : FPVSTATE id=video_element rs=4 w=1920 @1
+11-18 10:30:19.597   538   538 D CTFPV   : FPVSTATE id=video_element rs=4 w=1920 @1
+11-18 10:30:25.606   538   538 D CTFPV   : FPVSTATE id=video_element rs=4 w=1920 @1
+11-18 10:30:33.592   538   538 D CTFPV   : FPVSTATE id=video_element rs=4 w=1920 @1
+
+### Exit-Code: 0
