@@ -1,0 +1,27 @@
+### 253_cosmo_settings  –  2026-11-18 09:18:05
+### Box: verbunden (192.168.178.235:5555)
+
+== / 200 19513
+== /settings 404 169
+== /settings.html 404 169
+== /video 404 169
+== /config 404 169
+== /api/settings 404 169
+== /api/config 404 169
+href="css/style4.css?1547549180"
+href="/icons/android-icon-192x192.png"
+href="/icons/apple-icon-114x114.png"
+href="/icons/apple-icon-120x120.png"
+href="/icons/apple-icon-144x144.png"
+href="/icons/apple-icon-152x152.png"
+href="/icons/apple-icon-180x180.png"
+href="/icons/apple-icon-57x57.png"
+href="/icons/apple-icon-60x60.png"
+href="/icons/apple-icon-72x72.png"
+href="/icons/apple-icon-76x76.png"
+href="/icons/favicon-16x16.png"
+href="/icons/favicon-32x32.png"
+href="/icons/favicon-96x96.png"
+href="/manifest.json"
+
+### Exit-Code: 0
