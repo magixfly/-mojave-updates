@@ -1,18 +1,18 @@
 {
- "ver": "2.94",
+ "ver": "2.95",
  "neu": [
-  "Frosted glass look; split: scale above the black margin"
+  "STATUS in blue glass; buttons closer; scale below the buttons"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "798be68da07cab4c5138729aba1e2bf6"
+   "md5": "5ccaf3afb8432fbeab8e0210d1dcb64a"
   },
   {
    "p": "web/index.html",
-   "s": 152601,
-   "md5": "65ad94053ec876b78d438d218e27a369"
+   "s": 152837,
+   "md5": "4e854eefe093ebfd170fe14a8f81759a"
   },
   {
    "p": "web/kia.png",
