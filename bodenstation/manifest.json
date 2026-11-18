@@ -1,18 +1,18 @@
 {
- "ver": "2.91",
+ "ver": "2.92",
  "neu": [
-  "Status page: swinging EV6 picture instead of 'Display on Kia'; box: small EV6 in the top bar"
+  "Box: EV6 picture hidden in split view"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "7f6fbd819c147d2059a93aac3e28667e"
+   "md5": "62c201cb1b912fbc2b26778f5bbc994c"
   },
   {
    "p": "web/index.html",
-   "s": 150259,
-   "md5": "178a694aa7e3df93de5d9d655e02f2fd"
+   "s": 150304,
+   "md5": "57fe98f2b6e4c082f44530cb24431799"
   },
   {
    "p": "web/kia.png",
