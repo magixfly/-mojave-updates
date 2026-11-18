@@ -1,18 +1,18 @@
 {
- "ver": "2.84",
+ "ver": "2.85",
  "neu": [
-  "Fix: page did not start in 2.83; video button above the side panel"
+  "Pi video: no split; PiP movable (drag) and resizable (corner), remembered; tap PiP = full screen"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "84ccbf2d929356b9a55eac526900b249"
+   "md5": "ddb7f485858350b8b6fd4ee3d5ef8a38"
   },
   {
    "p": "web/index.html",
-   "s": 145481,
-   "md5": "1e6d28357c6826e3990165a36dfee9fa"
+   "s": 147666,
+   "md5": "89ebb92d4a2d4d9e828df9d3d0b61eea"
   }
  ]
 }
