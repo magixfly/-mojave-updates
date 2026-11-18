@@ -1,18 +1,18 @@
 {
- "ver": "2.93",
+ "ver": "2.94",
  "neu": [
-  "Scale no longer hidden bottom left; maps status in the ... menu also on the Pi; split: black margin also beside the cards"
+  "Frosted glass look; split: scale above the black margin"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "6ba3df18f3e5ea8a3b3659bf92ee32c2"
+   "md5": "798be68da07cab4c5138729aba1e2bf6"
   },
   {
    "p": "web/index.html",
-   "s": 150823,
-   "md5": "4e7c2f3fe0fe7cdcdc7688e91dc1be39"
+   "s": 152601,
+   "md5": "65ad94053ec876b78d438d218e27a369"
   },
   {
    "p": "web/kia.png",
