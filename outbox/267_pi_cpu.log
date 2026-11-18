@@ -1,0 +1,26 @@
+### 267_pi_cpu  –  2026-11-18 10:49:02
+### Box: verbunden (192.168.178.235:5555)
+
+top - 10:49:06 up 59 min,  2 users,  load average: 4.46, 8.24, 6.01
+Tasks: 224 total,   2 running, 222 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 10.8 us,  3.2 sy,  0.0 ni, 85.9 id,  0.0 wa,  0.0 hi,  0.1 si,  0.0 st 
+MiB Mem :   3795.6 total,   2046.6 free,    747.1 used,   1151.1 buff/cache     
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   1961 user1     20   0  199.9g 224800 149584 S  16.3   5.8  24:34.69 chromium
+  57335 user1     20   0  427712  33364  27256 R   6.6   0.9   0:00.20 wf-pane+
+   1848 user1     20   0   52.8g 168516 114248 S   5.6   4.3  13:15.27 chromium
+   1294 user1     20   0   52.8g 276536 228660 S   3.3   7.1   5:29.83 chromium
+   1325 user1     20   0 2135656  41996  13008 S   2.3   1.1   2:10.75 python3
+   1854 user1     20   0   52.5g 109396  85496 S   2.3   2.8   4:32.73 chromium
+     66 root       0 -20       0      0      0 I   0.7   0.0   2:51.00 kworker+
+   1073 user1     20   0    8540   4716   3548 S   0.7   0.1   0:20.27 dbus-da+
+   1075 user1     20   0  509056 100948  73648 S   0.7   2.6   1:39.60 labwc
+temp=65.2'C
+throttled=0x0
+--- FPV-Messung Tracker (letzte Einträge)
+10:45:08 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 88 freezes / 10 min \u00b7 max 1.8 s \u00b7 loss 0.7 %", "n10": 88, "max": 1808, "all": 88, "loss": 0.6785100627408887, "mins": 8, "player": "Janus"}}
+10:46:08 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 97 freezes / 10 min \u00b7 max 1.8 s \u00b7 loss 0.6 %", "n10": 97, "max": 1808, "all": 97, "loss": 0.6330119716071618, "mins": 9, "player": "Janus"}}
+10:47:08 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 101 freezes / 10 min \u00b7 max 1.8 s \u00b7 loss 0.6 %", "n10": 101, "max": 1808, "all": 101, "loss": 0.5686001931418564, "mins": 10, "player": "Janus"}}
+10:48:08 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 99 freezes / 10 min \u00b7 max 2.8 s \u00b7 loss 0.8 %", "n10": 99, "max": 2775, "all": 112, "loss": 0.7749075688532677, "mins": 11, "player": "Janus"}}
+
+### Exit-Code: 0
