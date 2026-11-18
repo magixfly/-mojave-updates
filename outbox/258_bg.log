@@ -1,0 +1,36 @@
+### 258_bg  –  2026-11-18 09:46:04
+### Box: verbunden (192.168.178.235:5555)
+
+%Cpu(s): 35.3 us, 14.1 sy,  0.0 ni, 49.8 id,  0.0 wa,  0.0 hi,  0.7 si,  0.0 st 
+MiB Mem :   3795.6 total,   1949.5 free,    825.8 used,   1184.5 buff/cache     
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   2969.8 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+ 377664 user1     20   0  199.9g 229516 148224 R  66.9   5.9   2:57.38 chromium
+ 377597 user1     20   0   52.9g 173248 116060 S  36.1   4.5   1:33.42 chromium
+ 377513 user1     20   0   52.8g 275976 227636 S  14.9   7.1   0:38.55 chromium
+ 377599 user1     20   0   52.5g 105756  85124 S  14.2   2.7   0:34.42 chromium
+     66 root       0 -20       0      0      0 I   6.3   0.0   6:08.06 kworker+
+   1099 user1     20   0  508628 100892  73588 S   6.0   2.6  23:45.00 labwc
+ 379939 user1     20   0   52.6g  79424  63516 S   5.0   2.0   0:10.80 chromium
+server pid 1359
+ 377709 user1     20   0 1741408  38688  13020 S   9.1   1.0   0:03.66 python3
+   1359 user1     20   0 1741408  38688  13020 S   0.0   1.0   0:00.49 python3
+ 377378 user1     20   0 1741408  38688  13020 S   0.0   1.0   0:02.43 python3
+ 377379 user1     20   0 1741408  38688  13020 S   0.0   1.0   0:00.11 python3
+ 377380 user1     20   0 1741408  38688  13020 S   0.0   1.0   0:00.24 python3
+ 377381 user1     20   0 1741408  38688  13020 S   0.0   1.0   0:00.14 python3
+ 377382 user1     20   0 1741408  38688  13020 S   0.0   1.0   0:00.07 python3
+ 377384 user1     20   0 1741408  38688  13020 S   0.0   1.0   0:00.01 python3
+ 377385 user1     20   0 1741408  38688  13020 S   0.0   1.0   0:00.00 python3
+ wlan0: 3469468541 3186753    0 24719    0     0          0    137119 287225475  525327    0    0    0     0       0          0
+ wlan0: 3478341311 3193190    0 24723    0     0          0    137130 287244927  525474    0    0    0     0       0          0
+[23456.116618] Goodix-TS 10-005d: Error writing 1 bytes to 0x814e: -5
+[24379.555735] Goodix-TS 10-005d: Error reading 10 bytes from 0x814e: -5
+[24379.557944] Goodix-TS 10-005d: Error writing 1 bytes to 0x814e: -5
+[24393.320696] Goodix-TS 10-005d: Error reading 10 bytes from 0x814e: -5
+[24393.325232] Goodix-TS 10-005d: Error writing 1 bytes to 0x814e: -5
+temp=69.1'C
+throttled=0x50000
+
+### Exit-Code: 0
