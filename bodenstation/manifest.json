@@ -1,18 +1,18 @@
 {
- "ver": "3.10",
+ "ver": "3.11",
  "neu": [
-  "FPV Jmuxer: plays at the real 60 fps (CosmoStreamer used 30 fps -> ever growing delay)"
+  "FPV Jmuxer: 60-fps change removed again (black picture)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 124266,
-   "md5": "268c26ce247864264df79487290b9371"
+   "md5": "3d174c8150f8a3259724258bc80aedfe"
   },
   {
    "p": "web/fpvstat.js",
-   "s": 6164,
-   "md5": "8e572bff046a028ab108e20173637f15"
+   "s": 5423,
+   "md5": "e483a40f2b68ad7093dff58bb362c2d7"
   },
   {
    "p": "web/index.html",
