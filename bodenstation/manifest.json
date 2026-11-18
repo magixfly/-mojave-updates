@@ -1,7 +1,7 @@
 {
- "ver": "3.25",
+ "ver": "3.26",
  "neu": [
-  "Menu: Restart button next to Check now"
+  "STATE button in the right column under ..."
  ],
  "dateien": [
   {
@@ -12,7 +12,7 @@
   {
    "p": "server.py",
    "s": 126175,
-   "md5": "eb92b3a72bf0be5a71614a200e540a2f"
+   "md5": "2ad084c84d298e4787786b516dd218f6"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 165022,
-   "md5": "644573bed05a49a6adf6649aa94b15cb"
+   "s": 164793,
+   "md5": "5e4c02ee3cb4ecac8e03ecd732b12c8e"
   },
   {
    "p": "web/kia.png",
