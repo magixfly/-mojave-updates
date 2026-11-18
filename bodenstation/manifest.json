@@ -1,7 +1,7 @@
 {
- "ver": "3.16",
+ "ver": "3.17",
  "neu": [
-  "3D map: wider canvas on wide screens (iPhone), no black corner"
+  "FPV live indicator: fps and Mbit/s, blinking dot, red NO VIDEO"
  ],
  "dateien": [
   {
@@ -12,12 +12,12 @@
   {
    "p": "server.py",
    "s": 124655,
-   "md5": "fb478ffc168c9159b258e4405b5b6372"
+   "md5": "f93a74f74d4d88091af453de6845df05"
   },
   {
    "p": "web/fpvstat.js",
-   "s": 5423,
-   "md5": "e483a40f2b68ad7093dff58bb362c2d7"
+   "s": 6230,
+   "md5": "ebc5ae2d9c729ebe4d5f435ab59f5b4b"
   },
   {
    "p": "web/index.html",

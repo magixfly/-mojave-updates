@@ -1,4 +1,4 @@
-/* V3.11 / App 1.80: 60-fps change removed again (black picture) – V3.07 / App 1.77 (Jmuxer catch-up) – V3.05 / App 1.75: FPV stall meter for the CosmoStreamer page (Janus / Pion / Jmuxer).
+/* V3.17 / App 1.84: overlay = live indicator (fps, Mbit/s, blinking dot; red when no frames). V3.11 / App 1.80: 60-fps change removed again (black picture) – V3.07 / App 1.77 (Jmuxer catch-up) – V3.05 / App 1.75: FPV stall meter for the CosmoStreamer page (Janus / Pion / Jmuxer).
    Counts freezes (no new video frame for > 300 ms), longest freeze, WebRTC packet loss; small overlay top left;
    one log line per minute (console "CTSTAT ..."; in the tracker also POST /api/dbg). */
 (function () {
@@ -37,6 +37,7 @@
       pc.getStats().then(function (r) {
         r.forEach(function (s) {
           if (s.type === 'inbound-rtp' && (s.kind || s.mediaType) === 'video') {
+            if (s.bytesReceived !== undefined) { var tn = Date.now(); if (window.ctB0 !== undefined && tn > window.ctBt) window.ctMbit = (s.bytesReceived - window.ctB0) * 8 / 1000 / (tn - window.ctBt); window.ctB0 = s.bytesReceived; window.ctBt = tn; }
             if (lost0 === null) { lost0 = s.packetsLost; recv0 = s.packetsReceived; }
             var l = s.packetsLost - lost0, rc = s.packetsReceived - recv0;
             loss = rc + l > 0 ? 100 * l / (rc + l) : 0;
@@ -63,7 +64,7 @@
     } catch (e) {}
   }, 250);
   var box = document.createElement('div');
-  box.style.cssText = 'position:fixed;left:8px;top:8px;z-index:2147483647;visibility:visible!important;pointer-events:none;font:700 15px/1.3 sans-serif;color:#4ade80;background:rgba(0,0,0,.55);padding:3px 9px;border-radius:7px;white-space:nowrap';
+  box.style.cssText = 'position:fixed;left:8px;top:8px;z-index:2147483647;visibility:visible!important;pointer-events:none;font:700 13px/1.3 sans-serif;color:#4ade80;background:rgba(0,0,0,.55);padding:3px 9px;border-radius:7px;white-space:nowrap';
   function text() {
     var n = Date.now(), w = ev.filter(function (e) { return n - e[0] < 600000; }), mx = 0;
     w.forEach(function (e) { if (e[1] > mx) mx = e[1]; });
@@ -73,7 +74,15 @@
     box.style.color = w.length ? (mx > 700 ? '#f87171' : '#fbbf24') : '#4ade80';
     return { s: s, dec: window.ctDec || null, drop: window.ctDrop, lag: window.ctLag, n10: w.length, max: mx, all: ev.length, loss: loss, mins: Math.round((n - t0) / 60000) };
   }
-  setInterval(function () { if (!box.parentNode && document.body) document.body.appendChild(box); var t = text(); box.textContent = t.s; box.style.display = window.ctStatHide ? 'none' : ''; }, 1000);
+  var f0 = 0, blink = false;
+  setInterval(function () {   // live indicator: frames in the last second, data rate, dot blinks while the stream runs
+    if (!box.parentNode && document.body) document.body.appendChild(box);
+    var fps = frames - f0; f0 = frames; blink = !blink;
+    var live = fps > 0 && Date.now() - lastF < 1500;
+    box.style.color = live ? '#4ade80' : '#f87171';
+    box.textContent = (live ? (blink ? '\u25cf ' : '\u25cb ') : '\u25cf ') + fps + ' fps' + (window.ctMbit != null ? ' \u00b7 ' + window.ctMbit.toFixed(1) + ' Mbit/s' : '') + (live ? '' : ' \u00b7 NO VIDEO');
+    box.style.display = window.ctStatHide ? 'none' : '';
+  }, 1000);
   setInterval(function () {
     var t = text(); t.player = NAMES[mode()];
     console.log('CTSTAT ' + JSON.stringify(t));
