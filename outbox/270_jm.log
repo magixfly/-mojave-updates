@@ -1,0 +1,13 @@
+### 270_jm  –  2026-11-18 11:17:04
+### Box: verbunden (192.168.178.235:5555)
+
+name="player">2
+--- Tracker
+11:11:02 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 72 freezes / 10 min \u00b7 max 1.2 s \u00b7 loss 0.2 %", "n10": 72, "max": 1164, "all": 1
+11:12:02 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 75 freezes / 10 min \u00b7 max 1.7 s \u00b7 loss 0.2 %", "n10": 75, "max": 1724, "all": 1
+11:13:02 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 77 freezes / 10 min \u00b7 max 1.7 s \u00b7 loss 0.2 %", "n10": 77, "max": 1724, "all": 1
+11:14:02 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 76 freezes / 10 min \u00b7 max 1.7 s \u00b7 loss 0.2 %", "n10": 76, "max": 1724, "all": 1
+11:15:02 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 84 freezes / 10 min \u00b7 max 1.7 s \u00b7 loss 0.2 %", "n10": 84, "max": 1724, "all": 1
+11:16:50 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 6 freezes / 10 min \u00b7 max 1.8 s \u00b7 loss 0.1 %", "n10": 6, "max": 1750, "all": 6, 
+
+### Exit-Code: 0
