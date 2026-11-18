@@ -430,7 +430,7 @@ class Fpv {
         + "v.poster='data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEAAAAALAAAAAABAAEAAAIBAAA=';if(v.paused&&v.play)try{v.play();}catch(e){}}"
         + "var m=document.getElementById(id);window.ctT0=window.ctT0||Date.now();var ok=m&&m.videoWidth>0;"
         + "if(!window.ctdbg||Date.now()-window.ctdbg>6000){window.ctdbg=Date.now();console.log('FPVSTATE id='+id+' rs='+(m&&m.readyState)+' w='+(m&&m.videoWidth));}"
-        + "if(!ok&&Date.now()-window.ctT0>15000){var pf=(ck.match(/ct_player=(\\d)/)||[])[1]||mo,nm=mo===pf?(pf==='0'?'1':'0'):pf;console.log('FPV: kein Bild -> Modus '+nm);document.cookie='video_player_mode='+nm+';path=/;max-age=31536000';location.reload();}"
+        + "if(!ok&&Date.now()-window.ctT0>45000){console.log('FPV: kein Bild mit Modus '+mo+' nach 45 s');var pf=(ck.match(/ct_player=(\\d)/)||[])[1]||mo,nm=mo===pf?(pf==='0'?'1':'0'):pf;console.log('FPV: kein Bild -> Modus '+nm);document.cookie='video_player_mode='+nm+';path=/;max-age=31536000';location.reload();}"
         + "return ok?'ok':(mo==='0'?'Jmuxer':'Janus');})()";
 
     boolean fill = false;
