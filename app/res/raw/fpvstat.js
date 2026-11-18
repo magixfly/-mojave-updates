@@ -64,7 +64,7 @@
     } catch (e) {}
   }, 250);
   var box = document.createElement('div');
-  box.style.cssText = 'position:fixed;left:8px;top:8px;z-index:2147483647;visibility:visible!important;pointer-events:none;font:700 13px/1.3 sans-serif;color:#4ade80;background:rgba(0,0,0,.55);padding:3px 9px;border-radius:7px;white-space:nowrap';
+  box.style.cssText = 'position:fixed;left:8px;top:8px;width:10px;height:10px;border-radius:50%;z-index:2147483647;visibility:visible!important;pointer-events:none;background:#22c55e;box-shadow:0 0 0 2px rgba(0,0,0,.5);transition:opacity .3s';
   function text() {
     var n = Date.now(), w = ev.filter(function (e) { return n - e[0] < 600000; }), mx = 0;
     w.forEach(function (e) { if (e[1] > mx) mx = e[1]; });
@@ -75,13 +75,15 @@
     return { s: s, dec: window.ctDec || null, drop: window.ctDrop, lag: window.ctLag, n10: w.length, max: mx, all: ev.length, loss: loss, mins: Math.round((n - t0) / 60000) };
   }
   var f0 = 0, blink = false;
-  setInterval(function () {   // live indicator: frames in the last second, data rate, dot blinks while the stream runs
+  setInterval(function () {   // V3.19: heartbeat dot only - green blinking while frames come, red after 3 s without any frame; numbers go to the ... menu
     if (!box.parentNode && document.body) document.body.appendChild(box);
     var fps = frames - f0; f0 = frames; blink = !blink;
-    var live = fps > 0 && Date.now() - lastF < 1500;
-    box.style.color = live ? '#4ade80' : '#f87171';
-    box.textContent = (live ? (blink ? '\u25cf ' : '\u25cb ') : '\u25cf ') + fps + ' fps' + (window.ctMbit != null ? ' \u00b7 ' + window.ctMbit.toFixed(1) + ' Mbit/s' : '') + (live ? '' : ' \u00b7 NO VIDEO');
+    var dead = Date.now() - lastF >= 3000;
+    box.style.background = dead ? '#ef4444' : '#22c55e';
+    box.style.opacity = dead ? '1' : (blink ? '.95' : '.35');
     box.style.display = window.ctStatHide ? 'none' : '';
+    window.ctFps = fps;
+    try { (parent !== window ? parent : window).postMessage({ ctinfo: { fps: fps, mbit: window.ctMbit } }, '*'); } catch (e) {}
   }, 1000);
   setInterval(function () {
     var t = text(); t.player = NAMES[mode()];

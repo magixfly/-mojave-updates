@@ -437,6 +437,12 @@ class Fpv {
         if (web == null) return;
         web.evaluateJavascript("window.ctFill=" + fill + ";window.ctZoom=" + (mode == FULL ? "1.2" : "0") + ";", null);
         a.web.evaluateJavascript("document.documentElement.classList.toggle('ctsplit'," + (mode == SPLIT) + ")", null);
+        web.evaluateJavascript("JSON.stringify([window.ctFps==null?null:window.ctFps,window.ctMbit==null?null:window.ctMbit])", new android.webkit.ValueCallback<String>() {   // V1.85: fps / Mbit/s ins ...-Menü der Karte
+            public void onReceiveValue(String r) {
+                try { String j = new org.json.JSONTokener(r).nextValue().toString(); org.json.JSONArray x = new org.json.JSONArray(j);
+                    if (!x.isNull(0)) a.web.evaluateJavascript("window.ctFpvSet&&ctFpvSet(" + x.get(0) + "," + (x.isNull(1) ? "null" : x.get(1)) + ")", null); } catch (Throwable t) { }
+            }
+        });
         web.evaluateJavascript(JS, new android.webkit.ValueCallback<String>() {
             public void onReceiveValue(String n) {
                 boolean ok = n != null && n.contains("ok");
