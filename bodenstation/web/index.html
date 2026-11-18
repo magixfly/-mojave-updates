@@ -1141,7 +1141,7 @@ async function init(){
   resize();
   try{V.head=localStorage.ori==='h'}catch(e){}
   try{const c=await j('/api/config');Object.assign(C,{max_zoom:+c.max_zoom,start_zoom:+c.start_zoom,orientation:c.orientation,cell_warn:+c.cell_warn,car_size:+c.car_size||1,auto_zoom:+c.auto_zoom,auto_zoom_out:+c.auto_zoom_out,auto_zoom_kmh:+c.auto_zoom_kmh||60});
-    V.lat=+c.test_lat;V.lon=+c.test_lon;C.cfg=c;document.body.classList.toggle('win',!!c.win);   // V2.0.24: English only (German removed)
+    V.lat=+(c.map_lat||c.test_lat);V.lon=+(c.map_lon||c.test_lon);   /* V3.15: start at the last real position */C.cfg=c;document.body.classList.toggle('win',!!c.win);   // V2.0.24: English only (German removed)
     $('pRad').value=c.preload_radius_m;$('pZ').value=c.preload_zmax;
     try{if(!localStorage.ori)V.head=c.orientation==='heading'}catch(e){V.head=c.orientation==='heading'}}
   catch(e){DEMO=true;C.max_zoom=19;demoInit()}

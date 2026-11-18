@@ -1,7 +1,7 @@
 {
- "ver": "3.14",
+ "ver": "3.15",
  "neu": [
-  "Map: nearest visible tiles load first, pictures decoded before drawing (no stutter), more tiles kept on a 4 GB Pi"
+  "Without GPS the map starts at the last real position (kept only on this Pi)"
  ],
  "dateien": [
   {
@@ -11,8 +11,8 @@
   },
   {
    "p": "server.py",
-   "s": 123830,
-   "md5": "0a09ade0ea993b18f754aadb822e573c"
+   "s": 124655,
+   "md5": "349bd43378413d08f2a690c21f14a5af"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 160527,
-   "md5": "f441c23d15c619a4cc310beb0f7e7e40"
+   "s": 160600,
+   "md5": "4f91d4f98b4cc0a6ce10b08ac6e032ac"
   },
   {
    "p": "web/kia.png",

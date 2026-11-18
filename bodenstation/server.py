@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.14"
+VERSION = "3.15"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -22,6 +22,8 @@ DEFAULTS = [
     ("baud", "115200", "Serial speed (USB from MT12/ESP32 ignores it)"),
     ("test", "0", "1 = start with simulated test ride"),
     ("test_ride", "demo_ride.csv", "Demo ride played in test mode (empty or missing = circle around test_lat/test_lon)"),
+    ("map_lat", "", "V3.15: map start without GPS = last real position (written automatically, stays only on this Pi)"),
+    ("map_lon", "", ""),
     ("test_lat", "48.2268", "Centre of the test ride"),
     ("test_lon", "15.6485", ""),
     ("tiles_dir", "tiles", "Tile folder (ki = AI tiles first, then ortho)"),
@@ -1636,6 +1638,19 @@ def serial_win(dev):
         S["dev"] = ""
     time.sleep(1)
 
+def lastpos_thread():   # V3.15: remember the last real GPS position as map start (local config only)
+    while True:
+        time.sleep(60)
+        try:
+            lat, lon = S.get("lat"), S.get("lon")
+            if lat and lon and not TEST["on"] and (S.get("sats") or 0) >= 5:
+                o = (float(CFG.get("map_lat") or 0), float(CFG.get("map_lon") or 0))
+                if not o[0] or haversine(o[0], o[1], lat, lon) > 200:
+                    CFG["map_lat"], CFG["map_lon"] = "%.5f" % lat, "%.5f" % lon
+                    save_cfg(CFG)
+        except Exception as e:
+            print("lastpos", e)
+
 def serial_thread():
     while True:
         dev = find_dev()
@@ -2520,6 +2535,7 @@ def bridge_repair():
 def main():
     if CFG.get("ipv4_only", "1") == "1":
         _ipv4_only()
+    threading.Thread(target=lastpos_thread, daemon=True).start()
     threading.Thread(target=serial_thread, daemon=True).start()
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
