@@ -1,4 +1,4 @@
-/* V3.07 / App 1.77 (Jmuxer catch-up) – V3.05 / App 1.75: FPV stall meter for the CosmoStreamer page (Janus / Pion / Jmuxer).
+/* V3.10 / App 1.79 (Jmuxer 60 fps) – V3.07 / App 1.77 (Jmuxer catch-up) – V3.05 / App 1.75: FPV stall meter for the CosmoStreamer page (Janus / Pion / Jmuxer).
    Counts freezes (no new video frame for > 300 ms), longest freeze, WebRTC packet loss; small overlay top left;
    one log line per minute (console "CTSTAT ..."; in the tracker also POST /api/dbg). */
 (function () {
@@ -12,6 +12,16 @@
       R.prototype.__ct = 1;
     }
   } catch (e) {}
+  // Jmuxer: the CosmoStreamer page sets 30 fps for Goggles 2/3 (60 only for Goggles V1/V2), but the goggles send 60 fps
+  // -> the video plays at half speed and falls behind for ever. Force 60 fps; if the player already runs, reconnect it once.
+  function wrapJM() {
+    var J = window.JMuxer;
+    if (!J || J.__ct) return;
+    var W = function (o) { if (o && (!o.fps || o.fps < 60)) o.fps = 60; return new J(o); };
+    W.prototype = J.prototype; W.__ct = 1; window.JMuxer = W;
+    try { var p = window.player_jmuxer_params; if (p && p.jmuxer && p.ws_video && !window.ctJmRe) { window.ctJmRe = 1; p.ws_video.close(); } } catch (e) {}
+  }
+  wrapJM(); var jmT = setInterval(wrapJM, 50); setTimeout(function () { clearInterval(jmT); setInterval(wrapJM, 2000); }, 15000);
   var NAMES = { '0': 'Jmuxer', '1': 'Janus', '2': 'Pion' };
   function mode() { return (document.cookie.match(/video_player_mode=(\d)/) || [])[1] || '1'; }
   var ev = [], lastF = 0, inFreeze = false, frames = 0, watched = null, loss = null, lost0 = null, recv0 = null, t0 = Date.now(), fz = null;
@@ -41,6 +51,8 @@
             var l = s.packetsLost - lost0, rc = s.packetsReceived - recv0;
             loss = rc + l > 0 ? 100 * l / (rc + l) : 0;
             if (s.freezeCount !== undefined) fz = s.freezeCount;
+            if (s.decoderImplementation) window.ctDec = s.decoderImplementation + (s.powerEfficientDecoder ? ' (HW)' : s.powerEfficientDecoder === false ? ' (SW)' : '');
+            if (s.framesDropped !== undefined) window.ctDrop = s.framesDropped;
           }
         });
       }).catch(function () {});
@@ -69,7 +81,7 @@
     if (loss !== null && mode() !== '0') s += ' · loss ' + loss.toFixed(1) + ' %';
     if (window.ctLag !== null) s += ' · buffer ' + window.ctLag.toFixed(1) + ' s';
     box.style.color = w.length ? (mx > 700 ? '#f87171' : '#fbbf24') : '#4ade80';
-    return { s: s, lag: window.ctLag, n10: w.length, max: mx, all: ev.length, loss: loss, mins: Math.round((n - t0) / 60000) };
+    return { s: s, dec: window.ctDec || null, drop: window.ctDrop, lag: window.ctLag, n10: w.length, max: mx, all: ev.length, loss: loss, mins: Math.round((n - t0) / 60000) };
   }
   setInterval(function () { if (!box.parentNode && document.body) document.body.appendChild(box); var t = text(); box.textContent = t.s; box.style.display = window.ctStatHide ? 'none' : ''; }, 1000);
   setInterval(function () {
