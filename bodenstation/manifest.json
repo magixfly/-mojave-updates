@@ -1,18 +1,18 @@
 {
- "ver": "2.83",
+ "ver": "2.84",
  "neu": [
-  "Pi: video button visible (was under the side panel), old GPS text bottom left removed"
+  "Fix: page did not start in 2.83; video button above the side panel"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "faf766ca7e1bbc6f28e78b3fba212eef"
+   "md5": "84ccbf2d929356b9a55eac526900b249"
   },
   {
    "p": "web/index.html",
-   "s": 145479,
-   "md5": "9d8bf59fa2b1bfa93631e15568ea31fc"
+   "s": 145481,
+   "md5": "1e6d28357c6826e3990165a36dfee9fa"
   }
  ]
 }
