@@ -957,7 +957,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
    else e.style.display='none'}   // V2.0.28: Claude connected remotely
   {const y=st.sys,e=$('sys');   // V2.0.2: load of the Pi (1 GB RAM - watch it)
    if(!y||DEMO){e.innerHTML=''}else{const col=v=>v==null?'var(--mut)':v>=85?'#ff453a':v>=70?'#ff9f0a':'#30d158';
-     const bar=(l,v)=>`<b style="color:${col(v)}">${l} ${v??'–'}%<i><u style="width:${Math.min(100,v||0)}%;background:${col(v)}"></u></i></b>`;
+     const bar=(l,v)=>`<b style="color:${col(v)}">${l} ${v??'–'}%</b>`;   // V3.18: value only, no bars
      const tc=y.temp==null?'var(--mut)':y.temp>=80?'#ff453a':y.temp>=70?'#ff9f0a':'#30d158';   // V2.0.47: green below 70°
      const h=bar('CPU',y.cpu)+bar('RAM',y.ram)+(y.temp!=null?`<b style="color:${tc}">TEMP ${y.temp}°</b>`:'');
      if(e.dataset.h!==h){e.dataset.h=h;e.innerHTML=h}
@@ -1204,7 +1204,7 @@ function warnSound(){
   const w=[st.warn||''].concat((st.vs||(st.car2?[st.car2]:[])).map(c=>c.warn||'')).filter(x=>x).join(' · '),now=performance.now();sndIcon();if(!soundOn()||DEMO||st.test){lastWarn=w;return}   // V1.9.2: no sound in the replay
   const bad=/LOW BATTERY|NO TELEMETRY|WEAK LINK|FAR|CAR WET/.test(w),pre=/BATTERY/.test(w);
   if((w!==lastWarn&&(bad||pre))||(bad&&now-lastBeep>8000)){
-    bInfo(w);if(/LOW BATTERY|NO TELEMETRY/.test(w)){beep(1400,.15);beep(1400,.15,.25);beep(1400,.15,.5)}
+    if(!/BATTERY/.test(w))bInfo(w);if(/LOW BATTERY|NO TELEMETRY/.test(w)){beep(1400,.15);beep(1400,.15,.25);beep(1400,.15,.5)}
     else if(bad){beep(1000,.2);beep(1000,.2,.3)}else beep(800,.25);
     lastBeep=now}
   lastWarn=w}

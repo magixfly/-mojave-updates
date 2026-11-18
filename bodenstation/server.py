@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.17"
+VERSION = "3.18"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1319,6 +1319,18 @@ def upd_thread():
         upd_check()
         time.sleep(6 * 3600)
 
+LIPO = [(4.20, 100), (4.10, 90), (4.00, 80), (3.92, 70), (3.87, 60), (3.82, 50), (3.79, 40), (3.77, 30), (3.74, 20), (3.68, 10), (3.45, 5), (3.30, 0)]
+def lipo_pct(c):
+    """V3.18: LiPo charge in % from the resting cell voltage"""
+    if not c:
+        return None
+    if c >= LIPO[0][0]:
+        return 100
+    for (v1, p1), (v2, p2) in zip(LIPO, LIPO[1:]):
+        if c >= v2:
+            return int(round(p2 + (c - v2) / (v1 - v2) * (p1 - p2)))
+    return 0
+
 def batt_view(d, sc, cl, mah, fc_pct):
     """V2.0.25: which mAh / % left a vehicle shows
     - car with the Core (Mojave): the Core's values (it knows pack and charge, same as Navi)
@@ -1328,6 +1340,9 @@ def batt_view(d, sc, cl, mah, fc_pct):
         return
     if cl and cl.get("pct") is not None and not cl.get("demo") and (sc.get("name") or "").lower() == (cl.get("name") or "").lower():
         d["left"] = int(cl["pct"])
+        vp = lipo_pct(d.get("cell"))   # V3.18: at low load (< 5 A) the cell voltage tells the real charge -> never show more than that
+        if vp is not None and (d.get("cur") or 0) < 5 and vp < d["left"]:
+            d["left"] = vp
         d["mah_used"] = int(round(cf("batt_mah") * (100 - d["left"]) / 100.0)) if cf("batt_mah") > 0 else None
     elif sc.get("type") == "plane":
         d["mah_used"] = int(mah) if mah is not None else None

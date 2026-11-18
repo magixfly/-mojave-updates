@@ -1,7 +1,7 @@
 {
- "ver": "3.17",
+ "ver": "3.18",
  "neu": [
-  "FPV live indicator: fps and Mbit/s, blinking dot, red NO VIDEO"
+  "Battery % capped by resting cell voltage; CPU/RAM without bars; battery warning only as red bar"
  ],
  "dateien": [
   {
@@ -11,8 +11,8 @@
   },
   {
    "p": "server.py",
-   "s": 124655,
-   "md5": "f93a74f74d4d88091af453de6845df05"
+   "s": 125355,
+   "md5": "0d41ca531780dfdb564574884f3b9876"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 160766,
-   "md5": "51281bb76bf67b6cb65e54f11ca68ff5"
+   "s": 160748,
+   "md5": "9c492eabf9f687b1dee90248e792bfc2"
   },
   {
    "p": "web/kia.png",
