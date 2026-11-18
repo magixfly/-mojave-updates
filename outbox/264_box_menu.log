@@ -1,0 +1,11 @@
+### 264_box_menu  –  2026-11-18 10:38:06
+### Box: verbunden (192.168.178.235:5555)
+
+Failed to write while dumping service wifi: Broken pipe
+mWifiInfo SSID: "Optimus Prime", BSSID: 04:18:d6:e7:21:0f, MAC: b0:5a:44:75:3e:33, IP: /192.168.178.235, Security type: 2, Supplicant state: COMPLETED, Wi-Fi standard: 11n, RSSI: -69, Link speed: 115M
+11-18 10:34:28.044   538   538 D CTFPV   : CTSTAT {"s":"Janus · 9 freezes / 10 min · max 0.9 s · loss 0.7 %","n10":9,"max":886,"all":9,"loss":0.6661827377886012,"mins":1,"player":"Janus"} @62
+11-18 10:35:28.044   538   538 D CTFPV   : CTSTAT {"s":"Janus · 26 freezes / 10 min · max 9.9 s · loss 1.2 %","n10":26,"max":9928,"all":26,"loss":1.1966698103190911,"mins":2,"player":"Janus"} @62
+11-18 10:36:28.043   538   538 D CTFPV   : CTSTAT {"s":"Janus · 35 freezes / 10 min · max 9.9 s · loss 0.8 %","n10":35,"max":9928,"all":35,"loss":0.8100428013881956,"mins":3,"player":"Janus"} @62
+11-18 10:37:28.043   538   538 D CTFPV   : CTSTAT {"s":"Janus · 49 freezes / 10 min · max 9.9 s · loss 0.7 %","n10":49,"max":9928,"all":49,"loss":0.7137436151071468,"mins":4,"player":"Janus"} @62
+
+### Exit-Code: 0
