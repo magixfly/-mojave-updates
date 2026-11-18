@@ -1,7 +1,7 @@
 {
- "ver": "3.21",
+ "ver": "3.22",
  "neu": [
-  "No battery bar on top (tile only); iPhone 3D canvas size; car never shows plane icon"
+  "STATUS button above the Core line"
  ],
  "dateien": [
   {
@@ -12,7 +12,7 @@
   {
    "p": "server.py",
    "s": 125621,
-   "md5": "25da7b2ad60d2fdef1b315fb022e3316"
+   "md5": "3db727dca16de9dd077fe0b5311c9b9d"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 163598,
-   "md5": "64171a66b135cc7137be1f1c064eb2ae"
+   "s": 163669,
+   "md5": "d1e7bb853d695dc12270c1d2b7bb64b7"
   },
   {
    "p": "web/kia.png",
