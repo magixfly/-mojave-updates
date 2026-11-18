@@ -11,7 +11,7 @@ if v != ver:
 fs = []
 for root, _, files in os.walk(base):
     for f in sorted(files):
-        if f == "manifest.json":
+        if f in ("manifest.json", "config.txt", "server.log") or f.endswith((".bak", ".new", ".pyc")) or "__pycache__" in root or "tiles" in root.split(os.sep):   # V3.27: never ship the local settings
             continue
         p = os.path.relpath(os.path.join(root, f), base).replace(os.sep, "/")
         d = open(os.path.join(root, f), "rb").read()

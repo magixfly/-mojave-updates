@@ -1,1 +1,4 @@
 __pycache__/
+bodenstation/config.txt
+bodenstation/server.log
+bodenstation/**/__pycache__/

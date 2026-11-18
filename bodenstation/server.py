@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.26"
+VERSION = "3.27"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1299,6 +1299,8 @@ def upd_install():
                 UPD["msg"] = "MD5 error %s - try again in 5 min (GitHub cache)" % f["p"]
                 return
             dst = os.path.join(BASE, f["p"])
+            if os.path.basename(dst) in ("config.txt", "server.log"):   # V3.27: an update never overwrites the own settings
+                continue
             os.makedirs(os.path.dirname(dst), exist_ok=True)
             with open(dst + ".new", "wb") as o:
                 o.write(data)
