@@ -1,4 +1,4 @@
-/* V3.05 / App 1.75: FPV stall meter for the CosmoStreamer page (Janus / Pion / Jmuxer).
+/* V3.07 / App 1.77 (Jmuxer catch-up) – V3.05 / App 1.75: FPV stall meter for the CosmoStreamer page (Janus / Pion / Jmuxer).
    Counts freezes (no new video frame for > 300 ms), longest freeze, WebRTC packet loss; small overlay top left;
    one log line per minute (console "CTSTAT ..."; in the tracker also POST /api/dbg). */
 (function () {
@@ -46,15 +46,31 @@
       }).catch(function () {});
     });
   }, 2000);
+  // Jmuxer: plays from a buffer and drifts behind live (2 s and more) - keep it close to live:
+  // > 1 s behind = jump to the newest frame, 0.25-1 s = play 25 % faster until caught up
+  window.ctLag = null;
+  setInterval(function () {
+    if (mode() !== '0') { window.ctLag = null; return; }
+    var v = document.getElementById('video_element');
+    if (!v || !v.buffered || !v.buffered.length) return;
+    var end = v.buffered.end(v.buffered.length - 1), lag = end - v.currentTime;
+    window.ctLag = lag;
+    try {
+      if (lag > 1.0) { v.currentTime = end - 0.1; v.playbackRate = 1; }
+      else if (lag > 0.25) v.playbackRate = 1.25;
+      else v.playbackRate = 1;
+    } catch (e) {}
+  }, 250);
   var box = document.createElement('div');
   box.style.cssText = 'position:fixed;left:8px;top:8px;z-index:2147483647;visibility:visible!important;pointer-events:none;font:700 15px/1.3 sans-serif;color:#4ade80;background:rgba(0,0,0,.55);padding:3px 9px;border-radius:7px;white-space:nowrap';
   function text() {
     var n = Date.now(), w = ev.filter(function (e) { return n - e[0] < 600000; }), mx = 0;
     w.forEach(function (e) { if (e[1] > mx) mx = e[1]; });
     var s = NAMES[mode()] + ' · ' + w.length + ' freezes / 10 min' + (w.length ? ' · max ' + (mx / 1000).toFixed(1) + ' s' : '');
-    if (loss !== null) s += ' · loss ' + loss.toFixed(1) + ' %';
+    if (loss !== null && mode() !== '0') s += ' · loss ' + loss.toFixed(1) + ' %';
+    if (window.ctLag !== null) s += ' · buffer ' + window.ctLag.toFixed(1) + ' s';
     box.style.color = w.length ? (mx > 700 ? '#f87171' : '#fbbf24') : '#4ade80';
-    return { s: s, n10: w.length, max: mx, all: ev.length, loss: loss, mins: Math.round((n - t0) / 60000) };
+    return { s: s, lag: window.ctLag, n10: w.length, max: mx, all: ev.length, loss: loss, mins: Math.round((n - t0) / 60000) };
   }
   setInterval(function () { if (!box.parentNode && document.body) document.body.appendChild(box); var t = text(); box.textContent = t.s; box.style.display = window.ctStatHide ? 'none' : ''; }, 1000);
   setInterval(function () {
