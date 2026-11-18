@@ -1,18 +1,18 @@
 {
- "ver": "2.88",
+ "ver": "2.89",
  "neu": [
-  "With PiP the car is centered in the free part of the map"
+  "Button KIA renamed to STATUS"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 123874,
-   "md5": "390bd3eb4658b86c7bacbc9ee6d46ce9"
+   "md5": "ad73c961106cfaaac97f1ef67eafc487"
   },
   {
    "p": "web/index.html",
-   "s": 148859,
-   "md5": "39910321716ca4668891a47cc4d4dfe0"
+   "s": 148862,
+   "md5": "c675844bc5b82b9ea36737f5801cbe07"
   }
  ]
 }
