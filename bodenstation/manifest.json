@@ -1,7 +1,7 @@
 {
- "ver": "3.22",
+ "ver": "3.23",
  "neu": [
-  "STATUS button above the Core line"
+  "FIND CAR button removed"
  ],
  "dateien": [
   {
@@ -12,7 +12,7 @@
   {
    "p": "server.py",
    "s": 125621,
-   "md5": "3db727dca16de9dd077fe0b5311c9b9d"
+   "md5": "a145019b3aa23d7e72de9f260f1f8b4a"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 163669,
-   "md5": "d1e7bb853d695dc12270c1d2b7bb64b7"
+   "s": 163687,
+   "md5": "7cdcbbb7ff5433cbd3cec579961c53be"
   },
   {
    "p": "web/kia.png",
