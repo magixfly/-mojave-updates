@@ -1,0 +1,30 @@
+### 255_t301  –  2026-11-18 09:27:04
+### Box: verbunden (192.168.178.235:5555)
+
+3.01 läuft
+top - 09:31:20 up  6:34,  2 users,  load average: 4.92, 6.34, 5.84
+Tasks: 223 total,   2 running, 221 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 39.0 us, 13.6 sy,  0.0 ni, 46.5 id,  0.0 wa,  0.0 hi,  1.0 si,  0.0 st 
+MiB Mem :   3795.6 total,   1938.5 free,    839.9 used,   1188.7 buff/cache     
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   2955.7 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   1970 user1     20   0  199.9g 238128 158912 S  70.8   6.1 174:22.80 chromium
+   1862 user1     20   0   52.8g 197656 125604 S  42.6   5.1      8,52 chromium
+   1324 user1     20   0   52.8g 276148 227892 S  19.3   7.1  39:21.27 chromium
+   1867 user1     20   0   52.5g 107608  85360 S  15.3   2.8  16:49.20 chromium
+     66 root       0 -20       0      0      0 I   7.4   0.0   5:32.91 kworker+
+   1099 user1     20   0  508620 100892  73588 S   6.4   2.6  23:16.43 labwc
+ 329398 user1     20   0   52.6g  79656  63752 S   5.4   2.0   1:43.86 chromium
+   1359 user1     20   0 2036640  39076  13020 S   4.5   1.0  13:01.58 python3
+   1104 user1     20   0  108084  14696   7736 S   4.0   0.4   1:11.86 pipewir+
+    PID %CPU   RSS COMMAND
+ 369533  150  3560 ps -eo pid,pcpu,rss,args --sort=-pcpu
+ 369532  140 10368 /usr/bin/wf-panel-pi
+   1862  135 198308 /usr/lib/chromium/chromium --type=gpu-process --gpu-recent-crash-count=0 --disable-dev-shm-usage --enable-gpu-rasterization --ozone-platform=wayland --render-node-override=/dev/dri
+   1970 44.2 238172 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --change-stack-guard-on-fork=enabl
+   1324  9.9 276148 /usr/lib/chromium/chromium --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disa
+   1099  5.9 100892 /usr/bin/labwc -m
+   1867  4.2 107680 /usr/lib/chromium/chromium --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --render
+
+### Exit-Code: 0
