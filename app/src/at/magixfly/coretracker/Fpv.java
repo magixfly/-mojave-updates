@@ -218,7 +218,7 @@ class Fpv {
             // V1.68: im Split so breit wie die linke Spalte (Tracker skaliert mit der Kartenbreite: 230 px × S)
             float S = Math.min(1f, Math.min((root.getWidth() - splitW()) / 1280f, root.getHeight() / 720f));
             int col = Math.max(120, Math.round(230 * S));
-            bl.width = sp ? col - 12 : 240; bl.height = sp ? 52 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? 8 : 12;
+            bl.width = sp ? col - 12 : 240; bl.height = sp ? 52 : 62; bl.leftMargin = sp ? 6 : 10; bl.bottomMargin = sp ? Math.round(root.getHeight() * 0.025f) + 8 : 12;   // V1.72: im Split über dem schwarzen Rand
             btn.setTextSize(sp ? 16 : 18);
             btn.setLayoutParams(bl);
             int vis = sp && btn.getVisibility() == View.VISIBLE ? View.VISIBLE : View.GONE;
@@ -227,7 +227,7 @@ class Fpv {
             for (int i = 0; i < 2; i++) {
                 FrameLayout.LayoutParams p = (FrameLayout.LayoutParams) ar[i].getLayoutParams();
                 int aw = sp ? (col - 18) / 2 : 105;
-                p.width = aw; p.height = sp ? 46 : 64; p.leftMargin = 6 + i * (aw + 6); p.bottomMargin = sp ? 66 : 80; ar[i].setLayoutParams(p);
+                p.width = aw; p.height = sp ? 46 : 64; p.leftMargin = 6 + i * (aw + 6); p.bottomMargin = sp ? Math.round(root.getHeight() * 0.025f) + 66 : 80; ar[i].setLayoutParams(p);
                 ar[i].setTextSize(sp ? 14 : 26); ar[i].setPadding(0, 0, 0, 0); ar[i].setIncludeFontPadding(false);   // V1.69: Pfeile passen in den Rahmen
                 ar[i].setVisibility(vis);
                 ar[i].setAlpha((i == 0 ? w >= r[1] : w <= r[0]) ? 0.35f : 1f);
