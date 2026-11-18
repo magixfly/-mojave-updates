@@ -1,0 +1,13 @@
+### 269_cosmo_wlan  –  2026-11-18 11:06:06
+### Box: verbunden (192.168.178.235:5555)
+
+      2 int 192.168.178.159 Media 5.18GHz 433.3 MBit/s -44 66/70
+      2 int 192.168.178.159 Media 5.18GHz 433.3 MBit/s -45 65/70
+      1 int 192.168.178.159 Media 5.18GHz 433.3 MBit/s -46 64/70
+== Ping Tracker -> Cosmo, 1400 Byte, 100/s, 15 s
+1500 packets transmitted, 1496 received, 0.266667% packet loss, time 17890ms
+rtt min/avg/max/mdev = 2.960/11.135/51.641/5.892 ms, pipe 3
+== Tracker-WLAN
+*       Media  36    270 Mbit/s  63     
+
+### Exit-Code: 0
