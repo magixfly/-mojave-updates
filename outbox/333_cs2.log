@@ -1,0 +1,37 @@
+### 333_cs2  –  2026-11-19 01:31:09
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+<select id="video_player_option" style="padding:5px; margin:5px; width:100%; background-color:transparent; color:gray;">
+<select id="am_speed_option" style="width:80px; margin-left:5px;">
+<select id="am_position_option" style="width:90px;"></select>
+<select id="available_gamepads_list" style="width:200px; margin:5px;">
+== js/jquery.min.js 89503
+pply(n,r))===o.promise())throw new TypeError("Thenable self-resolution");t=e&&("object"==typeof e||"function"==typeof e)&&e.then,m
+== js/jmuxer.min.js 32305
+== js/js.cookie.min.js 1685
+== js/log.js 125
+== js/binary.js 511
+== js/screen.js 22681
+== js/tabs.js 1015
+== js/types.js 4391
+== js/data.js 3360
+== js/parser.js 26767
+== js/automovements.js 5395
+== js/gamepad.js 4766
+== js/wirallite.js 9910
+== js/btgimbal.js 6775
+== js/screenjoystick.js 16323
+== js/servocontrols.js 4416
+== js/adapter.min.js 57955
+throw new TypeError("Invalid RID value provided.");if("scaleResolutionDownBy"in e&&!(1<=parseFloat(e.scaleResolutionDownBy)))throw
+== js/janus.js 109835
+== js/player-webrtc.js 15613
+== js/player-pion.js 4089
+== js/player-websockets.js 3875
+== js/area-codes.js 9289
+== js/leaflet/leaflet.js 147563
+== js/leaflet/leaflet.rotatedMarker.js 2088
+== js/map.js 7006
+== js/splashdrone.js 7988
+
+### Exit-Code: 0
