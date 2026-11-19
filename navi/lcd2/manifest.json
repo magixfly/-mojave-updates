@@ -1,10 +1,11 @@
 {
-  "fw": "V2.27",
+  "fw": "V2.28",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1313808,
-  "md5": "c8014c5907915ea326a75ed2fba0b02f",
+  "groesse": 1335296,
+  "md5": "0f51c018d8db577f1399b182aea7a8ec",
   "neu": [
+    "V2.28: standby (hold the screen 3 s or \"Standby\" on the Navi page, wake with BOOT/RESET); Navi battery voltage bottom right and on the Navi page, automatic standby when the battery is empty (3.30 V); car arrow in Mojave blue",
     "V2.27: fix freeze when deleting or adding an own area (area list is now locked while the map loader reads it)",
     "V2.26: \"Load here first\" on a square of the SD map overview now really loads it - the whole square (zoom 13-19) is loaded first and shown in the area list as \"Square ...\" with progress",
     "V2.25: speed always shown, also in the full-screen map; speed box slightly smaller",
