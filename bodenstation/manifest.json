@@ -1,13 +1,13 @@
 {
- "ver": "3.28",
+ "ver": "3.29",
  "neu": [
-  "Phone GPS: own position from GPS2IP (menu ... Phone GPS), used when the ESP GPS has no fix"
+  "Navi mode: without a car the map follows you (phone/ESP GPS), your speed, heading-up, auto zoom; drive saved as GPX in navi/"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 130040,
-   "md5": "017e10312c47afb5925dca971479b808"
+   "s": 131879,
+   "md5": "81285227e159ddb3654db48edb00f22f"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 165164,
-   "md5": "b48ba5bd3fb8e136830a954fb0eedeb3"
+   "s": 166429,
+   "md5": "8ff90fa69a75b728f59f48285652ff4c"
   },
   {
    "p": "web/kia.png",

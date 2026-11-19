@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.28"
+VERSION = "3.29"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -56,6 +56,7 @@ DEFAULTS = [
     ("map3d", "1", "V2.0.61: 1 = 3D view (tilted satellite map like a car navigation, menu 3D view)"),
     ("me_gps", "1", "1 = use the GPS module on the ESP receiver as own position (pilot / ground station)"),
     ("me_timeout_s", "5", "Own GPS older than this = not shown"),
+    ("navi", "1", "V3.29: 1 = without a car the map follows your own position (navi mode) and your drive is saved as GPX in navi/"),
     ("phone_gps", "0", "V3.28: 1 = own position from the phone app GPS2IP (socket mode) when the GPS on the ESP has no fix (menu)"),
     ("phone_gps_port", "11123", "GPS2IP port"),
     ("phone_gps_ip", "", "GPS2IP phone address (empty = WLAN gateway = phone hotspot, else search the own network)"),
@@ -574,6 +575,39 @@ def _phone_find(port):
     for t in ts: t.start()
     for t in ts: t.join(1.0)
     return found[0] if found else ""
+
+def navi_log_thread():
+    # V3.29: own drive (no car) -> navi/YYYY-MM-DD.gpx, a point every 2 s while moving
+    d = os.path.join(BASE, "navi"); last = None
+    while True:
+        time.sleep(2)
+        try:
+            if CFG.get("navi", "1") != "1" or not ME["t"] or time.time() - ME["t"] > 5 or not ME.get("fix"):
+                continue
+            if S.get("lat") and not S.get("vgps"):
+                continue
+            lat, lon = ME.get("lat"), ME.get("lon")
+            if lat is None or (ME.get("kmh") or 0) < 3:
+                continue
+            if last and haversine(last[0], last[1], lat, lon) < 5:
+                continue
+            last = (lat, lon)
+            os.makedirs(d, exist_ok=True)
+            fn = os.path.join(d, time.strftime("%Y-%m-%d") + ".gpx")
+            new = not os.path.exists(fn)
+            END = "</trkseg></trk></gpx>\n"
+            with open(fn, "a+") as f:
+                if new:
+                    f.write('<?xml version="1.0"?>\n<gpx version="1.1" creator="Core Tracker"><trk><name>Navi %s</name><trkseg>\n' % time.strftime("%Y-%m-%d"))
+                else:
+                    f.seek(0, 2); n = f.tell()
+                    if n >= len(END):
+                        f.seek(n - len(END)); tail = f.read()
+                        if tail == END:
+                            f.truncate(n - len(END))
+                f.write('<trkpt lat="%.6f" lon="%.6f"><ele>%d</ele><time>%s</time></trkpt>\n' % (lat, lon, ME.get("alt") or 0, time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())) + END)   # file stays a valid GPX
+        except Exception as e:
+            print("navi log", e)
 
 def phone_gps_thread():
     # V3.28: own position from GPS2IP (iPhone, socket mode) - used when the ESP GPS gives nothing
@@ -2486,7 +2520,7 @@ class H(BaseHTTPRequestHandler):
                 CFG["pip_pos"] = b["pip_pos"]; ok["pip_pos"] = b["pip_pos"]
             if b.get("theme") in ("glass", "hud"):   # V2.98
                 CFG["theme"] = b["theme"]; ok["theme"] = b["theme"]
-            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "map3d", "phone_gps"):
+            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "map3d", "phone_gps", "navi"):
                 if k in b:
                     v = str(int(float(b[k])))
                     CFG[k] = v
@@ -2643,6 +2677,7 @@ def main():
         _ipv4_only()
     threading.Thread(target=lastpos_thread, daemon=True).start()
     threading.Thread(target=phone_gps_thread, daemon=True).start()
+    threading.Thread(target=navi_log_thread, daemon=True).start()
     threading.Thread(target=serial_thread, daemon=True).start()
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
