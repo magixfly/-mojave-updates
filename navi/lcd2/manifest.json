@@ -1,10 +1,11 @@
 {
-  "fw": "V2.30",
+  "fw": "V2.31",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1335808,
-  "md5": "d66a47db548a3809588dc07f578c4763",
+  "groesse": 1336336,
+  "md5": "216702bc3c981095a123f25ed4b1c234",
   "neu": [
+    "V2.31: fix unwanted standby (thumb on the edge) - standby by touch only by holding the clock (top right) for 3 s; \"Last standby\" with reason on the Navi page",
     "V2.30: if the chosen Wi-Fi is not found for 1 min, the Navi also tries the other Wi-Fis; map no longer briefly replaced by the logo when the phone GPS pauses (logo only after 60 s without position)",
     "V2.29: Navi battery shown top left on the map (green from 3.70 V) instead of in the footer; car arrow always Mojave blue",
     "V2.28: standby (hold the screen 3 s or \"Standby\" on the Navi page, wake with BOOT/RESET); Navi battery voltage bottom right and on the Navi page, automatic standby when the battery is empty (3.30 V); car arrow in Mojave blue",
