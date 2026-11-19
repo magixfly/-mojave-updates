@@ -1,13 +1,13 @@
 {
- "ver": "3.27",
+ "ver": "3.28",
  "neu": [
-  "Updates no longer overwrite your settings (config.txt was shipped by mistake since 3.13)"
+  "Phone GPS: own position from GPS2IP (menu ... Phone GPS), used when the ESP GPS has no fix"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 126325,
-   "md5": "a5daf0d306b626b3a08ea2204719af33"
+   "s": 130040,
+   "md5": "017e10312c47afb5925dca971479b808"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 164793,
-   "md5": "5e4c02ee3cb4ecac8e03ecd732b12c8e"
+   "s": 165164,
+   "md5": "b48ba5bd3fb8e136830a954fb0eedeb3"
   },
   {
    "p": "web/kia.png",

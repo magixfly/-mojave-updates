@@ -359,6 +359,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <button class="mb" id="mName1"></button>
     <button class="mb" id="mName2"></button>
     <button class="mb" id="mNames">Names on the map: on</button>
+    <button class="mb" id="mPhone">Phone GPS (GPS2IP): off</button>
     <label>Range warning (distance from home)</label>
     <div class="seg" id="sRange"><b data-v="0">off</b><b data-v="300">300 m</b><b data-v="500">500 m</b><b data-v="1000">1 km</b><b data-v="2000">2 km</b></div>
     <button class="mb" id="mLock">Lock screen</button>
@@ -1005,7 +1006,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
   {const e=$('vAlt');if(e){const sc1=slotCfg(1);e.innerHTML=st.ralt!=null?'<small style="font-size:13px;color:var(--mut)">HEIGHT </small>'+(st.ralt<0?'↓':'↑')+Math.abs(st.ralt)+' m':'';e.style.fontSize=sc1&&sc1.type==='plane'?'28px':'20px'}}   // V2.0.7: height above start
   // GPS tile: coordinates (tap = QR), satellites, trip
   {const tr=st.trip||0;$('vTrip').textContent='trip '+(tr<1000?Math.round(tr)+' m':(tr/1000).toFixed(2)+' km')+(st.lat!=null&&st.alt!=null?' · alt '+Math.round(st.alt)+' m':'')}
-  $('vSats').textContent=(st.lat!=null?(st.vgps?'VGPS · ':'')+st.sats+' sats':'no GPS')+(st.me?(st.me.nofix?' · me no fix':' · me '+st.me.sats):'');cls($('vSats'),st.vgps?'mid':(st.lat!=null&&st.sats<6?'bad':null));
+  $('vSats').textContent=(st.lat!=null?(st.vgps?'VGPS · ':'')+st.sats+' sats':'no GPS')+(st.me?(st.me.nofix?' · me no fix':' · '+(st.me.src==='phone'?'phone':'me')+' '+st.me.sats):'');cls($('vSats'),st.vgps?'mid':(st.lat!=null&&st.sats<6?'bad':null));
   const w=$('warn'),wt=(st.warn||'').split(' · ').filter(x=>x&&!/BATTERY/.test(x)).join(' · ');w.textContent=wt;w.style.display=wt?'block':'none';   // V3.21: battery alarm only in the BATTERY tile on the left (red), no extra bar
   playHud();
   {const t1=!!(st.test&&(st.test_cars||TESTN||1)===1&&!st.car2);$('mTest').textContent='Test ride: '+(t1?'on':'off');$('mTest').classList.toggle('pri',t1)}   // V1.9.15: only one of the two shows on
@@ -1282,6 +1283,7 @@ function azStep(d){C.auto_zoom_out=Math.max(0,Math.min(3,Math.round(((+C.auto_zo
 $('azM').onclick=()=>azStep(-0.1);$('azP').onclick=()=>azStep(0.1);
 function mapNames(){return !(C.cfg&&C.cfg.map_names==='0')}
 function drvName(n){const sc=slotCfg(n);return ((sc&&sc.pilot)||((C.cfg&&C.cfg.names)||'').split(',')[n-1]||'').trim()||'–'}   // V2.0.5: pilot of the sender first
+$('mPhone').onclick=()=>{const v=(C.cfg&&C.cfg.phone_gps==='1')?'0':'1';if(C.cfg)C.cfg.phone_gps=v;j2('/api/set',{phone_gps:+v});updMenu()};   // V3.28
 $('mNames').onclick=()=>{const v=mapNames()?'0':'1';if(C.cfg)C.cfg.map_names=v;j2('/api/set',{map_names:+v});updMenu();dirty=true};
 $('mName1').onclick=()=>{$('menu').style.display='none';kbOpen(1)};$('mName2').onclick=()=>{$('menu').style.display='none';kbOpen(2)};
 // V1.9.16: settings editor for config.txt (on/off keys switch directly, others with the on-screen keyboard)
@@ -1329,7 +1331,7 @@ $('sndA').onclick=async()=>{await j2('/api/sender',{auto:!SNDAUTO});sndLoad()};
 $('sndEN').onclick=()=>{const x=SNDL.find(i=>i.mac===SNDSEL);if(!x)return;KB.mode='snd';KB.mac=x.mac;KB.t=x.name||'';KB.sh=false;kbMode();kbDraw();$('kb').style.display='flex'};
 $('sndEP').onclick=()=>{const x=SNDL.find(i=>i.mac===SNDSEL);if(!x)return;KB.mode='sndp';KB.mac=x.mac;KB.t=x.pilot||'';KB.sh=false;kbMode();kbDraw();$('kb').style.display='flex'};
 $('sndF').onclick=async()=>{if(!SNDSEL)return;await j2('/api/sender',{mac:SNDSEL,forget:true});SNDSEL=null;sndLoad()};
-function updMenu(){azShow();$('mNames').textContent='Names on the map: '+(mapNames()?'on':'off');$('mName1').textContent='Driver car 1: '+drvName(1)+'  ✎';$('mName2').textContent='Driver car 2: '+drvName(2)+'  ✎';$('mNight').textContent='Night mode: '+(isNight()?'on':'off');$('m3d').textContent='3D view: '+(is3d()?'on':'off');$('mCore').textContent='Core info: '+(coreShow()?'on':'off');$('mSound').textContent='Warning sound: '+(soundOn()?'on':'off');
+function updMenu(){azShow();$('mPhone').textContent='Phone GPS (GPS2IP): '+((C.cfg&&C.cfg.phone_gps==='1')?(st&&st.phone?st.phone:'on'):'off');$('mNames').textContent='Names on the map: '+(mapNames()?'on':'off');$('mName1').textContent='Driver car 1: '+drvName(1)+'  ✎';$('mName2').textContent='Driver car 2: '+drvName(2)+'  ✎';$('mNight').textContent='Night mode: '+(isNight()?'on':'off');$('m3d').textContent='3D view: '+(is3d()?'on':'off');$('mCore').textContent='Core info: '+(coreShow()?'on':'off');$('mSound').textContent='Warning sound: '+(soundOn()?'on':'off');
   seg('sBright',st.bright??100,v=>j2('/api/set',{bright:v}));seg('sRange',(C.cfg&&+C.cfg.range_warn_m)||0,v=>{if(C.cfg)C.cfg.range_warn_m=v;j2('/api/set',{range_warn_m:v})})}
 // ------------------------------------------------ screen lock (hold 2 s to unlock)
 let lockT=null,lockS=0;

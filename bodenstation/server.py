@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.27"
+VERSION = "3.28"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -56,6 +56,9 @@ DEFAULTS = [
     ("map3d", "1", "V2.0.61: 1 = 3D view (tilted satellite map like a car navigation, menu 3D view)"),
     ("me_gps", "1", "1 = use the GPS module on the ESP receiver as own position (pilot / ground station)"),
     ("me_timeout_s", "5", "Own GPS older than this = not shown"),
+    ("phone_gps", "0", "V3.28: 1 = own position from the phone app GPS2IP (socket mode) when the GPS on the ESP has no fix (menu)"),
+    ("phone_gps_port", "11123", "GPS2IP port"),
+    ("phone_gps_ip", "", "GPS2IP phone address (empty = WLAN gateway = phone hotspot, else search the own network)"),
     ("bright", "100", "Display brightness in % (set with the menu)"),
     ("car_size", "1.0", "Size of the car arrow on the map (1.5 = old size)"),
     ("wifi_dev", "wlan0", "WLAN device for the quality display"),
@@ -533,7 +536,83 @@ def on_me_gps(p):
         return
     lat, lon, alt, kmh, crs, sats, fix, hd = struct.unpack("<iihHHBBB", bytes(p[:17]))
     with LOCK:
-        ME.update(lat=lat / 1e7, lon=lon / 1e7, alt=alt, kmh=kmh / 10.0, crs=crs / 10.0, sats=sats, fix=fix, hdop=hd / 10.0, t=time.time())
+        ME.update(lat=lat / 1e7, lon=lon / 1e7, alt=alt, kmh=kmh / 10.0, crs=crs / 10.0, sats=sats, fix=fix, hdop=hd / 10.0, t=time.time(), src="esp")
+
+PHONE = {"st": "off", "ip": ""}   # V3.28: GPS2IP state for the menu
+
+def _nmea_deg(v, h):
+    if not v:
+        return None
+    d = float(v); deg = int(d / 100); x = deg + (d - deg * 100) / 60.0
+    return -x if h in ("S", "W") else x
+
+def _gw():
+    try:
+        return subprocess.run(["ip", "route", "show", "default"], capture_output=True, text=True, timeout=3).stdout.split()[2]
+    except Exception:
+        return ""
+
+def _phone_find(port):
+    # V3.28: phone = gateway (own phone hotspot) or any host in the /24 with the GPS2IP port open
+    gw = _gw()
+    cand = [CFG.get("phone_gps_ip", "").strip()] if CFG.get("phone_gps_ip", "").strip() else ([gw] if gw else [])
+    for ip in cand:
+        try:
+            socket.create_connection((ip, port), 1.5).close(); return ip
+        except Exception:
+            pass
+    if CFG.get("phone_gps_ip", "").strip() or not gw:
+        return ""
+    found = []
+    def probe(ip):
+        try:
+            socket.create_connection((ip, port), 0.4).close(); found.append(ip)
+        except Exception:
+            pass
+    pre = gw.rsplit(".", 1)[0]
+    ts = [threading.Thread(target=probe, args=("%s.%d" % (pre, i),), daemon=True) for i in range(1, 255)]
+    for t in ts: t.start()
+    for t in ts: t.join(1.0)
+    return found[0] if found else ""
+
+def phone_gps_thread():
+    # V3.28: own position from GPS2IP (iPhone, socket mode) - used when the ESP GPS gives nothing
+    while True:
+        if CFG.get("phone_gps", "0") != "1":
+            PHONE.update(st="off", ip=""); time.sleep(3); continue
+        port = ci("phone_gps_port")
+        PHONE["st"] = "searching"
+        ip = _phone_find(port)
+        if not ip:
+            PHONE.update(st="not found", ip=""); time.sleep(30); continue
+        PHONE.update(st="connected", ip=ip)
+        try:
+            so = socket.create_connection((ip, port), 3); so.settimeout(10); buf = b""
+            while CFG.get("phone_gps", "0") == "1":
+                d = so.recv(4096)
+                if not d:
+                    break
+                buf += d
+                while b"\n" in buf:
+                    ln, buf = buf.split(b"\n", 1)
+                    f = ln.decode("ascii", "ignore").strip().split("*")[0].split(",")
+                    if len(f) < 10:
+                        continue
+                    esp_ok = ME.get("src") != "phone" and ME["t"] and time.time() - ME["t"] < 5 and ME.get("fix")
+                    if esp_ok:
+                        continue
+                    if f[0][3:] == "GGA" and f[6] not in ("", "0"):
+                        with LOCK:
+                            ME.update(lat=_nmea_deg(f[2], f[3]), lon=_nmea_deg(f[4], f[5]), fix=1, sats=int(f[7] or 0),
+                                      hdop=float(f[8] or 0), alt=int(float(f[9] or 0)), t=time.time(), src="phone")
+                        PHONE["st"] = "ok"
+                    elif f[0][3:] == "RMC" and f[2] == "A" and ME.get("src") == "phone":
+                        with LOCK:
+                            ME.update(kmh=round(float(f[7] or 0) * 1.852, 1), crs=float(f[8] or 0))
+            so.close()
+        except Exception as e:
+            PHONE["st"] = "lost"
+        time.sleep(3)
 
 def bearing(a, b, c, d):
     y = math.sin(math.radians(d - b)) * math.cos(math.radians(c))
@@ -1412,7 +1491,8 @@ def snapshot():
         d["wifi"] = {"ssid": HOME_WIFI.get("ssid", ""), "sig": HOME_WIFI.get("sig"), "ms": HOME_WIFI.get("ms")}
         me = None
         if ME["t"] and time.time() - ME["t"] < cf("me_timeout_s") and ME.get("fix") and (ME.get("lat") or ME.get("lon")):
-            me = {k: ME[k] for k in ("lat", "lon", "alt", "kmh", "crs", "sats", "hdop")}
+            me = {k: ME.get(k, 0) for k in ("lat", "lon", "alt", "kmh", "crs", "sats", "hdop")}
+            me["src"] = ME.get("src", "esp")
             me["age"] = round(time.time() - ME["t"], 1)
             if d["lat"] is not None:
                 me["dist"] = round(haversine(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
@@ -1421,6 +1501,7 @@ def snapshot():
         elif ME["t"] and time.time() - ME["t"] < 30:
             me = {"nofix": True, "sats": ME.get("sats", 0)}
         d["me"] = me
+        d["phone"] = PHONE["st"] + ((" " + PHONE["ip"]) if PHONE["ip"] else "")   # V3.28
         far = me.get("dist") if me and me.get("dist") is not None else d.get("dist")
         if ci("range_warn_m") > 0 and far and far > ci("range_warn_m") and not TEST["on"]:   # V1.9.2: no FAR in the replay
             w.append("FAR %d M" % far)
@@ -2405,7 +2486,7 @@ class H(BaseHTTPRequestHandler):
                 CFG["pip_pos"] = b["pip_pos"]; ok["pip_pos"] = b["pip_pos"]
             if b.get("theme") in ("glass", "hud"):   # V2.98
                 CFG["theme"] = b["theme"]; ok["theme"] = b["theme"]
-            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "map3d"):
+            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "map3d", "phone_gps"):
                 if k in b:
                     v = str(int(float(b[k])))
                     CFG[k] = v
@@ -2561,6 +2642,7 @@ def main():
     if CFG.get("ipv4_only", "1") == "1":
         _ipv4_only()
     threading.Thread(target=lastpos_thread, daemon=True).start()
+    threading.Thread(target=phone_gps_thread, daemon=True).start()
     threading.Thread(target=serial_thread, daemon=True).start()
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
