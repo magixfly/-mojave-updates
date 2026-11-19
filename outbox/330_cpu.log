@@ -1,0 +1,42 @@
+### 330_cpu  –  2026-11-19 01:26:09
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+top - 01:26:12 up 10:38,  2 users,  load average: 13.85, 12.55, 9.49
+Tasks: 225 total,   4 running, 221 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 64.8 us, 27.0 sy,  0.0 ni,  6.2 id,  0.0 wa,  0.0 hi,  2.0 si,  0.0 st 
+MiB Mem :   3795.6 total,    577.0 free,   1318.5 used,   2511.5 buff/cache     
+MiB Swap:   2048.0 total,   2047.9 free,      0.1 used.   2477.1 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+1910185 user1     20   0  200.0g 260372 162984 R 124.8   6.7 106:13.73 chromium
+1910103 user1     20   0   52.9g 183660 128388 R  85.1   4.7 102:48.65 chromium
+1909969 user1     20   0   52.9g 277996 228076 S  21.1   7.2  25:39.14 chromium
+1910105 user1     20   0   52.5g 107012  85820 S  19.8   2.8   4:53.75 chromium
+     69 root       0 -20       0      0      0 D  14.5   0.0  17:44.60 kworker+
+   1097 user1     20   0  508424 101036  73716 R  14.5   2.6  28:43.66 labwc
+2970997 user1     20   0   52.6g  79760  63784 S   9.2   2.1   3:07.72 chromium
+   1102 user1     20   0  113416  19312   7732 S   6.9   0.5   5:14.28 pipewir+
+   1094 user1     20   0  172464  13680   8244 S   6.6   0.4   4:58.01 pipewire
+   2385 user1     20   0  796172   8912   8016 S   5.3   0.2  11:40.11 adb
+3074068 root      20   0       0      0      0 I   3.6   0.0   0:21.02 kworker+
+3637639 root      20   0       0      0      0 I   3.6   0.0   0:00.67 kworker+
+     87 root       1 -19       0      0      0 S   3.3   0.0   1:28.33 vchiq-s+
+   1344 user1     20   0 2037952  44040  13084 S   3.3   1.1  16:30.97 python3
+2862299 root      20   0       0      0      0 D   2.3   0.0   0:48.74 kworker+
+
+    PID %CPU     ELAPSED COMMAND
+3639204  300       00:00 ps -eo pid,pcpu,etime,args --sort=-pcpu
+1910185 60.3    02:56:03 /usr/lib/chromium/chromium --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --change-stack-guard-on-fork=
+1910103 58.3    02:56:04 /usr/lib/chromium/chromium --type=gpu-process --gpu-recent-crash-count=0 --disable-dev-shm-usage --enable-gpu-rasterization --ozone-platform=wayland --render-node-override=/de
+1909969 14.5    02:56:06 /usr/lib/chromium/chromium --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check -
+3638462  5.6       00:11 bash bridge.sh
+2970997  4.8    01:04:41 /usr/lib/chromium/chromium --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-GB --service-sandbox-type=none --disable-dev-shm-usage --use-angle=gles --rende
+   1097  4.5    10:37:49 /usr/bin/labwc -m
+
+throttled=0x0
+temp=51.1'C
+ 01:26:12 up 10:38,  2 users,  load average: 13.85, 12.55, 9.49
+
+{'ver': '3.27', 'fpv': None, 'box': None, 'cpu': None, 'ram': None, 'temp': None, 'thr': None}
+
+### Exit-Code: 0
