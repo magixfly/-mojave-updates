@@ -1,0 +1,14 @@
+### 331_shot  –  2026-11-19 01:29:24
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+cosmo 200
+fpv_mode=pip   # V3.24: FPV vi
+theme=hud   # V2.98: look of t
+map3d=0   # V2.0.61: 1 = 3D vi
+  File "/usr/lib/python3.13/socket.py", line 719, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+
+### Exit-Code: 0
