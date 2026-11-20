@@ -1,13 +1,13 @@
 {
- "ver": "3.31",
+ "ver": "3.32",
  "neu": [
-  "Start points: hide list, no points for real car drives (> 110 km/h)"
+  "Rides: filter All / MOJAVE / Others, hide and show rides (hidden = no start point), delete as before"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 135202,
-   "md5": "a19b49c8bb6ec85f9f608de8253d8a5c"
+   "s": 136302,
+   "md5": "29c2992e6a45d24e73135fab12befb03"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 169126,
-   "md5": "cb33d613f9e351a5944ce9aea7a9444a"
+   "s": 170680,
+   "md5": "54d93f5c978906b9186469ef83c93b7d"
   },
   {
    "p": "web/kia.png",

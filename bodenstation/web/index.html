@@ -321,7 +321,8 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
   <h3>RIDES</h3>
   <div class="row">
     <button class="mb" id="mRides">Show saved rides<span id="ridesN"></span></button>
-    <div id="ridesT" style="display:none;gap:8px"><button class="mb" id="rSel" style="flex:1">Select</button><button class="mb" id="rDel" style="flex:1.4;display:none;color:var(--red)"></button></div>
+    <div id="ridesF" style="display:none;gap:8px"><button class="mb" data-f="all" style="flex:1">All</button><button class="mb" data-f="mojave" style="flex:1">MOJAVE</button><button class="mb" data-f="other" style="flex:1">Others</button><button class="mb" id="rShowHid" style="flex:1.3">Hidden: off</button></div>
+    <div id="ridesT" style="display:none;gap:8px"><button class="mb" id="rSel" style="flex:1">Select</button><button class="mb" id="rHide" style="flex:1;display:none">Hide</button><button class="mb" id="rDel" style="flex:1.4;display:none;color:var(--red)"></button></div>
     <div id="rides"></div>
   </div>
   <h3 class="noWin">WI-FI</h3>
@@ -1382,22 +1383,31 @@ function lqCol(q){if(q==null)return '#888';const f=Math.max(0,Math.min(1,(q-30)/
 function ridesCnt(n){if(n!=null){$('ridesN').textContent=' ('+n+')';return}j('/api/rides').then(r=>ridesCnt(r.rides.length)).catch(()=>{})}
 // V2.0.18: mark rides to delete - Select, tap rides (or a day = all of that day), Delete, tap again to confirm
 const RSEL=new Set();let rDelArm=0;
-function rSelUpd(){const el=$('rides'),on=el.classList.contains('selm');$('rSel').textContent=on?'Cancel':'Select';const b=$('rDel');b.style.display=on?'':'none';
+function rSelUpd(){const el=$('rides'),on=el.classList.contains('selm');$('rSel').textContent=on?'Cancel':'Select';const b=$('rDel');b.style.display=on?'':'none';$('rHide').style.display=on&&RSEL.size?'':'none';$('rHide').textContent=RSHOWH?'Hide / show':'Hide';
   rDelArm=0;b.textContent=RSEL.size?'Delete '+RSEL.size+(RSEL.size===1?' ride':' rides'):'Tap rides to mark';b.disabled=!RSEL.size;
   el.querySelectorAll('.rr[data-n]').forEach(r=>{const s=RSEL.has(r.dataset.n);r.classList.toggle('sel',s);r.querySelector('.ck').textContent=s?'☑':'☐'});
   el.querySelectorAll('.rd').forEach(d=>{const L=[...d.nextSibling.querySelectorAll('.rr[data-n]')];const all=L.length&&L.every(r=>RSEL.has(r.dataset.n));d.classList.toggle('sel',all);d.querySelector('.ck').textContent=all?'☑':'☐'})}
+let RFIL='all',RSHOWH=false;
+$('ridesF').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;RFIL=b.dataset.f;j2('/api/ridefilter',{f:RFIL});$('mRides').onclick()};
+$('rShowHid').onclick=()=>{RSHOWH=!RSHOWH;$('mRides').onclick()};
+$('rHide').onclick=async()=>{if(!RSEL.size)return;const r=await j('/api/rides');const hid=new Set(r.rides.filter(x=>x.hid).map(x=>x.name));
+  const allHid=[...RSEL].every(n=>hid.has(n));await j2('/api/ridehide',{names:[...RSEL],hide:allHid?0:1});RSEL.clear();$('rides').classList.remove('selm');$('mRides').onclick();loadStarts()};
 $('rSel').onclick=()=>{$('rides').classList.toggle('selm');RSEL.clear();rSelUpd()};
 $('rDel').onclick=async()=>{if(!RSEL.size)return;if(!rDelArm){rDelArm=1;$('rDel').textContent='Tap again: delete '+RSEL.size+'?';setTimeout(()=>{if(rDelArm)rSelUpd()},4000);return}
   rDelArm=0;$('rDel').textContent='deleting …';try{await fetch('/api/ridedel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({names:[...RSEL]})})}catch(e){}
   RSEL.clear();$('rides').classList.remove('selm');$('mRides').onclick()};
 $('mRides').onclick=async()=>{const el=$('rides');el.innerHTML='<div class="rr">loading …</div>';
-  try{const r=await j('/api/rides');ridesCnt(r.rides.length);el.innerHTML=r.rides.length?'':'<div class="rr">no rides yet</div>';
+  try{const r=await j('/api/rides');RFIL=r.filter||RFIL;
+    const isMoj=x=>/mojave/i.test(((x.veh&&x.veh.name)||'')+' '+(x.driver||''));   // V3.32: filter + hidden rides
+    r.rides=r.rides.filter(x=>(RSHOWH||!x.hid)&&(RFIL==='all'||(RFIL==='mojave'?isMoj(x):!isMoj(x))));
+    $('ridesF').style.display='flex';$('ridesF').querySelectorAll('[data-f]').forEach(b=>b.classList.toggle('pri',b.dataset.f===RFIL));$('rShowHid').textContent='Hidden: '+(RSHOWH?'shown':'off');
+    ridesCnt(r.rides.length);el.innerHTML=r.rides.length?'':'<div class="rr">no rides</div>';
     const days=[];r.rides.forEach(x=>{const d=new Date(x.t0*1000),k=d.toDateString();let g=days[days.length-1];if(!g||g.k!==k){g={k,d,L:[]};days.push(g)}g.L.push(x)});
     days.forEach((g,gi)=>{const km=g.L.reduce((a,x)=>a+x.km,0),hd=document.createElement('div'),box=document.createElement('div');hd.className='rd';box.className='rdl';
       hd.innerHTML=`<span class="ck">☐</span><b>${g.d.toLocaleDateString('en-GB',{weekday:'short'})} ${g.d.toLocaleDateString('de-AT',{day:'2-digit',month:'2-digit',year:'numeric'})}</b><i>${g.L.length} ${g.L.length===1?'ride':'rides'} · ${km.toFixed(1)} km</i><span>${gi?'▸':'▾'}</span>`;
       box.style.display=gi?'none':'flex';hd.onclick=()=>{if(el.classList.contains('selm')){const L=g.L.map(x=>x.name),all=L.every(n=>RSEL.has(n));L.forEach(n=>all?RSEL.delete(n):RSEL.add(n));box.style.display='flex';hd.lastChild.textContent='▾';rSelUpd();return}const o=box.style.display==='none';box.style.display=o?'flex':'none';hd.lastChild.textContent=o?'▾':'▸'};
       g.L.forEach(x=>{const d=new Date(x.t0*1000),dv=document.createElement('div');dv.className='rr';
-        dv.dataset.n=x.name;dv.innerHTML=`<span class="ck">☐</span><b>${d.toTimeString().slice(0,5)}</b> · ${fmtDur(x.dur)} · ${x.km.toFixed(2)} km${x.driver?' · <b>'+x.driver+'</b>':''}${x.with_&&x.with_.length?' <b style="color:var(--acc)">+ '+x.with_.join(', ')+'</b>':''}<br>max ${x.vmax} km/h · ${x.mah} mAh · link min ${x.lqmin??'–'} %`;
+        dv.dataset.n=x.name;if(x.hid)dv.style.opacity='.45';dv.innerHTML=`<span class="ck">☐</span>${x.hid?'<i>hidden</i> ':''}<b>${d.toTimeString().slice(0,5)}</b> · ${fmtDur(x.dur)} · ${x.km.toFixed(2)} km${x.driver?' · <b>'+x.driver+'</b>':''}${x.with_&&x.with_.length?' <b style="color:var(--acc)">+ '+x.with_.join(', ')+'</b>':''}<br>max ${x.vmax} km/h · ${x.mah} mAh · link min ${x.lqmin??'–'} %`;
         dv.onclick=()=>{if(el.classList.contains('selm')){RSEL.has(x.name)?RSEL.delete(x.name):RSEL.add(x.name);rSelUpd();return}showRide(x.name)};box.appendChild(dv)});
       el.appendChild(hd);el.appendChild(box)});$('ridesT').style.display=r.rides.length?'flex':'none';rSelUpd()}catch(e){el.innerHTML='<div class="rr">error</div>'}};
 async function showRide(name){const r=await j('/api/ride?f='+encodeURIComponent(name));if(!r.pts||!r.pts.length)return;

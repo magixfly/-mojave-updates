@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.31"
+VERSION = "3.32"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -31,6 +31,8 @@ DEFAULTS = [
     ("labels", "1", "V3.30: 1 = place names and roads over the aerial photo (basemap.at overlay, menu)"),
     ("labels_url", "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", "Overlay with place names"),
     ("starts", "1", "V3.30: 1 = show where the car rides started (one point per 500 m, menu)"),
+    ("rides_hidden", "", "V3.32: hidden rides (file names, ;) - not in the list (unless shown) and no start point"),
+    ("rides_filter", "all", "V3.32: rides list filter all / mojave / other"),
     ("starts_hide", "", "V3.31: start points not to show, lat,lon;lat,lon (500 m around each)"),
     ("starts_vmax", "110", "V3.31: rides faster than this (km/h) are real car drives, no start point"),
     ("online_url", "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", "Aerial photo basemap.at"),
@@ -2107,6 +2109,8 @@ def ride_starts():
             continue
         if r["vmax"] > cf("starts_vmax"):
             continue
+        if r["name"] in CFG.get("rides_hidden", "").split(";"):
+            continue
         hid = False
         for hp in CFG.get("starts_hide", "").split(";"):
             try:
@@ -2445,7 +2449,8 @@ class H(BaseHTTPRequestHandler):
         if p == "/api/starts":                   # V3.30
             return self.send(200, {"pts": ride_starts()})
         if p == "/api/rides":
-            return self.send(200, {"rides": list_rides()})
+            hid = set(CFG.get("rides_hidden", "").split(";"))
+            return self.send(200, {"rides": [dict(r, hid=r["name"] in hid) for r in list_rides()], "filter": CFG.get("rides_filter", "all")})
         if p == "/api/wifi":                     # V1.8.3: saved Wi-Fi networks + switching state
             return self.send(200, {"list": wifi_list(), "scan": wifi_scan(), "busy": WIFI_SW["busy"], "msg": WIFI_SW["msg"], "target": WIFI_SW["target"],
                                    "secs": round(time.time() - WIFI_SW["t0"]) if WIFI_SW["t0"] else 0})
@@ -2613,6 +2618,17 @@ class H(BaseHTTPRequestHandler):
             if ok:
                 save_cfg(CFG)
             return self.send(200, ok)
+        if p == "/api/ridehide":                  # V3.32: hide / show rides
+            hid = set(x for x in CFG.get("rides_hidden", "").split(";") if x)
+            for name in b.get("names") or []:
+                name = os.path.basename(str(name))
+                (hid.add if b.get("hide") else hid.discard)(name)
+            CFG["rides_hidden"] = ";".join(sorted(hid)); save_cfg(CFG)
+            return self.send(200, {"ok": True, "n": len(hid)})
+        if p == "/api/ridefilter":                # V3.32
+            if b.get("f") in ("all", "mojave", "other"):
+                CFG["rides_filter"] = b["f"]; save_cfg(CFG)
+            return self.send(200, {"ok": True})
         if p == "/api/ridedel":                   # V2.0.18: delete marked rides = move them to logs/geloescht (can be brought back)
             lg = os.path.join(BASE, "logs")
             trash = os.path.join(lg, "geloescht")
