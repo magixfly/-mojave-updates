@@ -89,6 +89,9 @@ public class A11y extends AccessibilityService {
         want("band");
         try { c.startActivity(new Intent("android.settings.TETHER_SETTINGS").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)); } catch (Throwable t) { Log.d("CTAP", "band: " + t); }
         Log.d("CTAP", "Band: Hotspot-Seite geöffnet");
+        new android.os.Handler(c.getMainLooper()).postDelayed(new Runnable() { public void run() {   // V1.87: hängt die Band-Einstellung -> trotzdem zurück zur Startseite
+            if ("band".equals(task) && me != null) { Log.d("CTAP", "Band: Zeitlimit, zurück"); task = null; me.goBack(); }
+        } }, 25000);
     }
 
     void texts(AccessibilityNodeInfo n, java.util.List<AccessibilityNodeInfo> out) {
@@ -111,9 +114,7 @@ public class A11y extends AccessibilityService {
         Class<?> back = Autostart.backTo;
         Autostart.backTo = null;
         if (back != null) startActivity(new Intent(this, back).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-        else if (MainActivity.alive || getSharedPreferences("ct", 0).getBoolean("mapAuto", false))
-            startActivity(new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-        else performGlobalAction(GLOBAL_ACTION_HOME);
+        else performGlobalAction(GLOBAL_ACTION_HOME);   // V1.87: nach dem Hotspot immer zur Startseite der Box (Wunsch Thorsten)
     }
 
     void bandFinish(String why) {
