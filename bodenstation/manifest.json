@@ -1,13 +1,13 @@
 {
- "ver": "3.34",
+ "ver": "3.35",
  "neu": [
-  "Own position held in standstill and smoothed (no jumping); no car: own coordinates + QR; map follows you when navi starts; no doubled sats"
+  "Own position: hold radius 15 m"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 138065,
-   "md5": "cd28963734b70ad790f990905edf5ba0"
+   "md5": "565efc26f7322414a2230b70098008e5"
   },
   {
    "p": "web/fpvstat.js",
@@ -17,7 +17,7 @@
   {
    "p": "web/index.html",
    "s": 173480,
-   "md5": "a2f1d466b33b33b8d980022c0dfd0641"
+   "md5": "7d5a57d9a12b77122a96efaeed0f6de4"
   },
   {
    "p": "web/kia.png",

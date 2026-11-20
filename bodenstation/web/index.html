@@ -756,7 +756,7 @@ const NV={lat:null,lon:null,hdg:0};
 /* V3.34: own position like the car: hold still below 3 km/h (GPS wanders 5-15 m in standstill), then glide */
 const MEH={lat:null,lon:null};
 function meTarget(){const me=st.me;if(!me||me.lat==null||me.nofix)return null;
-  if(MEH.lat==null||(me.kmh||0)>=3||hav(MEH.lat,MEH.lon,me.lat,me.lon)>25){MEH.lat=me.lat;MEH.lon=me.lon}
+  if(MEH.lat==null||(me.kmh||0)>=3||hav(MEH.lat,MEH.lon,me.lat,me.lon)>15){MEH.lat=me.lat;MEH.lon=me.lon}
   return MEH}
 function meStep(){const t=meTarget();if(!t)return false;if(NV.lat==null||Math.abs(NV.lat-t.lat)>0.01||Math.abs(NV.lon-t.lon)>0.01){NV.lat=t.lat;NV.lon=t.lon;return true}
   const dl=t.lat-NV.lat,dn=t.lon-NV.lon;NV.lat+=dl*0.12;NV.lon+=dn*0.12;const me=st.me;if((me.kmh||0)>3){let d=((me.crs||0)-NV.hdg+540)%360-180;NV.hdg=(NV.hdg+d*0.1+360)%360}
