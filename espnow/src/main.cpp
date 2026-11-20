@@ -14,8 +14,9 @@
 #include <LittleFS.h>
 #include <MD5Builder.h>
 #include "car.h"
+#include "ble.h"
 
-#define VERSION "1.4"
+#define VERSION "1.5"
 #define LED_PIN 21
 #define GPS_RX 5      // GPS-TX -> GP5
 #define GPS_TX 6      // GPS-RX <- GP6
@@ -30,6 +31,8 @@ struct Cfg {
   int uart_tx = 43, uart_rx = 44;
   int ap = 1, ap_hidden = 0, ap_scan_stop = 1;
   String ap_ssid = "CoreTracker", ap_pass = "coretracker";
+  int ble = 1;                                   // V1.5: Bluetooth LE output for the Carlin box
+  String ble_name = "CoreTracker-ESP";
 } C;
 
 static const char* CFG_PATH = "/config.txt";
@@ -51,6 +54,8 @@ static void cfgSet(const String& k, const String& v) {
   else if (k == "uart_tx") C.uart_tx = v.toInt();
   else if (k == "uart_rx") C.uart_rx = v.toInt();
   else if (k == "ap") C.ap = v.toInt();
+  else if (k == "ble") C.ble = v.toInt();
+  else if (k == "ble_name") C.ble_name = v;
   else if (k == "ap_ssid") C.ap_ssid = v;
   else if (k == "ap_pass") C.ap_pass = v;
   else if (k == "ap_hidden") C.ap_hidden = v.toInt();
@@ -82,6 +87,8 @@ static String cfgText() {
   s += "ap_pass=" + C.ap_pass + "   # Passwort (mind. 8 Zeichen, kuerzer = offenes WLAN)\n";
   s += "ap_hidden=" + String(C.ap_hidden) + "   # 1 = WLAN-Name versteckt\n";
   s += "ap_scan_stop=" + String(C.ap_scan_stop) + "   # 1 = keine Core-Kanalsuche, solange ein Geraet im WLAN ist (Verbindung bleibt stabil)\n";
+  s += "ble=" + String(C.ble) + "   # 1 = Bluetooth LE fuer die Carlin-Box (Daten wie ueber USB), 0 = aus\n";
+  s += "ble_name=" + C.ble_name + "   # Bluetooth-Name\n";
   return s;
 }
 
@@ -95,7 +102,7 @@ static bool cfgSave() {
 
 static void cfgLoad() {
   static const char* keys[] = {"phrase", "uid", "channel", "led", "led_blink", "any_sender", "core", "core_scan", "core_poll", "gps", "gps_baud",
-                               "mac_tag", "uart", "uart_baud", "uart_tx", "uart_rx", "ap", "ap_ssid", "ap_pass", "ap_hidden", "ap_scan_stop"};
+                               "mac_tag", "uart", "uart_baud", "uart_tx", "uart_rx", "ap", "ap_ssid", "ap_pass", "ap_hidden", "ap_scan_stop", "ble", "ble_name"};
   bool seen[sizeof(keys) / sizeof(keys[0])] = {};
   File f = LittleFS.open(CFG_PATH, "r");
   if (f) {
@@ -147,6 +154,7 @@ static void writeOut(const uint8_t* d, size_t n) {
   if (Serial.availableForWrite() >= (int)n) Serial.write(d, n);   // nobody reading USB (car, Pi program stopped) -> drop, never block
   if (C.uart && Serial0.availableForWrite() >= (int)n) Serial0.write(d, n);
   carFrame(d, n);
+  if (C.ble) bleFrame(d, n);
 }
 
 // ---------------------------------------------------------------- statistics
@@ -410,6 +418,7 @@ static void printStatus(Print& o) {
   o.printf("# search scans=%lu polls=%lu ok=%lu chErr=%lu (%d at ch %d) now_ch=%d state=%d csCh=%d fail=%d next_poll=%lds next_scan=%lds allowed=%d\n",
            (unsigned long)scans, (unsigned long)polls, (unsigned long)pollOk, (unsigned long)chErr, chErrLast, chErrCh, curCh, csState, csCh, csFail,
            (long)((int32_t)(csNextPoll - now) / 1000), (long)((int32_t)(csNextScan - now) / 1000), scanAllowed());
+  o.printf("# ble=%d name=%s connected=%d sent=%lu\n", C.ble, C.ble_name.c_str(), bleConnected(), (unsigned long)bleSent());
   o.printf("# car ap=%d ssid=%s active=%d stations=%d pages=%d  heap=%u\n", C.ap, C.ap_ssid.c_str(), carActive(), carClients(),
            carWsClients(), (unsigned)ESP.getFreeHeap());
 }
@@ -468,6 +477,7 @@ void setup() {
   if (C.ap) carBegin(C.ap_ssid.c_str(), C.ap_pass.c_str(), C.channel, C.ap_hidden, VERSION);
   esp_wifi_set_channel(C.channel, WIFI_SECOND_CHAN_NONE);
   curCh = C.channel;
+  if (C.ble) bleBegin(C.ble_name.c_str());
 
   esp_now_init();
   esp_now_register_recv_cb(onRecv);
@@ -499,6 +509,7 @@ void loop() {
   coreSearch();
   gpsLoop();
   carLoop();
+  if (C.ble) { bleLoop(); String l; if (bleLine(l)) command(l); }
   cmdLoop();
   ledLoop();
   delay(1);
