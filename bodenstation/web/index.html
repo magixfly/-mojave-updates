@@ -360,6 +360,8 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <button class="mb" id="mName2"></button>
     <button class="mb" id="mNames">Names on the map: on</button>
     <button class="mb" id="mPhone">Phone GPS (GPS2IP): off</button>
+    <button class="mb" id="mLabels">Place names on the map: on</button>
+    <button class="mb" id="mStarts">Start points of the rides: on</button>
     <button class="mb" id="mNavi">Navi mode (map follows you without a car): on</button>
     <label>Range warning (distance from home)</label>
     <div class="seg" id="sRange"><b data-v="0">off</b><b data-v="300">300 m</b><b data-v="500">500 m</b><b data-v="1000">1 km</b><b data-v="2000">2 km</b></div>
@@ -460,6 +462,16 @@ let KIC=null;function kiLoad(){if(DEMO)return;fetch('/api/kicover').then(r=>r.js
 setTimeout(kiLoad,1500);setInterval(kiLoad,300000);
 function kiHas(z,x,y){const c=KIC[z]&&KIC[z][x];if(!c)return false;for(const r of c)if(y>=r[0]&&y<=r[1])return true;return false}
 let TCX=0,TCY=0,TCZ=0;   // V3.14: centre tile of the view - nearest tiles load first
+/* V3.30: place names + roads (basemap.at overlay) over the photo, own small cache; ride start points */
+const OVT=new Map();let ovLoad=0;
+function ovTile(z,x,y){const k=z+'/'+x+'/'+y;let t=OVT.get(k);if(t){t.used=frame;return t}
+  t={st:0,used:frame};OVT.set(k,t);return t}
+function ovPump(){for(const [k,t] of OVT){if(ovLoad>=3)break;if(t.st!==0||t.used<frame-2)continue;t.st=1;ovLoad++;const im=new Image();
+   im.onload=()=>{ovLoad--;t.img=im;t.st=2;dirty=true};im.onerror=()=>{ovLoad--;t.st=3};im.src='/tileo/'+k}
+  if(OVT.size>220){const a=[...OVT.entries()].sort((p,q)=>p[1].used-q[1].used);for(let i=0;i<a.length-180;i++)if(a[i][1].st!==1)OVT.delete(a[i][0])}}
+let STARTS=[];
+function loadStarts(){if(DEMO)return;fetch('/api/starts').then(r=>r.json()).then(d=>{STARTS=d.pts||[];dirty=true}).catch(()=>{})}
+setTimeout(loadStarts,3000);setInterval(loadStarts,300000);
 function getTile(z,x,y,ring){
   const k=z+'/'+x+'/'+y;let t=tiles.get(k);
   if(t){t.used=frame;if(t.st===3&&performance.now()>t.retry){t.st=0}else return t}
@@ -540,6 +552,18 @@ function draw(){
       pf=pf&&!!pt&&pt.st===3
     }
   }
+  if(!DEMO&&(!C.cfg||C.cfg.labels!=='0')){   // V3.30: overlay with place names (max z19, bigger zooms reuse z19)
+    const oz=Math.min(tz,19),f=2**(tz-oz),OS=TS*f;
+    for(let ty=Math.floor(vy0/f);ty<=Math.floor(vy1/f);ty++)for(let tx=Math.floor(vx0/f);tx<=Math.floor(vx1/f);tx++){
+      const m=2**oz,wx=((tx%m)+m)%m;if(ty<0||ty>=m)continue;const t=ovTile(oz,wx,ty);if(t.st===2)ctx.drawImage(t.img,tx*OS-cx,ty*OS-cy,OS,OS)}
+    ovPump()}
+  if(STARTS.length&&(!C.cfg||C.cfg.starts!=='0')){const k=TS*2**tz;   // V3.30: where the car rides started
+    for(const s of STARTS){const q=proj([s.lat,s.lon]),x=q[0]*k-cx,y=q[1]*k-cy;if(Math.abs(x)>R||Math.abs(y)>R)continue;
+      ctx.save();ctx.translate(x,y);ctx.rotate(-V.rot);ctx.scale((v3?2.2:1.4)/sc,(v3?2.2:1.4)/sc);
+      ctx.fillStyle='rgba(16,22,29,.85)';ctx.strokeStyle='#4ade80';ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(0,0,11,0,7);ctx.fill();ctx.stroke();
+      ctx.fillStyle='#4ade80';ctx.beginPath();ctx.moveTo(-3,6);ctx.lineTo(-3,-7);ctx.lineTo(6,-3.5);ctx.lineTo(-3,0);ctx.fill();
+      if(s.n>1){ctx.font='bold 12px system-ui';ctx.textAlign='left';ctx.textBaseline='middle';ctx.lineWidth=3;ctx.strokeStyle='#000';ctx.strokeText(s.n+'×',14,0);ctx.fillStyle='#fff';ctx.fillText(s.n+'×',14,0)}
+      ctx.restore()}}
   pump();
   drawRide(tz,cx,cy,sc);
   // track
@@ -1292,6 +1316,7 @@ $('azM').onclick=()=>azStep(-0.1);$('azP').onclick=()=>azStep(0.1);
 function mapNames(){return !(C.cfg&&C.cfg.map_names==='0')}
 function drvName(n){const sc=slotCfg(n);return ((sc&&sc.pilot)||((C.cfg&&C.cfg.names)||'').split(',')[n-1]||'').trim()||'–'}   // V2.0.5: pilot of the sender first
 $('mNavi').onclick=()=>{const v=(C.cfg&&C.cfg.navi==='0')?'1':'0';if(C.cfg)C.cfg.navi=v;j2('/api/set',{navi:+v});updMenu();dirty=true};   // V3.29
+for(const [id,key] of [['mLabels','labels'],['mStarts','starts']])$(id).onclick=()=>{const v=(C.cfg&&C.cfg[key]==='0')?'1':'0';if(C.cfg)C.cfg[key]=v;j2('/api/set',{[key]:+v});updMenu();dirty=true};   // V3.30
 $('mPhone').onclick=()=>{const v=(C.cfg&&C.cfg.phone_gps==='1')?'0':'1';if(C.cfg)C.cfg.phone_gps=v;j2('/api/set',{phone_gps:+v});updMenu()};   // V3.28
 $('mNames').onclick=()=>{const v=mapNames()?'0':'1';if(C.cfg)C.cfg.map_names=v;j2('/api/set',{map_names:+v});updMenu();dirty=true};
 $('mName1').onclick=()=>{$('menu').style.display='none';kbOpen(1)};$('mName2').onclick=()=>{$('menu').style.display='none';kbOpen(2)};
@@ -1340,7 +1365,7 @@ $('sndA').onclick=async()=>{await j2('/api/sender',{auto:!SNDAUTO});sndLoad()};
 $('sndEN').onclick=()=>{const x=SNDL.find(i=>i.mac===SNDSEL);if(!x)return;KB.mode='snd';KB.mac=x.mac;KB.t=x.name||'';KB.sh=false;kbMode();kbDraw();$('kb').style.display='flex'};
 $('sndEP').onclick=()=>{const x=SNDL.find(i=>i.mac===SNDSEL);if(!x)return;KB.mode='sndp';KB.mac=x.mac;KB.t=x.pilot||'';KB.sh=false;kbMode();kbDraw();$('kb').style.display='flex'};
 $('sndF').onclick=async()=>{if(!SNDSEL)return;await j2('/api/sender',{mac:SNDSEL,forget:true});SNDSEL=null;sndLoad()};
-function updMenu(){azShow();$('mNavi').textContent='Navi mode (map follows you without a car): '+((C.cfg&&C.cfg.navi==='0')?'off':'on');$('mPhone').textContent='Phone GPS (GPS2IP): '+((C.cfg&&C.cfg.phone_gps==='1')?(st&&st.phone?st.phone:'on'):'off');$('mNames').textContent='Names on the map: '+(mapNames()?'on':'off');$('mName1').textContent='Driver car 1: '+drvName(1)+'  ✎';$('mName2').textContent='Driver car 2: '+drvName(2)+'  ✎';$('mNight').textContent='Night mode: '+(isNight()?'on':'off');$('m3d').textContent='3D view: '+(is3d()?'on':'off');$('mCore').textContent='Core info: '+(coreShow()?'on':'off');$('mSound').textContent='Warning sound: '+(soundOn()?'on':'off');
+function updMenu(){azShow();$('mLabels').textContent='Place names on the map: '+((C.cfg&&C.cfg.labels==='0')?'off':'on');$('mStarts').textContent='Start points of the rides: '+((C.cfg&&C.cfg.starts==='0')?'off':'on');$('mNavi').textContent='Navi mode (map follows you without a car): '+((C.cfg&&C.cfg.navi==='0')?'off':'on');$('mPhone').textContent='Phone GPS (GPS2IP): '+((C.cfg&&C.cfg.phone_gps==='1')?(st&&st.phone?st.phone:'on'):'off');$('mNames').textContent='Names on the map: '+(mapNames()?'on':'off');$('mName1').textContent='Driver car 1: '+drvName(1)+'  ✎';$('mName2').textContent='Driver car 2: '+drvName(2)+'  ✎';$('mNight').textContent='Night mode: '+(isNight()?'on':'off');$('m3d').textContent='3D view: '+(is3d()?'on':'off');$('mCore').textContent='Core info: '+(coreShow()?'on':'off');$('mSound').textContent='Warning sound: '+(soundOn()?'on':'off');
   seg('sBright',st.bright??100,v=>j2('/api/set',{bright:v}));seg('sRange',(C.cfg&&+C.cfg.range_warn_m)||0,v=>{if(C.cfg)C.cfg.range_warn_m=v;j2('/api/set',{range_warn_m:v})})}
 // ------------------------------------------------ screen lock (hold 2 s to unlock)
 let lockT=null,lockS=0;

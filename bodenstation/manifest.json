@@ -1,13 +1,13 @@
 {
- "ver": "3.29",
+ "ver": "3.30",
  "neu": [
-  "Navi mode: without a car the map follows you (phone/ESP GPS), your speed, heading-up, auto zoom; drive saved as GPX in navi/"
+  "Place names and roads over the photo (basemap.at overlay); start points of the rides (one per 500 m, count); both switchable in ..."
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 131879,
-   "md5": "81285227e159ddb3654db48edb00f22f"
+   "s": 134600,
+   "md5": "2c9c8bfe74f47341a3533381cb9f9e0a"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 166429,
-   "md5": "8ff90fa69a75b728f59f48285652ff4c"
+   "s": 169126,
+   "md5": "cb33d613f9e351a5944ce9aea7a9444a"
   },
   {
    "p": "web/kia.png",

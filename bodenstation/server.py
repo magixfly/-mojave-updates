@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.29"
+VERSION = "3.30"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -28,6 +28,9 @@ DEFAULTS = [
     ("test_lon", "15.6485", ""),
     ("tiles_dir", "tiles", "Tile folder (ki = AI tiles first, then ortho)"),
     ("online", "1", "1 = load missing tiles from the internet and keep them"),
+    ("labels", "1", "V3.30: 1 = place names and roads over the aerial photo (basemap.at overlay, menu)"),
+    ("labels_url", "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", "Overlay with place names"),
+    ("starts", "1", "V3.30: 1 = show where the car rides started (one point per 500 m, menu)"),
     ("online_url", "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", "Aerial photo basemap.at"),
     ("online_url2", "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", "Fallback Esri"),
     ("online_timeout_s", "10", "Seconds to wait for one internet tile"),
@@ -697,6 +700,7 @@ def set_bright(pct):
 def ride_stats(fn, points=False):
     """Read one ride log. Returns stats (and points [lat, lon, kmh, lq] if wanted)."""
     pts, t0 = [], None
+    s0 = (None, None)
     drv = {}
     t1 = km = vmax = 0.0
     m0 = m1 = None
@@ -727,6 +731,7 @@ def ride_stats(fn, points=False):
                 continue
             if t0 is None:
                 t0 = t
+                s0 = (round(la, 6), round(lo, 6))   # V3.30: start point
             t1 = t
             m0 = mah if m0 is None else m0
             m1 = mah
@@ -753,7 +758,7 @@ def ride_stats(fn, points=False):
          "vmax": round(vmax), "mah": max(0, (m1 or 0) - (m0 or 0)), "lqmin": lqmin,
          "driver": drv.get("driver", ""), "car2": drv.get("car2", ""),
          "t1": t1, "car": int(re.search(r"_(\d)_", os.path.basename(fn)).group(1)) if re.search(r"_(\d)_", os.path.basename(fn)) else 1,
-         "plane": "(plane)" in drv.get("driver", "") or (drv.get("veh") or {}).get("type") == "plane", "veh": drv.get("veh")}
+         "lat0": s0[0], "lon0": s0[1], "plane": "(plane)" in drv.get("driver", "") or (drv.get("veh") or {}).get("type") == "plane", "veh": drv.get("veh")}
     if points:
         r["pts"] = pts
     return r
@@ -2064,6 +2069,47 @@ def _ipv4_only():
         return v4 or r
     socket.getaddrinfo = gai
 
+OV_FAIL = {}
+def get_overlay(z, x, y):
+    """V3.30: place-name overlay tile (png, transparent). Cached in tiles/overlay; b'' = known empty."""
+    p = os.path.join(TILES, "overlay", str(z), str(x), "%d.png" % y)
+    if os.path.exists(p):
+        with open(p, "rb") as f:
+            return f.read()
+    if CFG.get("online", "1") != "1" or OV_FAIL.get((z, x, y), 0) > time.time():
+        return None
+    u = CFG.get("labels_url", "").replace("{z}", str(z)).replace("{x}", str(x)).replace("{y}", str(y))
+    try:
+        with DL_SEM:
+            rq = urllib.request.Request(u, headers={"User-Agent": "MojaveGroundStation/" + VERSION})
+            with urllib.request.urlopen(rq, timeout=cf("online_timeout_s")) as r:
+                data = r.read()
+    except urllib.error.HTTPError:
+        data = b""                              # outside Austria: no overlay
+    except Exception:
+        OV_FAIL[(z, x, y)] = time.time() + 20
+        return None
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    with open(p + ".tmp", "wb") as f:
+        f.write(data)
+    os.replace(p + ".tmp", p)
+    return data
+
+def ride_starts():
+    """V3.30: start points of the car rides, one point per 500 m (count = number of rides there)"""
+    pts = []
+    for r in ride_files():
+        if r.get("plane") or r.get("lat0") is None:
+            continue
+        if r["km"] * 1000 < cf("ride_min_m") or r["vmax"] < cf("ride_min_kmh"):
+            continue
+        for q in pts:
+            if haversine(q["lat"], q["lon"], r["lat0"], r["lon0"]) < 500:
+                q["n"] += 1; q["t"] = max(q["t"], r.get("t0") or 0); break
+        else:
+            pts.append({"lat": r["lat0"], "lon": r["lon0"], "n": 1, "t": r.get("t0") or 0})
+    return pts
+
 def fetch_online(z, x, y):
     """Download a tile into ortho cache. Returns bytes or None."""
     if CFG["online"] != "1" or z > ci("online_max_zoom"):
@@ -2375,6 +2421,15 @@ class H(BaseHTTPRequestHandler):
             return self.send(200, {"busy": DEVS["busy"], "prog": DEVS["prog"], "d": DEVS["d"]})
         if p == "/api/kicover":                  # V2.0.17
             return self.send(200, ki_cover())
+        if p.startswith("/tileo/"):              # V3.30: place-name overlay
+            try:
+                z, x, y = [int(v.split(".")[0]) for v in p.split("/")[2:5]]
+            except Exception:
+                return self.send(400, {"err": "bad tile"})
+            d = get_overlay(z, x, y)
+            return self.send(200, d, "image/png", True) if d else self.send(404, b"", "text/plain")
+        if p == "/api/starts":                   # V3.30
+            return self.send(200, {"pts": ride_starts()})
         if p == "/api/rides":
             return self.send(200, {"rides": list_rides()})
         if p == "/api/wifi":                     # V1.8.3: saved Wi-Fi networks + switching state
@@ -2520,7 +2575,7 @@ class H(BaseHTTPRequestHandler):
                 CFG["pip_pos"] = b["pip_pos"]; ok["pip_pos"] = b["pip_pos"]
             if b.get("theme") in ("glass", "hud"):   # V2.98
                 CFG["theme"] = b["theme"]; ok["theme"] = b["theme"]
-            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "map3d", "phone_gps", "navi"):
+            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "map3d", "phone_gps", "navi", "labels", "starts"):
                 if k in b:
                     v = str(int(float(b[k])))
                     CFG[k] = v
