@@ -1,0 +1,6 @@
+### 349_shot  –  2026-11-20 15:00:21
+### Box: NICHT erreichbar (192.168.68.2:5555)
+
+{'lat': 48.1440778, 'lon': 15.3223163, 'alt': 283, 'kmh': 1.8, 'crs': 0.0, 'sats': 9, 'hdop': 1.0, 'src': 'esp', 'age': 0.3} None False
+
+### Exit-Code: 0
