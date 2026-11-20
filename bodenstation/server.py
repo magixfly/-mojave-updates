@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.30"
+VERSION = "3.31"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -31,6 +31,8 @@ DEFAULTS = [
     ("labels", "1", "V3.30: 1 = place names and roads over the aerial photo (basemap.at overlay, menu)"),
     ("labels_url", "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", "Overlay with place names"),
     ("starts", "1", "V3.30: 1 = show where the car rides started (one point per 500 m, menu)"),
+    ("starts_hide", "", "V3.31: start points not to show, lat,lon;lat,lon (500 m around each)"),
+    ("starts_vmax", "110", "V3.31: rides faster than this (km/h) are real car drives, no start point"),
     ("online_url", "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", "Aerial photo basemap.at"),
     ("online_url2", "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", "Fallback Esri"),
     ("online_timeout_s", "10", "Seconds to wait for one internet tile"),
@@ -2102,6 +2104,18 @@ def ride_starts():
         if r.get("plane") or r.get("lat0") is None:
             continue
         if r["km"] * 1000 < cf("ride_min_m") or r["vmax"] < cf("ride_min_kmh"):
+            continue
+        if r["vmax"] > cf("starts_vmax"):
+            continue
+        hid = False
+        for hp in CFG.get("starts_hide", "").split(";"):
+            try:
+                hl, ho = [float(v) for v in hp.split(",")]
+                if haversine(hl, ho, r["lat0"], r["lon0"]) < 500:
+                    hid = True
+            except Exception:
+                pass
+        if hid:
             continue
         for q in pts:
             if haversine(q["lat"], q["lon"], r["lat0"], r["lon0"]) < 500:

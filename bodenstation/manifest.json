@@ -1,13 +1,13 @@
 {
- "ver": "3.30",
+ "ver": "3.31",
  "neu": [
-  "Place names and roads over the photo (basemap.at overlay); start points of the rides (one per 500 m, count); both switchable in ..."
+  "Start points: hide list, no points for real car drives (> 110 km/h)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 134600,
-   "md5": "2c9c8bfe74f47341a3533381cb9f9e0a"
+   "s": 135202,
+   "md5": "a19b49c8bb6ec85f9f608de8253d8a5c"
   },
   {
    "p": "web/fpvstat.js",
