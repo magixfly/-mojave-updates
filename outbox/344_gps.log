@@ -1,0 +1,7 @@
+### 344_gps  –  2026-11-20 11:27:52
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+{'esp': True, 'dev': '/dev/ttyACM0', 'fw': '1.4', 'gps_cfg': 1, 'gps_baud': 9600, 'gps_data': False, 'gps_fix': 0, 'gps_sats': 0, 'age': 24} None
+{'esp': True, 'dev': '/dev/ttyACM0', 'fw': '1.4', 'gps_cfg': 1, 'gps_baud': 115200, 'gps_data': False, 'gps_fix': 0, 'gps_sats': 0, 'age': 23} None
+
+### Exit-Code: 0
