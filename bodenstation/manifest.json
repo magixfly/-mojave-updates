@@ -1,13 +1,13 @@
 {
- "ver": "3.33",
+ "ver": "3.34",
  "neu": [
-  "GPS tile shows Tracker GPS / Phone GPS state; ... menu HARDWARE: ESP receiver, firmware, GPS module"
+  "Own position held in standstill and smoothed (no jumping); no car: own coordinates + QR; map follows you when navi starts; no doubled sats"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 138065,
-   "md5": "d686902be6fd169f688e579453a7d9d6"
+   "md5": "cd28963734b70ad790f990905edf5ba0"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 172567,
-   "md5": "56f8ffb39a2f580a72b5d77ac9180d74"
+   "s": 173480,
+   "md5": "a2f1d466b33b33b8d980022c0dfd0641"
   },
   {
    "p": "web/kia.png",

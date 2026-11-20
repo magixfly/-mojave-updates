@@ -596,12 +596,12 @@ function draw(){
     ctx.fillStyle='#fff';ctx.strokeStyle='#000';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,0,13,0,7);ctx.fill();ctx.stroke();
     ctx.fillStyle='#000';ctx.font='bold 15px system-ui';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('H',0,1);ctx.restore()}
   // own position (pilot) and line to the car in find mode
-  const me=st.me&&st.me.lat!=null?st.me:null;
-  if(me){const mx=lon2x(me.lon,tz)-cx,my=lat2y(me.lat,tz)-cy;
+  const me=st.me&&st.me.lat!=null&&!st.me.nofix&&NV.lat!=null?st.me:null;
+  if(me){const mx=lon2x(NV.lon,tz)-cx,my=lat2y(NV.lat,tz)-cy;   // V3.34: smoothed, held in standstill
     if(FIND.on&&SM.lat!=null){const ax=lon2x(SM.lon,tz)-cx,ay=lat2y(SM.lat,tz)-cy;ctx.save();ctx.setLineDash([14/sc,10/sc]);ctx.lineWidth=4/sc;
       ctx.strokeStyle='rgba(77,184,255,.9)';ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(ax,ay);ctx.stroke();ctx.restore()}
     ctx.save();ctx.translate(mx,my);ctx.scale(1/sc,1/sc);
-    if(me.kmh>2){ctx.save();ctx.rotate(me.crs*Math.PI/180);ctx.fillStyle='rgba(77,184,255,.35)';ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,38,-Math.PI/2-.45,-Math.PI/2+.45);ctx.closePath();ctx.fill();ctx.restore()}
+    if(me.kmh>3){ctx.save();ctx.rotate(NV.hdg*Math.PI/180);ctx.fillStyle='rgba(77,184,255,.35)';ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,38,-Math.PI/2-.45,-Math.PI/2+.45);ctx.closePath();ctx.fill();ctx.restore()}
     ctx.fillStyle='#1a8cff';ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,11,0,7);ctx.fill();ctx.stroke();ctx.restore()}
   // car
   if(SM.lat!=null){const ax=lon2x(SM.lon,tz)-cx,ay=lat2y(SM.lat,tz)-cy;
@@ -753,10 +753,17 @@ function smoothFeed(SM_=SM,o=st){const SM=SM_,st=o||{};
 }
 /* V3.29: navi mode - no vehicle (or only the home position VGPS) but own position (ESP GPS / phone) -> map follows you */
 const NV={lat:null,lon:null,hdg:0};
-function naviOn(){const me=st&&st.me&&st.me.lat!=null?st.me:null;return !!(me&&(!C.cfg||C.cfg.navi!=='0')&&(st.lat==null||st.vgps)&&!TWO&&!(RIDE&&RIDE.tracks))}
-function naviStep(){const me=st.me;if(NV.lat==null||Math.abs(NV.lat-me.lat)>0.01||Math.abs(NV.lon-me.lon)>0.01){NV.lat=me.lat;NV.lon=me.lon}
-  const k=0.12,dl=me.lat-NV.lat,dn=me.lon-NV.lon;NV.lat+=dl*k;NV.lon+=dn*k;if((me.kmh||0)>3){let d=((me.crs||0)-NV.hdg+540)%360-180;NV.hdg=(NV.hdg+d*0.1+360)%360}
+/* V3.34: own position like the car: hold still below 3 km/h (GPS wanders 5-15 m in standstill), then glide */
+const MEH={lat:null,lon:null};
+function meTarget(){const me=st.me;if(!me||me.lat==null||me.nofix)return null;
+  if(MEH.lat==null||(me.kmh||0)>=3||hav(MEH.lat,MEH.lon,me.lat,me.lon)>25){MEH.lat=me.lat;MEH.lon=me.lon}
+  return MEH}
+function meStep(){const t=meTarget();if(!t)return false;if(NV.lat==null||Math.abs(NV.lat-t.lat)>0.01||Math.abs(NV.lon-t.lon)>0.01){NV.lat=t.lat;NV.lon=t.lon;return true}
+  const dl=t.lat-NV.lat,dn=t.lon-NV.lon;NV.lat+=dl*0.12;NV.lon+=dn*0.12;const me=st.me;if((me.kmh||0)>3){let d=((me.crs||0)-NV.hdg+540)%360-180;NV.hdg=(NV.hdg+d*0.1+360)%360}
   return Math.abs(dl)+Math.abs(dn)>1e-7}
+let NAVWAS=false;
+function naviOn(){const me=st&&st.me&&st.me.lat!=null?st.me:null;return !!(me&&(!C.cfg||C.cfg.navi!=='0')&&(st.lat==null||st.vgps)&&!TWO&&!(RIDE&&RIDE.tracks))}
+function naviStep(){return meStep()}
 function smoothStep(SM_=SM){const SM=SM_,B=SM.buf;
   if(!B||!B.length)return false;
   if(SM.dly==null)SM.dly=SM_DELAY;const tg=SM.dlyT||SM_DELAY;SM.dly+=Math.max(-8,Math.min(8,tg-SM.dly));   // change the delay slowly (no visible jump)
@@ -777,7 +784,8 @@ function loop(){
   if(WEBON)return;                           // V2.0.23: web page of Core/Navi covers the map
   smoothFeed();let moving=smoothStep();smoothFeed(SM2,st.car2);if(smoothStep(SM2))moving=true;
   const FX=FOL>=3?extras().find(c=>c.n===FOL&&c.lat!=null):null;
-  const NAV=naviOn();if(NAV&&naviStep())moving=true;
+  const NAV=naviOn();if(meStep())moving=true;   // V3.34
+  if(NAV&&!NAVWAS&&!V.follow&&typeof setFollow==='function')setFollow(true);NAVWAS=NAV;   // navi starts -> map follows you
   const F=NAV?NV:FX?{lat:FX.lat,lon:FX.lon,hdg:FX.hdg||0}:TWO&&FOL===2&&SM2.lat!=null?SM2:SM;
   if(RIDE.tracks&&V.follow&&RIDE.T!=null){const tr=RIDE.tracks[RIDE.fol||0]||RIDE.tracks[0],P=tr.pts;   // V2.0.15: replay - crosshair = map follows the vehicle
     if(P.length&&P[0][4]!=null){const ip=rideInterp(P,Math.max(P[0][4],Math.min(RIDE.T,P[P.length-1][4])));V.lat=ip.lat;V.lon=ip.lon}}
@@ -1049,7 +1057,7 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
    else{t='Tracker GPS · not found';c='var(--mut)'}
    const e=$('vMe');if(e.textContent!==t){e.textContent=t;e.style.color=c}}
   {const tr=st.trip||0;$('vTrip').textContent='trip '+(tr<1000?Math.round(tr)+' m':(tr/1000).toFixed(2)+' km')+(st.lat!=null&&st.alt!=null?' · alt '+Math.round(st.alt)+' m':'')}
-  $('vSats').textContent=(st.lat!=null?(st.vgps?'VGPS · ':'')+st.sats+' sats':'no GPS')+(st.me?(st.me.nofix?' · me no fix':' · '+(st.me.src==='phone'?'phone':'me')+' '+st.me.sats):'');cls($('vSats'),st.vgps?'mid':(st.lat!=null&&st.sats<6?'bad':null));
+  $('vSats').textContent=(st.lat!=null?(st.vgps?'VGPS · ':'')+st.sats+' sats':'no GPS');cls($('vSats'),st.vgps?'mid':(st.lat!=null&&st.sats<6?'bad':null));
   const w=$('warn'),wt=(st.warn||'').split(' · ').filter(x=>x&&!/BATTERY/.test(x)&&!(naviOn()&&/TELEMETRY|NO DATA|NO GPS/.test(x))).join(' · ');w.textContent=wt;w.style.display=wt?'block':'none';   // V3.21: battery alarm only in the BATTERY tile on the left (red), no extra bar
   playHud();
   {const t1=!!(st.test&&(st.test_cars||TESTN||1)===1&&!st.car2);$('mTest').textContent='Test ride: '+(t1?'on':'off');$('mTest').classList.toggle('pri',t1)}   // V1.9.15: only one of the two shows on
@@ -1084,7 +1092,8 @@ function hav(a,b,c,d){const R=6371000,p1=a*Math.PI/180,p2=c*Math.PI/180,dp=p2-p1
   const h=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(h)))}
 function brg(a,b,c,d){const f1=a*Math.PI/180,f2=c*Math.PI/180,dl=(d-b)*Math.PI/180;
   return (Math.atan2(Math.sin(dl)*Math.cos(f2),Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl))*180/Math.PI+360)%360}
-function posLine(){$('vPos').textContent=st.lat==null?'–':`${st.lat.toFixed(6)}, ${st.lon.toFixed(6)}`}
+function posLine(){const me=st.me&&st.me.lat!=null&&!st.me.nofix?st.me:null;   // V3.34: no car -> own coordinates
+  $('vPos').textContent=st.lat!=null&&!st.vgps?`${st.lat.toFixed(6)}, ${st.lon.toFixed(6)}`:me?`${(MEH.lat??me.lat).toFixed(6)}, ${(MEH.lon??me.lon).toFixed(6)}`:st.lat!=null?`${st.lat.toFixed(6)}, ${st.lon.toFixed(6)}`:'–'}
 // menu closes after an action button (not for map loading, saved rides or the segment buttons)
 ['mHome','mClear','mTest','mTest2','mNight','m3d','mSound','mCore','mLock'].forEach(id=>$(id).addEventListener('click',()=>setTimeout(()=>{$('menu').style.display='none'},150)));
 // V1.8.1: test ride player – pause, timeline, 1x/2x/4x
@@ -1162,14 +1171,14 @@ function qrShow(){const me=st.me&&st.me.lat!=null?st.me:null;if(QR.who===1&&!me)
   $('qrTxt').textContent=p[0].toFixed(6)+', '+p[1].toFixed(6);
   $('qrSub').textContent=QR.who===1?'Your position · scan with the phone':'Car position · scan → Google Maps walking route'+(st.age>2?' · last position':'');
   seg('sQr',QR.who,v=>{QR.who=v;qrShow()});$('qr').style.display='flex'}
-$('tGps').onclick=()=>{QR.who=0;qrShow()};
+$('tGps').onclick=()=>{QR.who=(st.lat==null||st.vgps)&&st.me&&st.me.lat!=null?1:0;qrShow()};   // V3.34: no car -> QR of own position
 $('qr').addEventListener('click',e=>{if(e.target.id==='qr')$('qr').style.display='none'});
 var FIND={on:false,fit:true,beep:false,lastBeep:0};
 function setFind(on){FIND.on=on;FIND.fit=true;$('bFind').classList.toggle('on',on);$('find').style.display=on?'block':'none';
   if(!on){setFollow(true)}else{$('menu').style.display='none'};dirty=true}
 $('bFind').onclick=()=>setFind(!FIND.on);
 $('fX').onclick=()=>setFind(false);
-$('fQr').onclick=()=>{QR.who=0;qrShow()};
+$('fQr').onclick=()=>{QR.who=(st.lat==null||st.vgps)&&st.me&&st.me.lat!=null?1:0;qrShow()};
 $('fBeep').onclick=()=>{FIND.beep=!FIND.beep;$('fBeep').textContent='Beep: '+(FIND.beep?'on':'off');$('fBeep').classList.toggle('pri',FIND.beep);if(FIND.beep){beep(1200,.08);bInfo('Find car: beeps on')}};
 // map shows car and pilot together (until the map is moved by hand)
 function fitBoth(){const a=[SM.lat,SM.lon],b=[st.me.lat,st.me.lon];
