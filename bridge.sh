@@ -20,6 +20,15 @@ GW=$(ip route 2>/dev/null | awk '/^default/{print $3; exit}')
 if [ -n "${BOX_IPS:-}" ]; then
   pick=""
   for ip in $BOX_IPS; do adb devices | grep -q "^$ip:$BOX_PORT[[:space:]]*device" && { pick=$ip; break; }; done
+  # 20.11.: Box sucht im eigenen Netz (iPhone-Hotspot: Box hat wechselnde Adresse, iPhone antwortet auf ping) -> wer hat ADB-Port 5555 offen?
+  if [ -z "$pick" ]; then
+    for ip in $BOX_IPS; do timeout 1 bash -c "</dev/tcp/$ip/$BOX_PORT" 2>/dev/null && { pick=$ip; break; }; done
+  fi
+  if [ -z "$pick" ] && [ -n "$GW" ]; then
+    pre=${GW%.*}; tmp=$(mktemp)
+    for i in $(seq 1 254); do ( timeout 0.5 bash -c "</dev/tcp/$pre.$i/$BOX_PORT" 2>/dev/null && echo "$pre.$i" >> "$tmp" ) & done; wait
+    pick=$(head -1 "$tmp"); rm -f "$tmp"
+  fi
   [ -z "$pick" ] && for ip in $BOX_IPS; do ping -c1 -W1 "$ip" >/dev/null 2>&1 && { pick=$ip; break; }; done
   # 13.11. 16:00: Box als eigener 5-GHz-Hotspot (SIM) -> Box ist das Gateway des Pi
   if [ -z "$pick" ]; then gw=$(ip route 2>/dev/null | awk '/^default/{print $3; exit}'); [ -n "$gw" ] && ping -c1 -W1 "$gw" >/dev/null 2>&1 && pick=$gw; fi
