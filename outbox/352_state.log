@@ -1,0 +1,6 @@
+### 352_state  –  2026-11-20 22:19:04
+### Box: verbunden (172.20.10.14:5555)
+
+{'ver': '3.35', 'lat': None, 'lon': None, 'sats': 0, 'age': 0.1, 'vgps': False, 'src': 'USB', 'esp': {'rssi': -62, 'pps': 23, 'bad': 0, 'age': 0.8}, 'warn': '', 'slot': None, 'name': None, 'me': {'nofix': True, 'sats': 0}, 'hw': {'esp': True, 'dev': '/dev/ttyACM0', 'fw': '1.4', 'gps_cfg': 1, 'gps_baud': 115200, 'gps_data': True, 'gps_fix': 0, 'gps_sats': 0, 'age': 1}}
+
+### Exit-Code: 0
