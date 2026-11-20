@@ -1,0 +1,7 @@
+### 342_esp  –  2026-11-20 11:13:06
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+{'ver': '3.32', 'esp': {'rssi': None, 'pps': 0, 'bad': 0, 'age': 0.0}, 'espq': None, 'src': '-', 'me': None, 'phone': 'off', 'vgps': False, 'sats': 0, 'lat': None}
+crw-rw----+ 1 root plugdev 166, 0 Nov 20 11:10 /dev/ttyACM0
+
+### Exit-Code: 2
