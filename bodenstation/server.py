@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.32"
+VERSION = "3.33"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1544,6 +1544,9 @@ def snapshot():
         elif ME["t"] and time.time() - ME["t"] < 30:
             me = {"nofix": True, "sats": ME.get("sats", 0)}
         d["me"] = me
+        d["hw"] = {"esp": bool(S.get("dev")), "dev": S.get("dev", ""), "fw": ESPINFO["fw"], "gps_cfg": ESPINFO["gps_cfg"],
+                   "gps_baud": ESPINFO["gps_baud"], "gps_data": bool(ME["t"] and time.time() - ME["t"] < 5 and ME.get("src", "esp") == "esp"),
+                   "gps_fix": ESPINFO["gps_fix"], "gps_sats": ESPINFO["gps_sats"], "age": round(time.time() - ESPINFO["t"]) if ESPINFO["t"] else None}   # V3.33
         d["phone"] = PHONE["st"] + ((" " + PHONE["ip"]) if PHONE["ip"] else "")   # V3.28
         far = me.get("dist") if me and me.get("dist") is not None else d.get("dist")
         if ci("range_warn_m") > 0 and far and far > ci("range_warn_m") and not TEST["on"]:   # V1.9.2: no FAR in the replay
@@ -1796,6 +1799,28 @@ def lastpos_thread():   # V3.15: remember the last real GPS position as map star
         except Exception as e:
             print("lastpos", e)
 
+ESPINFO = {"fw": "", "gps_cfg": None, "gps_baud": 0, "gps_fix": 0, "gps_sats": 0, "t": 0}   # V3.33: from the ESP "status" text
+def esp_text(buf, d):
+    """V3.33: pick the '# ...' status lines out of the mixed binary/text stream"""
+    for ch in d:
+        if ch == 10:
+            ln = buf.decode("latin1", "ignore"); buf.clear()
+            i = ln.find("# ")
+            if i < 0:
+                continue
+            ln = ln[i:]
+            m = re.search(r"receiver V([0-9.]+)", ln)
+            if m:
+                ESPINFO["fw"] = m.group(1); ESPINFO["t"] = time.time()
+            m = re.search(r"gps=(\d+) baud=(\d+) fix=(\d+) sats=(\d+)", ln)
+            if m:
+                ESPINFO.update(gps_cfg=int(m.group(1)), gps_baud=int(m.group(2)), gps_fix=int(m.group(3)), gps_sats=int(m.group(4)), t=time.time())
+        elif 32 <= ch < 127:
+            if len(buf) < 400:
+                buf.append(ch)
+        else:
+            buf.clear()
+
 def serial_thread():
     while True:
         dev = find_dev()
@@ -1816,9 +1841,15 @@ def serial_thread():
             S["dev"] = dev
         p = Crsf("UART" if "serial" in dev or "ttyAMA" in dev or "ttyS" in dev else "USB")
         usb_esp = any(os.path.realpath(l) == os.path.realpath(dev) for l in glob.glob("/dev/serial/by-id/*Espressif*"))   # V2.0.44: only the ESP32 receiver
-        last = time.time()
+        last = time.time(); tb = bytearray(); ask = 0
         try:
             while True:
+                if usb_esp and time.time() - ask > 30:   # V3.33: ask the ESP for its status (firmware, GPS)
+                    ask = time.time()
+                    try:
+                        os.write(fd, b"status\n")
+                    except Exception:
+                        pass
                 r, _, _ = select.select([fd], [], [], 1.0)
                 if r:
                     d = os.read(fd, 1024)
@@ -1826,6 +1857,8 @@ def serial_thread():
                         raise OSError("closed")
                     last = time.time()
                     p.feed(d)
+                    if usb_esp:
+                        esp_text(tb, d)
                 elif usb_esp and time.time() - last > 8:   # ESP sends at least 1 frame per second -> silent = stuck
                     esp_reset(fd)
                     last = time.time()

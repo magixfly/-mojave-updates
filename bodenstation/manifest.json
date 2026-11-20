@@ -1,13 +1,13 @@
 {
- "ver": "3.32",
+ "ver": "3.33",
  "neu": [
-  "Rides: filter All / MOJAVE / Others, hide and show rides (hidden = no start point), delete as before"
+  "GPS tile shows Tracker GPS / Phone GPS state; ... menu HARDWARE: ESP receiver, firmware, GPS module"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 136302,
-   "md5": "29c2992e6a45d24e73135fab12befb03"
+   "s": 138065,
+   "md5": "d686902be6fd169f688e579453a7d9d6"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 170680,
-   "md5": "54d93f5c978906b9186469ef83c93b7d"
+   "s": 172567,
+   "md5": "56f8ffb39a2f580a72b5d77ac9180d74"
   },
   {
    "p": "web/kia.png",
