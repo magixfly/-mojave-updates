@@ -1,13 +1,13 @@
 {
- "ver": "3.42",
+ "ver": "3.43",
  "neu": [
-  "Background map loading also for all rides, the test area and home"
+  "... menu HARDWARE: progress bar of the background map loading around your rides"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 141865,
-   "md5": "2be2497378f05a05f4f0fb66a3ef1c8a"
+   "s": 141951,
+   "md5": "bb7afd281825c983444a0c47a386ef25"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 175423,
-   "md5": "a02fe43f6257c920ebae88af7ebbd91a"
+   "s": 176138,
+   "md5": "faa41918736550df3f4ffae5e38e073f"
   },
   {
    "p": "web/kia.png",

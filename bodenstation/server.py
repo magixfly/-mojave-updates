@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.42"
+VERSION = "3.43"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1577,6 +1577,7 @@ def snapshot():
         d["hw"] = {"esp": bool(S.get("dev")), "dev": S.get("dev", ""), "fw": ESPINFO["fw"], "gps_cfg": ESPINFO["gps_cfg"],
                    "gps_baud": ESPINFO["gps_baud"], "gps_data": bool(ME["t"] and time.time() - ME["t"] < 5 and ME.get("src", "esp") == "esp"),
                    "gps_fix": ESPINFO["gps_fix"], "gps_sats": ESPINFO["gps_sats"], "age": round(time.time() - ESPINFO["t"]) if ESPINFO["t"] else None}   # V3.33
+        d["autopre"] = {"done": AUTOPRE["done"], "total": AUTOPRE["total"]}   # V3.43
         d["phone"] = PHONE["st"] + ((" " + PHONE["ip"]) if PHONE["ip"] else "")   # V3.28
         far = me.get("dist") if me and me.get("dist") is not None else d.get("dist")
         if ci("range_warn_m") > 0 and far and far > ci("range_warn_m") and not TEST["on"]:   # V1.9.2: no FAR in the replay
