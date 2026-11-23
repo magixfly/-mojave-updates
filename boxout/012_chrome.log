@@ -1,0 +1,10 @@
+### 012_chrome  –  2026-11-23 22:35:59
+### Box direkt (App 1.93, 192.168.178.235)
+
+package:com.google.android.webview
+package:com.android.chrome
+Starting: Intent { act=android.intent.action.VIEW dat=http://192.168.178.159/... pkg=com.android.chrome }
+
+### Exit-Code: 0
+
+### Dauer 12 s
