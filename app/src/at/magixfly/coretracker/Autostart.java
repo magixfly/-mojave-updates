@@ -21,7 +21,8 @@ public class Autostart extends Activity {
     TextView st;
 
     static final String[][] OPT = {
-        {"apAuto", "1", "Hotspot beim Start einschalten"},
+        {"wlanAuto", "1", "WLAN nach Reihenfolge wählen (unten), sonst Hotspot"},
+        {"apAuto", "1", "Hotspot einschalten, wenn kein WLAN aus der Liste da ist"},
         {"ap5", "1", "Hotspot auf 5 GHz festlegen"},
         {"adbAuto", "1", "Debugging über WLAN (ADB) beim Start – Fernwartung"},
         {"mapAuto", "0", "Core Tracker (Karte) beim Start öffnen"},
@@ -46,6 +47,15 @@ public class Autostart extends Activity {
             });
             l.addView(s);
         }
+        TextView ol = tv("WLAN-Reihenfolge (Komma-getrennt):", 20, 0xFF9CA3AF); ol.setPadding(0, 18, 0, 4); l.addView(ol);   // V1.88
+        final android.widget.EditText oe = new android.widget.EditText(this);
+        oe.setText(p.getString("wlanOrder", WlanOrder.DEF)); oe.setTextSize(22); oe.setTextColor(0xFFE5E7EB); oe.setSingleLine(true);
+        oe.addTextChangedListener(new android.text.TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int a, int b, int d) { }
+            public void onTextChanged(CharSequence s, int a, int b, int d) { }
+            public void afterTextChanged(android.text.Editable s) { p.edit().putString("wlanOrder", s.toString()).apply(); }
+        });
+        l.addView(oe);
         TextView go = tv("Jetzt ausführen (Hotspot an + 5 GHz)", 22, 0xFF4ADE80);
         go.setGravity(Gravity.CENTER); go.setTypeface(null, Typeface.BOLD);
         android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
@@ -67,7 +77,7 @@ public class Autostart extends Activity {
     void status() {
         if (st == null) return;
         boolean on = HotspotBoot.apOn(this);
-        st.setText("Hotspot: " + (on ? "an" + band() : "aus") + "\nApp-Version " + ver() + "\nBildschirm im Browser: http://" + ip() + ":" + ScreenShare.PORT);
+        st.setText("Hotspot: " + (on ? "an" + band() : "aus") + (WlanOrder.state.length() > 0 ? "\nWLAN-Automatik: " + WlanOrder.state : "") + "\nApp-Version " + ver() + "\nBildschirm im Browser: http://" + ip() + ":" + ScreenShare.PORT);
     }
 
     static String ip() {

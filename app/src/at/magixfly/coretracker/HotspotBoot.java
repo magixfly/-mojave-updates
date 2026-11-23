@@ -21,6 +21,7 @@ class HotspotBoot {
 
     /** Nur in den ersten 10 min nach dem Einschalten und nur einmal pro Start. */
     static void maybe(final Context c) {
+        WlanOrder.watch(c.getApplicationContext());                // V1.88: dauerhaft – besseres WLAN / kein WLAN → Hotspot
         if (started || SystemClock.elapsedRealtime() > 10 * 60 * 1000L) return;
         if (!c.getSharedPreferences("ct", 0).getBoolean("apAuto", true)) return;
         started = true;
@@ -29,6 +30,7 @@ class HotspotBoot {
             try {
                 Thread.sleep(20000);
                 if (apOn(c)) { Log.d("CTAP", "Hotspot schon an"); A11y.startBand(c); return; }   // V1.57: 5 GHz festlegen
+                if (c.getSharedPreferences("ct", 0).getBoolean("wlanAuto", true)) { WlanOrder.boot(c); return; }   // V1.88: Media → XVII → Optimus Prime, sonst Hotspot
                 if (wifiConnected(c)) { Log.d("CTAP", "WLAN verbunden (z. B. Heim-WLAN) -> kein Hotspot"); return; }   // V1.82: zu Hause nicht aus dem WLAN werfen
                 A11y.want("ap");
                 c.startActivity(new android.content.Intent("android.settings.TETHER_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
