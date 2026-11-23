@@ -1,0 +1,7 @@
+### 387_st  –  2026-11-24 00:12:03
+### Box: verbunden (192.168.178.235:5555)
+
+box= {'txt': 'Maps 28.4/27.9 GB · stopped', 'dl': 0, 'gb': 28.4, 'est': 27.9, 'net': 'Wi-Fi', 'stop': 1, 'ver': '1.95', 'wifi': 'Box: Media 5 GHz · -64 dBm', 'ip': '192.168.178.235'}
+-rw-rw-r-- 1 user1 user1 2774 Nov 24 00:12 /tmp/s.png
+
+### Exit-Code: 0
