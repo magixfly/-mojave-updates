@@ -1,0 +1,43 @@
+### 364_boxwl2  –  2026-11-23 16:14:03
+### Box: verbunden (192.168.178.235:5555)
+
+Box 192.168.178.235:5555
+ls: /system/bin/su: No such file or directory
+ls: /system/xbin/su: No such file or directory
+== Media
+ rec[0]: time=11-23 16:11:07.128 processed=ConnectableState org=L3ConnectedState dest=<null> what=CMD_CONNECT_NETWORK screen=on 2 "Media"WPA_PSK nid=2 cuid=0 suid=0
+ rec[1]: time=11-23 16:11:07.470 processed=ConnectableState org=L3ConnectedState dest=L2ConnectingState what=CMD_START_CONNECT screen=on 2 0 targetConfigKey="Media"WPA_PSK BSSID=null targetBssid=any roam=false currentConfigKey="Optimus Prime"WPA_PSK
+ rec[4]: time=11-23 16:11:07.908 processed=ConnectingOrConnectedState org=L2ConnectingState dest=<null> what=SUPPLICANT_STATE_CHANGE_EVENT screen=on 0 0 ssid: "Media" bssid: 00:00:00:00:00:00 nid: 2 frequencyMhz: 0 state: SCANNING
+ rec[8]: time=11-23 16:11:11.152 processed=ConnectingOrConnectedState org=L2ConnectingState dest=<null> what=SUPPLICANT_STATE_CHANGE_EVENT screen=on 0 0 ssid: "Media" bssid: f0:a7:31:a9:a0:a6 nid: 2 frequencyMhz: 0 state: ASSOCIATING
+ rec[9]: time=11-23 16:11:11.298 processed=L2ConnectingState org=L2ConnectingState dest=DisconnectedState what=AUTHENTICATION_FAILURE_EVENT screen=on 0 0
+ rec[10]: time=11-23 16:11:11.302 processed=ConnectableState org=DisconnectedState dest=<null> what=ASSOCIATION_REJECTION_EVENT screen=on  ssid: "Media" bssid: f0:a7:31:a9:a0:a6 statusCode: 1 timedOut: false oceRssiBasedAssocRejectInfo: null mboAssocDisallowedInfo: null
+ rec[11]: time=11-23 16:11:11.302 processed=ConnectableState org=DisconnectedState dest=<null> what=SUPPLICANT_STATE_CHANGE_EVENT screen=on 0 0 ssid: "Media" bssid: f0:a7:31:a9:a0:a6 nid: 2 frequencyMhz: 0 state: DISCONNECTED
+ rec[12]: time=11-23 16:11:14.983 processed=ConnectableState org=DisconnectedState dest=L2ConnectingState what=CMD_START_CONNECT screen=on 2 1010 targetConfigKey="Media"WPA_PSK BSSID=null targetBssid=any roam=false
+ rec[13]: time=11-23 16:11:14.987 processed=ConnectingOrConnectedState org=L2ConnectingState dest=<null> what=SUPPLICANT_STATE_CHANGE_EVENT screen=on 0 0 ssid: "Media" bssid: f0:a7:31:a9:a0:a6 nid: 2 frequencyMhz: 0 state: ASSOCIATING
+ rec[14]: time=11-23 16:11:15.124 processed=L2ConnectingState org=L2ConnectingState dest=DisconnectedState what=AUTHENTICATION_FAILURE_EVENT screen=on 0 0
+ rec[15]: time=11-23 16:11:15.127 processed=ConnectableState org=DisconnectedState dest=<null> what=ASSOCIATION_REJECTION_EVENT screen=on  ssid: "Media" bssid: f0:a7:31:a9:a0:a6 statusCode: 1 timedOut: false oceRssiBasedAssocRejectInfo: null mboAssocDisallowedInfo: null
+ rec[16]: time=11-23 16:11:15.139 processed=ConnectableState org=DisconnectedState dest=<null> what=SUPPLICANT_STATE_CHANGE_EVENT screen=on 0 0 ssid: "Media" bssid: f0:a7:31:a9:a0:a6 nid: 2 frequencyMhz: 0 state: DISCONNECTED
+ rec[24]: time=11-23 16:11:19.000 processed=ConnectingOrConnectedState org=L2ConnectingState dest=L3ProvisioningState what=NETWORK_CONNECTION_EVENT screen=on 0 false f0:a7:31:a9:a0:a7 nid=0 "Optimus Prime"WPA_PSK last="Media"WPA_PSK
+ rec[49]: time=11-23 16:12:10.829 processed=ConnectableState org=L3ConnectedState dest=<null> what=CMD_CONNECT_NETWORK screen=on 2 "Media"WPA_PSK nid=2 cuid=0 suid=0
+ rec[50]: time=11-23 16:12:10.945 processed=ConnectableState org=L3ConnectedState dest=L2ConnectingState what=CMD_START_CONNECT screen=on 2 0 targetConfigKey="Media"WPA_PSK BSSID=null targetBssid=any roam=false currentConfigKey="Optimus Prime"WPA_PSK
+ rec[53]: time=11-23 16:12:10.978 processed=ConnectingOrConnectedState org=L2ConnectingState dest=<null> what=SUPPLICANT_STATE_CHANGE_EVENT screen=on 0 0 ssid: "Media" bssid: 00:00:00:00:00:00 nid: 2 frequencyMhz: 0 state: SCANNING
+ rec[56]: time=11-23 16:12:14.604 processed=ConnectingOrConnectedState org=L2ConnectingState dest=<null> what=SUPPLICANT_STATE_CHANGE_EVENT screen=on 0 0 ssid: "Media" bssid: f0:a7:31:a9:a0:a6 nid: 2 frequencyMhz: 0 state: ASSOCIATING
+ rec[57]: time=11-23 16:12:14.894 processed=L2ConnectingState org=L2ConnectingState dest=DisconnectedState what=AUTHENTICATION_FAILURE_EVENT screen=on 0 0
+ rec[58]: time=11-23 16:12:14.901 processed=ConnectableState org=DisconnectedState dest=<null> what=ASSOCIATION_REJECTION_EVENT screen=on  ssid: "Media" bssid: f0:a7:31:a9:a0:a6 statusCode: 1 timedOut: false oceRssiBasedAssocRejectInfo: null mboAssocDisallowedInfo: null
+ rec[59]: time=11-23 16:12:14.901 processed=ConnectableState org=DisconnectedState dest=<null> what=SUPPLICANT_STATE_CHANGE_EVENT screen=on 0 0 ssid: "Media" bssid: f0:a7:31:a9:a0:a6 nid: 2 frequencyMhz: 0 state: DISCONNECTED
+Failed to write while dumping service wifi: Broken pipe
+==
+11-23 16:12:10.919  1539  2512 D SupplicantStaIfaceHalHidlImpl: Selecting supplicant SSID "Media"
+11-23 16:12:14.879  1539  2512 D WifiClientModeImpl[30740:wlan0]: L2ConnectingState: Authentication failure  reason=2 error=-1
+11-23 16:12:14.883  1539  2512 E WifiBlocklistMonitor: Invalid input: BSSID=any, config=ID: 2 SSID: "Media" PROVIDER-NAME: null BSSID: null FQDN: null HOME-PROVIDER-NETWORK: false PRIO: 0 HIDDEN: false PMF: false CarrierId: -1 SubscriptionId: -1 SubscriptionGroup: null Currently Connected: false User Selected: false
+11-23 16:12:14.901  1539  2512 E SupplicantStateTracker[wlan0]: Ignoring { when=-45ms what=147499 obj= ssid: "Media" bssid: f0:a7:31:a9:a0:a6 statusCode: 1 timedOut: false oceRssiBasedAssocRejectInfo: null mboAssocDisallowedInfo: null target=com.android.wifi.x.com.android.internal.util.StateMachine$SmHandler }
+11-23 16:12:18.626  1539  2512 D SupplicantStaIfaceHalHidlImpl: connectToNetwork "Media"WPA_PSK
+11-23 16:12:18.769  1539  2512 D WifiClientModeImpl[30740:wlan0]: L2ConnectingState: Authentication failure  reason=2 error=-1
+11-23 16:12:18.777  1539  2512 E WifiBlocklistMonitor: Invalid input: BSSID=any, config=- DSBLE ID: 2 SSID: "Media" PROVIDER-NAME: null BSSID: null FQDN: null HOME-PROVIDER-NETWORK: false PRIO: 0 HIDDEN: false PMF: false CarrierId: -1 SubscriptionId: -1 SubscriptionGroup: null Currently Connected: false User Selected: false
+11-23 16:12:18.777  1539  2512 E WifiBlocklistMonitor:  mNetworkSelectionDisableReason NETWORK_SELECTION_DISABLED_BY_WRONG_PASSWORD
+11-23 16:12:18.777  1539  2512 E WifiBlocklistMonitor: NETWORK_SELECTION_DISABLED_BY_WRONG_PASSWORD counter:2
+11-23 16:12:18.793  1539  2512 E SupplicantStateTracker[wlan0]: Ignoring { when=-41ms what=147499 obj= ssid: "Media" bssid: f0:a7:31:a9:a0:a6 statusCode: 1 timedOut: false oceRssiBasedAssocRejectInfo: null mboAssocDisallowedInfo: null target=com.android.wifi.x.com.android.internal.util.StateMachine$SmHandler }
+==
+Wifi is connected to "Optimus Prime"
+
+### Exit-Code: 0
