@@ -1,13 +1,13 @@
 {
- "ver": "3.41",
+ "ver": "3.42",
  "neu": [
-  "Maps around every ride start (700 m, zoom 14-19, aerial + place names) are loaded in the background"
+  "Background map loading also for all rides, the test area and home"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 141207,
-   "md5": "7a683c47bff1271f0332d12dd499579d"
+   "s": 141865,
+   "md5": "2be2497378f05a05f4f0fb66a3ef1c8a"
   },
   {
    "p": "web/fpvstat.js",

@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.41"
+VERSION = "3.42"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -2409,7 +2409,17 @@ def autopre_thread():
         try:
             if CFG.get("autopre", "1") == "1" and CFG.get("online", "1") == "1":
                 jobs = []
-                for p in ride_starts():
+                pts = [{"lat": r["lat0"], "lon": r["lon0"]} for r in ride_files() if r.get("lat0") is not None]   # every ride start (also hidden ones)
+                for k in (("test_lat", "test_lon"), ("vgps_lat", "vgps_lon")):                                     # test area + home
+                    try:
+                        pts.append({"lat": float(CFG.get(k[0])), "lon": float(CFG.get(k[1]))})
+                    except Exception:
+                        pass
+                uniq = []
+                for p in pts:
+                    if all(haversine(p["lat"], p["lon"], q["lat"], q["lon"]) > 500 for q in uniq):
+                        uniq.append(p)
+                for p in uniq:
                     for z in range(14, 20):
                         jobs += tiles_for(p["lat"], p["lon"], 700, z)
                 jobs = list(dict.fromkeys(jobs))
