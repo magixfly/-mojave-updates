@@ -24,6 +24,7 @@ public class Autostart extends Activity {
         {"wlanAuto", "1", "WLAN nach Reihenfolge wählen (unten), sonst Hotspot"},
         {"apAuto", "1", "Hotspot einschalten, wenn kein WLAN aus der Liste da ist"},
         {"ap5", "1", "Hotspot auf 5 GHz festlegen"},
+        {"bbAuto", "1", "Fernwartung direkt über GitHub (ohne Pi)"},
         {"adbAuto", "1", "Debugging über WLAN (ADB) beim Start – Fernwartung"},
         {"mapAuto", "0", "Core Tracker (Karte) beim Start öffnen"},
         {"share", "1", "Bildschirm im Browser zeigen (Port 8090)"},
@@ -77,7 +78,7 @@ public class Autostart extends Activity {
     void status() {
         if (st == null) return;
         boolean on = HotspotBoot.apOn(this);
-        st.setText("Hotspot: " + (on ? "an" + band() : "aus") + (WlanOrder.state.length() > 0 ? "\nWLAN-Automatik: " + WlanOrder.state : "") + "\nApp-Version " + ver() + "\nBildschirm im Browser: http://" + ip() + ":" + ScreenShare.PORT);
+        st.setText("Hotspot: " + (on ? "an" + band() : "aus") + (WlanOrder.state.length() > 0 ? "\nWLAN-Automatik: " + WlanOrder.state : "") + "\nFernwartung: " + (BoxBridge.state.length() > 0 ? BoxBridge.state : "startet …") + (BoxBridge.tok(this).length() > 0 ? " (Token ✓)" : " (kein Token)") + "\nApp-Version " + ver() + "\nBildschirm im Browser: http://" + ip() + ":" + ScreenShare.PORT);
     }
 
     static String ip() {
