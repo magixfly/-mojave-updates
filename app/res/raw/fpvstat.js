@@ -34,6 +34,9 @@
   setInterval(function () {   // packet loss of the video stream (WebRTC only)
     PCS.forEach(function (pc) {
       if (!pc.getStats || pc.connectionState === 'closed') return;
+      try { pc.getReceivers().forEach(function (rc) {   // V3.39: ask the player for the smallest buffer (lower delay)
+        if (rc.track && rc.track.kind === 'video') { if ('jitterBufferTarget' in rc && rc.jitterBufferTarget !== 0) rc.jitterBufferTarget = 0; if ('playoutDelayHint' in rc && rc.playoutDelayHint !== 0) rc.playoutDelayHint = 0; }
+      }); } catch (e) {}
       pc.getStats().then(function (r) {
         r.forEach(function (s) {
           if (s.type === 'inbound-rtp' && (s.kind || s.mediaType) === 'video') {
@@ -44,6 +47,11 @@
             if (s.freezeCount !== undefined) fz = s.freezeCount;
             if (s.decoderImplementation) window.ctDec = s.decoderImplementation + (s.powerEfficientDecoder ? ' (HW)' : s.powerEfficientDecoder === false ? ' (SW)' : '');
             if (s.framesDropped !== undefined) window.ctDrop = s.framesDropped;
+            if (s.jitterBufferDelay !== undefined && s.jitterBufferEmittedCount) {   // V3.39: how long frames wait in the player buffer (ms)
+              var jd = s.jitterBufferDelay, je = s.jitterBufferEmittedCount;
+              if (window.ctJd0 !== undefined && je > window.ctJe0) window.ctBuf = Math.round(1000 * (jd - window.ctJd0) / (je - window.ctJe0));
+              window.ctJd0 = jd; window.ctJe0 = je;
+            }
           }
         });
       }).catch(function () {});
@@ -83,7 +91,7 @@
     box.style.opacity = dead ? '1' : (blink ? '.95' : '.35');
     box.style.display = window.ctStatHide ? 'none' : '';
     window.ctFps = fps;
-    try { (parent !== window ? parent : window).postMessage({ ctinfo: { fps: fps, mbit: window.ctMbit } }, '*'); } catch (e) {}
+    try { (parent !== window ? parent : window).postMessage({ ctinfo: { fps: fps, mbit: window.ctMbit, buf: window.ctBuf, dec: window.ctDec } }, '*'); } catch (e) {}
   }, 1000);
   setInterval(function () {
     var t = text(); t.player = NAMES[mode()];

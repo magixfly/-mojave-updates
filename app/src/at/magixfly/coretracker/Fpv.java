@@ -437,10 +437,10 @@ class Fpv {
         if (web == null) return;
         web.evaluateJavascript("window.ctFill=" + fill + ";window.ctZoom=" + (mode == FULL ? "1.2" : "0") + ";", null);
         a.web.evaluateJavascript("document.documentElement.classList.toggle('ctsplit'," + (mode == SPLIT) + ");window.ctVW=" + (splitW() / a.getResources().getDisplayMetrics().density), null);   // V1.86: Videobreite für die Core-Zeile
-        web.evaluateJavascript("JSON.stringify([window.ctFps==null?null:window.ctFps,window.ctMbit==null?null:window.ctMbit])", new android.webkit.ValueCallback<String>() {   // V1.85: fps / Mbit/s ins ...-Menü der Karte
+        web.evaluateJavascript("JSON.stringify([window.ctFps==null?null:window.ctFps,window.ctMbit==null?null:window.ctMbit,window.ctBuf==null?null:window.ctBuf,window.ctDec||null])", new android.webkit.ValueCallback<String>() {   // V1.85: fps / Mbit/s ins ...-Menü der Karte
             public void onReceiveValue(String r) {
                 try { String j = new org.json.JSONTokener(r).nextValue().toString(); org.json.JSONArray x = new org.json.JSONArray(j);
-                    if (!x.isNull(0)) a.web.evaluateJavascript("window.ctFpvSet&&ctFpvSet(" + x.get(0) + "," + (x.isNull(1) ? "null" : x.get(1)) + ")", null); } catch (Throwable t) { }
+                    if (!x.isNull(0)) a.web.evaluateJavascript("window.ctFpvSet&&ctFpvSet(" + x.get(0) + "," + (x.isNull(1) ? "null" : x.get(1)) + "," + (x.length() > 2 && !x.isNull(2) ? x.get(2) : "null") + "," + (x.length() > 3 && !x.isNull(3) ? org.json.JSONObject.quote(x.getString(3)) : "null") + ")", null); /* V1.93: Puffer + Decoder */ } catch (Throwable t) { }
             }
         });
         web.evaluateJavascript(JS, new android.webkit.ValueCallback<String>() {
