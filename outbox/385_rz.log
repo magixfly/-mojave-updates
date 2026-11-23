@@ -1,0 +1,25 @@
+### 385_rz  –  2026-11-23 23:43:09
+### Box: verbunden (192.168.178.235:5555)
+
+test_ride=demo_ride.csv   # Demo ride played in test mode (empty or missing = circle around test_lat/test_lon)
+map_lat=48.22190   # V3.15: map start without GPS = last real position (written automatically, stays only on this Pi)
+map_lon=15.65558
+test_lat=48.2268   # Centre of the test ride
+test_lon=15.6485
+navi=1   # V3.29: 1 = without a car the map follows your own position (navi mode) and your drive is saved as GPX in navi/
+phone_gps=0   # V3.28: 1 = own position from the phone app GPS2IP (socket mode) when the GPS on the ESP has no fix (menu)
+phone_gps_port=11123   # GPS2IP port
+phone_gps_ip=   # GPS2IP phone address (empty = WLAN gateway = phone hotspot, else search the own network)
+navi_hosts=   # V2.0.60: extra Navi addresses, separated by spaces (normally found automatically)
+home_min_sats=6   # Home point is set at first fix with this many satellites
+vgps=1   # 1 = test GPS (VGPS) at home: fixed position when the real GPS has no fix (like the Core)
+vgps_lat=48.1872125   # VGPS position (Core: 5JP7+VGQ St. Poelten)
+vgps_lon=15.6138594
+vgps_sats=12   # Satellites shown for VGPS
+vgps_ssid=Optimus Prime,Media   # VGPS only in these WLANs, comma separated (empty = always when no fix)
+map_names=1   # 1 = show the driver names next to the cars on the map (menu)
+{'lat': None, 'lon': None, 'fix': None, 'vgps': False, 'src': '-', 'phone': 'off', 'me': None, 'hw': {'esp': False, 'dev': '', 'fw': '', 'gps_cfg': None, 'gps_baud': 0, 'gps_data': False, 'gps_fix': 0, 'gps_sats': 0, 'age': None}, 'ssid': None}
+{'test': '0', 'test_ride': 'demo_ride.csv', 'map_lat': '48.22190', 'map_lon': '15.65558', 'test_lat': '48.2268', 'test_lon': '15.6485', 'map3d': '0', 'home_min_sats': '6', 'vgps': '1', 'vgps_lat': '48.1872125', 'vgps_lon': '15.6138594', 'vgps_sats': '12', 'vgps_ssid': 'Optimus Prime,Media', 'map_names': '1'}
+inbox/385_rz.sh: line 6: iwgetid: command not found
+
+### Exit-Code: 127
