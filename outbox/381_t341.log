@@ -1,0 +1,7 @@
+### 381_t341  –  2026-11-23 23:20:03
+### Box: verbunden (192.168.178.235:5555)
+
+3.41 läuft
+ls: cannot access '/dev/ttyACM*': No such file or directory
+{"pts": [{"lat": 48.144213, "lon": 15.322275, "n": 1, "t": 1794400787.2}]}
+### Exit-Code: 0
