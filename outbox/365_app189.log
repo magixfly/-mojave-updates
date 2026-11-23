@@ -1,0 +1,15 @@
+### 365_app189  –  2026-11-23 16:15:03
+### Box: verbunden (192.168.178.235:5555)
+
+Box 192.168.178.235:5555
+Forget successful
+Network Id      SSID                         Security type
+0            Optimus Prime                    wpa2-psk
+0            Optimus Prime                    wpa3-sae^
+1            XVII                             wpa2-psk
+1            XVII                             wpa3-sae^
+Success
+    versionName=1.89
+Wifi is connected to "Optimus Prime"
+
+### Exit-Code: 0
