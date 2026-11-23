@@ -1,0 +1,20 @@
+### 007_cs  –  2026-11-23 22:14:23
+### Box direkt (App 1.93, 192.168.178.235)
+
+    versionName=1.93
+Failed to write while dumping service package: Broken pipe
+20 packets transmitted, 0 received, +20 errors, 100% packet loss, time 3942ms
+pipe 12
+cs http 000 2.306464s
+800%cpu 150%user   0%nice  87%sys 540%idle   0%iow  20%irq   3%sirq   0%host
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+ 5483 u0_a210      10 -10  39G 288M 165M S 56.6   3.8   2:12.59 at.magixfly.coretracker
+ 5653 u0_i9007     10 -10 313G 220M 129M S 23.3   2.9   0:20.64 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+ 7464 root         20   0  10G 4.8M 3.7M R 20.0   0.0   0:00.06 top -b -n 1 -m 6
+ 1349 system       -2   0  11G  42M  20M S 10.0   0.5   2:18.15 surfaceflinger
+   94 root         20   0    0    0    0 S 10.0   0.0   0:53.64 [kswapd-1:0]
+ 2391 root         20   0  60M 1.0M 160K S  6.6   0.0   1:19.78 sdsdk816
+
+### Exit-Code: 0
+
+### Dauer 7 s
