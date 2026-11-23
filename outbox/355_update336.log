@@ -1,0 +1,8 @@
+### 355_update336  –  2026-11-23 14:51:03
+### Box: verbunden (192.168.178.235:5555)
+
+{"busy": false, "prog": 0, "msg": "", "online": "3.36", "neu": ["At home without GPS fix: own position = home (VGPS), map shows it"], "cur": "3.35"}
+{"busy": true, "prog": 1, "msg": "checking \u2026", "online": "3.36", "neu": ["At home without GPS fix: own position = home (VGPS), map shows it"], "cur": "3.35"}
+ver 3.36 me {'lat': 48.1872125, 'lon': 15.6138594, 'alt': 0, 'kmh': 0.0, 'crs': 0.0, 'sats': 12, 'hdop': 0.0, 'src': 'vgps', 'age': 0.2, 'vgps': True} wifi {'ssid': 'Media', 'sig': -62, 'ms': 3}
+
+### Exit-Code: 0
