@@ -1,13 +1,13 @@
 {
- "ver": "3.40",
+ "ver": "3.41",
  "neu": [
-  "Map starts directly at car / own / home position (no flash of the test area)"
+  "Maps around every ride start (700 m, zoom 14-19, aerial + place names) are loaded in the background"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 139758,
-   "md5": "9c24c995d88713272d351af1e1f7a34c"
+   "s": 141207,
+   "md5": "7a683c47bff1271f0332d12dd499579d"
   },
   {
    "p": "web/fpvstat.js",

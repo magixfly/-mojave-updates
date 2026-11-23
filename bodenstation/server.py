@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.40"
+VERSION = "3.41"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -33,6 +33,7 @@ DEFAULTS = [
     ("starts", "1", "V3.30: 1 = show where the car rides started (one point per 500 m, menu)"),
     ("rides_hidden", "", "V3.32: hidden rides (file names, ;) - not in the list (unless shown) and no start point"),
     ("rides_filter", "all", "V3.32: rides list filter all / mojave / other"),
+    ("autopre", "1", "V3.41: 1 = load the map (aerial + place names, zoom 14-19, 700 m) around every ride start in the background, so it is there at once"),
     ("starts_hide", "", "V3.31: start points not to show, lat,lon;lat,lon (500 m around each)"),
     ("starts_vmax", "110", "V3.31: rides faster than this (km/h) are real car drives, no start point"),
     ("online_url", "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", "Aerial photo basemap.at"),
@@ -2400,6 +2401,30 @@ def usb_thread():
         seen = mounts
         time.sleep(5)
 
+AUTOPRE = {"done": 0, "total": 0, "t": 0}
+def autopre_thread():
+    """V3.41: keep the maps around all ride start points complete (aerial + labels), quietly in the background"""
+    time.sleep(90)
+    while True:
+        try:
+            if CFG.get("autopre", "1") == "1" and CFG.get("online", "1") == "1":
+                jobs = []
+                for p in ride_starts():
+                    for z in range(14, 20):
+                        jobs += tiles_for(p["lat"], p["lon"], 700, z)
+                jobs = list(dict.fromkeys(jobs))
+                AUTOPRE.update(done=0, total=len(jobs), t=time.time())
+                for (z, x, y) in jobs:
+                    if not (os.path.exists(tile_file("ortho", z, x, y)) or os.path.exists(tile_file("ki", z, x, y))):
+                        fetch_online(z, x, y); time.sleep(0.05)
+                    if CFG.get("labels", "1") == "1" and not os.path.exists(os.path.join(TILES, "overlay", str(z), str(x), "%d.png" % y)):
+                        get_overlay(z, x, y); time.sleep(0.05)
+                    AUTOPRE["done"] += 1
+                print("autopre: %d tiles checked" % len(jobs))
+        except Exception as e:
+            print("autopre", e)
+        time.sleep(6 * 3600)
+
 def preload(lat, lon, radius, zmin, zmax):
     jobs = []
     for z in range(zmin, zmax + 1):
@@ -2825,6 +2850,7 @@ def main():
     threading.Thread(target=lastpos_thread, daemon=True).start()
     threading.Thread(target=phone_gps_thread, daemon=True).start()
     threading.Thread(target=navi_log_thread, daemon=True).start()
+    threading.Thread(target=autopre_thread, daemon=True).start()
     threading.Thread(target=serial_thread, daemon=True).start()
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
