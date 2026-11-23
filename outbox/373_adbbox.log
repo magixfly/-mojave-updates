@@ -1,0 +1,16 @@
+### 373_adbbox  –  2026-11-23 21:48:10
+### Box: verbunden (192.168.178.235:5555)
+
+5555 offen
+connected to 192.168.178.235:5555
+List of devices attached
+192.168.178.1:42843	offline
+192.168.178.1:47001	offline
+192.168.178.1:49000	offline
+192.168.178.235:5555	device
+
+List of discovered mdns services
+
+{"state":"idle","run":false,"age":-1}
+
+### Exit-Code: 0

@@ -1,0 +1,38 @@
+### 368_dp  –  2026-11-23 21:48:08
+### Box: verbunden (192.168.178.235:5555)
+
+Box 192.168.178.235:5555
+Lito for arm64
+lito
+
+card0
+card0-DP-1
+card0-DSI-1
+card0-Virtual-1
+renderD128
+sde-crtc-0
+sde-crtc-1
+version
+[bluetooth.profile.a2dp.source.enabled]: [true]
+[com.suding.speedplay.active]: [wa]
+[com.suding.speedplay.devid]: [9B24D86A3867353DF321EEE72C2A4EF1]
+[com.suding.speedplay.mode.spec]: [wa]
+[debug.mdpcomp.logs]: [0]
+[init.svc.dpmQmiMgr]: [running]
+[init.svc.dpmd]: [running]
+[init.svc.hdmi_insmod]: [stopped]
+[init.svc_debug_pid.dpmQmiMgr]: [1614]
+[init.svc_debug_pid.dpmd]: [1609]
+[init.svc_debug_pid.hdmi_insmod]: []
+[media.stagefright.enable-fma2dp]: [true]
+[persist.bluetooth.a2dp_offload.cap]: [sbc-aac-aptx-aptxhd-ldac]
+[persist.bluetooth.a2dp_offload.disabled]: [false]
+[persist.demo.hdmirotationlock]: [false]
+  DisplayDeviceInfo{"Integrierter Bildschirm": uniqueId="local:4630947182319518337", 1920 x 720, modeId 1, renderFrameRate 30.000002, defaultModeId 1, userPreferredModeId -1, supportedModes [{id=1, width=1920, height=720, fps=30.000002, vsync=30.000002, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[2, 3, 4]}], colorMode 0, supportedColorModes [0], hdrCapabilities HdrCapabilities{mSupportedHdrTypes=[2, 3, 4], mMaxLuminance=500.0, mMaxAverageLuminance=500.0, mMinLuminance=0.0}, allmSupported false, gameContentTypeSupported false, density 238, 320.842 x 320.842 dpi, appVsyncOff 1000000, presDeadline 33333333, touch INTERNAL, rotation 0, type INTERNAL, address {port=129, model=0x40446ded2fc042}, deviceProductInfo DeviceProductInfo{name=, manufacturerPnpId=QCM, productId=1, modelYear=null, manufactureDate=ManufactureDate{week=27, year=2006}, connectionToSinkType=0}, state ON, committedState ON, frameRateOverride {uid=10117 frameRateHz=30.000002} , brightnessMinimum 0.0, brightnessMaximum 1.0, brightnessDefault 0.39763778, hdrSdrRatio NaN, FLAG_ALLOWED_TO_BE_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_TRUSTED, installOrientation 0, displayShape DisplayShape{ spec=-589017265 displayWidth=1920 displayHeight=720 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+  DisplayDeviceInfo{"ctshare": uniqueId="virtual:at.magixfly.coretracker,10210,ctshare,0", 960 x 360, modeId 2, renderFrameRate 60.0, defaultModeId 2, userPreferredModeId -1, supportedModes [{id=2, width=960, height=360, fps=60.0, vsync=60.0, synthetic=false, alternativeRefreshRates=[], supportedHdrTypes=[]}], colorMode 0, supportedColorModes [0], hdrCapabilities null, allmSupported false, gameContentTypeSupported false, density 160, 160.0 x 160.0 dpi, appVsyncOff 0, presDeadline 16666666, touch NONE, rotation 0, type VIRTUAL, deviceProductInfo null, state ON, committedState UNKNOWN, owner at.magixfly.coretracker (uid 10210), frameRateOverride , brightnessMinimum 0.0, brightnessMaximum 0.0, brightnessDefault 0.0, hdrSdrRatio NaN, FLAG_PRIVATE, FLAG_PRESENTATION, installOrientation 0, displayShape DisplayShape{ spec=546804123 displayWidth=960 displayHeight=360 physicalPixelDisplaySizeRatio=1.0 rotation=0 offsetX=0 offsetY=0 scale=1.0}}
+    mDisplayIdToMirror=0
+    mDisplayId=0
+    mDisplayId=2
+Failed to write while dumping service display: Broken pipe
+
+### Exit-Code: 0
