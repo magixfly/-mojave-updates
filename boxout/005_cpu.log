@@ -1,0 +1,17 @@
+### 005_cpu  –  2026-11-23 22:08:19
+### Box direkt (App 1.92, 192.168.178.235)
+
+800%cpu  86%user   0%nice  66%sys 631%idle   0%iow  14%irq   3%sirq   0%host
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+29903 u0_a210      10 -10  39G 280M 155M S 44.8   3.7   1:59.04 at.magixfly.coretracker
+31831 root         20   0  10G 5.2M 3.9M R 20.6   0.0   0:00.07 top -b -n 1 -m 5
+30042 u0_i9006     10 -10 313G 196M 119M S 20.6   2.6   0:13.03 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+ 1349 system       -2   0  11G  42M  20M S 10.3   0.5   1:40.58 surfaceflinger
+  ACTIVITY com.google.android.apps.maps/com.google.android.maps.MapsActivity 6fa09d2 pid=5109 userId=0 uid=10117 displayId=0(type=INTERNAL)
+      mResumed=false mStopped=true mFinished=false
+      mCreated=true mResumed=false mStopped=true    Active Fragments:
+Failed to write while dumping service activity: Broken pipe
+
+### Exit-Code: 0
+
+### Dauer 20 s
