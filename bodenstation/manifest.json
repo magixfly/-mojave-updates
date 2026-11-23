@@ -1,13 +1,13 @@
 {
- "ver": "3.36",
+ "ver": "3.37",
  "neu": [
-  "At home without GPS fix: own position = home (VGPS), map shows it"
+  "Undervoltage warning in the top bar (\u26a1 LOW POWER / POWER WAS LOW)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 138767,
-   "md5": "66b2575087ef21d617decb77b476958a"
+   "s": 139758,
+   "md5": "4c4c35337f3118856f231d7e62cbc5f8"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 173805,
-   "md5": "980878bb68c2b897a7ef38afd9dd7d2e"
+   "s": 174367,
+   "md5": "495872c59d8279a15bf28adfecc21737"
   },
   {
    "p": "web/kia.png",

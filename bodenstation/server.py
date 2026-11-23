@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.36"
+VERSION = "3.37"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1376,6 +1376,28 @@ def sys_load():
             SYS["thr"] = int(subprocess.run(["vcgencmd", "get_throttled"], capture_output=True, text=True, timeout=2).stdout.strip().split("=")[1], 16)
             SYS["thr_t"] = now
         d["thr"] = SYS.get("thr")
+    except Exception:
+        pass
+    try:                                      # V3.37: undervoltage warning on the screen (kernel hwmon alarm, read every second)
+        if "uvp" not in SYS:
+            SYS["uvp"] = None
+            for h in glob.glob("/sys/class/hwmon/hwmon*"):
+                try:
+                    if open(h + "/name").read().strip() == "rpi_volt" and os.path.exists(h + "/in0_lcrit_alarm"):
+                        SYS["uvp"] = h + "/in0_lcrit_alarm"
+                except Exception:
+                    pass
+        uv = False
+        if SYS["uvp"]:
+            with open(SYS["uvp"]) as f:
+                uv = f.read().strip() == "1"
+        if uv or (SYS.get("thr") or 0) & 0x1:
+            SYS["uv_last"] = now
+            SYS["uv_n"] = SYS.get("uv_n", 0) + (0 if SYS.get("uv_was") else 1)
+        SYS["uv_was"] = uv
+        d["uv"] = uv
+        d["uv_ago"] = round(now - SYS["uv_last"]) if SYS.get("uv_last") else None
+        d["uv_n"] = SYS.get("uv_n", 0)
     except Exception:
         pass
     SYS["d"], SYS["t"] = d, now
