@@ -68,6 +68,27 @@ public class ScreenShare {
             OutputStream o = s.getOutputStream();
             if (!enabled()) { text(o, "text/plain", "Bildschirm-Übertragung ist in „Box Autostart“ ausgeschaltet."); s.close(); return; }
             if (path.startsWith("/mjpeg")) { mjpeg(s, o); return; }
+            if (path.startsWith("/wifi") && first.startsWith("POST")) {   // V1.90: WLAN eintragen (User tippt SSID + Passwort selbst; Android sperrt das Passwortfeld in der Übertragung)
+                java.util.regex.Matcher cl = java.util.regex.Pattern.compile("(?i)content-length:\\s*(\\d+)").matcher(sb);
+                int n = cl.find() ? Math.min(4000, Integer.parseInt(cl.group(1))) : 0;
+                byte[] b = new byte[n]; int got = 0; while (got < n) { int r = in.read(b, got, n - got); if (r < 0) break; got += r; }
+                String body = new String(b, 0, got, "UTF-8"), ssid = "", pw = "";
+                for (String kv : body.split("&")) {
+                    String[] p = kv.split("=", 2); if (p.length < 2) continue;
+                    String v = java.net.URLDecoder.decode(p[1], "UTF-8");
+                    if (p[0].equals("ssid")) ssid = v.trim(); else if (p[0].equals("pw")) pw = v;
+                }
+                String res;
+                if (ssid.length() == 0 || pw.length() < 8) res = "SSID fehlt oder Passwort kürzer als 8 Zeichen.";
+                else {
+                    String out = WlanOrder.sh("cmd wifi add-network " + WlanOrder.q(ssid) + " wpa2 " + WlanOrder.q(pw) + " 2>&1");
+                    WlanOrder.failUntil.remove(ssid);
+                    res = "„" + ssid + "“ gespeichert. " + out.trim() + " – die Box wechselt in 1–2 min selbst, wenn es laut Reihenfolge besser ist.";
+                    Log.d("CTWL", "WLAN eingetragen: " + ssid);
+                }
+                text(o, "text/html; charset=utf-8", "<!doctype html><meta name=viewport content='width=device-width,initial-scale=1'><body style='background:#0b0f14;color:#e5e7eb;font:20px sans-serif;padding:20px'>" + res.replace("<", "&lt;") + "<p><a style='color:#4ade80' href='/'>zurück zum Bildschirm</a></body>");
+                o.flush(); s.close(); return;
+            }
             if (path.startsWith("/shot.jpg")) {
                 lastView = System.currentTimeMillis(); request();
                 byte[] j = jpg;
@@ -121,7 +142,9 @@ public class ScreenShare {
         + "button{background:#0b0f14;color:#4ade80;border:2px solid rgba(77,184,255,.6);border-radius:10px;font:700 18px sans-serif;padding:8px 18px;cursor:pointer}"
         + "#st{color:#9ca3af;flex:1}#w{position:relative}img{width:100%;display:block;cursor:crosshair;user-select:none;-webkit-user-drag:none}"
         + "#pb{height:22px;background:#18202a;border-radius:8px;margin:10px;position:relative;overflow:hidden;display:none}#pb i{position:absolute;left:0;top:0;bottom:0;background:#2563eb;width:0}#pb span{position:absolute;inset:0;text-align:center;font:700 14px/22px sans-serif}"
-        + "</style></head><body><div id=bar><b style='color:#4ade80'>Box-Bildschirm</b><button onclick=\"k('back')\">◀ Zurück</button><button onclick=\"k('home')\">● Home</button><button onclick=\"k('recents')\">▢ Apps</button><span id=st>verbinde …</span></div>"
+        + "</style></head><body><div id=bar><b style='color:#4ade80'>Box-Bildschirm</b><button onclick=\"k('back')\">◀ Zurück</button><button onclick=\"k('home')\">● Home</button><button onclick=\"k('recents')\">▢ Apps</button><span id=st>verbinde …</span><button onclick=\"document.getElementById('wf').style.display='flex'\">📶 WLAN eintragen</button></div>"
+        + "<form id=wf method=post action=/wifi style='display:none;gap:10px;align-items:center;padding:8px 10px;flex-wrap:wrap'>"
+        + "<input name=ssid placeholder='WLAN-Name (SSID)' style='font:18px sans-serif;padding:8px'><input name=pw type=password placeholder='Passwort' autocomplete=off style='font:18px sans-serif;padding:8px'><button>Speichern</button></form>"
         + "<div id=pb><i></i><span></span></div><div id=w><img id=s draggable=false></div><script>"
         + "var s=document.getElementById('s'),st=document.getElementById('st'),pb=document.getElementById('pb'),t0=Date.now(),d=null;"
         + "s.src='/mjpeg';function k(x){fetch('/key?k='+x)}"
