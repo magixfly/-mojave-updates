@@ -1,13 +1,13 @@
 {
- "ver": "3.39",
+ "ver": "3.40",
  "neu": [
-  "FPV: smallest player buffer (lower delay); menu shows buffer ms and decoder"
+  "Map starts directly at car / own / home position (no flash of the test area)"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 139758,
-   "md5": "aad797a72e2a28ff35c740f1be55adeb"
+   "md5": "9c24c995d88713272d351af1e1f7a34c"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 175012,
-   "md5": "fa87766df96e3ce9f6a0db14e86183aa"
+   "s": 175423,
+   "md5": "a02fe43f6257c920ebae88af7ebbd91a"
   },
   {
    "p": "web/kia.png",
