@@ -1,0 +1,32 @@
+### 363_boxwl  –  2026-11-23 16:13:04
+### Box: verbunden (192.168.178.235:5555)
+
+Box 192.168.178.235:5555
+PSK-Laenge: 9
+==
+Wifi is connected to "Optimus Prime"
+Network Id      SSID                         Security type
+0            Optimus Prime                    wpa2-psk
+0            Optimus Prime                    wpa3-sae^
+1            XVII                             wpa2-psk
+1            XVII                             wpa3-sae^
+2            Media                            wpa2-psk
+2            Media                            wpa3-sae^
+== Log
+--------- beginning of main
+11-23 16:12:10.758 20640 20676 D CTWL    : verbinde Media
+11-23 16:12:12.812 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43114): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:14.813 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43116): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:16.818 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43118): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:18.820 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43120): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:20.822 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43122): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:22.823 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43124): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:25.402 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43154): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:27.403 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43156): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:29.404 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43160): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:31.405 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43162): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:33.407 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43164): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:35.410 20640 20676 D CTWL    : shell: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43166): connect failed: ECONNREFUSED (Connection refused)
+11-23 16:12:41.600 20640 20676 D CTWL    : Media fehlgeschlagen
+
+### Exit-Code: 0
