@@ -1,10 +1,11 @@
 {
-  "fw": "V2.35",
+  "fw": "V2.36",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1338224,
-  "md5": "7542009da3aaba6fb254b7ffe5948246",
+  "groesse": 1338272,
+  "md5": "96abcf6562d1c8d93ec8a048ea5f7843",
   "neu": [
+    "V2.36: standby progress bar also on the logo screen",
     "V2.35: standby also by holding the middle of the map for 3 s (the clock top right still works)",
     "V2.34: fix logo flashing / \"1193 h keine Pos\" (timing bug); thumb on the case edge no longer toggles NET (MT12 mode turned Wi-Fi off); Wi-Fi disconnect counter on the Navi page",
     "V2.33: fix Wi-Fi constantly dropping since V2.30 - when connected to a fallback Wi-Fi the Navi now stays there instead of switching back immediately",
