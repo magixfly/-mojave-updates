@@ -1,0 +1,12 @@
+### 377_csjs  –  2026-11-23 22:29:04
+### Box: verbunden (192.168.178.235:5555)
+
+total 72
+drwxrwxr-x 2 user1 user1  4096 Nov 23 22:29 .
+drwxrwxr-x 5 user1 user1 20480 Nov 23 22:29 ..
+-rw-rw-r-- 1 user1 user1  4089 Nov 23 22:29 player-pion.js
+-rw-rw-r-- 1 user1 user1 15613 Nov 23 22:29 player-webrtc.js
+-rw-rw-r-- 1 user1 user1  3875 Nov 23 22:29 player-websockets.js
+-rw-rw-r-- 1 user1 user1 22681 Nov 23 22:29 screen.js
+
+### Exit-Code: 0
