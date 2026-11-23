@@ -10,8 +10,9 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.45"
+VERSION = "3.46"
 BASE = os.path.dirname(os.path.abspath(__file__))
+ONBOX = os.environ.get("CT_BOX") == "1"   # V3.46: running on the Carlin box itself (Python on Android, started by boxmain.py)
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
 
@@ -916,6 +917,8 @@ def wifi_add(ssid, psk):   # V2.0.50: wifi_fix_auto runs again after adding (pow
     WIFI_SW.update(busy=False, msg=("connected - saved" if ok else "failed: " + ((r.stderr or r.stdout).strip()[-120:] if r else "timeout")))
 
 def wifi_fix_auto():
+    if ONBOX:                                      # V3.46: Android manages its own Wi-Fi
+        return
     """V2.0.13: every saved Wi-Fi connects by itself and keeps trying (NetworkManager gives up after 4 tries by default)"""
     for w in wifi_list():
         if w.get("ssid") == "CoreTracker" or w["con"] == "CoreTracker":   # V2.72: own ESP access point (car mode, no internet) - never join by itself
@@ -937,7 +940,17 @@ def wifi_thread():
     # checks every 10 s whether the Pi is in the home WLAN (for VGPS)
     while True:
         ssid = ""
-        for cmd in (["iwgetid", "-r"], ["nmcli", "-t", "-f", "active,ssid", "dev", "wifi"]):
+        box_sig = None
+        if ONBOX:                                  # V3.46: Android: SSID and signal from "cmd wifi status"
+            try:
+                out = subprocess.run(["cmd", "wifi", "status"], capture_output=True, text=True, timeout=8).stdout
+                m = re.search(r'connected to "([^"]*)"', out)
+                ssid = m.group(1) if m else ""
+                m = re.search(r"RSSI: (-?\d+)", out)
+                box_sig = int(m.group(1)) if m else None
+            except Exception:
+                pass
+        for cmd in (() if ONBOX else (["iwgetid", "-r"], ["nmcli", "-t", "-f", "active,ssid", "dev", "wifi"])):
             try:
                 out = subprocess.run(cmd, capture_output=True, text=True, timeout=5).stdout
             except Exception:
@@ -978,6 +991,8 @@ def wifi_thread():
                         ms = -1          # no answer
             except Exception:
                 pass
+        if ONBOX:
+            sig = box_sig
         HOME_WIFI["sig"] = sig if ssid else None
         HOME_WIFI["ms"] = ms
         # V2.0.45: after a WLAN change refresh the device list (IP/WLAN of this Pi were stale)
@@ -1458,7 +1473,7 @@ def upd_install():
             os.replace(dst + ".new", dst)
         UPD.update(prog=100, msg="installed %s - restarting …" % UPD["online"])
         time.sleep(1.0)
-        os.execv(sys.executable, [sys.executable] + sys.argv)   # restart the program, the page reloads by itself
+        restart_self()   # restart the program, the page reloads by itself
     except Exception as e:
         UPD["msg"] = "update failed: %s" % e
     finally:
@@ -1550,6 +1565,7 @@ def snapshot():
         d["imp"] = {k: IMP[k] for k in ("running", "done", "total", "copied", "skipped", "msg")} if (IMP["running"] or time.time() - IMP["t"] < 15) else None
         e = d.get("esp")
         d["esp"] = None if not e else {"rssi": e["rssi"], "pps": e["pps"], "bad": e["bad"], "age": round(time.time() - e["t"], 1)}
+        d["onbox"] = ONBOX                       # V3.46: page runs on the box itself (no Pi overview page there)
         d["sys"] = sys_load()                 # V2.0.2: CPU / RAM / temperature for the top bar
         d["dl"] = len(DL_WANT)
         if PRE["running"]:                       # V2.0.16: map preload progress for the status bar
@@ -2770,7 +2786,7 @@ class H(BaseHTTPRequestHandler):
         if p == "/api/restart":                   # V1.9.16: restart the program so config.txt is read again
             def _re():
                 time.sleep(0.6)
-                os.execv(sys.executable, [sys.executable] + sys.argv)
+                restart_self()
             threading.Thread(target=_re, daemon=True).start()
             return self.send(200, {"ok": True})
         if p == "/api/wifi":
@@ -2857,6 +2873,13 @@ def bridge_repair():
             print("bridge repair", e)
         time.sleep(300)
 
+def restart_self():
+    """Restart the program. On the box python runs through the musl loader, so exec is not possible:
+    exit and let run.sh start it again (V3.46)."""
+    if ONBOX:
+        os._exit(3)
+    os.execv(sys.executable, [sys.executable] + sys.argv)
+
 def main():
     if CFG.get("ipv4_only", "1") == "1":
         _ipv4_only()
@@ -2868,13 +2891,14 @@ def main():
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
         threading.Thread(target=wifi_thread, daemon=True).start()
+    if not WIN and not ONBOX:
         threading.Thread(target=bridge_repair, daemon=True).start()   # V2.0.49
     threading.Thread(target=core_thread, daemon=True).start()
     threading.Thread(target=upd_thread, daemon=True).start()
     for _ in range(6):
         threading.Thread(target=dl_worker, daemon=True).start()
     threading.Thread(target=core_live_thread, daemon=True).start()
-    if not WIN:
+    if not WIN and not ONBOX:
         set_bright(ci("bright"))
         threading.Thread(target=usb_thread, daemon=True).start()
     port = ci("port")

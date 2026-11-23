@@ -1,13 +1,13 @@
 {
- "ver": "3.45",
+ "ver": "3.46",
  "neu": [
-  "STATE button visible again on the Pi display"
+  "Box mode (server can run on the Carlin box), overview page only on the Pi"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 142205,
-   "md5": "b0718880182b286870488bb05ecfc3ce"
+   "s": 143377,
+   "md5": "2dd5105a081e6399d56ce342e8cb5a67"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 176142,
-   "md5": "ca23f8a132cc6ddc220863f2715f5829"
+   "s": 176190,
+   "md5": "8b8f953707bb4a79562eb083e3ea498e"
   },
   {
    "p": "web/kia.png",
