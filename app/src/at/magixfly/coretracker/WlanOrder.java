@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * V1.88: WLAN nach fester Reihenfolge (Wunsch Thorsten 23.11.): Media → XVII → Optimus Prime, erst wenn keins da ist
+ * V1.89: WLAN mit falschem Passwort wird übersprungen. V1.88: WLAN nach fester Reihenfolge (Wunsch Thorsten 23.11.): Media → XVII → Optimus Prime, erst wenn keins da ist
  * eigenen Hotspot (5 GHz) starten. Läuft über die Root-Shell der Box (lokales ADB, siehe HotspotBoot.shell).
  * Passwörter kommen aus den gespeicherten WLANs der Box (WifiConfigStore.xml), werden nie geloggt.
  * Reihenfolge einstellbar in „Box Autostart“ (Pref wlanOrder, Komma-getrennt).
@@ -68,6 +68,7 @@ class WlanOrder {
             Matcher k = Pattern.compile("<string name=\"PreSharedKey\">([^<]*)</string>").matcher(n);
             String psk = k.find() ? unx(k.group(1)) : "";
             if (psk.startsWith("\"") && psk.endsWith("\"")) psk = psk.substring(1, psk.length() - 1); else psk = "";
+            if (n.contains("WRONG_PASSWORD")) { Log.d("CTWL", ssid + ": falsches Passwort gespeichert -> überspringen"); continue; }   // V1.89
             if (!s.containsKey(ssid) || s.get(ssid).length() == 0) s.put(ssid, psk);
         }
         return s;
@@ -84,7 +85,7 @@ class WlanOrder {
             SystemClock.sleep(2000);
             if (ssid.equals(current())) { lastSwitch = SystemClock.elapsedRealtime(); state = "WLAN " + ssid; return true; }
         }
-        failUntil.put(ssid, SystemClock.elapsedRealtime() + 10 * 60 * 1000L);
+        failUntil.put(ssid, SystemClock.elapsedRealtime() + 60 * 60 * 1000L);   // V1.89: 1 h Pause (falsches Passwort wirft die Box sonst immer kurz raus)
         Log.d("CTWL", ssid + " fehlgeschlagen");
         return false;
     }
