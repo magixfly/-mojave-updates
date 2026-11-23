@@ -1,0 +1,23 @@
+### 376_csmode  –  2026-11-23 22:28:04
+### Box: verbunden (192.168.178.235:5555)
+
+24134 /tmp/cs.html
+<option>Jmuxer
+<option>WebRTC Janus
+<option>WebRTC Pion
+<option>No video
+<option>Speed 1
+<option>Speed 2
+<option>Speed 3
+<option>Speed 4
+<option>Speed 5
+<option>Speed 6
+<option>Speed 7
+<option>Speed 8
+<option>
+== js/screen.js
+== js/player-webrtc.js
+== js/player-pion.js
+== js/player-websockets.js
+
+### Exit-Code: 1
