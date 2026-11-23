@@ -1,0 +1,16 @@
+### 356_cosmo  –  2026-11-23 15:21:03
+### Box: verbunden (192.168.178.235:5555)
+
+inbox/356_cosmo.sh: line 4: iwgetid: command not found
+Pi: 192.168.178.214  WLAN: 
+== Name
+cosmostreamer.local: kein mDNS
+== bekannte IP 192.168.178.175
+ping fehlgeschlagen
+== MAC dc:a6:32:09:df:0d im Netz?
+MAC nicht gefunden
+== Seiten mit Titel Cosmostreamer (Port 80)
+== Tracker-Geräteliste
+{'ok': False, 'host': 'cosmostreamer.local', 'ip': None}
+
+### Exit-Code: 0
