@@ -1,0 +1,49 @@
+### 361_boxwifi  –  2026-11-23 16:07:03
+### Box: verbunden (192.168.178.235:5555)
+
+Box 192.168.178.235:5555
+15
+35
+uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:su:s0
+Wifi is enabled
+Wifi scanning is always available
+==== ClientModeManager instance: ConcreteClientModeManager{id=30543 iface=wlan0 role=ROLE_CLIENT_PRIMARY} ====
+Wifi is connected to "Optimus Prime"
+WifiInfo: SSID: "Optimus Prime", BSSID: f0:a7:31:a9:a0:a7, MAC: b0:5a:44:75:3e:33, IP: /192.168.178.235, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11n, RSSI: -51, Link speed: 400Mbps, Tx Link speed: 400Mbps, Max Supported Tx Link speed: 300Mbps, Rx Link speed: 400Mbps, Max Supported Rx Link speed: 300Mbps, Frequency: 2442MHz, Net ID: 0, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none>"Optimus Prime"wpa3-saeMLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>
+successfulTxPackets: 62568
+successfulTxPacketsPerSecond: 114.57842439660922
+retriedTxPackets: 27828
+== gespeichert
+Network Id      SSID                         Security type
+0            Optimus Prime                    wpa2-psk
+0            Optimus Prime                    wpa3-sae^
+1            XVII                             wpa2-psk
+1            XVII                             wpa3-sae^
+== scan
+    BSSID              Frequency      RSSI           Age(sec)     SSID                                 Flags
+  f0:a7:31:a9:a0:a6       5180    -59(0:-59/1:-110)   516,326    Media                             [WPA2-PSK-CCMP][RSN-PSK+SAE-CCMP][ESS][WPS][MFPC]
+  f0:a7:31:a9:a0:a7       2442    -52(0:-52/1:-96)   512,463    Optimus Prime                     [WPA2-PSK-CCMP][RSN-PSK+SAE-CCMP][ESS][WPS][MFPC]
+== help
+  connect-network <ssid> open|owe|wpa2|wpa3|wep [<passphrase>] [-x] [-m] [-d] [-b <bssid>] [-r auto|none|persistent|non_persistent]
+  add-network <ssid> open|owe|wpa2|wpa3|wep [<passphrase>] [-x] [-m] [-d] [-b <bssid>] [-r auto|none|persistent|non_persistent]
+  start-scan
+  list-networks
+  forget-network <networkId>
+  set-network-selection-config <enabled|disabled> <enabled|disabled> -a <associated_network_selection_override>
+  network-requests-remove-user-approved-access-points <package name>
+  start-softap <ssid> (open|wpa2|wpa3|wpa3_transition|owe|owe_transition) <passphrase> [-b 2|5|6|any|bridged|bridged_2_5|bridged_2_6|bridged_5_6] [-x] [-w 20|40|80|160|320] [-f <int> [<int>]]
+  settings-reset
+  network-requests-set-user-approved <package name> yes|no
+  network-requests-has-user-approved <package name>
+  enable-scanning enabled|disabled [-h]
+== store
+ls: /data/misc/wifi/WifiConfigStore.xml: No such file or directory
+-rw------- 1 system system 10343 2026-11-23 15:58 /data/misc/apexdata/com.android.wifi/WifiConfigStore.xml
+/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml:2
+grep: /data/misc/wifi/WifiConfigStore.xml: No such file or directory
+/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml:<string name="SSID">&quot;Optimus Prime&quot;
+/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml:<string name="SSID">&quot;XVII&quot;
+/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml:2
+== softap
+
+### Exit-Code: 2
