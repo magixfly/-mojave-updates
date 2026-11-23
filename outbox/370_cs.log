@@ -1,0 +1,10 @@
+### 370_cs  –  2026-11-23 17:43:57
+### Box: NICHT erreichbar (192.168.136.31:5555)
+
+    inet 192.168.136.253/24 brd 192.168.136.255 scope global dynamic noprefixroute wlan0
+default via 192.168.136.31 dev wlan0 proto dhcp src 192.168.136.253 metric 600 
+192.168.136.0/24 dev wlan0 proto kernel scope link src 192.168.136.253 metric 600 
+inbox/370_cs.sh: line 2: iwgetid: command not found
+cosmo None {'txt': 'Maps 28.4/27.9 GB · stopped', 'dl': 0, 'gb': 28.4, 'est': 27.9, 'net': 'SIM', 'stop': 1, 'ver': '1.90', 'wifi': 'Box: Hotspot', 'ip': '192.168.136.31'}
+
+### Exit-Code: 0
