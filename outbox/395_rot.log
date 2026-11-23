@@ -1,0 +1,59 @@
+### 395_rot  –  2026-11-24 00:41:04
+### Box: verbunden (192.168.178.235:5555)
+
+DSI-1 "(null) (null) (DSI-1)"
+  Make: (null)
+  Model: (null)
+  Serial: (null)
+  Physical size: 90x151 mm
+  Enabled: yes
+  Modes:
+    720x1280 px, 60.037998 Hz (preferred, current)
+  Position: 0,0
+  Transform: 90
+  Scale: 1.000000
+  Adaptive Sync: disabled
+/home/user1/.config/kanshi:
+config
+config.v212
+
+/home/user1/.config/labwc:
+autostart
+autostart.v200
+environment
+rc.xml
+rc.xml.claude
+rc.xml.v204
+rc.xml.vorTouch
+# V2.0.13: HDMI monitor connected -> only the HDMI monitor (own best resolution), else the touch display
+profile hdmi1 {
+	output DSI-1 disable
+	output HDMI-A-1 enable position 0,0
+}
+profile hdmi2 {
+	output DSI-1 disable
+	output HDMI-A-2 enable position 0,0
+}
+profile touch {
+	output DSI-1 enable mode 720x1280@60.038 position 0,0 transform 90
+}
+  <touch deviceName="10-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="11-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes" />
+  <touch deviceName="6-0038 generic ft5x06 (79)" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="4-0038 generic ft5x06 (79)" mapToOutput="DSI-2" mouseEmulation="yes" />
+  <touch deviceName="10-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="11-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes" />
+  <touch deviceName="6-0038 generic ft5x06 (00)" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="4-0038 generic ft5x06 (00)" mapToOutput="DSI-2" mouseEmulation="yes" />
+  <touch deviceName="10-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="no" />
+  <touch deviceName="11-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="no" />
+  <touch deviceName="6-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="no" />
+  <touch deviceName="4-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-2" mouseEmulation="no" />
+  <touch deviceName="10-0041 ili_v3" mapToOutput="DSI-1" mouseEmulation="yes" />
+  <touch deviceName="11-0041 ili_v3" mapToOutput="DSI-2" mouseEmulation="yes" />
+
+	<touch deviceName="10-005d Goodix Capacitive TouchScreen" mapToOutput="DSI-1" mouseEmulation="no"/>
+</openbox_config>
+
+
+### Exit-Code: 0
