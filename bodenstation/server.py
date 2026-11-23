@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.43"
+VERSION = "3.44"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1564,10 +1564,10 @@ def snapshot():
                 me["dist"] = round(haversine(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
                 me["brg"] = round(bearing(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
                 me["dalt"] = round((d.get("alt") or 0) - (me.get("alt") or 0))
-        elif ME["t"] and time.time() - ME["t"] < 30 and CFG.get("vgps", "0") == "1" and HOME_WIFI["ok"] and ME.get("src", "esp") == "esp":
+        elif CFG.get("vgps", "0") == "1" and HOME_WIFI["ok"] and ME.get("src", "esp") == "esp":   # V3.44: also without ESP/GPS plugged in
             # V3.36: at home (home WLAN) the ESP GPS has no fix indoors -> own position = VGPS home position (like the car)
             me = {"lat": cf("vgps_lat"), "lon": cf("vgps_lon"), "alt": 0, "kmh": 0.0, "crs": 0.0, "sats": ci("vgps_sats"), "hdop": 0.0,
-                  "src": "vgps", "age": round(time.time() - ME["t"], 1), "vgps": True}
+                  "src": "vgps", "age": round(time.time() - ME["t"], 1) if ME["t"] else 0, "vgps": True}
             if d["lat"] is not None:
                 me["dist"] = round(haversine(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
                 me["brg"] = round(bearing(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
@@ -2605,6 +2605,8 @@ class H(BaseHTTPRequestHandler):
             c["free_mb"] = du.free // 1048576
             c["total_mb"] = du.total // 1048576       # V1.9.13: SD card size for the menu
             c["version"] = VERSION
+            if CFG.get("vgps", "0") == "1" and HOME_WIFI["ok"] and not S.get("lat"):   # V3.44: in the home WLAN the map starts at home, not at the last ride
+                c["map_lat"], c["map_lon"] = CFG["vgps_lat"], CFG["vgps_lon"]
             return self.send(200, c)
         if p == "/api/preload":
             return self.send(200, PRE)

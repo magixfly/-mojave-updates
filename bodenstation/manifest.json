@@ -1,13 +1,13 @@
 {
- "ver": "3.43",
+ "ver": "3.44",
  "neu": [
-  "... menu HARDWARE: progress bar of the background map loading around your rides"
+  "Home WLAN: map starts at home and own position = home, also without ESP/GPS"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 141951,
-   "md5": "bb7afd281825c983444a0c47a386ef25"
+   "s": 142205,
+   "md5": "dc11d0eedda8c7651f5ba54eeb7eced5"
   },
   {
    "p": "web/fpvstat.js",
