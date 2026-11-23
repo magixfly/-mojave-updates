@@ -79,6 +79,7 @@ for f in inbox/*.sh; do
   # 13.11.: Befehle mit Zeile "#nobox" laufen auch ohne Box (z. B. Tracker-Update am Pi)
   if ! is_dev && ! grep -q '^#nobox' "$f"; then log "$n wartet – Box nicht erreichbar"; continue; fi
   log "starte $n"
+  touch /tmp/claude_remote   # 23.11.: Tracker zeigt „CLAUDE“ (90 s), solange Claude über die Fernwartung arbeitet
   { echo "### $n  –  $(date '+%F %T')"; echo "### Box: $ST"; echo;
     cd "$D"; timeout "$CMD_TIMEOUT" bash "$f" 2>&1; rc=$?; echo; echo "### Exit-Code: $rc"; } > "outbox/$n.log"
   if grep -q '^#screenshot' "$f"; then
