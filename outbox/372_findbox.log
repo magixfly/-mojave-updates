@@ -1,0 +1,10 @@
+### 372_findbox  –  2026-11-23 21:45:07
+### Box: NICHT erreichbar (192.168.178.235:5555)
+
+Pi: 192.168.178.214 
+yes:Media
+== Box-MAC b0:5a:44:75:3e:33
+192.168.178.235 dev wlan0 lladdr b0:5a:44:75:3e:33 REACHABLE 
+Port 8090 offen: 192.168.178.235
+
+### Exit-Code: 1
