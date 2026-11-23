@@ -1,23 +1,23 @@
 {
- "ver": "3.38",
+ "ver": "3.39",
  "neu": [
-  "Compass also without a car (north mode): turn the map with one finger, e.g. on the Kia display"
+  "FPV: smallest player buffer (lower delay); menu shows buffer ms and decoder"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 139758,
-   "md5": "1994b47e4b7e261773bc3aaadf4ac383"
+   "md5": "aad797a72e2a28ff35c740f1be55adeb"
   },
   {
    "p": "web/fpvstat.js",
-   "s": 6261,
-   "md5": "48c57f29f38c20dd63c5ce0563289d45"
+   "s": 7101,
+   "md5": "ac60886a5adfb1cf678e670adb2109ff"
   },
   {
    "p": "web/index.html",
-   "s": 174895,
-   "md5": "d1e5f6aa409724bfa922e62d9238920d"
+   "s": 175012,
+   "md5": "fa87766df96e3ce9f6a0db14e86183aa"
   },
   {
    "p": "web/kia.png",

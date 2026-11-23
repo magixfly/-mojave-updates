@@ -1522,8 +1522,8 @@ document.head.appendChild(st)}
  img.style.animationPlayState=on?'running':'paused'},1000)})();
 </script>
 <script>/* V3.19: frames + data rate of the FPV stream (from the video page) for the ... menu */
-function ctFpvSet(f,m){window.ctFpvT=Date.now();const e=document.getElementById('fpvInfo');if(e)e.textContent=(f==null?'–':f)+' fps'+(m!=null?' · '+(+m).toFixed(1)+' Mbit/s':'')}
-addEventListener('message',e=>{const d=e.data;if(d&&d.ctinfo)ctFpvSet(d.ctinfo.fps,d.ctinfo.mbit)});
+function ctFpvSet(f,m,b,d){window.ctFpvT=Date.now();const e=document.getElementById('fpvInfo');if(e)e.textContent=(f==null?'–':f)+' fps'+(m!=null?' · '+(+m).toFixed(1)+' Mbit/s':'')+(b!=null?' · buffer '+b+' ms':'')+(d?' · '+d:'')}   // V3.39: player buffer + decoder
+addEventListener('message',e=>{const d=e.data;if(d&&d.ctinfo)ctFpvSet(d.ctinfo.fps,d.ctinfo.mbit,d.ctinfo.buf,d.ctinfo.dec)});
 setInterval(()=>{if(Date.now()-(window.ctFpvT||0)>5000){const e=document.getElementById('fpvInfo');if(e)e.textContent='no video'}},2000);</script>
 <script>/* V3.20: box split view - Core line only as wide as the visible map (not under the video) */
 setInterval(()=>{const c=document.getElementById('core');if(!c)return;const sp=document.documentElement.classList.contains('ctsplit')&&window.ctVW>0;
