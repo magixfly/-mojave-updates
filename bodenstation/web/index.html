@@ -793,6 +793,7 @@ function loop(){
   else if(V.follow&&TWO&&FOL===0){const P=[[SM.lat,SM.lon],[SM2.lat,SM2.lon]].concat(extras().map(c=>[c.lat,c.lon])).filter(p=>p[0]!=null);   // V2.0.6: all vehicles
     if(P.length>1){const la=P.map(p=>p[0]),lo=P.map(p=>p[1]);fitPts([Math.min(...la),Math.min(...lo)],[Math.max(...la),Math.max(...lo)])}else if(P.length){V.lat=P[0][0];V.lon=P[0][1]}}
   else if(V.follow&&F.lat!=null){V.lat=F.lat;V.lon=F.lon}
+  else if(V.follow&&st.me&&st.me.lat!=null&&!RIDE.tracks){V.lat=st.me.lat;V.lon=st.me.lon}   // V3.36: no vehicle -> map shows where you are (at home: VGPS)
   if(LP){dirty=true;if(performance.now()-LP.t0>=800){ICON[LP.n]=(ICON[LP.n]+1)%3;const sc=slotCfg(LP.n);if(sc){sc.sym=ICON[LP.n];j2('/api/sender',{mac:sc.mac,sym:ICON[LP.n]})}else saveIcons();beep(1100,.06);bInfo('Car icon changed');LP=null}}
   // auto zoom: slowly zoom out with speed, back in when standing (manual zoom stays the base)
   {const tgt=(C.auto_zoom&&V.follow&&!DEMO_BLOCKED&&!(FIND.on&&FIND.fit)&&!(TWO&&FOL===0))?Math.min(1,Math.max(0,(((NAV?st.me.kmh:FX?FX.spd:TWO&&FOL===2&&st.car2?st.car2.spd:st.spd)||0)-5)/(C.auto_zoom_kmh-5)))*C.auto_zoom_out:0;
@@ -1049,7 +1050,8 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
   {const e=$('vAlt');if(e){const sc1=slotCfg(1);e.innerHTML=st.ralt!=null?'<small style="font-size:13px;color:var(--mut)">HEIGHT </small>'+(st.ralt<0?'↓':'↑')+Math.abs(st.ralt)+' m':'';e.style.fontSize=sc1&&sc1.type==='plane'?'28px':'20px'}}   // V2.0.7: height above start
   // GPS tile: coordinates (tap = QR), satellites, trip
   {const hw=st.hw||{},me=st.me;let t,c;   // V3.33: own GPS (Tracker GPS = module on the ESP, Phone GPS = GPS2IP)
-   if(me&&!me.nofix&&me.src==='phone'){t='Phone GPS · '+me.sats+' sats';c='var(--grn)'}
+   if(me&&me.src==='vgps'){t='Home (VGPS) · no fix';c='var(--org)'}
+   else if(me&&!me.nofix&&me.src==='phone'){t='Phone GPS · '+me.sats+' sats';c='var(--grn)'}
    else if(me&&!me.nofix){t='Tracker GPS · '+me.sats+' sats';c='var(--grn)'}
    else if(me&&me.nofix){t='Tracker GPS · no fix ('+(me.sats||0)+')';c='#f5b13d'}
    else if(!hw.esp){t='no receiver';c='var(--mut)'}
@@ -1526,7 +1528,7 @@ setInterval(()=>{const c=document.getElementById('core');if(!c)return;const sp=d
 <script>/* V3.33: hardware info in the ... menu */
 function hwShow(){const e=document.getElementById('hwInfo');if(!e||typeof st==='undefined'||!st)return;const hw=st.hw||{},me=st.me;
   const ok=s=>'<b style="color:var(--grn)">'+s+'</b>',no=s=>'<b style="color:#f87171">'+s+'</b>',mid=s=>'<b style="color:#f5b13d">'+s+'</b>';
-  let g;if(!hw.esp)g=no('–');else if(hw.gps_cfg===0)g=mid('switched off on the ESP (gps=0)');else if(me&&!me.nofix&&me.src!=='phone')g=ok('found · fix · '+me.sats+' satellites')+(hw.gps_baud?' · '+hw.gps_baud+' baud':'');
+  let g;if(!hw.esp)g=no('–');else if(hw.gps_cfg===0)g=mid('switched off on the ESP (gps=0)');else if(me&&me.src==='vgps')g=mid('found · no fix (indoors?) · home position shown (VGPS)');else if(me&&!me.nofix&&me.src!=='phone')g=ok('found · fix · '+me.sats+' satellites')+(hw.gps_baud?' · '+hw.gps_baud+' baud':'');
   else if(me&&me.nofix)g=mid('found · no fix yet ('+(me.sats||0)+' satellites)')+' – needs open sky';else g=no('no data')+' – check wiring: GPS-TX → GP5, GPS-RX ← GP6, 5 V, GND';
   e.innerHTML='ESP receiver: '+(hw.esp?ok('found')+' · '+hw.dev+(hw.fw?' · firmware '+hw.fw:''):no('not found')+' – plug the ESP32 into USB')+
    '<br>Tracker GPS (module on the ESP): '+g+'<br>Phone GPS (GPS2IP): '+(st.phone||'off')}

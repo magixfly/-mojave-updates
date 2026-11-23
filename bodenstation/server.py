@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.35"
+VERSION = "3.36"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1541,6 +1541,13 @@ def snapshot():
                 me["dist"] = round(haversine(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
                 me["brg"] = round(bearing(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
                 me["dalt"] = round((d.get("alt") or 0) - (me.get("alt") or 0))
+        elif ME["t"] and time.time() - ME["t"] < 30 and CFG.get("vgps", "0") == "1" and HOME_WIFI["ok"] and ME.get("src", "esp") == "esp":
+            # V3.36: at home (home WLAN) the ESP GPS has no fix indoors -> own position = VGPS home position (like the car)
+            me = {"lat": cf("vgps_lat"), "lon": cf("vgps_lon"), "alt": 0, "kmh": 0.0, "crs": 0.0, "sats": ci("vgps_sats"), "hdop": 0.0,
+                  "src": "vgps", "age": round(time.time() - ME["t"], 1), "vgps": True}
+            if d["lat"] is not None:
+                me["dist"] = round(haversine(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
+                me["brg"] = round(bearing(me["lat"], me["lon"], d["lat"], d["lon"]), 1)
         elif ME["t"] and time.time() - ME["t"] < 30:
             me = {"nofix": True, "sats": ME.get("sats", 0)}
         d["me"] = me

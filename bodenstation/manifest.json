@@ -1,13 +1,13 @@
 {
- "ver": "3.35",
+ "ver": "3.36",
  "neu": [
-  "Own position: hold radius 15 m"
+  "At home without GPS fix: own position = home (VGPS), map shows it"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 138065,
-   "md5": "565efc26f7322414a2230b70098008e5"
+   "s": 138767,
+   "md5": "66b2575087ef21d617decb77b476958a"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 173480,
-   "md5": "7d5a57d9a12b77122a96efaeed0f6de4"
+   "s": 173805,
+   "md5": "980878bb68c2b897a7ef38afd9dd7d2e"
   },
   {
    "p": "web/kia.png",
