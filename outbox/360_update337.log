@@ -1,0 +1,9 @@
+### 360_update337  –  2026-11-23 16:01:03
+### Box: verbunden (192.168.178.235:5555)
+
+{"busy": false, "prog": 0, "msg": "", "online": "3.37", "neu": ["Undervoltage warning in the top bar (\u26a1 LOW POWER / POWER WAS LOW)"], "cur": "3.36"}
+{"busy": true, "prog": 1, "msg": "checking \u2026", "online": "3.37", "neu": ["Undervoltage warning in the top bar (\u26a1 LOW POWER / POWER WAS LOW)"], "cur": "3.36"}
+3.37 {"uv": false, "uv_ago": null, "uv_n": 0, "thr": 327680}
+3.37 {'uv': False, 'uv_ago': None, 'uv_n': 0, 'thr': 327680}
+
+### Exit-Code: 0
