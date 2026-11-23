@@ -1,0 +1,12 @@
+### 354_versionen  –  2026-11-23 14:50:03
+### Box: verbunden (192.168.178.235:5555)
+
+== Tracker
+ver 3.35 esp 1.4 src -
+{"busy": false, "prog": 0, "msg": "", "online": "3.35", "neu": ["Own position: hold radius 15 m"], "cur": "3.35"}
+== Core
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+== Navi
+{'tracker': ('3.35', None, True), 'core': (None, None, False), 'navi': (None, None, False), 'box': ('', None, False), 'cosmo': (None, None, False)}
+
+### Exit-Code: 0
