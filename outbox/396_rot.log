@@ -1,0 +1,7 @@
+### 396_rot  –  2026-11-24 00:42:04
+### Box: verbunden (192.168.178.235:5555)
+
+	output DSI-1 enable mode 720x1280@60.038 position 0,0 transform 270
+  Transform: 270
+
+### Exit-Code: 0
