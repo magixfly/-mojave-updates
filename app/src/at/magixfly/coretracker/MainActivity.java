@@ -251,7 +251,7 @@ public class MainActivity extends Activity {
                 }
                 netTxt = t;
             } catch (Throwable e) { if (!"ap".equals(e.getMessage())) netTxt = wifiTxt(); }
-            final String js = "(function(){var e=document.getElementById('ctNet');if(!e){e=document.createElement('span');e.id='ctNet';e.title='Box Wi-Fi';var a=document.getElementById('att');if(a&&a.parentNode)a.parentNode.insertBefore(e,a.nextSibling);else document.body.appendChild(e);}e.textContent='" + netTxt.replace("'", "") + "';})()";
+            final String js = "(function(){var e=document.getElementById('ctNet');if(!e){e=document.createElement('span');e.id='ctNet';e.title='Box Wi-Fi';var a=document.getElementById('att');if(a&&a.parentNode)a.parentNode.insertBefore(e,a.nextSibling);else document.body.appendChild(e);}e.textContent='" + netTxt.replace("'", "") + "';var m=e.textContent.match(/(-\\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'':r>=-60?'#4ade80':r>=-72?'#f5b13d':'#f87171';})()";   /* V1.95: Farbe nach Signal: grün ≥ −60, orange ≥ −72, rot darunter */
             ui.post(new Runnable() { public void run() { if (loaded) web.evaluateJavascript(js, null); } });
             try { Thread.sleep(15000); } catch (Throwable e) { }
         }
@@ -261,8 +261,9 @@ public class MainActivity extends Activity {
     String ghz() {
         try {
             android.net.wifi.WifiManager wm = (android.net.wifi.WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-            int f = wm.getConnectionInfo().getFrequency();
-            return f > 4900 ? "5 GHz" : f > 2000 ? "2.4 GHz" : "";
+            android.net.wifi.WifiInfo wi = wm.getConnectionInfo();
+            int f = wi.getFrequency(), r = wi.getRssi();
+            return (f > 4900 ? "5 GHz" : f > 2000 ? "2.4 GHz" : "") + (r < 0 && r > -127 ? " \u00b7 " + r + " dBm" : "");   // V1.95: Signalqualität dazu
         } catch (Throwable t) { return ""; }
     }
     /** V1.56: Band des eigenen Hotspots (alte und neue Android-API per Reflection) */
