@@ -1,0 +1,13 @@
+### 357_cosmo2  –  2026-11-23 15:36:03
+### Box: verbunden (192.168.178.235:5555)
+
+Pi: 192.168.178.214 
+cosmostreamer.local: kein mDNS
+== MAC
+keine Raspberry-MAC dc:a6:32 gefunden
+== Titel-Suche
+keine Cosmostreamer-Seite
+== Geräte im Netz: 52
+{'ok': False, 'host': 'cosmostreamer.local', 'ip': None}
+
+### Exit-Code: 0
