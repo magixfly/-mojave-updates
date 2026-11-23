@@ -1,0 +1,8 @@
+Stand: 2026-11-23 22:01:18
+App: 1.91
+IP: 192.168.178.235
+WLAN: WLAN Media
+Wifi is connected to "Media"
+
+### Exit-Code: 0
+Fernwartung: Fehler: bad base-64
