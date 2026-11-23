@@ -1,13 +1,13 @@
 {
- "ver": "3.44",
+ "ver": "3.45",
  "neu": [
-  "Home WLAN: map starts at home and own position = home, also without ESP/GPS"
+  "STATE button visible again on the Pi display"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 142205,
-   "md5": "dc11d0eedda8c7651f5ba54eeb7eced5"
+   "md5": "b0718880182b286870488bb05ecfc3ce"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 176138,
-   "md5": "faa41918736550df3f4ffae5e38e073f"
+   "s": 176142,
+   "md5": "ca23f8a132cc6ddc220863f2715f5829"
   },
   {
    "p": "web/kia.png",
