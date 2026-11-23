@@ -1,0 +1,26 @@
+### 003_check  –  2026-11-23 22:07:31
+### Box direkt (App 1.92, 192.168.178.235)
+
+    versionName=1.92
+mWifiInfo SSID: "Media", BSSID: f0:a7:31:a9:a0:a6, MAC: b0:5a:44:75:3e:33, IP: /192.168.178.235, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -69, Link speed: 866Mbps, Tx Link speed: 866Mbps, Max Supported Tx Link speed: 866Mbps, Rx Link speed: 866Mbps, Max Supported Rx
+11-23 22:06:51.119  2661  2661 D PhoneNetManager: onReceive: wifi SD_WIFI_ACTION mIsWifiConnect=true  connectionInfo=SSID: "Media", BSSID: f0:a7:31:a9:a0:a6, MAC: 02:00:00:00:00:00, IP: /192.168.178.235, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -68, Link speed: 866M
+10 packets transmitted, 0 received, +10 errors, 100% packet loss, time 1870ms
+pipe 10
+Tasks: 763 total,   1 running, 762 sleeping,   0 stopped,   0 zombie
+  Mem:  7681092K total,  6709996K used,   971096K free,  1186484K buffers
+ Swap:  4194300K total,   302060K used,  3892240K free,  1710112K cached
+800%cpu  63%user  17%nice 150%sys 553%idle   0%iow  13%irq   3%sirq   0%host
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+29903 u0_a210      10 -10  39G 241M 158M S  120   3.2   0:40.75 at.magixfly.coretracker
+22044 u0_a94       20   0  15G 168M 109M S 26.6   2.2   0:06.05 com.android.vending
+   94 root         20   0    0    0    0 S 20.0   0.0   0:30.07 [kswapd-1:0]
+30723 root         20   0  10G 5.2M 3.9M R 10.0   0.0   0:00.07 top -b -n 1 -m 8
+30042 u0_i9006     10 -10 313G 207M 120M S 10.0   2.7   0:04.97 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+21601 root         20   0    0    0    0 I 10.0   0.0   0:06.34 [kworker/u16:4-ufs_clkscaling_0]
+ 1349 system       -2   0  11G  42M  20M S  6.6   0.5   1:35.03 surfaceflinger
+ 1299 system       -3  -8  11G  11M 7.8M S  6.6   0.1   0:40.81 vendor.qti.hardware.display.composer-service
+37000
+
+### Exit-Code: 0
+
+### Dauer 5 s
