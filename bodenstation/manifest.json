@@ -1,13 +1,13 @@
 {
- "ver": "3.37",
+ "ver": "3.38",
  "neu": [
-  "Undervoltage warning in the top bar (\u26a1 LOW POWER / POWER WAS LOW)"
+  "Compass also without a car (north mode): turn the map with one finger, e.g. on the Kia display"
  ],
  "dateien": [
   {
    "p": "server.py",
    "s": 139758,
-   "md5": "4c4c35337f3118856f231d7e62cbc5f8"
+   "md5": "1994b47e4b7e261773bc3aaadf4ac383"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 174367,
-   "md5": "495872c59d8279a15bf28adfecc21737"
+   "s": 174895,
+   "md5": "d1e5f6aa409724bfa922e62d9238920d"
   },
   {
    "p": "web/kia.png",
