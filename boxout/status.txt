@@ -1,8 +1,8 @@
-Stand: 2026-11-23 22:33:53
+Stand: 2026-11-23 22:44:23
 App: 1.93
 IP: 192.168.178.235
 WLAN: WLAN Media
 Wifi is connected to "Media"
 
 ### Exit-Code: 0
-Fernwartung: zuletzt 010_menu.sh
+Fernwartung: zuletzt 012_chrome.sh
