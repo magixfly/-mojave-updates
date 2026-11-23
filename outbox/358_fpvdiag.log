@@ -1,0 +1,110 @@
+### 358_fpvdiag  –  2026-11-23 15:56:02
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+cosmo {'ok': True, 'host': 'cosmostreamer.local', 'ip': '192.168.178.175'}
+== Last
+ 15:56:03 up  1:26,  2 users,  load average: 11.39, 8.67, 6.37
+               total        used        free      shared  buff/cache   available
+Mem:            3795         889        1324         111        1775        2905
+Swap:           2047           0        2047
+temp=39.9'C
+throttled=0x50000
+gpu=76M
+== Top
+top - 15:56:03 up  1:26,  2 users,  load average: 11.39, 8.67, 6.37
+Tasks: 220 total,   2 running, 218 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 29.2 us, 16.7 sy,  0.0 ni, 54.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st 
+MiB Mem :   3795.6 total,   1322.8 free,    891.7 used,   1776.8 buff/cache     
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   2903.9 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   1962 user1     20   0  199.9g 242676 144836 S  50.0   6.2  21:30.81 chromium
+   1842 user1     20   0   52.9g 164568 111592 R  25.0   4.2   9:16.36 chromium
+   1075 user1     20   0  105920  12976   8244 S   8.3   0.3   0:28.27 pipewire
+   1299 user1     20   0   52.8g 277000 227524 S   8.3   7.1   4:19.66 chromium
+ 234365 user1     20   0   52.6g  79424  63504 S   8.3   2.0   0:46.07 chromium
+ 361950 root      20   0       0      0      0 D   8.3   0.0   0:00.45 kworker+
+ 414942 user1     20   0   10180   4816   2812 R   8.3   0.1   0:00.03 top
+      1 root      20   0   25300  14604  10436 S   0.0   0.4   0:06.22 systemd
+== Chromium Start
+--force-renderer-accessibility
+--enable-remote-extensions
+--show-component-extension-options
+--enable-gpu-rasterization
+--no-default-browser-check
+--disable-pings
+--media-router=0
+--disable-dev-shm-usage
+--enable-remote-extensions
+--load-extension
+--use-angle=gles
+--kiosk
+--start-fullscreen
+--disable-features=Translate
+--window-position=0,0
+--window-size=1280,720
+--force-device-scale-factor=1
+--renderer-process-limit=1
+--process-per-site
+--disable-extensions
+--disable-component-update
+--disk-cache-size=1048576
+--js-flags=--max-old-space-size=192
+--noerrdialogs
+--disable-infobars
+--disable-pinch
+--overscroll-history-navigation=0
+--check-for-update-interval=31536000
+--disable-session-crashed-bubble
+--incognito
+--password-store=basic
+--autoplay-policy=no-user-gesture-required
+== Chromium Speicher
+1193.29 MB
+== Swap/OOM
+inbox/358_fpvdiag.sh: line 9: swapon: command not found
+== config.txt
+dtparam=audio=on
+camera_auto_detect=1
+display_auto_detect=1
+auto_initramfs=1
+dtoverlay=vc4-kms-v3d
+max_framebuffers=2
+disable_fw_kms_setup=1
+arm_64bit=1
+disable_overscan=1
+arm_boost=1
+[cm4]
+otg_mode=1
+[cm5]
+dtoverlay=dwc2,dr_mode=host
+[pi5]
+dtoverlay=nospi10
+[all]
+== Zram
+/dev/zram0
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+Chromium 156.0.8078.79 built on Debian GNU/Linux 13 (trixie)
+== V4L2 Decoder
+/dev/video10
+/dev/video11
+/dev/video12
+/dev/video13
+/dev/video14
+/dev/video15
+/dev/video16
+/dev/video18
+/dev/video19
+== Top nach 20 s
+top - 15:56:23 up  1:26,  2 users,  load average: 9.75, 8.46, 6.35
+Tasks: 220 total,   3 running, 217 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 22.7 us, 13.6 sy,  0.0 ni, 63.6 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st 
+MiB Mem :   3795.6 total,   1338.8 free,    874.1 used,   1777.7 buff/cache     
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   2921.5 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   1962 user1     20   0  199.9g 242096 144836 R  72.7   6.2  21:46.63 chromium
+   1842 user1     20   0   52.9g 164544 111588 S  27.3   4.2   9:25.25 chromium
+ 415664 user1     20   0   10180   4812   2816 R  27.3   0.1   0:00.04 top
+
+### Exit-Code: 0
