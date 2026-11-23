@@ -1,0 +1,16 @@
+### 001_test  –  2026-11-23 22:00:44
+### Box direkt (App 1.91, 192.168.178.235)
+
+15
+Lito for arm64
+arm64-v8a
+7
+MemTotal:        7681092 kB
+MemFree:          917760 kB
+/dev/block/dm-47  86G  52G   35G  60% /data/user/0
+    versionName=1.91
+    inet 192.168.178.235/24 brd 192.168.178.255 scope global wlan0
+
+### Exit-Code: 0
+
+### Dauer 0 s
