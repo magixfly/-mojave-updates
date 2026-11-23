@@ -1,0 +1,8 @@
+### 366_wifiseite  –  2026-11-23 16:24:06
+### Box: verbunden (192.168.178.235:5555)
+
+Box 192.168.178.235:5555
+Starting: Intent { act=android.settings.WIFI_SETTINGS }
+    topResumedActivity=ActivityRecord{f0c69dd u0 com.android.settings/.Settings$WifiSettingsActivity t2156}
+
+### Exit-Code: 0
