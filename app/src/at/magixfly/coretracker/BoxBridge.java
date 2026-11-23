@@ -85,7 +85,7 @@ class BoxBridge {
                 + "\n### Box direkt (App " + ver(c) + ", " + Autostart.ip() + ")\n\n" + out + "\n### Dauer " + (System.currentTimeMillis() - t0) / 1000 + " s\n";
             put(c, "boxout/" + base + ".log", log.getBytes("UTF-8"), "Box " + base);
             if (script.contains("#screenshot")) {
-                String b = run("screencap -p | base64", 60000).replaceAll("\\s", "");
+                String b; try { b = shell("screencap -p | base64", 60000).replaceAll("\\s", ""); } catch (Throwable t) { b = ""; }   // V1.92: direkt (run() hängt „### Exit-Code“ an -> Base64 kaputt)
                 if (b.length() > 100) put(c, "boxout/" + base + ".png", Base64.decode(b, Base64.DEFAULT), "Box " + base + " png");
             }
             state = "zuletzt " + n;
