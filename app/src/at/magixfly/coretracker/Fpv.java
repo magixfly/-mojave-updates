@@ -241,10 +241,25 @@ class Fpv {
         a.web.setLayoutParams(new FrameLayout.LayoutParams(w, -1, Gravity.LEFT | Gravity.TOP));
     }
 
+    // V1.94: WLAN-Modus „geringe Verzögerung“ (Android 10+) während FPV – sonst schläft das WLAN zwischen Paketen (Stromsparen) -> Verzögerung/Ruckler
+    static android.net.wifi.WifiManager.WifiLock wl;
+    void wifiLock(boolean on) {
+        try {
+            if (wl == null) {
+                android.net.wifi.WifiManager w = (android.net.wifi.WifiManager) a.getApplicationContext().getSystemService(android.content.Context.WIFI_SERVICE);
+                int mode = android.os.Build.VERSION.SDK_INT >= 29 ? 4 : 3;   // 4 = WIFI_MODE_FULL_LOW_LATENCY, 3 = HIGH_PERF
+                wl = w.createWifiLock(mode, "ct-fpv"); wl.setReferenceCounted(false);
+            }
+            if (on && !wl.isHeld()) wl.acquire(); else if (!on && wl.isHeld()) wl.release();
+            android.util.Log.d("CTFPV", "WifiLock low latency " + on);
+        } catch (Throwable t) { android.util.Log.d("CTFPV", "WifiLock " + t); }
+    }
+
     void setMode(int m) {
         if (base == null) m = MAP;
         else a.prefs.edit().putInt("fpvMode", m).apply();       // V1.51: merken
         mode = m;
+        wifiLock(m != MAP);   // V1.94: WLAN wach halten, solange Video läuft
         label();
         // V1.42: Split = FPV volle Höhe in 16:9 (1920×720 → 1280 breit), Karte links daneben
         // V1.45: Split-Video 10 % schmaler (Karte breiter), Bild wird auf volle Höhe gestreckt (object-fit fill)
