@@ -1,0 +1,32 @@
+### 359_fpvstat  –  2026-11-23 15:57:11
+### Box: NICHT erreichbar (192.168.178.1:5555)
+
+== fpvstat letzte 25 (127.0.0.1 = Pi-Kiosk)
+15:50:21 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 3 freezes / 10 min \u00b7 max 0.7 s \u00b7 loss 0.0 %", "dec": null, "drop": 79, "lag": null, "n10": 3, "max": 681, "all": 3, "loss": 0, "mins": 1, "player": "Janus"}}
+15:51:21 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 3 freezes / 10 min \u00b7 max 0.7 s \u00b7 loss 0.0 %", "dec": null, "drop": 79, "lag": null, "n10": 3, "max": 681, "all": 3, "loss": 0, "mins": 2, "player": "Janus"}}
+15:52:21 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 4 freezes / 10 min \u00b7 max 142.3 s \u00b7 loss 0.0 %", "dec": null, "drop": 103, "lag": null, "n10": 4, "max": 142285, "all": 4, "loss": 0, "mins": 3, "player": "Janus"}}
+15:53:21 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 6 freezes / 10 min \u00b7 max 142.3 s \u00b7 loss 0.0 %", "dec": null, "drop": 152, "lag": null, "n10": 6, "max": 142285, "all": 6, "loss": 0, "mins": 4, "player": "Janus"}}
+15:54:21 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 7 freezes / 10 min \u00b7 max 142.3 s \u00b7 loss 3.7 %", "dec": null, "drop": 182, "lag": null, "n10": 7, "max": 142285, "all": 7, "loss": 3.7093953023488258, "mins": 5, "player": "Janus"}}
+15:55:21 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 7 freezes / 10 min \u00b7 max 142.3 s \u00b7 loss 3.0 %", "dec": null, "drop": 182, "lag": null, "n10": 7, "max": 142285, "all": 7, "loss": 3.0349959877537045, "mins": 6, "player": "Janus"}}
+15:56:21 127.0.0.1 {"fpvstat": {"s": "Janus \u00b7 7 freezes / 10 min \u00b7 max 142.3 s \u00b7 loss 2.6 %", "dec": null, "drop": 182, "lag": null, "n10": 7, "max": 142285, "all": 7, "loss": 2.580448905981792, "mins": 7, "player": "Janus"}}
+== Kernel-Meldungen
+[ 5077.529082] hwmon hwmon1: Undervoltage detected!
+[ 5117.850300] hwmon hwmon1: Voltage normalised
+[ 5119.866302] hwmon hwmon1: Undervoltage detected!
+[ 5131.962481] hwmon hwmon1: Voltage normalised
+[ 5133.978388] hwmon hwmon1: Undervoltage detected!
+[ 5148.089305] hwmon hwmon1: Voltage normalised
+[ 5150.105601] hwmon hwmon1: Undervoltage detected!
+[ 5194.454380] hwmon hwmon1: Voltage normalised
+[ 5196.470406] hwmon hwmon1: Undervoltage detected!
+[ 5204.537913] hwmon hwmon1: Voltage normalised
+[ 5208.566496] hwmon hwmon1: Undervoltage detected!
+[ 5214.613281] hwmon hwmon1: Voltage normalised
+[ 5238.804152] hwmon hwmon1: Undervoltage detected!
+[ 5244.851694] hwmon hwmon1: Voltage normalised
+[ 5250.899849] hwmon hwmon1: Undervoltage detected!
+== D-Status Prozesse
+D     416807 kworker/u16:3+events_unbound
+== Last-Ursache
+
+### Exit-Code: 1
