@@ -184,13 +184,17 @@ public class MainActivity extends Activity {
                 if (ok(c.get(i))) found = c.get(i);
             }
             if (found == null) found = scanSubnet();     // V1.24: e.g. home Wi-Fi without corepi.local (mDNS)
+            boolean local = false;
+            if (found == null && localServer()) { found = "127.0.0.1"; local = true; }   // V1.96: no Pi -> tracker program on the box itself
             searching = false;
             if (found != null && found.endsWith(".local")) {   // V1.64: .local löst die Box nicht immer auf (WebView ja, Java nein) -> feste IP merken
                 try { found = java.net.InetAddress.getByName(found).getHostAddress(); } catch (Throwable t) { String ip = scanSubnet(); if (ip != null) found = ip; }
             }
             if (found != null) {
                 String host = found;
-                prefs.edit().putString("host", host).apply();
+                if (!local) prefs.edit().putString("host", host).apply();
+                onLocal = local;
+                if (local) startPiWatch();
                 piBase = "http://" + host + ":" + PORT;
                 showOverlay("Found: " + host, 100);
                 loaded = true;
@@ -201,6 +205,44 @@ public class MainActivity extends Activity {
             }
     }
 
+
+    // ---------------------------------------------------------------- V1.96: tracker program on the box (no Pi)
+    static final String CT_DIR = "/data/local/tmp/ct";
+    volatile boolean onLocal = false, piWatch = false;
+
+    /** Starts server.py on the box (if installed) and waits up to 25 s until it answers. */
+    boolean localServer() {
+        if (ok("127.0.0.1")) return true;
+        try {
+            String r = HotspotBoot.shell("[ -f " + CT_DIR + "/run.sh ] && [ -x " + CT_DIR + "/ld-musl ] && echo yes");
+            if (!r.contains("yes")) return false;
+            HotspotBoot.shell("pgrep -f ct/boxmain.py >/dev/null || (setsid sh " + CT_DIR + "/run.sh >/dev/null 2>&1 </dev/null &)");
+        } catch (Throwable t) { return false; }
+        for (int i = 0; i < 25; i++) {
+            showOverlay("Starting tracker on the box …", i * 4);
+            if (ok("127.0.0.1")) return true;
+            try { Thread.sleep(1000); } catch (Throwable t) { }
+        }
+        return false;
+    }
+
+    /** While the box runs its own tracker: switch to the Pi as soon as it is back (it has the car data). */
+    void startPiWatch() {
+        if (piWatch) return;
+        piWatch = true;
+        new Thread(new Runnable() { public void run() {
+            while (onLocal) {
+                try { Thread.sleep(30000); } catch (Throwable t) { }
+                String h = prefs.getString("host", null);
+                if (onLocal && h != null && ok(h)) {
+                    onLocal = false;
+                    piBase = "http://" + h + ":" + PORT;
+                    ui.post(new Task(MainActivity.this, Task.LOAD, piBase + "/", 0));
+                }
+            }
+            piWatch = false;
+        } }).start();
+    }
 
     /** V1.24: look for the tracker in the own /24 network (all addresses at once, ~2 s). */
     String scanSubnet() {
