@@ -1,0 +1,77 @@
+### 013_mem  –  2026-11-23 22:46:27
+### Box direkt (App 1.93, 192.168.178.235)
+
+Total PSS by process:
+    234,853K: com.google.android.gms (pid 3317)
+    223,668K: com.android.chrome (pid 21606 / activities)
+    204,689K: system (pid 1530)
+    185,588K: com.google.android.inputmethod.latin (pid 3471)
+    183,678K: com.google.android.apps.maps (pid 5109 / activities)
+    150,806K: at.magixfly.coretracker (pid 5483 / activities)
+    147,007K: com.android.launcher3 (pid 3002 / activities)
+    132,667K: com.google.android.youtube (pid 21604)
+    126,432K: com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 (pid 5653)
+    123,652K: com.android.chrome:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0 (pid 27938)
+    121,085K: com.android.systemui (pid 2661)
+    111,450K: com.google.android.googlequicksearchbox:googleapp (pid 21884)
+    101,742K: com.android.chrome:privileged_process0 (pid 27972)
+     95,542K: surfaceflinger (pid 1349)
+     80,936K: com.android.vending (pid 22044)
+     57,168K: com.google.android.googlequicksearchbox:search (pid 4287)
+     50,116K: com.android.vending:background (pid 22450)
+     44,896K: com.android.providers.media.module (pid 3966)
+     43,990K: com.google.android.as (pid 3940)
+     41,904K: com.google.android.googlequicksearchbox:interactor (pid 3942)
+     41,634K: com.google.android.apps.messaging:rcs (pid 3962)
+     38,034K: com.suding.speedplay:daemon (pid 15173)
+     37,263K: com.suding.speedplay (pid 8236)
+     36,113K: com.google.android.dialer (pid 31754)
+     34,432K: com.google.android.tts (pid 31752)
+     33,504K: com.spotify.music (pid 21609)
+     31,514K: android.hardware.camera.provider@2.4-service_64 (pid 1253)
+     29,454K: com.carsyso.bluetooth (pid 3880)
+     25,210K: com.carsyso.main (pid 2812)
+Failed to write while dumping service meminfo: Broken pipe
+0.0
+0.5
+null
+package:ai.metaverselabs.obdandroid
+package:com.netflix.mediaclient
+package:com.cleevio.ionity.android.app
+package:com.waze
+package:cloud.shelly.smartcontrol
+package:at.radio.android
+package:at.tmobile.android.magentatv
+package:com.mautilus.servus
+package:com.whatsapp
+package:com.enbw.ev
+package:io.homeassistant.companion.android
+package:com.google.android.contactkeys
+package:com.anthropic.claude
+package:com.google.android.verifier
+package:com.dazn
+package:net.easypark.android
+package:at.magixfly.coretracker
+package:net.easyconn
+package:com.estrongs.android.pop
+package:com.spotify.music
+package:de.wetteronline.wetterapp
+package:com.chargemap_beta.android
+package:dji.go.v5
+package:com.openai.chatgpt
+package:org.videolan.vlc
+package:com.google.android.apps.bard
+package:com.vialsoft.radarbot_free
+package:com.deyesolar
+package:com.audible.application
+package:com.google.android.safetycore
+package:at.zappn
+package:com.google.android.youtube
+package:com.amazon.avod.thirdpartyclient
+package:com.iternio.abrpapp
+package:com.nousguide.android.orftvthek
+package:com.apkpure.aegon
+
+### Exit-Code: 0
+
+### Dauer 1 s
