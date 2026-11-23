@@ -1,0 +1,15 @@
+### 389_ps  –  2026-11-24 00:19:03
+### Box: verbunden (192.168.178.235:5555)
+
+user1       1120  6.3  2.6 508428 101136 ?       Ssl  Nov23  10:26 /usr/bin/labwc -m
+user1       1182  0.0  0.0  10164  1860 ?        Ss   Nov23   0:00 /usr/bin/ssh-agent /usr/bin/labwc-pi
+user1       1709  8.7  7.1 55361372 277188 ?     Sl   Nov23  14:25 /usr/lib/chromium/chromium --force-renderer-accessibility --enable-remote-extensions --show-component-extension-options --enable-gpu-rasterization --no-default-browser-check --disable
+user1       2102  0.0  0.1 54541764 3948 ?       Sl   Nov23   0:00 /usr/lib/chromium/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --user-stream-region=4,65568 --database=/home/user1/.config/chromium/Crash Re
+user1       2119  0.0  0.0 54533412 3544 ?       S    Nov23   0:00 /usr/lib/chromium/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/user1/.config/chromium/Crash Reports --annotation=chann
+user1       2150  0.0  1.7 55001384 69844 ?      S    Nov23   0:00 /usr/lib/chromium/chromium --type=zygote --no-zygote-sandbox --force-device-scale-factor=1 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --no
+user1       2153  0.0  1.8 55001516 70136 ?      S    Nov23   0:00 /usr/lib/chromium/chromium --type=zygote --force-device-scale-factor=1 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --change-
+user1       2191  0.0  0.5 55001516 19768 ?      S    Nov23   0:00 /usr/lib/chromium/chromium --type=zygote --force-device-scale-factor=1 --crashpad-handler-pid=0 --enable-crash-reporter=,built on Debian GNU/Linux 13 (trixie) --noerrdialogs --change-
+XDG=wayland-0 wayland-0.lock
+1719156 /tmp/s.b64
+
+### Exit-Code: 0
