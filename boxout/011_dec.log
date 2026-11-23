@@ -1,0 +1,19 @@
+### 011_dec  –  2026-11-23 22:34:25
+### Box direkt (App 1.93, 192.168.178.235)
+
+    SupportsMultipleSecureCodecs: 1
+    SupportsSecureWithNonSecureCodec: 1
+        Name: OMX.qcom.video.decoder.avc
+non-secure-codec/hw-video-codec:[]:1
+    11-23 22:32:54 removeResource(pid 5483, uid 10210 clientId -5476376625962429760, resources battery/hw-video-codec:[]:1 )
+    11-23 22:31:00 addResource(pid 5483, uid 10210 clientId -5476376625962429760, resources battery/hw-video-codec:[]:1 )
+    11-23 22:28:10 removeResource(pid 5483, uid 10210 clientId -5476376625962429760, resources battery/hw-video-codec:[]:1 )
+    11-23 22:23:05 addResource(pid 5483, uid 10210 clientId -5476376625962429760, resources battery/hw-video-codec:[]:1 )
+    11-23 22:23:05 addResource(pid 5483, uid 10210 clientId -5476376625962429760, resources non-secure-codec/hw-video-codec:[]:1 )
+    11-23 22:18:28 removeResource(pid 5483, uid 10210 clientId -5476376625962276400, resources battery/hw-video-codec:[]:1 )
+    11-23 22:18:18 addResource(pid 5483, uid 10210 clientId -5476376625962276400, resources battery/hw-video-codec:[]:1 )
+    11-23 22:18:18 addResource(pid 5483, uid 10210 clientId -5476376625962276400, resources non-secure-codec/hw-video-codec:[]:1 )
+
+### Exit-Code: 0
+
+### Dauer 0 s
