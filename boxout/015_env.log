@@ -1,0 +1,76 @@
+### 015_env  –  2026-11-24 00:29:46
+### Box direkt (App 1.95, 192.168.178.235)
+
+uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:su:s0
+arm64-v8a
+15
+
+ls: /etc/resolv.conf: No such file or directory
+/etc/hosts
+145
+145
+/dev/block/dm-47  86G  52G   35G  61% /data/user/0
+/system/bin/tar
+/system/bin/gzip
+/system/bin/unzip
+/system/bin/curl
+/system/bin/toybox
+total 144
+drwxrwx--x 4 shell shell  4096 2026-11-23 22:06 .
+drwxr-x--x 5 root  root   4096 1970-01-01 01:02 ..
+-rw-rw-rw- 1 root  root      0 2026-11-13 08:18 chcon.log
+drwxrwxrwx 3 root  root   4096 2026-11-13 08:16 ct_bak
+-rw-rw-rw- 1 root  root    283 2026-11-13 08:16 ct_restore.log
+-rw-rw-rw- 1 root  root    694 2026-11-13 08:14 ct_restore.sh
+-rw-rw---- 1 root  root  70149 2026-11-23 22:55 ct_update.apk
+-rw-rw-rw- 1 root  root     71 2026-11-23 22:56 ct_update.log
+-rw-rw-rw- 1 root  root    437 2026-11-24 00:29 ctbb.sh
+tcp        0      0 192.168.178.235:37918   192.168.178.214:8080    ESTABLISHED 4335/at.magixfly.coretracker
+tcp        0      0 192.168.178.235:37916   192.168.178.214:8080    ESTABLISHED 4335/at.magixfly.coretracker
+tcp        0      0 192.168.178.235:40768   192.168.178.214:8080    ESTABLISHED 4335/at.magixfly.coretracker
+tcp6       0      0 [::]:8090               [::]:*                  LISTEN      4335/at.magixfly.coretracker
+tcp6       0      0 ::ffff:192.168.17:50224 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49220 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.178:8090 ::ffff:192.168.17:55487 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:48144 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49206 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47846 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47916 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49234 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47864 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50274 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49208 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49174 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50290 ::ffff:192.168.178:8080 ESTABLISHED 4335/at.magixfly.coretracker
+tcp6       0      0 ::ffff:192.168.17:47852 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50228 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49216 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47834 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49184 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47764 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50256 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50218 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:48136 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50280 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47494 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.178:8090 ::ffff:192.168.17:57023 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47886 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49198 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47898 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50266 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.178:8090 ::ffff:192.168.17:61281 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50240 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50236 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:47878 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49222 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:49190 ::ffff:192.168.178:8080 TIME_WAIT   -
+tcp6       0      0 ::ffff:192.168.17:50262 ::ffff:192.168.178:8080 TIME_WAIT   -
+Wifi is enabled
+Wifi scanning is always available
+==== ClientModeManager instance: ConcreteClientModeManager{id=29216 iface=wlan0 role=ROLE_CLIENT_PRIMARY} ====
+Wifi is connected to "Media"
+WifiInfo: SSID: "Media", BSSID: f0:a7:31:a9:a0:a6, MAC: b0:5a:44:75:3e:33, IP: /192.168.178.235, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -58, Link speed: 650Mbps, Tx Link speed: 650Mbps, Max Supported Tx Link speed: 866Mbps, Rx Link speed: 866Mbps, Max Supported Rx Link speed: 866Mbps, Frequency: 5180MHz, Net ID: 0, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none>"Media"wpa3-saeMLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>
+
+### Exit-Code: 0
+
+### Dauer 0 s
