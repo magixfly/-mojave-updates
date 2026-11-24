@@ -1,0 +1,9 @@
+### 405_a21  –  2026-11-24 18:52:04
+### Box: verbunden (192.168.178.235:5555)
+
+ver 8 ['Gloggnitz', 'Reichenau an der Rax', 'Rax (plateau)', 'Neusiedl am See', 'Neusiedler See + 5 km', 'Linz - A1 - Vienna - A23 - A2 - Gloggnitz', 'Home St. Poelten', 'Ratzersdorfer See', 'A21 Steinhaeusl - Alland - Voesendorf']
+{"ok":true,"ver":9}
+
+ver 9 a21 pts 5 [[48.1525, 15.918], [48.116, 15.992], [48.056, 16.08]] [[48.07, 16.195], [48.109, 16.308]]
+
+### Exit-Code: 0
