@@ -19,7 +19,6 @@ background:var(--pan);border-bottom:1px solid var(--line);font-size:19px}
 #dot{width:16px;height:16px;border-radius:50%;background:#666;flex:none}
 #top .sp{flex:1}
 #src{color:var(--mut);font-size:17px}
-#boxst{display:none;align-items:center;gap:6px;font-size:14px;font-weight:700;color:#4ade80;border:1px solid rgba(74,222,128,.6);border-radius:9px;padding:1px 8px;white-space:nowrap;cursor:pointer}#boxst.st{color:#fbbf24;border-color:rgba(251,191,36,.6)}
 #cl{display:none;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#d97757;border:1px solid #d97757;border-radius:9px;padding:1px 8px}
 #cl i{width:9px;height:9px;border-radius:50%;background:#d97757;animation:clp 1.6s infinite}@keyframes clp{50%{opacity:.25}}
 #esp,#wifi{font-size:17px;font-variant-numeric:tabular-nums;color:var(--mut)}
@@ -69,19 +68,16 @@ display:flex;align-items:center;justify-content:center;font-size:34px;font-weigh
 #lockPill i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--acc)}
 #lockPill span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800}
 body.night #map{filter:brightness(.55) saturate(.8)}
-#top #boxst{display:none!important}   /* V2.93: map download of the box is in the ... menu */
 /* V2.94: frosted glass look */
 :root{--gl:linear-gradient(150deg,rgba(255,255,255,.10),rgba(255,255,255,.025) 55%,rgba(120,200,255,.05));--gb:rgba(140,205,255,.42);--gs:inset 0 1px 0 rgba(255,255,255,.16),0 8px 22px rgba(0,0,0,.38)}
 html body #side{background:linear-gradient(180deg,rgba(18,26,36,.92),rgba(10,14,20,.94))!important}
 html body #top{background:linear-gradient(180deg,rgba(22,30,42,.88),rgba(12,17,24,.82))!important;backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.07)}
 html body .t{background:var(--gl)!important;border:1.5px solid var(--gb)!important;box-shadow:var(--gs)!important;backdrop-filter:blur(14px) saturate(150%)}
-html body #btns > *,html body #bFpv,html body #kiaBtn{background:linear-gradient(150deg,rgba(30,42,58,.62),rgba(10,14,20,.55))!important;border:1.5px solid var(--gb)!important;box-shadow:var(--gs)!important;backdrop-filter:blur(12px) saturate(160%);-webkit-backdrop-filter:blur(12px) saturate(160%)}
+html body #btns > *,html body #bFpv{background:linear-gradient(150deg,rgba(30,42,58,.62),rgba(10,14,20,.55))!important;border:1.5px solid var(--gb)!important;box-shadow:var(--gs)!important;backdrop-filter:blur(12px) saturate(160%);-webkit-backdrop-filter:blur(12px) saturate(160%)}
 html body #ui > #scale,html body #scale{background:rgba(12,18,26,.45)!important;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);box-shadow:var(--gs)}
 html body #top #esp,html body #top #sys,html body #top #wifi,html body #top #ctNet,html body #top #snd{background:linear-gradient(150deg,rgba(255,255,255,.08),rgba(255,255,255,.02))!important;border-color:var(--gb)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)!important}
 html.fpv-pip #fpvBox{border:1.5px solid rgba(160,215,255,.6)!important;box-shadow:0 10px 30px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.2)!important;border-radius:14px!important}
-#kiaOv{background:radial-gradient(ellipse at 50% 30%,#16212e 0,#0b0f14 70%)!important}
 html.ctsplit body #ui > #scale,html.ctsplit body #scale{bottom:calc(2.5% + 10px)!important}
-html body #kiaBtn{color:#bfe6ff!important}   /* V2.95: STATUS in blue glass */
 #btns{gap:7px!important}
 html body #ui > #scale{right:14px!important;left:auto!important;bottom:10px!important}   /* V2.95: scale below the button column */
 /* V2.97: glass also for car cards, replay bar, 2nd scale; box chips with inner spacing; EV6 hidden while a warning is shown */
@@ -91,21 +87,19 @@ html body #play b{background:rgba(255,255,255,.04);border-color:rgba(140,205,255
 html body #scale2{background:rgba(12,18,26,.45);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:3px 8px;box-shadow:var(--gs)}
 html body #top #esp,html body #top #sys,html body #top #wifi,html body #top #ctNet{padding:0 14px!important}
 html body #top #sys{gap:14px!important}
-body:has(#warn:not([style*="none"]):not(:empty)) #sideCar{display:none!important}
 /* V2.98: styles - Liquid Glass (default) and HUD Neon, menu "Style" */
 html.th-glass body .t,html.th-glass body .car{background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.5)!important;border-radius:22px!important;backdrop-filter:blur(8px) saturate(200%) contrast(1.1);-webkit-backdrop-filter:blur(8px) saturate(200%) contrast(1.1);box-shadow:inset 2px 2px 1px rgba(255,255,255,.4),inset -2px -2px 2px rgba(255,255,255,.14),0 12px 28px rgba(0,0,0,.35)!important}
-html.th-glass body #btns > *,html.th-glass body #bFpv,html.th-glass body #kiaBtn,html.th-glass body #play,html.th-glass body #ui > #scale{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.55)!important;backdrop-filter:blur(8px) saturate(200%) contrast(1.1);-webkit-backdrop-filter:blur(8px) saturate(200%) contrast(1.1);box-shadow:inset 2px 2px 1px rgba(255,255,255,.45),inset -2px -2px 2px rgba(255,255,255,.16),0 12px 28px rgba(0,0,0,.35)!important}
+html.th-glass body #btns > *,html.th-glass body #bFpv,html.th-glass body #play,html.th-glass body #ui > #scale{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.55)!important;backdrop-filter:blur(8px) saturate(200%) contrast(1.1);-webkit-backdrop-filter:blur(8px) saturate(200%) contrast(1.1);box-shadow:inset 2px 2px 1px rgba(255,255,255,.45),inset -2px -2px 2px rgba(255,255,255,.16),0 12px 28px rgba(0,0,0,.35)!important}
 html.th-glass body #btns > *{border-radius:18px!important}
 html.th-glass body #top #esp,html.th-glass body #top #sys,html.th-glass body #top #wifi,html.th-glass body #top #ctNet,html.th-glass body #top #snd{background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.4)!important;border-radius:16px!important;box-shadow:inset 1px 1px 1px rgba(255,255,255,.35)!important}
 html.th-hud body{--acc:#00e5ff}
 html.th-hud body #map{filter:brightness(.62) saturate(.75)}
-html.th-hud body .t,html.th-hud body .car,html.th-hud body #btns > *,html.th-hud body #bFpv,html.th-hud body #kiaBtn,html.th-hud body #play,html.th-hud body #ui > #scale{background:rgba(5,8,12,.6)!important;border:1px solid rgba(0,229,255,.8)!important;border-radius:4px!important;box-shadow:0 0 12px rgba(0,229,255,.4),inset 0 0 14px rgba(0,229,255,.1)!important;backdrop-filter:none!important;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
+html.th-hud body .t,html.th-hud body .car,html.th-hud body #btns > *,html.th-hud body #bFpv,html.th-hud body #play,html.th-hud body #ui > #scale{background:rgba(5,8,12,.6)!important;border:1px solid rgba(0,229,255,.8)!important;border-radius:4px!important;box-shadow:0 0 12px rgba(0,229,255,.4),inset 0 0 14px rgba(0,229,255,.1)!important;backdrop-filter:none!important;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px)}
 html.th-hud body .t .l,html.th-hud body .car .l,html.th-hud body #btns > *{color:#00e5ff!important}
 html.th-hud body .t .v{text-shadow:0 0 10px rgba(0,229,255,.7)}
 html.th-hud body #top{background:rgba(3,6,10,.92)!important;border-bottom:1px solid rgba(0,229,255,.5)!important}
 html.th-hud body #top #esp,html.th-hud body #top #sys,html.th-hud body #top #wifi,html.th-hud body #top #ctNet,html.th-hud body #top #snd{background:transparent!important;border:1px solid rgba(0,229,255,.6)!important;border-radius:3px!important;box-shadow:0 0 8px rgba(0,229,255,.3)!important}
 html.th-hud body #side{background:rgba(3,6,10,.94)!important}
-#sideCar{display:none;position:fixed;left:440px;top:7px;width:150px;height:56px;perspective:600px;text-align:center;pointer-events:none;z-index:7}#sideCar img{height:50px;animation:kspin 9s ease-in-out infinite;filter:drop-shadow(0 0 14px rgba(74,222,128,.3));}@keyframes kspin{0%{transform:rotateY(-28deg)}50%{transform:rotateY(28deg)}100%{transform:rotateY(-28deg)}}
 /* V2.80: CosmoStreamer video on the Pi (MAP -> Split -> FPV -> PiP), like the box app */
 #bFpv{position:absolute;left:10px;bottom:10px;width:210px;height:54px;display:none;z-index:899;border:2px solid rgba(77,184,255,.6);border-radius:12px;background:#0b0f14;color:#4ade80;font-weight:700;font-size:24px;font-family:inherit}
 html.cosmoOn #bFpv{display:block}
@@ -266,10 +260,10 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
 </head>
 <body>
 <div id="ui">
-<canvas id="map"></canvas><div id="sideCar"><img src="kia.png" alt=""></div><div id="fpvBox"><iframe id="fpvIf" allow="autoplay"></iframe><i id="fpvRs"></i></div><button id="bFpv">FPV</button>
+<canvas id="map"></canvas><div id="fpvBox"><iframe id="fpvIf" allow="autoplay"></iframe><i id="fpvRs"></i></div><button id="bFpv">FPV</button>
 
 <div id="top"><span id="dot"></span><b>CORE TRACKER</b><span id="ver" style="color:var(--mut);font-size:19px;font-weight:400"></span><span id="bInfo"></span><span id="src"></span><span id="chips"></span><span id="dlst" style="color:var(--acc);font-size:17px;font-weight:700;font-variant-numeric:tabular-nums"></span>
-<span class="sp"></span><span id="boxst" title="Carlin box in the car: map download (tap = stop / start)"></span><span id="cl" title="Claude is connected remotely (Pi Connect)"><i></i>CLAUDE</span><span id="sys" title="Pi: CPU / RAM / temperature"></span><span id="esp"></span><span id="wifi"></span><span id="snd" title="Warning sound on/off"></span><span id="clock"></span></div>
+<span class="sp"></span><span id="cl" title="Claude is connected remotely (Pi Connect)"><i></i>CLAUDE</span><span id="sys" title="Pi: CPU / RAM / temperature"></span><span id="esp"></span><span id="wifi"></span><span id="snd" title="Warning sound on/off"></span><span id="clock"></span></div>
 <div id="warn"></div>
 
 <div id="rideSide"></div>
@@ -356,7 +350,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <div class="seg noWin" id="sBright"><b data-v="20">20 %</b><b data-v="40">40 %</b><b data-v="70">70 %</b><b data-v="100">100 %</b></div>
     <label>Track length (live + replay) · how much of the line stays visible</label>
     <div style="display:flex;gap:10px;align-items:center"><button class="mb" id="mTlM" style="width:90px;font-size:30px">−</button><b id="mTl" style="flex:1;text-align:center;font-size:26px"></b><button class="mb" id="mTlP" style="width:90px;font-size:30px">+</button></div>
-    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="m3d">3D view: on</button><button class="mb" id="mTheme">Style: Glass</button><button class="mb" id="mMaps" style="display:none">Maps</button>
+    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="m3d">3D view: on</button><button class="mb" id="mTheme">Style: Glass</button>
     <button class="mb" id="mCore">Core info: on</button>
     <button class="mb" id="mSound">Warning sound: on</button>
     <label>Drivers</label>
@@ -781,7 +775,6 @@ function loop(){
   if(!VREADY&&performance.now()<15000)return;
   if(typeof fpvMode!=='undefined'&&fpvMode==='full'){dirty=true;return}   // V3.09: map hidden behind full-screen FPV -> don't draw (CPU for the video)
   const now=performance.now();
-  {const k=document.getElementById('kiaOv');if(k&&k.style.display!=='none'&&getComputedStyle(k).display!=='none'&&now-lastDraw<1000)return}   // V3.02: status view open -> map behind it 1 fps
   if(now-lastDraw<(document.documentElement.classList.contains('fpv-pip')&&!document.getElementById('ctMaps')?200:33))return;   // max. 30 fps (V3.00: Pi with PiP video 5 fps, CPU for the video)
   if(WEBON)return;                           // V2.0.23: web page of Core/Navi covers the map
   smoothFeed();let moving=smoothStep();smoothFeed(SM2,st.car2);if(smoothStep(SM2))moving=true;
@@ -988,28 +981,6 @@ function hud(){$('trB').style.display=RIDE.tracks?'none':'';if(RIDE.tracks&&$('t
    else{const r=x.rssi;e.textContent='ESP '+(r!=null?r+' dBm · ':'')+String(x.pps).padStart(3,'\u2007')+'/s';   // V2.0.46: fixed width
      e.style.color=r==null?'var(--mut)':r>=-70?'#30d158':r>=-82?'#ff9f0a':'#ff453a'}}
   $('cl').style.display=st.claude&&!DEMO?'inline-flex':'none';$('cl').classList.toggle('on',!!(st.claude&&!DEMO));
-  if(!window.boxBound){window.boxBound=1;$('boxst').onclick=()=>{fetch('/api/boxcmd',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({toggle:1})});$('boxst').textContent='\u{1F697} Box: sending …'}}
-  {// V2.0.51: Pi-Display zeigt nur Info, solange die Kia-Box die Karte anzeigt (spart CPU); Tippen = Karte, kleiner Knopf = wieder Info
-   const loc=['localhost','127.0.0.1'].includes(location.hostname)&&!document.getElementById('ctMaps')&&!st.onbox;   /* V3.46: not on the box itself */let k=$('kiaOv');
-   if(loc&&!k){k=document.createElement('div');k.id='kiaOv';k.innerHTML='<div class="ki"><span id="kSpd">–</span><span id="kBat">–</span><span id="kLq">–</span></div><div id="kSys" class="ks"></div><div id="kMap" class="km"></div><div id="kDev" class="kd"></div><div class="kh">tap = show map here</div>';document.body.appendChild(k);
-     const b=document.createElement('div');b.id='kiaBtn';b.className='b';b.textContent='STATE';$('bMenu').after(b);   /* V3.26: side button under ... */
-     const st2=document.createElement('style');st2.textContent='#kiaOv{position:fixed;inset:0;z-index:900;background:#0b0f14;display:none;flex-direction:column;align-items:center;justify-content:center;gap:26px;color:#e5e7eb;cursor:pointer}#kiaOv .kt{font-size:54px;font-weight:800;color:#4ade80}#kiaOv .kcar{perspective:900px;height:190px;display:flex;align-items:center;justify-content:center;margin-bottom:34px}#kiaOv .kcar{position:relative}#kiaOv .kcar img{position:relative;height:180px;animation:kspin 9s ease-in-out infinite;will-change:transform}@keyframes kspin{0%{transform:rotateY(-28deg) translateZ(0)}50%{transform:rotateY(28deg) translateZ(0)}100%{transform:rotateY(-28deg) translateZ(0)}}#kiaOv .ki{display:flex;gap:46px;font-size:44px;font-weight:800;font-variant-numeric:tabular-nums}#kiaOv .kh{font-size:20px;color:var(--mut)}#kiaOv .ks{display:flex;gap:34px;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}#kiaOv .ks b{font-weight:700}#kiaOv .km{font-size:26px;font-weight:700;color:#7fd4ff;display:flex;align-items:center;gap:16px}#kiaOv .km .pb{position:relative;width:260px;height:26px;border-radius:13px;background:#2a3440;overflow:hidden}#kiaOv .km .pb i{position:absolute;left:0;top:0;bottom:0;background:#4ade80}#kiaOv .km .pb span{position:absolute;inset:0;text-align:center;font-size:17px;line-height:26px;color:#fff}#kiaOv .kd i{font-style:normal;color:#7fd4ff}#kiaOv .kd u{text-decoration:none;color:#4ade80}#kiaOv .kd{display:grid;grid-template-columns:auto auto auto auto;gap:4px 28px;font-size:22px;font-variant-numeric:tabular-nums}#kiaOv .kd b{color:#9ca3af;font-weight:700}.kd b.kc{font-size:22px;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid #2a3542;padding-bottom:2px}#kiaOv .kd .no{color:#ef4444}#kiaBtn{display:none;font-size:20px;font-weight:800}';document.head.appendChild(st2);
-     k.onclick=()=>{window.kiaMan=1};b.onclick=()=>{window.kiaMan=0}}
-   if(k){const on=!!st.box&&!window.kiaMan;k.style.display=on?'flex':'none';$('kiaBtn').style.display=(st.box&&window.kiaMan)?'flex':'none';
-     $('map').style.visibility=on?'hidden':'';
-     if(on&&(!window.kDevT||Date.now()-window.kDevT>10000)){window.kDevT=Date.now();j('/api/devices').then(r=>{const d=r.d||{},ws=(d.tracker&&d.tracker.ssid)||'',g=(d.tracker&&d.tracker.ghz)||'',L=[['Tracker',d.tracker&&d.tracker.ips&&d.tracker.ips.map(x=>x[1]).join(' '),ws+' · '+g,d.tracker&&d.tracker.ver],['KIA Entertainment',d.box&&d.box.ip,d.box&&(()=>{const w=(d.box.wifi||'').replace(/^Box: /,''),bg=(w.match(/[\d.\/]+( GHz)?$/)||[''])[0]||g;return d.box.hs||/^Hotspot/.test(w)?'Hotspot '+ws+' · '+bg:(w.replace(/ [\d.\/]+( GHz)?$/,'')||ws)+' · '+bg})(),d.box&&d.box.ver?'App '+d.box.ver:''],['Core',d.core&&d.core.ok&&d.core.ip,d.core&&d.core.ssid&&d.core.ssid+' · 2.4 GHz',d.core&&d.core.ver],['Navi',d.navi&&d.navi.ok&&d.navi.ip,d.navi&&d.navi.ssid&&d.navi.ssid+' · 2.4 GHz',d.navi&&d.navi.ver],['CosmoStreamer',d.cosmo&&d.cosmo.ok&&d.cosmo.ip,d.cosmo&&d.cosmo.ok?ws+' · '+g:'',d.cosmo&&d.cosmo.ver]];
-       $('kDev').innerHTML='<b class="kc">Device</b><b class="kc">IP</b><b class="kc">Network</b><b class="kc">Version</b>'+L.map(x=>'<b>'+x[0]+'</b><span'+(x[1]?'':' class="no"')+'>'+(x[1]||'not found')+'</span><i>'+(x[1]&&x[2]?x[2].replace(/ · $/,''):'')+'</i><u>'+(x[1]&&x[3]?'V'+String(x[3]).replace(/^App /,'').replace(/^[Vv]/,''):'')+'</u>').join('')}).catch(()=>{})}   // V2.0.53: known devices
-     if(on){const y=st.sys||{},c=(v,a,b)=>v==null?'#9ca3af':v>=b?'#ff453a':v>=a?'#ff9f0a':'#4ade80',t=y.thr;   // V3.04: Pi load and power supply
-       const pw=t==null?'':(t&0x1||y.uv)?'<b style="color:#ff453a">POWER LOW now</b>':(t&0x4)?'<b style="color:#ff453a">THROTTLED now</b>':(t&0x50000)?'<b style="color:#ff9f0a">POWER was low</b>':'<b style="color:#4ade80">POWER OK</b>';
-       const ks=`<b style="color:${c(y.cpu,70,85)}">CPU ${y.cpu??'–'}%</b><b style="color:${c(y.ram,70,85)}">RAM ${y.ram??'–'}%</b><b style="color:${c(y.temp,70,80)}">TEMP ${y.temp??'–'}°</b>`+pw;
-       if($('kSys').dataset.h!==ks){$('kSys').dataset.h=ks;$('kSys').innerHTML=ks}}
-     if(on){const bx=st.box,t=((bx&&bx.txt)||'').replace(/\s*\u00b7\s*tap:.*$/,''),m=t.match(/([\d.]+)\s*\/\s*([\d.]+)\s*GB/),p=m&&+m[2]?Math.min(100,Math.floor(m[1]/m[2]*100)):null;   // V2.0.65: map download of the box
-       const kh=t?'<img src="car.png" style="height:26px;vertical-align:-5px;margin-right:6px">'+t.replace(/^Maps\s*/,'Maps ')+(p!=null?`<span class="pb"><i style="width:${p}%"></i><span>${p} %</span></span>`:''):'';if($('kMap').dataset.h!==kh){$('kMap').dataset.h=kh;$('kMap').innerHTML=kh}}
-     if(on){$('kSpd').textContent=($('vSpd').textContent||'–')+' km/h';$('kBat').textContent=$('vCell').textContent||'–';$('kLq').textContent='LQ '+($('vLq').textContent||'–')}}}
-  {const e=$('boxst'),bx=st.box;   // V2.0.41: Carlin box map download (not on the box itself, it has its own pill)
-   if(bx&&!document.getElementById('ctMaps')){e.style.display='inline-flex';e.classList.toggle('st',!!bx.stop||!bx.dl);
-    e.textContent='\u{1F697} Box: '+(bx.txt||'').replace(/^Maps\s*/,'Maps ').replace(/\s*\u00b7\s*tap:.*$/,'');e.dataset.ip=bx.ip||''}
-   else e.style.display='none'}   // V2.0.28: Claude connected remotely
   {const y=st.sys,e=$('sys');   // V2.0.2: load of the Pi (1 GB RAM - watch it)
    if(!y||DEMO){e.innerHTML=''}else{const col=v=>v==null?'var(--mut)':v>=85?'#ff453a':v>=70?'#ff9f0a':'#30d158';
      const bar=(l,v)=>`<b style="color:${col(v)}">${l} ${v??'–'}%</b>`;   // V3.18: value only, no bars
@@ -1337,7 +1308,7 @@ function set3d(on,save){const m=cv.style,sp3=on&&(document.documentElement.class
 {let rt=0;const re3=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(is3d())set3d(true)},300)};addEventListener('resize',re3);new MutationObserver(re3).observe(document.head,{childList:true,subtree:true,characterData:true});let wasSp=null;new MutationObserver(()=>{const s=document.documentElement.classList.contains('ctsplit');if(s!==wasSp){wasSp=s;clearTimeout(rt);rt=setTimeout(()=>set3d(is3d()),200)}}).observe(document.documentElement,{attributes:true,attributeFilter:['class']})}   // V2.76: split on/off -> flat/3D again   // V2.0.62: box app adds its CSS later -> measure again
 function setNight(on,save){document.body.classList.toggle('night',on);if(save){if(C.cfg)C.cfg.night=on?'1':'0';j2('/api/set',{night:on?1:0})}updMenu()}
 $('mNight').onclick=()=>setNight(!isNight(),true);{const sc=$('scale');if(sc&&sc.parentNode.id==='side')$('ui').appendChild(sc)}   // V2.93: scale out of the side column (was hidden bottom left)
-$('m3d').onclick=()=>set3d(!is3d(),true);$('mTheme').onclick=()=>setTheme(curTheme()==='hud'?'glass':'hud',true);$('mMaps').onclick=()=>{const c=document.getElementById('ctMaps')||$('boxst');if(c)c.click()};setInterval(()=>{const c=document.getElementById('ctMaps'),bs=$('boxst'),b=$('mMaps'),src=c||(bs&&bs.textContent.trim()?bs:null);b.style.display=src?'':'none';if(src){const t=(src.textContent||'').trim()||'Maps';if(b.textContent!==t)b.textContent=t}},1000);$('bFpv').onclick=fpvNext;$('fpvBox').onclick=()=>{if(fpvMode==='full'&&Date.now()-(window.pipTap||0)>500)fpvNext()};setTimeout(fpvPoll,3000);setInterval(fpvPoll,15000);
+$('m3d').onclick=()=>set3d(!is3d(),true);$('mTheme').onclick=()=>setTheme(curTheme()==='hud'?'glass':'hud',true);$('bFpv').onclick=fpvNext;$('fpvBox').onclick=()=>{if(fpvMode==='full'&&Date.now()-(window.pipTap||0)>500)fpvNext()};setTimeout(fpvPoll,3000);setInterval(fpvPoll,15000);
 $('mCore').onclick=()=>{const v=coreShow()?'0':'1';if(C.cfg)C.cfg.core_show=v;j2('/api/set',{core_show:+v});updMenu();hud()};
 function azShow(){azIcon();const v=+C.auto_zoom_out||0;$('azV').innerHTML=v<=0?'off':`${v.toFixed(1)}<br><span style="color:var(--mut);font-size:13px">${(2**v).toFixed(1)}× wider at ${C.auto_zoom_kmh} km/h</span>`}
 function azStep(d){C.auto_zoom_out=Math.max(0,Math.min(3,Math.round(((+C.auto_zoom_out||0)+d)*10)/10));if(C.cfg)C.cfg.auto_zoom_out=String(C.auto_zoom_out);azShow();j2('/api/set',{auto_zoom_out:C.auto_zoom_out});dirty=true}
@@ -1511,27 +1482,11 @@ function demoStep(){
   const l=track[track.length-1];if(!l||Math.hypot((lat-l[0])*111320,(lon-l[1])*75000)>2)track.push([lat,lon,spd]);
 }
 init();
-
-
-// V2.0.39: Carlin box app - the Mojave next to "Maps" only turns while tiles are really downloading
-(function(){let last='',chg=0;setInterval(()=>{const t=document.getElementById('ctMapsT'),img=document.querySelector('#ctMaps img');if(!t||!img)return;
- const x=t.textContent||'',now=Date.now();if(x!==last){last=x;chg=now}
- {const mc=document.getElementById('ctMaps'),sp=document.querySelector('#top .sp');if(mc&&sp){const vis=mc.offsetWidth>0&&getComputedStyle(mc).display!=='none',need=vis?Math.max(0,mc.offsetLeft+mc.offsetWidth+12-sp.offsetLeft):0;sp.style.setProperty('flex',vis?'1 0 '+need+'px':'1 1 0','important')}}   // V2.0.59: spacer covers the Maps chip -> nothing slides under it
- if(!document.getElementById('ctfix')){const st=document.createElement('style');st.id='ctfix';   // V2.0.42: box app - chips never narrower than their text (frame fits)
-  st.textContent='#top #esp,#top #sys{flex:0 0 auto!important;min-width:max-content!important}#top #wifi{flex:0 1 auto!important;min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}#top #wifi,#top #esp{padding:0 12px!important}#top #cl:not(.on){display:none!important}#top #dlst{position:fixed!important;right:110px;top:70px;margin:0!important;padding:3px 12px;border-radius:10px;background:rgba(16,22,29,.85);z-index:7}#top #dlst:empty{display:none!important}#top #ctMaps{display:none!important}#sideCar{display:block!important}html.ctsplit #sideCar{display:none!important}#side .t .s,#side .t .s *{font-size:19px!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}#top #att:not(.flip){display:none!important}#top #att{position:fixed!important;top:72px!important;left:50%!important;transform:translateX(-50%)!important;width:auto!important;min-width:max-content!important;padding:0 18px!important;z-index:8!important;background:rgba(127,29,29,.9)!important;border-color:#ef4444!important}#top #att *{color:#fff!important}html:not(.ctsplit) #top #ctNet{display:flex!important}html.ctsplit body,html.ctsplit{background:#000!important}html.ctsplit body #map{top:2.5%!important;height:95%!important;transform:none!important}html.ctsplit body #side{top:2.5%!important;bottom:2.5%!important}#top #wifi{display:none!important}#top #ctNet{flex:0 0 auto!important;min-width:max-content!important;max-width:none!important}';   // V2.73: box - GPS/sats chip only for UPSIDE DOWN (sats are in the GPS card), Pi Wi-Fi chip off (box Wi-Fi chip is enough)
-   // V2.0.65: map download status below the top bar (no overlap with version)
-document.head.appendChild(st)}
- const m=document.getElementById('ctMaps');if(m&&m.dataset.dl!==undefined){img.style.animationPlayState=m.dataset.dl==='1'?'running':'paused';return}   // V2.0.40: app >= 1.22 says itself
- const on=/^Maps\s/.test(x)&&!/complete|paused|waiting|full|Touch/.test(x)&&now-chg<10000;   // text changes while MB count grows
- img.style.animationPlayState=on?'running':'paused'},1000)})();
 </script>
 <script>/* V3.19: frames + data rate of the FPV stream (from the video page) for the ... menu */
 function ctFpvSet(f,m,b,d){window.ctFpvT=Date.now();const e=document.getElementById('fpvInfo');if(e)e.textContent=(f==null?'–':f)+' fps'+(m!=null?' · '+(+m).toFixed(1)+' Mbit/s':'')+(b!=null?' · buffer '+b+' ms':'')+(d?' · '+d:'')}   // V3.39: player buffer + decoder
 addEventListener('message',e=>{const d=e.data;if(d&&d.ctinfo)ctFpvSet(d.ctinfo.fps,d.ctinfo.mbit,d.ctinfo.buf,d.ctinfo.dec)});
 setInterval(()=>{if(Date.now()-(window.ctFpvT||0)>5000){const e=document.getElementById('fpvInfo');if(e)e.textContent='no video'}},2000);</script>
-<script>/* V3.20: box split view - Core line only as wide as the visible map (not under the video) */
-setInterval(()=>{const c=document.getElementById('core');if(!c)return;const sp=document.documentElement.classList.contains('ctsplit')&&window.ctVW>0;
-  const mw=sp?Math.max(200,(innerWidth-window.ctVW)/S-c.offsetLeft-12)+'px':'';if(c.style.maxWidth!==mw){c.style.maxWidth=mw;c.style.whiteSpace=sp?'normal':''}},1000);</script>
 <script>/* V3.33: hardware info in the ... menu */
 function hwShow(){const e=document.getElementById('hwInfo');if(!e||typeof st==='undefined'||!st)return;const hw=st.hw||{},me=st.me;
   const ok=s=>'<b style="color:var(--grn)">'+s+'</b>',no=s=>'<b style="color:#f87171">'+s+'</b>',mid=s=>'<b style="color:#f5b13d">'+s+'</b>';

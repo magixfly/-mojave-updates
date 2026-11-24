@@ -1,13 +1,13 @@
 {
- "ver": "3.47",
+ "ver": "3.48",
  "neu": [
-  "Box: own ESP via Bluetooth (bridge port 8099)"
+  "Carlin box parts removed: STATE overview page, box chip, /api/box, /api/boxcmd, box mode and Bluetooth bridge"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 145157,
-   "md5": "b8cb14472661d7f2a8fc0e51593a5907"
+   "s": 140308,
+   "md5": "521d09fd89c026b367fe873686e48d0a"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,13 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 176190,
-   "md5": "8b8f953707bb4a79562eb083e3ea498e"
-  },
-  {
-   "p": "web/kia.png",
-   "s": 247521,
-   "md5": "0f09830d6a093d80dbf36bd8c60c602f"
+   "s": 164693,
+   "md5": "858969fdb1967758d5a569861998514d"
   }
  ]
 }

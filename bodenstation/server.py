@@ -10,9 +10,8 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.47"
+VERSION = "3.48"
 BASE = os.path.dirname(os.path.abspath(__file__))
-ONBOX = os.environ.get("CT_BOX") == "1"   # V3.46: running on the Carlin box itself (Python on Android, started by boxmain.py)
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
 
@@ -280,7 +279,6 @@ def devices_scan():
             ip = _dev_ip(h)
             if ip and ip not in cand:
                 cand.append(ip)
-        skip = {core.get("ip"), BOX.get("ip")}
         try:
             pass   # V2.97: no address sweep for the Navi any more (search shorter)
         except Exception:
@@ -294,25 +292,13 @@ def devices_scan():
             navi = {"ok": True, "host": "mojave-navi.local", "ip": st.get("ip") or h, "ver": st.get("ver"), "ssid": st.get("ssid") or "", "rssi": st.get("rssi")}
             break
         out["navi"] = navi
-        # V2.0.53: Kia-Box (meldet sich selbst per /api/box) und CosmoStreamer
-        box_ok = time.time() - BOX.get("t", 0) < 30
-        bip = BOX.get("ip") if box_ok else None
-        try:
-            gw = subprocess.run(["ip", "route"], capture_output=True, text=True, timeout=3).stdout.split("default via ")[1].split()[0]
-        except Exception:
-            gw = None
-        on_box_ap = ssid.strip().lower() == "box"     # V2.0.67: Pi hängt im Hotspot der Box -> Gateway IST die Box
-        if not bip and on_box_ap and gw and _dev_ip(gw):
-            bip = gw
-        hs = bool(on_box_ap and bip and bip == gw)
-        # V2.0.67: ohne Meldung der App und nicht im Box-Hotspot = offline (früher fälschlich die FRITZ!Box/Router-Adresse)
-        out["box"] = {"ok": box_ok or hs, "host": "Carlin box", "ip": bip, "hs": hs, "wifi": BOX.get("wifi") or "", "ver": BOX.get("ver") or ""}   # hs: the box is the hotspot
+        # V3.48: Carlin box removed - only the CosmoStreamer
         cos = {"ok": False, "host": "cosmostreamer.local", "ip": None}
         cand = ([COSMO_LAST[0]] if COSMO_LAST[0] else []) + ["cosmostreamer.local"]
         try:                                      # V2.0.58: alle bekannten Nachbarn im Netz (V2.97: nur wenn noch keine Adresse bekannt)
             for l in ([] if COSMO_LAST[0] else subprocess.run(["ip", "neigh"], capture_output=True, text=True, timeout=3).stdout.splitlines()):
                 f = l.split()
-                if f and "FAILED" not in l and re.match(r"^\d+\.\d+\.\d+\.\d+$", f[0]) and f[0] not in cand and f[0] != bip:
+                if f and "FAILED" not in l and re.match(r"^\d+\.\d+\.\d+\.\d+$", f[0]) and f[0] not in cand:
                     cand.append(f[0])
             pass   # V2.97: no .2-.20 sweep
         except Exception:
@@ -917,8 +903,6 @@ def wifi_add(ssid, psk):   # V2.0.50: wifi_fix_auto runs again after adding (pow
     WIFI_SW.update(busy=False, msg=("connected - saved" if ok else "failed: " + ((r.stderr or r.stdout).strip()[-120:] if r else "timeout")))
 
 def wifi_fix_auto():
-    if ONBOX:                                      # V3.46: Android manages its own Wi-Fi
-        return
     """V2.0.13: every saved Wi-Fi connects by itself and keeps trying (NetworkManager gives up after 4 tries by default)"""
     for w in wifi_list():
         if w.get("ssid") == "CoreTracker" or w["con"] == "CoreTracker":   # V2.72: own ESP access point (car mode, no internet) - never join by itself
@@ -940,17 +924,7 @@ def wifi_thread():
     # checks every 10 s whether the Pi is in the home WLAN (for VGPS)
     while True:
         ssid = ""
-        box_sig = None
-        if ONBOX:                                  # V3.46: Android: SSID and signal from "cmd wifi status"
-            try:
-                out = subprocess.run(["cmd", "wifi", "status"], capture_output=True, text=True, timeout=8).stdout
-                m = re.search(r'connected to "([^"]*)"', out)
-                ssid = m.group(1) if m else ""
-                m = re.search(r"RSSI: (-?\d+)", out)
-                box_sig = int(m.group(1)) if m else None
-            except Exception:
-                pass
-        for cmd in (() if ONBOX else (["iwgetid", "-r"], ["nmcli", "-t", "-f", "active,ssid", "dev", "wifi"])):
+        for cmd in (["iwgetid", "-r"], ["nmcli", "-t", "-f", "active,ssid", "dev", "wifi"]):
             try:
                 out = subprocess.run(cmd, capture_output=True, text=True, timeout=5).stdout
             except Exception:
@@ -991,8 +965,6 @@ def wifi_thread():
                         ms = -1          # no answer
             except Exception:
                 pass
-        if ONBOX:
-            sig = box_sig
         HOME_WIFI["sig"] = sig if ssid else None
         HOME_WIFI["ms"] = ms
         # V2.0.45: after a WLAN change refresh the device list (IP/WLAN of this Pi were stale)
@@ -1517,9 +1489,6 @@ def batt_view(d, sc, cl, mah, fc_pct):
         d["mah_used"] = None
         d["left"] = None
 
-BOX = {"t": 0}          # V2.0.41: status the Carlin box app sends (map download)
-BOX_CMD = {"toggle": 0} # V2.0.41: tap on the box chip (PC/phone) -> box app stops/starts at its next report
-
 def claude_remote():
     """V2.0.28: Claude works on the Pi remotely (Pi Connect shell) -> it touches /tmp/claude_remote every 30 s"""
     try:
@@ -1535,8 +1504,6 @@ def snapshot():
         d = dict(S)
         d["age"] = round(time.time() - LAST_RX, 1) if LAST_RX else 99.0
         d["claude"] = claude_remote()
-        if time.time() - BOX["t"] < 20:                      # V2.0.41: box map download, shown on every screen
-            d["box"] = {k: v for k, v in BOX.items() if k != "t"}
         if TEST["on"] and PLAY["pause"]:
             d["age"] = 0.0                     # paused demo is not a lost link
         d["test"] = TEST["on"]
@@ -1565,7 +1532,6 @@ def snapshot():
         d["imp"] = {k: IMP[k] for k in ("running", "done", "total", "copied", "skipped", "msg")} if (IMP["running"] or time.time() - IMP["t"] < 15) else None
         e = d.get("esp")
         d["esp"] = None if not e else {"rssi": e["rssi"], "pps": e["pps"], "bad": e["bad"], "age": round(time.time() - e["t"], 1)}
-        d["onbox"] = ONBOX                       # V3.46: page runs on the box itself (no Pi overview page there)
         d["sys"] = sys_load()                 # V2.0.2: CPU / RAM / temperature for the top bar
         d["dl"] = len(DL_WANT)
         if PRE["running"]:                       # V2.0.16: map preload progress for the status bar
@@ -1918,50 +1884,6 @@ def serial_thread():
         with LOCK:
             S["dev"] = ""
         time.sleep(1)
-
-def ble_thread():
-    """V3.47 (box): the box app connects to the own ESP via Bluetooth (BLE) and passes its byte stream
-    through 127.0.0.1:8099 - same CRSF stream as over USB on the Pi. Text sent back goes to the ESP."""
-    srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    srv.bind(("127.0.0.1", 8099))
-    srv.listen(1)
-    while True:
-        c, _ = srv.accept()
-        c.settimeout(1.0)
-        name = "ble"
-        print("BLE bridge connected")
-        p = Crsf("USB"); tb = bytearray(); ask = 0; last = time.time()
-        try:
-            while True:
-                if time.time() - ask > 30:   # ask the ESP for its status (firmware, GPS), like on USB
-                    ask = time.time()
-                    c.sendall(b"status\n")
-                try:
-                    d = c.recv(4096)
-                except socket.timeout:
-                    if time.time() - last > 15:
-                        raise OSError("silent")
-                    continue
-                if not d:
-                    raise OSError("closed")
-                if d.startswith(b"@dev ") and b"\n" in d:   # first line from the app: device name
-                    ln, d = d.split(b"\n", 1)
-                    name = "ble:" + ln[5:].decode("latin1", "ignore").strip()
-                with LOCK:
-                    S["dev"] = name
-                last = time.time()
-                if d:
-                    p.feed(d)
-                    esp_text(tb, d)
-        except Exception as e:
-            print("BLE bridge lost", e)
-        try:
-            c.close()
-        except Exception:
-            pass
-        with LOCK:
-            S["dev"] = ""
 
 # ---------------------------------------------------------------- test ride
 def load_demo():
@@ -2811,16 +2733,6 @@ class H(BaseHTTPRequestHandler):
             CFG[k] = v.strip()
             save_cfg(CFG)
             return self.send(200, {"ok": True, "k": k, "v": CFG[k]})
-        if p == "/api/box":                       # V2.0.41: Carlin box app reports its map download every few seconds
-            BOX.update({k: b[k] for k in ("txt", "dl", "gb", "est", "net", "stop", "ver", "ip", "wifi") if k in b})
-            BOX["t"] = time.time()
-            if "ip" not in b: BOX["ip"] = self.client_address[0]
-            r = {"ok": 1, "toggle": BOX_CMD["toggle"]}
-            BOX_CMD["toggle"] = 0
-            return self.send(200, r)
-        if p == "/api/boxcmd":                    # V2.0.41: {toggle:1} from the box chip
-            if b.get("toggle"): BOX_CMD["toggle"] = 1
-            return self.send(200, {"ok": 1})
         if p == "/api/update":                    # V2.0.26: {check:1} or {install:1}
             if b.get("install") and not UPD["busy"]:
                 threading.Thread(target=upd_install, daemon=True).start()
@@ -2918,10 +2830,7 @@ def bridge_repair():
         time.sleep(300)
 
 def restart_self():
-    """Restart the program. On the box python runs through the musl loader, so exec is not possible:
-    exit and let run.sh start it again (V3.46)."""
-    if ONBOX:
-        os._exit(3)
+    """Restart the program."""
     os.execv(sys.executable, [sys.executable] + sys.argv)
 
 def main():
@@ -2931,18 +2840,18 @@ def main():
     threading.Thread(target=phone_gps_thread, daemon=True).start()
     threading.Thread(target=navi_log_thread, daemon=True).start()
     threading.Thread(target=autopre_thread, daemon=True).start()
-    threading.Thread(target=ble_thread if ONBOX else serial_thread, daemon=True).start()   # V3.47: box = own ESP via Bluetooth
+    threading.Thread(target=serial_thread, daemon=True).start()
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
         threading.Thread(target=wifi_thread, daemon=True).start()
-    if not WIN and not ONBOX:
+    if not WIN:
         threading.Thread(target=bridge_repair, daemon=True).start()   # V2.0.49
     threading.Thread(target=core_thread, daemon=True).start()
     threading.Thread(target=upd_thread, daemon=True).start()
     for _ in range(6):
         threading.Thread(target=dl_worker, daemon=True).start()
     threading.Thread(target=core_live_thread, daemon=True).start()
-    if not WIN and not ONBOX:
+    if not WIN:
         set_bright(ci("bright"))
         threading.Thread(target=usb_thread, daemon=True).start()
     port = ci("port")
