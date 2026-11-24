@@ -1,9 +1,7 @@
 {
- "ver": "3.51",
+ "ver": "3.52",
  "neu": [
-  "Map areas: one list for tracker, box and navi from the PC map centre (KartenZentrale)",
-  "Tiles outside the areas are deleted (AI tiles and maps around rides stay)",
-  "Tiles come from the PC first, then basemap.at"
+  "Button AREAS: shows the map areas (same list as PC, box and navi) on the map"
  ],
  "dateien": [
   {
@@ -13,8 +11,8 @@
   },
   {
    "p": "server.py",
-   "s": 153754,
-   "md5": "9b770487343386c03f96e914c370f441"
+   "s": 153852,
+   "md5": "a74540538b117f5e9c5db6117c282ad9"
   },
   {
    "p": "web/fpvstat.js",
@@ -23,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 162754,
-   "md5": "244f06f6890509a299a22f55bb9dac9f"
+   "s": 165192,
+   "md5": "c8788b2b3dff933bd5de42216e46f2eb"
   }
  ]
 }

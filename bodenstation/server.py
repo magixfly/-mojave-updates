@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.51"
+VERSION = "3.52"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -33,6 +33,7 @@ DEFAULTS = [
     ("starts", "1", "V3.30: 1 = show where the car rides started (one point per 500 m, menu)"),
     ("rides_hidden", "", "V3.32: hidden rides (file names, ;) - not in the list (unless shown) and no start point"),
     ("rides_filter", "all", "V3.32: rides list filter all / mojave / other"),
+    ("areas_show", "0", "V3.52: 1 = show the map areas on the map (button AREAS)"),
     ("areas", "1", "V3.51: 1 = keep the map of the areas in gebiete.json (same list as box and navi) complete, in the background"),
     ("map_zmax", "19", "V3.51: highest zoom this device loads for the areas (lower = less space)"),
     ("areas_clean", "1", "V3.51: 1 = delete aerial photo tiles outside the areas (AI tiles and the maps around your rides stay)"),
@@ -2952,7 +2953,7 @@ class H(BaseHTTPRequestHandler):
                 CFG["pip_pos"] = b["pip_pos"]; ok["pip_pos"] = b["pip_pos"]
             if b.get("theme") in ("glass", "hud"):   # V2.98
                 CFG["theme"] = b["theme"]; ok["theme"] = b["theme"]
-            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "phone_gps", "navi", "labels", "starts"):
+            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "areas_show", "phone_gps", "navi", "labels", "starts"):
                 if k in b:
                     v = str(int(float(b[k])))
                     CFG[k] = v

@@ -293,6 +293,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
   <div class="b" id="bOri" title="North up / heading up">N</div>
   <div class="b" id="bAz" title="Auto zoom with speed" style="font-size:20px;font-weight:800;line-height:1.05;text-align:center;flex-direction:column">AUTO<br>ZOOM<span id="azF" style="font-size:16px;margin-top:3px"></span></div>
   <div class="b" id="bFind" title="Find the car" style="display:none!important">FIND<br>CAR</div>   <!-- V3.23: button removed (kept hidden, code uses it) -->
+  <div class="b" id="bArea" title="Show the map areas (same list as PC, box and navi)" style="font-size:20px;font-weight:800;line-height:1.05;text-align:center">AREAS</div>   <!-- V3.52 -->
   <div class="b" id="bMenu"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg></div>
 </div>
 
@@ -558,6 +559,19 @@ function draw(){
       ctx.fillStyle='#4ade80';ctx.beginPath();ctx.moveTo(-3,6);ctx.lineTo(-3,-7);ctx.lineTo(6,-3.5);ctx.lineTo(-3,0);ctx.fill();
       if(s.n>1){ctx.font='bold 12px system-ui';ctx.textAlign='left';ctx.textBaseline='middle';ctx.lineWidth=3;ctx.strokeStyle='#000';ctx.strokeText(s.n+'×',14,0);ctx.fillStyle='#fff';ctx.fillText(s.n+'×',14,0)}
       ctx.restore()}}
+  if(AREAS.on&&AREAS.list){const k=TS*2**tz;   // V3.52: map areas of the shared list (like the PC page)
+    ctx.save();for(const a of AREAS.list.areas||[]){const col=a.auto?'#f59e0b':a.type==='route'?'#a855f7':'#4db8ff';let lx=null,ly=null;
+      if(a.type==='circle'){const q=proj([a.lat,a.lon]),x=q[0]*k-cx,y=q[1]*k-cy,r=a.r/(40075016*Math.cos(a.lat*Math.PI/180)/k);
+        if(Math.abs(x)-r>R||Math.abs(y)-r>R)continue;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fillStyle=col+'26';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=2.5/sc;ctx.stroke();lx=x;ly=y-r}
+      else if(a.type==='rect'){const p=proj([a.n,a.w]),q=proj([a.s,a.e]),x=p[0]*k-cx,y=p[1]*k-cy,w=(q[0]-p[0])*k,h=(q[1]-p[1])*k;
+        ctx.fillStyle=col+'26';ctx.fillRect(x,y,w,h);ctx.strokeStyle=col;ctx.lineWidth=2.5/sc;ctx.strokeRect(x,y,w,h);lx=x+w/2;ly=y}
+      else if(a.type==='route'&&a.pts&&a.pts.length>1){const mpp=40075016*Math.cos(a.pts[0][0]*Math.PI/180)/k;ctx.beginPath();
+        a.pts.forEach((pt,i)=>{const q=proj(pt),x=q[0]*k-cx,y=q[1]*k-cy;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
+        ctx.strokeStyle=col+'59';ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=Math.max(6/sc,2*(a.w||2000)/mpp);ctx.stroke();
+        const q=proj(a.pts[Math.floor(a.pts.length/2)]);lx=q[0]*k-cx;ly=q[1]*k-cy}
+      if(lx!=null&&Math.abs(lx)<R&&Math.abs(ly)<R){ctx.save();ctx.translate(lx,ly);ctx.rotate(-V.rot);ctx.scale(1/sc,1/sc);ctx.font='bold 13px system-ui';ctx.textAlign='center';ctx.textBaseline='bottom';
+        const t=a.name+' · z'+a.zmax;ctx.lineWidth=3;ctx.strokeStyle='#000';ctx.strokeText(t,0,-4);ctx.fillStyle=col;ctx.fillText(t,0,-4);ctx.restore()}}
+    ctx.restore()}
   pump();
   drawRide(tz,cx,cy,sc);
   // track
@@ -1304,6 +1318,12 @@ $('azM').onclick=()=>azStep(-0.1);$('azP').onclick=()=>azStep(0.1);
 function mapNames(){return !(C.cfg&&C.cfg.map_names==='0')}
 function drvName(n){const sc=slotCfg(n);return ((sc&&sc.pilot)||((C.cfg&&C.cfg.names)||'').split(',')[n-1]||'').trim()||'–'}   // V2.0.5: pilot of the sender first
 $('mNavi').onclick=()=>{const v=(C.cfg&&C.cfg.navi==='0')?'1':'0';if(C.cfg)C.cfg.navi=v;j2('/api/set',{navi:+v});updMenu();dirty=true};   // V3.29
+// V3.52: AREAS button - show the shared map areas (gebiete.json) on the map
+const AREAS={on:false,list:null,t:0};
+function areasLoad(){if(DEMO)return;fetch('/gebiete.json').then(r=>r.json()).then(d=>{AREAS.list=d;dirty=true}).catch(()=>{})}
+function areasBtn(){AREAS.on=!!(C.cfg&&C.cfg.areas_show==='1');$('bArea').classList.toggle('on',AREAS.on);if(AREAS.on&&!AREAS.list)areasLoad();dirty=true}
+$('bArea').onclick=()=>{const v=AREAS.on?'0':'1';if(C.cfg)C.cfg.areas_show=v;j2('/api/set',{areas_show:+v});areasBtn()};
+setInterval(()=>{if(AREAS.on)areasLoad()},60000);setTimeout(areasBtn,2500);
 for(const [id,key] of [['mLabels','labels'],['mStarts','starts']])$(id).onclick=()=>{const v=(C.cfg&&C.cfg[key]==='0')?'1':'0';if(C.cfg)C.cfg[key]=v;j2('/api/set',{[key]:+v});updMenu();dirty=true};   // V3.30
 $('mPhone').onclick=()=>{const v=(C.cfg&&C.cfg.phone_gps==='1')?'0':'1';if(C.cfg)C.cfg.phone_gps=v;j2('/api/set',{phone_gps:+v});updMenu()};   // V3.28
 $('mNames').onclick=()=>{const v=mapNames()?'0':'1';if(C.cfg)C.cfg.map_names=v;j2('/api/set',{map_names:+v});updMenu();dirty=true};
