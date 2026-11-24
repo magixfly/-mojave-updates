@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.52"
+VERSION = "3.53"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -1540,6 +1540,7 @@ def snapshot():
         d["esp"] = None if not e else {"rssi": e["rssi"], "pps": e["pps"], "bad": e["bad"], "age": round(time.time() - e["t"], 1)}
         d["sys"] = sys_load()                 # V2.0.2: CPU / RAM / temperature for the top bar
         d["dl"] = len(DL_WANT)
+        d["dlsrc"] = TSRC["last"]
         if PRE["running"]:                       # V2.0.16: map preload progress for the status bar
             d["pre"] = {"done": PRE["done"], "total": PRE["total"]}                 # tiles waiting for / being downloaded from the internet
         d["wifi"] = {"ssid": HOME_WIFI.get("ssid", ""), "sig": HOME_WIFI.get("sig"), "ms": HOME_WIFI.get("ms")}
@@ -2192,6 +2193,7 @@ def fetch_online(z, x, y):
         return None
     missing = 0
     if _fetch_zentrale(z, x, y):                # V3.51: PC centre first
+        TSRC["pc"] += 1; TSRC["last"] = "PC"
         with open(tile_file("ortho", z, x, y), "rb") as f:
             return f.read()
     with DL_SEM:
@@ -2212,6 +2214,7 @@ def fetch_online(z, x, y):
                     f.write(data)
                 os.replace(p + ".tmp", p)
                 ONLINE["fails"] = 0
+                TSRC["net"] += 1; TSRC["last"] = "internet"
                 return data
             except urllib.error.HTTPError:
                 missing += 1      # tile does not exist on this server -> try next
@@ -2230,6 +2233,7 @@ def fetch_online(z, x, y):
 
 DLQ = queue.Queue()
 DL_WANT = set()
+TSRC = {"pc": 0, "net": 0, "last": ""}   # V3.53: where the map tiles came from
 
 def dl_worker():
     while True:

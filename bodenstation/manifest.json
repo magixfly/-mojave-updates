@@ -1,7 +1,7 @@
 {
- "ver": "3.52",
+ "ver": "3.53",
  "neu": [
-  "Button AREAS: shows the map areas (same list as PC, box and navi) on the map"
+  "Map status shows where tiles come from (PC or internet)"
  ],
  "dateien": [
   {
@@ -11,8 +11,8 @@
   },
   {
    "p": "server.py",
-   "s": 153852,
-   "md5": "a74540538b117f5e9c5db6117c282ad9"
+   "s": 154071,
+   "md5": "3e3a17b0da482335cd45a0832ad7c346"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 165192,
-   "md5": "c8788b2b3dff933bd5de42216e46f2eb"
+   "s": 165207,
+   "md5": "3c583a5ee9a10090447955bb61913a4b"
   }
  ]
 }
