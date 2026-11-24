@@ -1,7 +1,7 @@
-Stand: 2026-11-24 23:51:34
+Stand: 2026-11-25 00:01:46
 App: 2.13
 IP: 192.168.178.235
-WLAN: 
+WLAN: WLAN Media
 Wifi is connected to "Media"
 
 ### Exit-Code: 0
