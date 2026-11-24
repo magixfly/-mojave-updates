@@ -1,0 +1,10 @@
+### 020_st  –  2026-11-24 09:25:42
+### Box direkt (App 1.97, 192.168.178.235)
+
+cat: /data/local/tmp/ct/run.log: No such file or directory
+tail: /data/local/tmp/ct/bodenstation/server.log: No such file or directory
+
+
+### Exit-Code: 0
+
+### Dauer 0 s
