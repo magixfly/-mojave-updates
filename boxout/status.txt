@@ -1,8 +1,8 @@
-Stand: 2026-11-24 19:25:38
+Stand: 2026-11-24 19:35:53
 App: 2.07
 IP: 192.168.178.235
 WLAN: WLAN Media
 Wifi is connected to "Media"
 
 ### Exit-Code: 0
-Fernwartung: zuletzt 047_esp.sh
+Fernwartung: Fehler: https://raw.githubusercontent.com/magixfly/-mojave-updates/carlin/apk/ver.txt?t=1795545045352
