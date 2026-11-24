@@ -1,8 +1,8 @@
-Stand: 2026-11-24 19:05:14
+Stand: 2026-11-24 19:15:25
 App: 2.07
 IP: 192.168.178.235
-WLAN: 
+WLAN: WLAN Media
 Wifi is connected to "Media"
 
 ### Exit-Code: 0
-Fernwartung: 
+Fernwartung: zuletzt 047_esp.sh
