@@ -179,13 +179,13 @@ public class MainActivity extends Activity {
             for (String h : FIXED) if (!c.contains(h)) c.add(h);
             for (int i = 1; i <= 15; i++) { String h = "172.20.10." + i; if (!c.contains(h)) c.add(h); }
             String found = null;
+            boolean local = false;
+            if (localServer()) { found = "127.0.0.1"; local = true; }   // V1.97: tracker program on the box itself comes first (own ESP via Bluetooth), Pi only if not installed
             for (int i = 0; i < c.size() && found == null; i++) {
                 showOverlay("Searching Core Tracker … " + c.get(i), i * 100 / c.size());
                 if (ok(c.get(i))) found = c.get(i);
             }
             if (found == null) found = scanSubnet();     // V1.24: e.g. home Wi-Fi without corepi.local (mDNS)
-            boolean local = false;
-            if (found == null && localServer()) { found = "127.0.0.1"; local = true; }   // V1.96: no Pi -> tracker program on the box itself
             searching = false;
             if (found != null && found.endsWith(".local")) {   // V1.64: .local löst die Box nicht immer auf (WebView ja, Java nein) -> feste IP merken
                 try { found = java.net.InetAddress.getByName(found).getHostAddress(); } catch (Throwable t) { String ip = scanSubnet(); if (ip != null) found = ip; }
@@ -194,7 +194,7 @@ public class MainActivity extends Activity {
                 String host = found;
                 if (!local) prefs.edit().putString("host", host).apply();
                 onLocal = local;
-                if (local) startPiWatch();
+                if (local) BleEsp.start(this);   // V1.97: own ESP via Bluetooth, no switching back to the Pi
                 piBase = "http://" + host + ":" + PORT;
                 showOverlay("Found: " + host, 100);
                 loaded = true;
