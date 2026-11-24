@@ -1,0 +1,36 @@
+### 039_scan  –  2026-11-24 17:19:33
+### Box direkt (App 2.02, 192.168.178.235)
+
+Locks acquired: 0 full high perf, 0 full low latency
+Locks released: 0 full high perf, 0 full low latency
+mWifiLockStats:
+low_latency_active_time_ms: 0
+mWifiLockHighPerfAcqDurationSecHistogram:
+mWifiLockLowLatencyAcqDurationSecHistogram:
+mWifiLockHighPerfActiveSessionDurationSecHistogram:
+mWifiLockLowLatencyActiveSessionDurationSecHistogram:
+=== Scan 2
+    BSSID              Frequency      RSSI           Age(sec)     SSID                                 Flags
+  f0:a7:31:a9:a0:a6       5180    -55(0:-55/1:-108)     4,720    Media                             [WPA2-PSK-CCMP][RSN-PSK+SAE-CCMP][ESS][WPS][MFPC]
+  f0:a7:31:a9:a0:a7       2437    -37(0:-37/1:-91)    11,081    Optimus Prime                     [WPA2-PSK-CCMP][RSN-PSK+SAE-CCMP][ESS][WPS][MFPC]
+=== wpa_cli
+bssid / frequency / signal level / flags / ssid
+f0:a7:31:a9:a0:a6	5180	-55	[WPA2-PSK+SAE-CCMP][WPS][ESS]	Media
+f0:a7:31:a9:a0:a7	2437	-37	[WPA2-PSK+SAE-CCMP][WPS][ESS]	Optimus Prime
+ae:27:6e:af:8a:24	2412	-31	[WPA2-PSK-CCMP][ESS]	CoreTracker
+c8:0e:14:91:0a:f4	2462	-80	[WPA2-PSK+SAE-CCMP][WPS][ESS]	shelly
+68:79:c4:d5:a7:fe	2412	-85	[WPA2-PSK-CCMP][ESS]	D258093011A0
+/data/vendor/wifi/wpa:
+sockets
+wpa_supplicant.conf
+
+/data/vendor/wifi/wpa/sockets:
+wlan0
+wpa_ctrl_1423-2
+wpa_ctrl_1423-6
+wpa_ctrl_1464-1
+wpa_ctrl_1464-2
+
+### Exit-Code: 0
+
+### Dauer 19 s
