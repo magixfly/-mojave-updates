@@ -1,0 +1,31 @@
+== 009_check on mojave-fpv, 2026-11-25 00:42:57, FPV V1.4.1 ==
+VERSION = "V1.4.1"
+14:  cam:
+25:  cam2:
+27:      /bin/bash /opt/fpv/usbcam.sh /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1920 1080 30
+--- pipelines
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1920x1080@30 3000k, mode sw
+2026/11/25 00:41:13 INF [path cam2] runOnDemand command stopped: timed out
+2026/11/25 00:41:16 INF [path cam2] runOnDemand command started
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1920x1080@30 3000k, mode sw
+2026/11/25 00:41:36 INF [path cam2] runOnDemand command stopped: timed out
+2026/11/25 00:41:39 INF [path cam2] runOnDemand command started
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1920x1080@30 3000k, mode sw
+2026/11/25 00:41:59 INF [path cam2] runOnDemand command stopped: timed out
+2026/11/25 00:42:02 INF [path cam2] runOnDemand command started
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1920x1080@30 3000k, mode sw
+2026/11/25 00:42:22 INF [path cam2] runOnDemand command stopped: timed out
+2026/11/25 00:42:25 INF [path cam2] runOnDemand command started
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1920x1080@30 3000k, mode sw
+2026/11/25 00:42:45 INF [path cam2] runOnDemand command stopped: timed out
+2026/11/25 00:42:49 INF [path cam2] runOnDemand command started
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1920x1080@30 3000k, mode sw
+--- cpu
+0.0% mediamtx
+0.0% gst-launch-1.0
+/run/fpv-usbcam-cam2: sw
+ 00:42:57 up  1:04,  0 users,  load average: 0.33, 4.86, 5.07
+temp=61.3'C
+Bus 001 Device 003: ID 328f:006d EMEET HD Webcam eMeet C960
+
+== exit code 0, 0.4 s ==
