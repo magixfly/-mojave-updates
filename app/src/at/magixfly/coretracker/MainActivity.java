@@ -216,7 +216,7 @@ public class MainActivity extends Activity {
         try {
             String r = HotspotBoot.shell("[ -f " + CT_DIR + "/run.sh ] && [ -x " + CT_DIR + "/ld-musl ] && echo yes");
             if (!r.contains("yes")) return false;
-            HotspotBoot.shell("pgrep -f ct/boxmain.py >/dev/null || (setsid sh " + CT_DIR + "/run.sh >/dev/null 2>&1 </dev/null &)");
+            HotspotBoot.shell("pgrep -f ct/boxmai[n].py >/dev/null || (setsid sh " + CT_DIR + "/run.sh >/dev/null 2>&1 </dev/null &)");
         } catch (Throwable t) { return false; }
         for (int i = 0; i < 25; i++) {
             showOverlay("Starting tracker on the box …", i * 4);
