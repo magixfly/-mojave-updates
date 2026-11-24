@@ -1,0 +1,9 @@
+### 058_v211  –  2026-11-24 22:32:30
+### Box direkt (App 2.10, 192.168.178.235)
+
+    versionName=2.10
+Failed to write while dumping service package: Broken pipe
+
+### Exit-Code: 0
+
+### Dauer 23 s
