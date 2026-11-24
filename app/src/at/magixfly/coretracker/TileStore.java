@@ -149,7 +149,7 @@ class TileStore {
             HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
             c.setConnectTimeout(timeout);
             c.setReadTimeout(timeout);
-            c.setRequestProperty("User-Agent", "CarlinBox/2.01");
+            c.setRequestProperty("User-Agent", "CarlinBox/2.02");
             int code = c.getResponseCode();
             if (code == 404 || code == 400) { c.disconnect(); return new byte[0]; }
             if (code != 200) { c.disconnect(); return null; }
