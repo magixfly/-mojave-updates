@@ -1,0 +1,17 @@
+### 047_esp  –  2026-11-24 19:15:23
+### Box direkt (App 2.07, 192.168.178.235)
+
+/system/bin/curl
+/system/bin/nc
+/system/bin/toybox
+{"ver": "3.52"
+ "dev": ""
+ "esp": null
+ "hw": {"esp": false
+ "dev": ""
+ "fw": ""
+ "gps_cfg": null
+
+### Exit-Code: 0
+
+### Dauer 0 s
