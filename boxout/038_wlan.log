@@ -1,0 +1,46 @@
+### 038_wlan  –  2026-11-24 17:16:52
+### Box direkt (App 2.02, 192.168.178.235)
+
+Wifi is enabled
+Wifi scanning is always available
+==== ClientModeManager instance: ConcreteClientModeManager{id=31406 iface=wlan0 role=ROLE_CLIENT_PRIMARY} ====
+Wifi is connected to "Media"
+WifiInfo: SSID: "Media", BSSID: f0:a7:31:a9:a0:a6, MAC: b0:5a:44:75:3e:33, IP: /192.168.178.235, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -65, Link speed: 585Mbps, Tx Link speed: 585Mbps, Max Supported Tx Link speed: 866Mbps, Rx Link speed: 390Mbps, Max Supported Rx Link speed: 866Mbps, Frequency: 5180MHz, Net ID: 0, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none>"Media"wpa3-saeMLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>
+successfulTxPackets: 2069532
+successfulTxPacketsPerSecond: 644.4518896881789
+retriedTxPackets: 347902
+retriedTxPacketsPerSecond: 428.9324087883966
+lostTxPackets: 0
+lostTxPacketsPerSecond: 0.0
+successfulRxPackets: 3069527
+successfulRxPacketsPerSecond: 887.7824795658017
+NetworkCapabilities: [ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&VALIDATED&NOT_ROAMING&FOREGROUND&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=2855Kbps LinkDnBandwidth>=23350Kbps TransportInfo: <SSID: <unknown ssid>, BSSID: 02:00:00:00:00:00, MAC: 02:00:00:00:00:00, IP: /192.168.178.235, Security type: 4, Supplicant state: COMPLETED, Wi-Fi standard: 11ac, RSSI: -65, Link speed: 585Mbps, Tx Link speed: 585Mbps, Max Supported Tx Link speed: 866Mbps, Rx Link speed: 390Mbps, Max Supported Rx Link speed: 866Mbps, Frequency: 5180MHz, Net ID: -1, Metered hint: false, score: 60, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none><none>MLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -65 AdminUids: [1000] SSID: "Media" UnderlyingNetworks: Null]
+=== Scan
+    BSSID              Frequency      RSSI           Age(sec)     SSID                                 Flags
+  f0:a7:31:a9:a0:a6       5180    -65(0:-65/1:-108)   >1000.0    Media                             [WPA2-PSK-CCMP][RSN-PSK+SAE-CCMP][ESS][WPS][MFPC]
+=== Hilfe connect
+  connect-network <ssid> open|owe|wpa2|wpa3|wep [<passphrase>] [-x] [-m] [-d] [-b <bssid>] [-r auto|none|persistent|non_persistent]
+    Connect to a network with provided params and add to saved networks list
+    <ssid> - SSID of the network
+    open|owe|wpa2|wpa3|wep - Security type of the network.
+        - Use 'open' or 'owe' for networks with no passphrase
+           - 'open' - Open networks (Most prevalent)
+           - 'owe' - Enhanced open networks
+        - Use 'wpa2' or 'wpa3' or 'wep' for networks with passphrase
+           - 'wpa2' - WPA-2 PSK networks (Most prevalent)
+           - 'wpa3' - WPA-3 PSK networks
+           - 'wep'  - WEP network. Passphrase should be bytes in hex or encoded into String using UTF-8
+    -x - Specifies the SSID as hex digits instead of plain text
+    -m - Mark the network metered.
+=== gespeicherte Netze
+Network Id      SSID                         Security type
+0            Media                            wpa2-psk
+0            Media                            wpa3-sae^
+1            Optimus Prime                    wpa2-psk
+1            Optimus Prime                    wpa3-sae^
+2            XVII                             wpa2-psk
+2            XVII                             wpa3-sae^
+
+### Exit-Code: 0
+
+### Dauer 6 s
