@@ -1,0 +1,29 @@
+### 035_v201  –  2026-11-24 15:26:07
+### Box direkt (App 2.01, 192.168.178.235)
+
+    versionName=2.01
+25642
+app laeuft
+  Location Providers:
+    passive provider:
+        10095/com.google.android.gms[network_location_provider]/357AA238 Request[PASSIVE, minUpdateInterval=0, hiddenFromAppOps, WorkSource{10095 com.google.android.gms}]
+        10095/com.google.android.gms[fused_location_provider]/A761B3E9 Request[@+24855d3h14m7s806ms BALANCED, minUpdateInterval=0, hiddenFromAppOps, WorkSource{10095 com.google.android.gms}]
+      properties=ProviderProperties[powerUsage=Low, accuracy=Fine]
+    network provider:
+      service: ProviderRequest[@+1s0ms, WorkSource{10210 at.magixfly.coretracker}]
+        10210/at.magixfly.coretracker/B4617C3F Request[@+1s0ms BALANCED, WorkSource{10210 at.magixfly.coretracker}]
+      identity=10095/com.google.android.gms[network_location_provider]
+      extra attribution tags={awareness_provider, activity_recognition_provider, network_location_provider, gnss_location_provider, network_location_calibration, current_semantic_location, fused_location_provider, wearable_flp_shim, geofencer_provider}
+      properties=ProviderProperties[powerUsage=Medium, accuracy=Fine, requires=network, supports=[altitude]]
+    fused provider:
+Failed to write while dumping service location: Broken pipe
+        android.permission.ACCESS_FINE_LOCATION: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACCESS_COARSE_LOCATION: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+kein Box-Tracker-Prozess
+2.3G	/data/local/tmp/ct
+45G	/data/data/at.magixfly.coretracker/files/tiles
+864K	/data/data/at.magixfly.coretracker/files/ovl
+
+### Exit-Code: 0
+
+### Dauer 62 s
