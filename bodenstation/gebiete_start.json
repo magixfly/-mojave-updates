@@ -1,0 +1,11 @@
+{"ver": 1, "zmin": 8, "areas": [
+ {"id":"gloggnitz","name":"Gloggnitz","type":"circle","lat":47.6756,"lon":15.9389,"r":5000,"zmax":19,"src":"navi"},
+ {"id":"reichenau","name":"Reichenau an der Rax","type":"circle","lat":47.6967,"lon":15.8417,"r":10000,"zmax":19,"src":"navi"},
+ {"id":"rax","name":"Rax (plateau)","type":"circle","lat":47.7050,"lon":15.7450,"r":5000,"zmax":19,"src":"navi"},
+ {"id":"neusiedl","name":"Neusiedl am See","type":"circle","lat":47.9486,"lon":16.8414,"r":5000,"zmax":19,"src":"navi"},
+ {"id":"see","name":"Neusiedler See + 5 km","type":"rect","s":47.65,"n":48.02,"w":16.58,"e":16.97,"zmax":17,"src":"navi"},
+ {"id":"a1","name":"Linz - A1 - Vienna - A23 - A2 - Gloggnitz","type":"route","w":2000,"zmax":16,"src":"navi",
+  "via":[[48.3064,14.2861],[48.2253,14.2856],[48.1786,15.6372],[48.2063,16.2192],[48.2340,16.4198],[48.1395,16.3585],[47.8155,16.2346],[47.6756,15.9389]],
+  "pts":[[48.3064,14.2861],[48.2253,14.2856],[48.1786,15.6372],[48.2063,16.2192],[48.2340,16.4198],[48.1395,16.3585],[47.8155,16.2346],[47.6756,15.9389]]},
+ {"id":"home","name":"Home St. Poelten","type":"circle","lat":48.18736,"lon":15.61389,"r":2000,"zmax":19,"src":"user"}
+]}

@@ -1,13 +1,20 @@
 {
- "ver": "3.50",
+ "ver": "3.51",
  "neu": [
-  "Offline map of Vienna + Lower Austria (zoom 8-16, aerial + place names) loads once in the background, progress under ..."
+  "Map areas: one list for tracker, box and navi from the PC map centre (KartenZentrale)",
+  "Tiles outside the areas are deleted (AI tiles and maps around rides stay)",
+  "Tiles come from the PC first, then basemap.at"
  ],
  "dateien": [
   {
+   "p": "gebiete_start.json",
+   "s": 1179,
+   "md5": "833a1a16eaa8586dbc9824950d7ce3d4"
+  },
+  {
    "p": "server.py",
-   "s": 145716,
-   "md5": "ed075f9f7c2bf924dfce2c7f2c3c9597"
+   "s": 153754,
+   "md5": "9b770487343386c03f96e914c370f441"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +23,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 162544,
-   "md5": "732bb38af2f710dceabe97a2375c9b10"
+   "s": 162754,
+   "md5": "244f06f6890509a299a22f55bb9dac9f"
   }
  ]
 }

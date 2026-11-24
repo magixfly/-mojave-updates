@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.50"
+VERSION = "3.51"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -33,9 +33,12 @@ DEFAULTS = [
     ("starts", "1", "V3.30: 1 = show where the car rides started (one point per 500 m, menu)"),
     ("rides_hidden", "", "V3.32: hidden rides (file names, ;) - not in the list (unless shown) and no start point"),
     ("rides_filter", "all", "V3.32: rides list filter all / mojave / other"),
-    ("region_pre", "1", "V3.50: 1 = load the whole map of Vienna + Lower Austria (aerial + place names) in the background, once, so it works offline"),
-    ("region_zmax", "16", "V3.50: highest zoom for the Vienna + Lower Austria map (16 = about 5-7 GB, 17 = about 20-28 GB)"),
-    ("region_min_free_gb", "5", "V3.50: stop the region map when less than this is free on the SD card"),
+    ("areas", "1", "V3.51: 1 = keep the map of the areas in gebiete.json (same list as box and navi) complete, in the background"),
+    ("map_zmax", "19", "V3.51: highest zoom this device loads for the areas (lower = less space)"),
+    ("areas_clean", "1", "V3.51: 1 = delete aerial photo tiles outside the areas (AI tiles and the maps around your rides stay)"),
+    ("areas_cleaned", "", "V3.51: internal - list version already cleaned"),
+    ("zentrale", "", "V3.51: address of the PC map centre (KartenZentrale), set by the PC itself, e.g. http://192.168.178.20:8091"),
+    ("region_min_free_gb", "5", "Stop loading area maps when less than this is free on the SD card"),
     ("autopre", "1", "V3.41: 1 = load the map (aerial + place names, zoom 14-19, 700 m) around every ride start in the background, so it is there at once"),
     ("starts_hide", "", "V3.31: start points not to show, lat,lon;lat,lon (500 m around each)"),
     ("starts_vmax", "110", "V3.31: rides faster than this (km/h) are real car drives, no start point"),
@@ -1562,7 +1565,7 @@ def snapshot():
                    "gps_baud": ESPINFO["gps_baud"], "gps_data": bool(ME["t"] and time.time() - ME["t"] < 5 and ME.get("src", "esp") == "esp"),
                    "gps_fix": ESPINFO["gps_fix"], "gps_sats": ESPINFO["gps_sats"], "age": round(time.time() - ESPINFO["t"]) if ESPINFO["t"] else None}   # V3.33
         d["autopre"] = {"done": AUTOPRE["done"], "total": AUTOPRE["total"]}   # V3.43
-        d["region"] = {k: REGION[k] for k in ("done", "total", "msg")}         # V3.50
+        d["region"] = {k: REGION[k] for k in ("done", "total", "msg", "phase", "del", "src", "listver")}   # V3.50 / V3.51
         d["phone"] = PHONE["st"] + ((" " + PHONE["ip"]) if PHONE["ip"] else "")   # V3.28
         far = me.get("dist") if me and me.get("dist") is not None else d.get("dist")
         if ci("range_warn_m") > 0 and far and far > ci("range_warn_m") and not TEST["on"]:   # V1.9.2: no FAR in the replay
@@ -2187,6 +2190,9 @@ def fetch_online(z, x, y):
     if FAIL.get(key, 0) > time.time():
         return None
     missing = 0
+    if _fetch_zentrale(z, x, y):                # V3.51: PC centre first
+        with open(tile_file("ortho", z, x, y), "rb") as f:
+            return f.read()
     with DL_SEM:
         for url in (CFG.get("online_url"), CFG.get("online_url2")):
             if not url:
@@ -2421,49 +2427,155 @@ def autopre_thread():
             print("autopre", e)
         time.sleep(6 * 3600)
 
-# V3.50: Vienna + Lower Austria as one offline map (rough border polygon, lat/lon)
-NOE = [(48.15, 14.42), (48.32, 14.55), (48.55, 14.68), (48.62, 14.95), (48.78, 14.95), (49.03, 15.15), (48.98, 15.40),
-       (48.86, 15.80), (48.80, 16.10), (48.74, 16.45), (48.78, 16.93), (48.62, 16.98), (48.38, 16.88), (48.15, 17.08),
-       (48.02, 16.90), (47.88, 16.47), (47.78, 16.30), (47.60, 16.42), (47.42, 16.20), (47.50, 15.95), (47.62, 15.78),
-       (47.72, 15.40), (47.75, 15.05), (47.70, 14.75), (47.88, 14.55), (48.05, 14.45)]
-REGION = {"done": 0, "total": 0, "msg": "", "t": 0}
+# V3.51: one area list for tracker, box and navi (gebiete.json in the repo). Every device loads these areas
+# up to its own highest zoom (map_zmax) and deletes aerial tiles outside them.
+GEB_FILE = os.path.join(BASE, "gebiete.json")          # local copy of the list from the PC centre (not in the repo)
+GEB_START = os.path.join(BASE, "gebiete_start.json")   # shipped start list (used until the centre answers once)
 
-def _in_poly(lat, lon, poly=NOE):
-    inside = False
-    for i in range(len(poly)):
-        a, b = poly[i], poly[i - 1]
-        if (a[0] > lat) != (b[0] > lat) and lon < (b[1] - a[1]) * (lat - a[0]) / (b[0] - a[0]) + a[1]:
-            inside = not inside
-    return inside
+def zentrale():
+    return CFG.get("zentrale", "").strip().rstrip("/")
+REGION = {"done": 0, "total": 0, "msg": "", "t": 0, "del": 0, "phase": "", "src": "", "listver": 0}
 
-def region_tiles(z):
-    """All tiles of zoom z that touch Vienna + Lower Austria."""
+def _lon2tx(lon, n): return int((lon + 180.0) / 360.0 * n)
+def _lat2ty(lat, n):
+    r = math.radians(max(-85.0, min(85.0, lat)))
+    return int((1 - math.log(math.tan(r) + 1 / math.cos(r)) / math.pi) / 2 * n)
+
+def _box_tiles(out, z, s, n_, w, e):
     n = 2 ** z
-    def lat_of(y): return math.degrees(math.atan(math.sinh(math.pi * (1 - 2 * y / n))))
-    def lon_of(x): return x / n * 360.0 - 180.0
-    def tx(lo): return int((lo + 180.0) / 360.0 * n)
-    def ty(la):
-        r = math.radians(la)
-        return int((1 - math.log(math.tan(r) + 1 / math.cos(r)) / math.pi) / 2 * n)
-    out = []
-    for x in range(tx(14.42), tx(17.08) + 1):
-        for y in range(ty(49.03), ty(47.42) + 1):
-            if any(_in_poly(lat_of(y + fy), lon_of(x + fx)) for fx in (0, .5, 1) for fy in (0, .5, 1)):
-                out.append((z, x, y))
+    for x in range(_lon2tx(w, n), _lon2tx(e, n) + 1):
+        for y in range(_lat2ty(n_, n), _lat2ty(s, n) + 1):
+            out.add((z, x, y))
+
+def area_tiles(a, z):
+    """Tiles of zoom z for one area: circle (lat, lon, r m), rect (s, n, w, e) or route (pts [[lat, lon]...], w m)."""
+    out = set()
+    t = a.get("type")
+    if t == "rect":
+        _box_tiles(out, z, a["s"], a["n"], a["w"], a["e"])
+    elif t == "circle":
+        n = 2 ** z
+        la, lo, r = a["lat"], a["lon"], a["r"]
+        dla, dlo = r / 111320.0, r / (111320.0 * math.cos(math.radians(la)))
+        for x in range(_lon2tx(lo - dlo, n), _lon2tx(lo + dlo, n) + 1):
+            for y in range(_lat2ty(la + dla, n), _lat2ty(la - dla, n) + 1):
+                # nearest point of the tile to the centre
+                lo0, lo1 = x / n * 360 - 180, (x + 1) / n * 360 - 180
+                la1 = math.degrees(math.atan(math.sinh(math.pi * (1 - 2 * y / n))))
+                la0 = math.degrees(math.atan(math.sinh(math.pi * (1 - 2 * (y + 1) / n))))
+                if haversine(la, lo, min(max(la, la0), la1), min(max(lo, lo0), lo1)) <= r:
+                    out.add((z, x, y))
+    elif t == "route":
+        w = a.get("w", 2000)
+        step = max(50.0, min(w, 40075000.0 / 2 ** z / 2))   # sample at least every half tile
+        pts = a["pts"]
+        for i in range(len(pts) - 1):
+            (la0, lo0), (la1, lo1) = pts[i], pts[i + 1]
+            d = haversine(la0, lo0, la1, lo1)
+            k = max(1, int(d / step))
+            for j in range(k + 1):
+                la, lo = la0 + (la1 - la0) * j / k, lo0 + (lo1 - lo0) * j / k
+                dla, dlo = w / 111320.0, w / (111320.0 * math.cos(math.radians(la)))
+                _box_tiles(out, z, la - dla, la + dla, lo - dlo, lo + dlo)
     return out
 
+def load_areas():
+    """V3.51: list from the PC centre (KartenZentrale), else the last copy, else the start list."""
+    z = zentrale()
+    if z:
+        try:
+            with urllib.request.urlopen(z + "/gebiete.json", timeout=10) as r:
+                d = json.loads(r.read().decode("utf-8"))
+            if d.get("areas"):
+                with open(GEB_FILE + ".tmp", "w", encoding="utf-8") as f:
+                    json.dump(d, f, ensure_ascii=False)
+                os.replace(GEB_FILE + ".tmp", GEB_FILE)
+                REGION["src"] = "PC centre"
+                return d
+        except Exception:
+            pass
+    for p, src in ((GEB_FILE, "last copy"), (GEB_START, "start list")):
+        try:
+            with open(p, encoding="utf-8") as f:
+                d = json.load(f)
+            REGION["src"] = src
+            return d
+        except Exception:
+            pass
+    return {"ver": 0, "areas": []}
+
+def report_places():
+    """V3.51: tell the PC centre where the tracker has been (ride starts); it adds new places as areas."""
+    z = zentrale()
+    if not z:
+        return
+    pts = [{"lat": r["lat0"], "lon": r["lon0"], "t": int(r.get("t0") or 0)} for r in ride_files() if r.get("lat0") is not None]
+    if not pts:
+        return
+    try:
+        rq = urllib.request.Request(z + "/api/orte", data=json.dumps({"dev": "tracker", "pts": pts}).encode(),
+                                    headers={"Content-Type": "application/json"})
+        with urllib.request.urlopen(rq, timeout=10) as r:
+            r.read()
+    except Exception:
+        pass
+
+def _fetch_zentrale(z, x, y):
+    """Tile from the PC centre (fast in the home network). True = got it."""
+    zc = zentrale()
+    if not zc:
+        return False
+    try:
+        with urllib.request.urlopen("%s/tile/%d/%d/%d.jpg" % (zc, z, x, y), timeout=5) as r:
+            data = r.read()
+        if len(data) < 100:
+            return False
+        p = tile_file("ortho", z, x, y)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        with open(p + ".tmp", "wb") as f:
+            f.write(data)
+        os.replace(p + ".tmp", p)
+        return True
+    except Exception:
+        return False
+
+def wanted_tiles(d, zcap):
+    want = set()
+    for a in d.get("areas", []):
+        for z in range(int(d.get("zmin", 8)), min(int(a.get("zmax", 16)), zcap) + 1):
+            want |= area_tiles(a, z)
+    return want
+
+def protected_tiles():
+    """Tiles kept anyway: 700 m around ride starts, test area and home, zoom 14-19 (autopre)."""
+    keep = set()
+    pts = [(r["lat0"], r["lon0"]) for r in ride_files() if r.get("lat0") is not None]
+    for k in (("test_lat", "test_lon"), ("vgps_lat", "vgps_lon")):
+        try:
+            pts.append((float(CFG.get(k[0])), float(CFG.get(k[1]))))
+        except Exception:
+            pass
+    for la, lo in pts:
+        for z in range(14, 20):
+            keep.update(tiles_for(la, lo, 700, z))
+    return keep
+
 def _fetch_basemap(z, x, y):
-    """Region map: only basemap.at (Austria), never the Esri fallback (no foreign tiles)."""
+    """Only basemap.at (Austria), never the Esri fallback. 404 -> empty marker file (tile does not exist)."""
     u = CFG.get("online_url", "").replace("{z}", str(z)).replace("{x}", str(x)).replace("{y}", str(y))
     try:
         with DL_SEM:
             rq = urllib.request.Request(u, headers={"User-Agent": "MojaveGroundStation/" + VERSION})
             with urllib.request.urlopen(rq, timeout=cf("online_timeout_s")) as r:
                 data = r.read()
-    except urllib.error.HTTPError:
-        return True                       # tile does not exist -> skip
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            p = os.path.join(TILES, "none", str(z), str(x), "%d" % y)
+            os.makedirs(os.path.dirname(p), exist_ok=True)
+            open(p, "w").close()
+        return True
     except Exception:
-        return False                      # network problem -> try again later
+        return False
     if len(data) >= 100:
         p = tile_file("ortho", z, x, y)
         os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -2472,54 +2584,98 @@ def _fetch_basemap(z, x, y):
         os.replace(p + ".tmp", p)
     return True
 
+def clean_tiles(want, keep):
+    """Delete aerial photo and place-name tiles outside the areas (AI tiles in tiles/ki are never touched)."""
+    REGION.update(phase="cleaning", msg="deleting tiles outside the areas", done=0, total=0, **{"del": 0})
+    files = []
+    for kind in ("ortho", "overlay"):
+        base = os.path.join(TILES, kind)
+        for root, _, fs in os.walk(base):
+            for f in fs:
+                files.append(os.path.join(root, f))
+    REGION["total"] = len(files)
+    for p in files:
+        REGION["done"] += 1
+        try:
+            rel = os.path.relpath(p, TILES).split(os.sep)   # kind, z, x, y.ext
+            key = (int(rel[1]), int(rel[2]), int(rel[3].split(".")[0]))
+        except Exception:
+            continue
+        if key in want or key in keep:
+            continue
+        try:
+            os.remove(p); REGION["del"] += 1
+        except Exception:
+            pass
+    for kind in ("ortho", "overlay"):                      # empty folders away
+        for root, dirs, fs in os.walk(os.path.join(TILES, kind), topdown=False):
+            if root != os.path.join(TILES, kind) and not dirs and not fs:
+                try: os.rmdir(root)
+                except Exception: pass
+    print("areas: %d tiles outside deleted" % REGION["del"])
+
 def region_thread():
-    """V3.50: load Vienna + Lower Austria (zoom 8..region_zmax) once, quietly, 2 downloads at a time.
-    Tiles already on the SD card are skipped, so after a restart it carries on where it stopped."""
-    time.sleep(120)
+    """V3.51: sync the map with gebiete.json - delete what is outside (once per list version), load what is missing."""
+    time.sleep(60)
     while True:
         try:
-            if CFG.get("region_pre", "1") == "1" and CFG.get("online", "1") == "1":
-                zmax = min(19, max(8, ci("region_zmax")))
-                REGION.update(msg="counting tiles", done=0, total=0)
-                jobs = [t for z in range(8, zmax + 1) for t in region_tiles(z)]
-                REGION.update(total=len(jobs), done=0, msg="loading", t=time.time())
-                q = queue.Queue()
-                for j in jobs:
-                    q.put(j)
-                stop = {"full": False}
+            if CFG.get("areas", "1") == "1":
+                REGION.update(phase="list", msg="reading area list", done=0, total=0)
+                report_places()
+                d = load_areas()
+                REGION["listver"] = d.get("ver", 0)
+                zcap = min(19, max(8, ci("map_zmax")))
+                want = wanted_tiles(d, zcap)
+                if CFG.get("areas_clean", "1") == "1" and CFG.get("areas_cleaned", "") != str(d.get("ver", "")) + "/" + str(zcap):
+                    clean_tiles(want, protected_tiles())
+                    CFG["areas_cleaned"] = str(d.get("ver", "")) + "/" + str(zcap); save_cfg(CFG)
+                if CFG.get("online", "1") == "1":
+                    jobs = sorted(want)
+                    REGION.update(phase="loading", total=len(jobs), done=0, msg="loading", t=time.time())
+                    q = queue.Queue()
+                    for j in jobs:
+                        q.put(j)
+                    stop = {"full": False}
 
-                def worker():
-                    while not stop["full"]:
-                        try:
-                            z, x, y = q.get_nowait()
-                        except queue.Empty:
-                            return
-                        if REGION["done"] % 200 == 0 and shutil.disk_usage(BASE).free < cf("region_min_free_gb") * 1e9:
-                            stop["full"] = True
-                            return
-                        have = os.path.exists(tile_file("ortho", z, x, y)) or os.path.exists(tile_file("ki", z, x, y))
-                        for _ in range(3):
-                            if have or time.time() < ONLINE["down_until"]:
-                                break
-                            if _fetch_basemap(z, x, y):
-                                break
-                            time.sleep(5)
-                        if CFG.get("labels", "1") == "1" and not os.path.exists(os.path.join(TILES, "overlay", str(z), str(x), "%d.png" % y)):
-                            get_overlay(z, x, y)
-                        REGION["done"] += 1
-                        if not have:
-                            time.sleep(0.02)
-                ws = [threading.Thread(target=worker, daemon=True) for _ in range(2)]
-                for w in ws:
-                    w.start()
-                for w in ws:
-                    w.join()
-                REGION["msg"] = "SD card full - stopped" if stop["full"] else "complete"
-                print("region map:", REGION["msg"], REGION["done"], "/", REGION["total"])
+                    def worker():
+                        while not stop["full"]:
+                            try:
+                                z, x, y = q.get_nowait()
+                            except queue.Empty:
+                                return
+                            if REGION["done"] % 500 == 0 and shutil.disk_usage(BASE).free < cf("region_min_free_gb") * 1e9:
+                                stop["full"] = True
+                                return
+                            have = (os.path.exists(tile_file("ortho", z, x, y)) or os.path.exists(tile_file("ki", z, x, y))
+                                    or os.path.exists(os.path.join(TILES, "none", str(z), str(x), "%d" % y)))
+                            for _ in range(3):
+                                if have or time.time() < ONLINE["down_until"]:
+                                    break
+                                if _fetch_zentrale(z, x, y) or _fetch_basemap(z, x, y):
+                                    break
+                                time.sleep(5)
+                            if CFG.get("labels", "1") == "1" and not os.path.exists(os.path.join(TILES, "overlay", str(z), str(x), "%d.png" % y)):
+                                get_overlay(z, x, y)
+                            REGION["done"] += 1
+                    ws = [threading.Thread(target=worker, daemon=True) for _ in range(4)]
+                    for w in ws:
+                        w.start()
+                    for w in ws:
+                        w.join()
+                    REGION.update(phase="done", msg="SD card full - stopped" if stop["full"] else "complete")
+                print("areas:", REGION["msg"], REGION["done"], "/", REGION["total"])
         except Exception as e:
             REGION["msg"] = "error: %s" % e
-            print("region", e)
-        time.sleep(24 * 3600)              # check once a day for missing tiles
+            print("areas", e)
+        for _ in range(360):              # check every 6 h, or at once when the list on the PC changes
+            time.sleep(60)
+            try:
+                if zentrale():
+                    with urllib.request.urlopen(zentrale() + "/api/ping", timeout=5) as r:
+                        if json.loads(r.read().decode()).get("listver") != REGION.get("listver"):
+                            break
+            except Exception:
+                pass
 
 def preload(lat, lon, radius, zmin, zmax):
     jobs = []
@@ -2620,6 +2776,18 @@ class H(BaseHTTPRequestHandler):
                 DEVS["busy"], DEVS["prog"] = True, 1
                 threading.Thread(target=devices_scan, daemon=True).start()
             return self.send(200, {"busy": DEVS["busy"], "prog": DEVS["prog"], "d": DEVS["d"]})
+        if p == "/api/zentrale":                 # V3.51: where is the PC centre (box and navi ask here)
+            return self.send(200, {"url": zentrale()})
+        if p == "/gebiete.html":                 # V3.51: the area editor lives on the PC
+            if zentrale():
+                self.send_response(302); self.send_header("Location", zentrale() + "/gebiete.html"); self.end_headers(); return
+            return self.send(200, "<p>PC map centre (KartenZentrale) not found yet - start it on the PC.</p>", "text/html")
+        if p == "/gebiete.json":                 # V3.51: area list for box and navi
+            try:
+                with open(GEB_FILE if os.path.exists(GEB_FILE) else GEB_START, "rb") as f:
+                    return self.send(200, f.read(), "application/json")
+            except Exception:
+                return self.send(404, b"", "text/plain")
         if p == "/api/kicover":                  # V2.0.17
             return self.send(200, ki_cover())
         if p.startswith("/tileo/"):              # V3.30: place-name overlay
@@ -2769,6 +2937,11 @@ class H(BaseHTTPRequestHandler):
                 SND[mac] = x
                 save_senders()
                 return self.send(200, {"ok": True, "s": dict(x, mac=mac)})
+        if p == "/api/zentrale":                 # V3.51: the PC centre tells where it is
+            u = str(b.get("url", "")).strip()
+            if u.startswith("http://") and len(u) < 80 and CFG.get("zentrale") != u:
+                CFG["zentrale"] = u; save_cfg(CFG)
+            return self.send(200, {"ok": True})
         if p == "/api/set":                     # small settings from the menu (saved in config.txt)
             ok = {}
             if b.get("orientation") in ("north", "heading"):   # V1.8.2: menu settings survive a restart (browser runs incognito)
