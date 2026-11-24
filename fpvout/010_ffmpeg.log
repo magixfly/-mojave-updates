@@ -1,0 +1,10 @@
+== 010_ffmpeg on mojave-fpv, 2026-11-25 00:43:30, FPV V1.4.1 ==
+[fpv-setup] Mojave FPV LTE V1.4.1
+[fpv-setup] video server settings written
+[fpv-setup] USB camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2' with 1280x720
+[1:08:26.380847693] [4300] ERROR V4L2 v4l2_device.cpp:410 'imx290 10-001a': Unable to set controls: Device or resource busy
+[1:08:26.392739212] [4300] ERROR V4L2 v4l2_device.cpp:410 'imx290 10-001a': Unable to set controls: Device or resource busy
+temp=52.1'C
+--- gst debug (camera must be free for this part)
+
+== STOPPED after 600 s (time limit) ==
