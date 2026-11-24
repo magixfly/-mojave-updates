@@ -1,0 +1,24 @@
+== 005_v14 on mojave-fpv, 2026-11-25 00:25:30, FPV V1.3 ==
+Then open in a browser:  http://mojave-fpv.local:8080
+Settings page:            http://mojave-fpv.local:8080/settings
+restarting the bridge and the remote maintenance in 3 seconds
+DONE: Mojave FPV LTE V1.4 installed
+[fpv-setup] Mojave FPV LTE V1.4
+[fpv-setup] video server settings written
+[fpv-setup] USB camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2'
+[fpv-setup] USB camera /dev/v4l/by-id/usb-Microsoft_Microsoft®_LifeCam_HD-3000-video-index0 on path 'cam3'
+14:  cam:
+25:  cam2:
+36:  cam3:
+control_enable = 1
+throttle_reverse   = 0
+throttle_limit_pct = 30        # max throttle over IP in percent of full
+ground_timeout_ms  = 300       # no command from the ground for this long -> neutral
+control_mode = msp_rx
+steer_channel = 1
+throttle_channel = 2
+throttle_neutral_us = 1500
+failsafe_hold_ms = 1000
+VERSION = "V1.4"
+
+== exit code 0, 19.3 s ==
