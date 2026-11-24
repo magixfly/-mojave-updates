@@ -1,0 +1,28 @@
+== 007_gsttest on mojave-fpv, 2026-11-25 00:35:32, FPV V1.4 ==
+test camera: 
+Cannot open device , exiting.
+Cannot open device , exiting.
+
+##### A hardware jpeg decode
+cpu of the pipeline:
+260.0% ffmpeg  
+WARNING: erroneous pipeline: no element "image"
+
+##### B software jpeg decode
+cpu of the pipeline:
+170.6% ffmpeg  
+WARNING: erroneous pipeline: no element "image"
+
+##### C ffmpeg low delay
+cpu of the pipeline:
+155.0% ffmpeg  
+[video4linux2,v4l2 @ 0x559894dba0] Cannot open video device -pix_fmt: No such file or directory
+[in#0 @ 0x55988f4510] Error opening input: No such file or directory
+Error opening input file -pix_fmt.
+Error opening input files: No such file or directory
+
+ 00:36:01 up 57 min,  0 users,  load average: 11.90, 9.92, 5.48
+temp=80.3'C
+ls: cannot access '/dev/v4l/by-id/usb-Microsoft*-video-index0': No such file or directory
+
+== exit code 0, 29.0 s ==
