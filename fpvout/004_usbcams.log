@@ -1,0 +1,126 @@
+== 004_usbcams on mojave-fpv, 2026-11-25 00:21:52, FPV V1.3 ==
+--- USB
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 2109:3431 VIA Labs, Inc. Hub
+Bus 001 Device 003: ID 328f:006d EMEET HD Webcam eMeet C960
+Bus 001 Device 004: ID 045e:0810 Microsoft Corp. LifeCam HD-3000
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+--- kernel
+[    1.345657] usb 1-1: new high-speed USB device number 2 using xhci_hcd
+[    1.488325] usb 1-1: New USB device found, idVendor=2109, idProduct=3431, bcdDevice= 4.21
+[    1.488355] usb 1-1: New USB device strings: Mfr=0, Product=1, SerialNumber=0
+[    1.488363] usb 1-1: Product: USB2.0 Hub
+[    5.677273] videodev: Linux video capture interface: v2.00
+[    5.730704] bcm2835_vc_sm_cma_probe: Videocore shared memory driver
+[    5.766540] bcm2835-isp bcm2835-isp: Device node output[0] registered as /dev/video13
+[    5.766934] bcm2835-isp bcm2835-isp: Device node capture[0] registered as /dev/video14
+[    5.767704] bcm2835-isp bcm2835-isp: Device node capture[1] registered as /dev/video15
+[    5.767847] bcm2835-isp bcm2835-isp: Device node stats[2] registered as /dev/video16
+[    5.768478] bcm2835-codec bcm2835-codec: Device registered as /dev/video10
+[    5.771518] bcm2835-isp bcm2835-isp: Device node output[0] registered as /dev/video20
+[    5.771795] bcm2835-codec bcm2835-codec: Device registered as /dev/video11
+[    5.771964] bcm2835-isp bcm2835-isp: Device node capture[0] registered as /dev/video21
+[    5.772206] bcm2835-isp bcm2835-isp: Device node capture[1] registered as /dev/video22
+[    5.772366] bcm2835-isp bcm2835-isp: Device node stats[2] registered as /dev/video23
+[    5.779246] bcm2835-codec bcm2835-codec: Device registered as /dev/video12
+[    5.786321] bcm2835-codec bcm2835-codec: Device registered as /dev/video18
+[    5.793776] bcm2835-codec bcm2835-codec: Device registered as /dev/video31
+[    5.802013] rpi-hevc-dec feb00000.codec: Device registered as /dev/video19
+[ 2327.551255] uvcvideo 1-1.1:1.0: Found UVC 1.00 device HD Webcam eMeet C960 (328f:006d)
+[ 2327.553909] uvcvideo 1-1.1:1.0: Failed to query (GET_INFO) UVC control 5 on unit 1: 0 (exp. 1).
+[ 2327.563716] usbcore: registered new interface driver uvcvideo
+[ 2552.517901] uvcvideo 1-1.2:1.0: Found UVC 1.00 device Microsoft® LifeCam HD-3000 (045e:0810)
+--- v4l
+total 0
+lrwxrwxrwx 1 root root 12 Nov 25 00:16 usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 -> ../../video1
+lrwxrwxrwx 1 root root 12 Nov 25 00:16 usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index1 -> ../../video2
+lrwxrwxrwx 1 root root 12 Nov 25 00:20 usb-Microsoft_Microsoft®_LifeCam_HD-3000-video-index0 -> ../../video3
+lrwxrwxrwx 1 root root 12 Nov 25 00:20 usb-Microsoft_Microsoft®_LifeCam_HD-3000-video-index1 -> ../../video4
+bcm2835-codec-decode (platform:bcm2835-codec):
+	/dev/video10
+	/dev/video11
+	/dev/video12
+	/dev/video18
+	/dev/video31
+
+bcm2835-isp (platform:bcm2835-isp):
+	/dev/video13
+	/dev/video14
+	/dev/video15
+	/dev/video16
+	/dev/video20
+	/dev/video21
+	/dev/video22
+	/dev/video23
+	/dev/media0
+	/dev/media1
+
+unicam (platform:fe801000.csi):
+	/dev/video0
+	/dev/media4
+
+rpi-hevc-dec (platform:rpi-hevc-dec):
+	/dev/video19
+	/dev/media3
+
+HD Webcam eMeet C960: HD Webcam (usb-0000:01:00.0-1.1):
+	/dev/video1
+	/dev/video2
+	/dev/media5
+
+Microsoft® LifeCam HD-3000: Mi (usb-0000:01:00.0-1.2):
+	/dev/video3
+	/dev/video4
+	/dev/media6
+
+bcm2835-codec (vchiq:bcm2835-codec):
+	/dev/media2
+--- formats /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0
+	[0]: 'MJPG' (Motion-JPEG, compressed)
+		Size: Discrete 1920x1080
+		Size: Discrete 1280x960
+		Size: Discrete 1280x720
+		Size: Discrete 1024x576
+		Size: Discrete 800x600
+		Size: Discrete 640x480
+		Size: Discrete 640x360
+	[1]: 'YUYV' (YUYV 4:2:2)
+		Size: Discrete 640x480
+		Size: Discrete 640x360
+--- formats /dev/v4l/by-id/usb-Microsoft_Microsoft®_LifeCam_HD-3000-video-index0
+	[0]: 'YUYV' (YUYV 4:2:2)
+		Size: Discrete 640x480
+		Size: Discrete 1280x720
+		Size: Discrete 960x544
+		Size: Discrete 800x448
+		Size: Discrete 640x360
+		Size: Discrete 424x240
+		Size: Discrete 352x288
+		Size: Discrete 320x240
+		Size: Discrete 800x600
+		Size: Discrete 176x144
+		Size: Discrete 160x120
+		Size: Discrete 1280x800
+	[1]: 'MJPG' (Motion-JPEG, compressed)
+		Size: Discrete 640x480
+		Size: Discrete 1280x720
+		Size: Discrete 960x544
+		Size: Discrete 800x448
+		Size: Discrete 640x360
+		Size: Discrete 800x600
+		Size: Discrete 416x240
+		Size: Discrete 352x288
+		Size: Discrete 176x144
+		Size: Discrete 320x240
+--- mics
+card 3: C960 [HD Webcam eMeet C960], device 0: USB Audio [USB Audio]
+card 4: HD3000 [Microsoft® LifeCam HD-3000], device 0: USB Audio [USB Audio]
+--- power
+throttled=0x0
+[fpv-setup] Mojave FPV LTE V1.3
+[fpv-setup] video server settings written
+[fpv-setup] second camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2'
+14:  cam:
+25:  cam2:
+
+== exit code 0, 2.6 s ==
