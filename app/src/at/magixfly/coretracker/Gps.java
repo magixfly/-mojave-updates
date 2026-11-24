@@ -41,15 +41,28 @@ class Gps implements LocationListener {
 
     void stop() { try { if (lm != null) lm.removeUpdates(this); } catch (Throwable t) { } }
 
+    /** V2.06: GPS-Modul am Tracker-ESP (über Bluetooth) = echte GPS-Position der Box */
+    volatile long extT = 0;
+    void ext(double lat, double lon, double kmh, double crs, int sats) {
+        Location l = new Location(LocationManager.GPS_PROVIDER);
+        l.setLatitude(lat); l.setLongitude(lon); l.setTime(System.currentTimeMillis());
+        l.setAccuracy(sats >= 6 ? 5 : 15); l.setSpeed((float) (kmh / 3.6)); if (kmh > 3) l.setBearing((float) crs);
+        extT = System.currentTimeMillis();
+        last = l;
+        push();
+    }
+
     void push() {
         Location l = last;
         if (l == null) return;
+        if (a.tiles != null) a.tiles.here(l.getLatitude(), l.getLongitude(), l.hasAccuracy() ? l.getAccuracy() : 999);
         boolean gps = LocationManager.GPS_PROVIDER.equals(l.getProvider());
         a.js("window.ctPos&&ctPos(" + l.getLatitude() + "," + l.getLongitude() + "," + (l.hasAccuracy() ? l.getAccuracy() : -1) + ","
                 + (l.hasSpeed() ? l.getSpeed() * 3.6 : -1) + "," + (l.hasBearing() ? l.getBearing() : -1) + "," + (System.currentTimeMillis() - l.getTime()) / 1000 + "," + gps + ")");
     }
 
     public void onLocationChanged(Location l) {
+        if (System.currentTimeMillis() - extT < 10000) return;   // V2.06: GPS vom ESP hat Vorrang
         Location o = last;
         // GPS hat Vorrang; Netzwerk-Position nur, wenn GPS älter als 10 s ist
         if (o != null && LocationManager.GPS_PROVIDER.equals(o.getProvider()) && !LocationManager.GPS_PROVIDER.equals(l.getProvider())

@@ -1,30 +1,34 @@
 package at.magixfly.coretracker;
 import java.io.File;
+/** V2.06: lädt die Kacheln der Gebietsliste (Zentrale → Pi → basemap.at). Im Hintergrund nur über WLAN, nie über die SIM-Karte. */
 class TileWorker implements Runnable {
     final TileStore s;
     TileWorker(TileStore s) { this.s = s; }
-        public void run() {
+    public void run() {
+        while (true) {
             try {
-                while (true) {
-                    long[] t = s.q.take();
-                    if (t[0] < 0) { s.finished = true; return; }
-                    while (s.stopped || !s.online() || s.full) {   // V1.65: keine automatische Fahrt-Pause mehr – gestartet = laden, bis von Hand gestoppt   // V1.43: Hotspot-Pause raus (Start ist ohnehin gestoppt)   // stopped by tap, driving (map loads what it needs), no internet, storage full
-                        s.paused = true;
-                        s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE;
-                        Thread.sleep(2000);   // sofort weiter, sobald frei
-                    }
-                    s.paused = false;
-                    int z = (int) t[0], x = (int) t[1], y = (int) t[2];
-                    File f = s.file(z, x, y);
-                    byte[] d = TileStore.http(String.format(TileStore.SRC, z, y, x), 8000);
+                long[] t = s.q.take();
+                if (t[0] < 0) { if (s.q.isEmpty()) s.finished = true; continue; }
+                while (s.stopped || !"Wi-Fi".equals(s.netType()) || s.full) {
+                    s.paused = true;
+                    s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE;
+                    Thread.sleep(2000);
+                }
+                s.paused = false;
+                int z = (int) t[0], x = (int) t[1], y = (int) t[2];
+                File f = s.file(z, x, y);
+                if (!f.exists()) {
+                    byte[] d = s.fetch(z, x, y, false, 8000);
                     if (d != null) {
                         TileStore.save(f, d);                                   // 0 Byte = keine Daten an dieser Stelle
                         if (d.length > 0) { s.loaded.incrementAndGet(); s.bytes.addAndGet(d.length); s.lastOk = System.currentTimeMillis(); }
                     }
-                    s.done.incrementAndGet();
-                    if ((s.done.get() & 255) == 0) { s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE; s.saveTotal(); }
+                    File o = s.ovlFile(z, x, y);
+                    if (!o.exists()) { byte[] od = s.fetch(z, x, y, true, 8000); if (od != null) TileStore.save(o, od); }
                 }
-            } catch (Throwable e) { }
+                s.done.incrementAndGet();
+                if ((s.done.get() & 255) == 0) { s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE; s.saveTotal(); }
+            } catch (Throwable e) { try { Thread.sleep(1000); } catch (Throwable t) { } }
         }
     }
-
+}

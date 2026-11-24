@@ -7,127 +7,278 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
- * Kartenkacheln auf der Box: liefert Kacheln an die eigene Karte (aus dem Speicher der Box)
- * und lädt im Hintergrund Wien + Niederösterreich vor (nur über WLAN, z. B. Hotspot XVII).
- * Reihenfolge: Zoom 8–16 komplett, dann Zoom 17/18 ringförmig von St. Pölten nach außen.
+ * Kartenkacheln auf der Box.
+ * V2.06 (Plan Kartenabgleich 24.11.): statt Rechteck Wien + NÖ gilt die gemeinsame Gebietsliste gebiete.json
+ * (Zentrale am PC → Tracker-Pi → GitHub). Kacheln kommen aus: Box-Speicher → Zentrale → Pi → basemap.at.
+ * Kacheln außerhalb der Liste werden einmal je Listenversion gelöscht. Neue Orte der Box gehen an Zentrale/Pi (/api/orte).
  */
 class TileStore {
-    // Wien + Niederösterreich (Rechteck)
-    static final double LAT_S = 47.42, LAT_N = 49.02, LON_W = 14.45, LON_E = 17.07;
-    static final double C_LAT = 48.1874, C_LON = 15.6139;       // Start: St. Pölten
-    static final int ZMIN = 8, ZFULL = 16, ZMAX = 18;
+    static final double C_LAT = 48.1874, C_LON = 15.6139;       // Zuhause St. Pölten
     static final long KEEP_FREE = 8L * 1024 * 1024 * 1024;     // mindestens 8 GB frei lassen
     static final String SRC = "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/%d/%d/%d.jpeg";
-    static final int WORKERS = 8;                               // V1.22: 8 downloads at the same time
+    static final String OVL = "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/%d/%d/%d.png";   // V2.01: Ortsnamen/Straßen
+    static final String PI = "http://192.168.178.214:8080";
+    static final String GH = "https://raw.githubusercontent.com/magixfly/-mojave-updates/main/bodenstation/";
+    static final int WORKERS = 6;
 
     final MainActivity a;
-    final File dir, ovlDir;
+    final File dir, ovlDir, listFile;
     final BlockingQueue<long[]> q = new ArrayBlockingQueue<long[]>(400);
     final AtomicLong done = new AtomicLong(), loaded = new AtomicLong(), bytes = new AtomicLong();
     volatile long total = 1;
-    volatile String phase = "";
+    volatile String phase = "starting";
+    volatile int cleanPct = -1;
+    volatile long deleted = 0;
     volatile boolean finished = false, paused = false, full = false, stopped = false;
-    volatile long lastOk = 0;                                   // last tile downloaded (for "loading now")
+    volatile long lastOk = 0;
+    volatile Areas areas;
+    volatile String listSrc = "";
+    volatile boolean zOk = false, piOk = false;   // Zentrale / Tracker-Pi erreichbar
 
     TileStore(MainActivity a) {
         this.a = a;
         dir = new File(a.getFilesDir(), "tiles");
         dir.mkdirs();
         ovlDir = new File(a.getFilesDir(), "ovl");
-        stopped = true;                                          // V1.43: nach jedem Start gestoppt – Tippen auf „Maps“ startet/stoppt
+        listFile = new File(a.getFilesDir(), "gebiete.json");
+        stopped = a.prefs.getBoolean("dlStop", false);
     }
 
     File file(int z, int x, int y) { return new File(dir, z + "/" + x + "/" + y + ".jpg"); }
-
-    static final String OVL = "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/%d/%d/%d.png";   // V2.01: Ortsnamen/Straßen
     File ovlFile(int z, int x, int y) { return new File(ovlDir, z + "/" + x + "/" + y + ".png"); }
 
-    /** V2.01: Kachel aus dem Box-Speicher; fehlt sie und gibt es Internet, direkt von basemap.at holen und speichern. null/leer = nicht verfügbar. */
+    String zentrale() { String z = a.prefs.getString("zentrale", "").trim(); while (z.endsWith("/")) z = z.substring(0, z.length() - 1); return z; }
+    int zcap() { return Math.max(8, Math.min(19, a.prefs.getInt("map_zmax", 19))); }
+
+    /** Kachel für die Karte: Box-Speicher → Zentrale → Pi → basemap.at. Gespeichert wird nur, was in der Liste liegt. null/leer = nicht verfügbar. */
     byte[] get(int z, int x, int y, boolean ovl) {
         File f = ovl ? ovlFile(z, x, y) : file(z, x, y);
         if (f.exists()) return f.length() > 0 ? read(f) : null;
         if (!online()) return null;
-        byte[] d = http(String.format(ovl ? OVL : SRC, z, y, x), 4000);
+        byte[] d = fetch(z, x, y, ovl, 4000);
         if (d == null) return null;
-        if (z <= ZMAX + 1) save(f, d);                       // 0 Byte = an dieser Stelle keine Daten
+        Areas ar = areas;
+        if (ar == null || ar.has(z, x, y)) save(f, d);
         if (!ovl && d.length > 0) { loaded.incrementAndGet(); bytes.addAndGet(d.length); }
         return d;
     }
 
-    // ---------- Hintergrund-Download ----------
-    /** Gesamtgröße aller gespeicherten Kacheln (bleibt über Neustarts erhalten). */
+    /** Daten (leer = gibt es nicht) oder null (Netzfehler). Reihenfolge Zentrale → Pi → basemap.at. */
+    byte[] fetch(int z, int x, int y, boolean ovl, int timeout) {
+        String path = (ovl ? "/tileo/" : "/tile/") + z + "/" + x + "/" + y + (ovl ? ".png" : ".jpg");
+        String zz = zentrale();
+        if (zOk && zz.length() > 0) { byte[] d = http(zz + path, 2500); if (d != null && d.length > 0) return d; }
+        if (piOk) { byte[] d = http(PI + path, 2500); if (d != null && d.length > 0) return d; }
+        return http(String.format(ovl ? OVL : SRC, z, y, x), timeout);
+    }
+
+    // ---------- Fortschritt ----------
     void loadTotal() {
         long b = a.prefs.getLong("tileBytes", -1);
         if (b >= 0) { bytes.set(b); loaded.set(a.prefs.getLong("tileCount", 0)); return; }
-        long[] r = new long[2]; dirSize(dir, r);       // einmalig zählen
+        long[] r = new long[2]; dirSize(dir, r);
         bytes.set(r[0]); loaded.set(r[1]);
         saveTotal();
     }
-    /** V2.03: Fortschritt über Neustarts merken – sonst zählt der Prozentwert nach jedem Start wieder von 0 hoch, während die vorhandenen Kacheln geprüft werden */
-    volatile long savedDone = 0;
-    long doneNow() { return Math.max(done.get(), savedDone); }
-    void saveTotal() { a.prefs.edit().putLong("tileBytes", bytes.get()).putLong("tileCount", loaded.get()).putLong("tileDone", doneNow()).apply(); }
+    void saveTotal() { a.prefs.edit().putLong("tileBytes", bytes.get()).putLong("tileCount", loaded.get()).apply(); }
     static void dirSize(File f, long[] r) {
         if (f.isFile()) { if (f.length() > 0) { r[0] += f.length(); r[1]++; } return; }
         File[] l = f.listFiles();
         if (l != null) for (File x : l) dirSize(x, r);
     }
-    /** geschätzte Gesamtgröße Wien + NÖ (Kachelanzahl × durchschnittliche Größe; ~45 % der Fläche liegen außerhalb Österreichs) */
-    long estimate() {
-        long n = loaded.get(); double avg = n > 200 ? (double) bytes.get() / n : 18000;
-        return (long) (total * 0.55 * avg);
+    long estimate() { long n = loaded.get(); double avg = n > 200 ? (double) bytes.get() / n : 22000; return (long) (total * avg); }
+
+    int percent() {
+        if (cleanPct >= 0 && "cleaning".equals(phase)) return cleanPct;
+        return (int) Math.min(100, done.get() * 100 / Math.max(1, total));
+    }
+
+    /** kurzer Text für die Kopfzeile */
+    String stateText() {
+        if ("list".equals(phase)) return "reading area list";
+        if ("cleaning".equals(phase)) return "deleting outside areas · " + deleted;
+        if (finished) return "complete";
+        if (full) return "storage full";
+        if (stopped) return "stopped";
+        if (netType() == null) return "offline";
+        if (paused) return "waiting";
+        return (loadingNow() ? "loading" : "checking") + (zOk ? " from PC" : piOk ? " from tracker" : "");
     }
 
     void start() {
-        savedDone = a.prefs.getLong("tileDone", 0);
         loadTotal();
-        long t = 0;
-        for (int z = ZMIN; z <= ZMAX; z++) t += count(z);
-        total = t;
+        new Thread(new Runnable() { public void run() { syncLoop(); } }).start();
         for (int i = 0; i < WORKERS; i++) new Thread(new TileWorker(this)).start();
-        new Thread(new TileProducer(this)).start();
+        new Thread(new Runnable() { public void run() { placesLoop(); } }).start();
     }
 
-    long count(int z) {
-        long w = lonX(LON_E, z) - lonX(LON_W, z) + 1, h = latY(LAT_S, z) - latY(LAT_N, z) + 1;
-        return w * h;
+    // ---------- Gebietsliste ----------
+    void probe() {
+        String zz = zentrale();
+        zOk = zz.length() > 0 && http(zz + "/api/ping", 1500) != null;
+        byte[] p = http(PI + "/api/state", 1500);
+        piOk = p != null && p.length > 0;
     }
 
-    String status() {
-        long d = doneNow();
-        int pct = (int) Math.min(100, d * 100 / Math.max(1, total));
-        String s = "Maps " + pct + " % · " + phase + " · " + (bytes.get() / (1024 * 1024)) + " MB loaded";
-        if (finished) s = "Maps Vienna + Lower Austria complete";
-        else if (full) s = "Maps: storage almost full – download paused";
-        else if (stopped) s = "Maps " + pct + " % · stopped";
-        else if (paused) s = "Maps " + pct + " % · no internet";
-        return s;
+    JSONObject loadList() {
+        String zz = zentrale();
+        String[] src = {zz.length() > 0 ? zz + "/gebiete.json" : null, PI + "/gebiete.json", GH + "gebiete.json", GH + "gebiete_default.json"};
+        for (String u : src) {
+            if (u == null) continue;
+            byte[] d = http(u + "?t=" + System.currentTimeMillis(), 6000);
+            if (d == null || d.length < 10) continue;
+            try {
+                JSONObject j = new JSONObject(new String(d, "UTF-8"));
+                if (j.has("areas")) { save(listFile, d); listSrc = u.startsWith(PI) ? "tracker" : u.startsWith("https") ? "GitHub" : "PC"; return j; }
+            } catch (Throwable t) { }
+        }
+        try { if (listFile.exists()) { listSrc = "saved copy"; return new JSONObject(new String(read(listFile), "UTF-8")); } } catch (Throwable t) { }
+        return null;
     }
 
-    int percent() { return (int) Math.min(100, doneNow() * 100 / Math.max(1, total)); }
+    void syncLoop() {
+        int lastVer = -1;
+        while (true) {
+            try {
+                phase = "list";
+                probe();
+                JSONObject j = loadList();
+                if (j != null) {
+                    Areas ar = new Areas(j, zcap());
+                    areas = ar;
+                    String tag = ar.ver + "/" + ar.zcap;
+                    if (!tag.equals(a.prefs.getString("areasCleaned", ""))) {
+                        clean(ar);
+                        a.prefs.edit().putString("areasCleaned", tag).apply();
+                    }
+                    if (ar.ver != lastVer || !finished) {
+                        lastVer = ar.ver;
+                        produce(ar);
+                    }
+                }
+            } catch (Throwable t) { android.util.Log.d("CTAP", "sync: " + t); }
+            phase = finished ? "done" : phase;
+            for (int i = 0; i < 60; i++) {   // alle 30 min neu prüfen (Liste kann sich geändert haben)
+                try { Thread.sleep(30000); } catch (Throwable t) { }
+                if (i % 2 == 0) probe();
+            }
+        }
+    }
 
-    /** V1.22: any internet - Wi-Fi or the SIM card of the box. */
-    boolean online() { return netType() != null; }
+    /** alle Kacheln der Liste in die Warteschlange, kleinste Zoomstufe zuerst, je Stufe von zuhause nach außen */
+    void produce(Areas ar) throws InterruptedException {
+        finished = false;
+        ArrayList<long[]> jobs = new ArrayList<long[]>(ar.want.size());
+        for (Long k : ar.want) jobs.add(new long[]{k >>> 56, (k >>> 28) & 0xFFFFFFFL, k & 0xFFFFFFFL});
+        final long[][] c = new long[20][];
+        for (int z = 0; z < 20; z++) c[z] = new long[]{lonX(C_LON, z), latY(C_LAT, z)};
+        java.util.Collections.sort(jobs, new java.util.Comparator<long[]>() { public int compare(long[] p, long[] q) {
+            if (p[0] != q[0]) return p[0] < q[0] ? -1 : 1;
+            long[] h = c[(int) p[0]];
+            long dp = Math.max(Math.abs(p[1] - h[0]), Math.abs(p[2] - h[1])), dq = Math.max(Math.abs(q[1] - h[0]), Math.abs(q[2] - h[1]));
+            return dp < dq ? -1 : dp > dq ? 1 : 0;
+        } });
+        total = jobs.size(); done.set(0);
+        phase = "loading";
+        for (long[] t : jobs) {
+            if (areas != ar) return;                              // neue Liste -> neu anfangen
+            File f = file((int) t[0], (int) t[1], (int) t[2]);
+            if (f.exists()) { done.incrementAndGet(); continue; }
+            while (full) Thread.sleep(60000);
+            q.put(t);
+        }
+        for (int i = 0; i < WORKERS; i++) q.put(new long[]{-1, 0, 0});
+    }
 
-    /** V1.38: iPhone-Hotspot (172.20.10.x) = mobile Daten → Download pausieren */
-    long hsT = 0; boolean hsV = false;
-    boolean hotspot() {
-        if (System.currentTimeMillis() - hsT < 5000) return hsV;
-        hsT = System.currentTimeMillis(); hsV = false;
+    /** Kacheln (Luftbild + Ortsnamen) außerhalb der Liste löschen – ganze Spalten-Ordner auf einmal, wenn darin nichts gebraucht wird */
+    void clean(Areas ar) {
+        phase = "cleaning"; cleanPct = 0; deleted = 0;
+        ArrayList<File> cols = new ArrayList<File>();
+        for (File base : new File[]{dir, ovlDir}) {
+            File[] zs = base.listFiles();
+            if (zs == null) continue;
+            for (File zd : zs) { File[] xs = zd.listFiles(); if (xs != null) for (File xd : xs) cols.add(xd); }
+        }
+        int n = 0;
+        for (File xd : cols) {
+            n++; cleanPct = (int) (n * 100L / Math.max(1, cols.size()));
+            try {
+                int z = Integer.parseInt(xd.getParentFile().getName()); long x = Long.parseLong(xd.getName());
+                File[] ys = xd.listFiles();
+                if (ys == null) continue;
+                for (File yf : ys) {
+                    String nm = yf.getName(); int dot = nm.indexOf('.');
+                    long y; try { y = Long.parseLong(dot > 0 ? nm.substring(0, dot) : nm); } catch (Throwable t) { continue; }
+                    if (!ar.has(z, x, y)) { long l = yf.length(); if (yf.delete()) { deleted++; if (xd.getPath().startsWith(dir.getPath()) && l > 0) { bytes.addAndGet(-l); loaded.decrementAndGet(); } } }
+                }
+                String[] left = xd.list();
+                if (left != null && left.length == 0) xd.delete();
+            } catch (Throwable t) { }
+        }
+        for (File base : new File[]{dir, ovlDir}) { File[] zs = base.listFiles(); if (zs != null) for (File zd : zs) { String[] l = zd.list(); if (l != null && l.length == 0) zd.delete(); } }
+        if (bytes.get() < 0) { long[] r = new long[2]; dirSize(dir, r); bytes.set(r[0]); loaded.set(r[1]); }
+        saveTotal();
+        cleanPct = -1;
+        android.util.Log.d("CTAP", "areas clean: " + deleted + " deleted");
+    }
+
+    // ---------- neue Orte melden ----------
+    /** von Gps bzw. BleEsp: aktuelle Position der Box (nur genaue Werte) */
+    volatile long hereT = 0;
+    void here(double lat, double lon, float acc) {
+        long now = System.currentTimeMillis();
+        if (now - hereT < 20000) return;                  // höchstens alle 20 s prüfen
+        hereT = now;
+        Areas ar = areas;
+        if (ar == null || acc > 300 || ar.covers(lat, lon)) return;
         try {
-            for (java.net.NetworkInterface ni : java.util.Collections.list(java.net.NetworkInterface.getNetworkInterfaces()))
-                for (java.net.InetAddress ia : java.util.Collections.list(ni.getInetAddresses()))
-                    if (ia.getHostAddress().startsWith("172.20.10.")) hsV = true;
+            JSONArray p = new JSONArray(a.prefs.getString("newPlaces", "[]"));
+            for (int i = 0; i < p.length(); i++) { JSONObject o = p.getJSONObject(i); if (Areas.dist(lat, lon, o.getDouble("lat"), o.getDouble("lon")) < 500) return; }
+            p.put(new JSONObject().put("lat", Math.round(lat * 1e5) / 1e5).put("lon", Math.round(lon * 1e5) / 1e5).put("t", System.currentTimeMillis() / 1000));
+            a.prefs.edit().putString("newPlaces", p.toString()).apply();
+            android.util.Log.d("CTAP", "new place " + lat + "," + lon);
         } catch (Throwable t) { }
-        return hsV;
     }
+
+    void placesLoop() {
+        while (true) {
+            try { Thread.sleep(60000); } catch (Throwable t) { }
+            try {
+                String s = a.prefs.getString("newPlaces", "[]");
+                if (s.equals("[]")) continue;
+                String body = new JSONObject().put("dev", "box").put("pts", new JSONArray(s)).toString();
+                String zz = zentrale();
+                boolean ok = (zOk && zz.length() > 0 && post(zz + "/api/orte", body)) || (piOk && post(PI + "/api/orte", body));
+                if (ok) a.prefs.edit().putString("newPlaces", "[]").apply();
+            } catch (Throwable t) { }
+        }
+    }
+
+    static boolean post(String url, String body) {
+        try {
+            HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
+            c.setConnectTimeout(3000); c.setReadTimeout(5000);
+            c.setRequestMethod("POST"); c.setDoOutput(true);
+            c.setRequestProperty("Content-Type", "application/json");
+            OutputStream o = c.getOutputStream(); o.write(body.getBytes("UTF-8")); o.close();
+            int code = c.getResponseCode(); c.disconnect();
+            return code == 200;
+        } catch (Throwable t) { return false; }
+    }
+
+    // ---------- Netz ----------
+    boolean online() { return netType() != null; }
     String netType() {
         try {
             ConnectivityManager cm = (ConnectivityManager) a.getSystemService("connectivity");
@@ -137,7 +288,6 @@ class TileStore {
         } catch (Throwable t) { return null; }
     }
     void setStopped(boolean st) { stopped = st; a.prefs.edit().putBoolean("dlStop", st).apply(); }
-    /** really downloading right now (for the turning Mojave) */
     boolean loadingNow() { return !finished && !full && !stopped && !paused && System.currentTimeMillis() - lastOk < 8000; }
 
     // ---------- Hilfen ----------
@@ -153,7 +303,7 @@ class TileStore {
             HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
             c.setConnectTimeout(timeout);
             c.setReadTimeout(timeout);
-            c.setRequestProperty("User-Agent", "CarlinBox/2.05");
+            c.setRequestProperty("User-Agent", "CarlinBox/2.06");
             int code = c.getResponseCode();
             if (code == 404 || code == 400) { c.disconnect(); return new byte[0]; }
             if (code != 200) { c.disconnect(); return null; }

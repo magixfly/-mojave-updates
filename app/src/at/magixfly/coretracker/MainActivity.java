@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 
 /**
+ * V2.06: Karten nach der gemeinsamen Gebietsliste (gebiete.json), Tracker-ESP über Bluetooth (MT12-Telemetrie des Mojave).
  * V2.01: Carlin Box – eigenständig, ohne Core Tracker (Wunsch Thorsten 24.11.).
  * Startseite = eigene Offline-Karte Wien + NÖ aus dem Box-Speicher (Leaflet, in der App mitgeliefert),
  * eigene Position über das GPS der Box (falls vorhanden), FPV vom CosmoStreamer, WLAN/Hotspot-Anzeige.
@@ -79,6 +80,7 @@ public class MainActivity extends Activity {
         web.loadUrl(HOST);
         gps = new Gps(this);
         gps.start();
+        BleEsp.start(this);                       // V2.06: Tracker-ESP über Bluetooth (MT12-Telemetrie des Mojave + GPS)
         new Thread(new Runnable() { public void run() { netLoop(); } }).start();   // V1.43: WLAN/Hotspot der Box anzeigen
         ui.postDelayed(new Runnable() { public void run() { tick(); } }, 1000);
         hideBars();
@@ -118,10 +120,9 @@ public class MainActivity extends Activity {
         if (!loaded) return;
         long b1 = tiles.bytes.get(), b2 = tiles.estimate();
         String mb = (b1 >= 1073741824L && b2 >= 1073741824L) ? String.format(java.util.Locale.US, "%.1f/%.1f GB", b1 / 1073741824.0, b2 / 1073741824.0) : size(b1) + "/" + size(b2);
-        String net = tiles.netType();
-        boolean on = tiles.loadingNow();
-        String st = tiles.finished ? "complete" : tiles.full ? "storage full" : tiles.stopped ? "stopped" : net == null ? "offline" : on ? "loading" : "starting";
-        int pct = tiles.finished ? 100 : tiles.percent();
+        boolean on = tiles.loadingNow() || "cleaning".equals(tiles.phase);
+        String st = tiles.stateText();
+        int pct = tiles.finished && !"cleaning".equals(tiles.phase) ? 100 : tiles.percent();
         web.evaluateJavascript("window.ctUpd&&ctUpd(" + Client.q(Updater.st) + "," + Updater.pct + ")", null);
         web.evaluateJavascript("window.ctMaps&&ctMaps(" + pct + "," + Client.q(mb) + "," + Client.q(st) + "," + (on ? 1 : 0) + ")", null);
     }

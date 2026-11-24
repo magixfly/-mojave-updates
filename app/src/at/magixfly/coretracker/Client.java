@@ -15,7 +15,7 @@ class Client extends WebViewClient {
     @Override
     public void onPageFinished(WebView v, String url) {
         a.loaded = true;
-        v.evaluateJavascript("window.ctInit&&ctInit(" + q(MainActivity.ver(a)) + "," + TileStore.C_LAT + "," + TileStore.C_LON + ")", null);
+        v.evaluateJavascript("window.ctInit&&ctInit(" + q(MainActivity.ver(a)) + "," + TileStore.C_LAT + "," + TileStore.C_LON + "," + a.prefs.getBoolean("ble", true) + ")", null);
         if (a.gps != null) a.gps.push();
         a.updatePill();
         a.js("window.ctNet&&ctNet(" + q(a.netTxt) + ")");
@@ -42,6 +42,9 @@ class Client extends WebViewClient {
             if (p.startsWith("__ctbox/")) {
                 String c = p.substring(8);
                 if (c.equals("toggle")) a.tiles.setStopped(!a.tiles.stopped);           // V1.22: Tippen auf „Maps“ = Download Stopp/Start
+                else if (c.equals("update")) Updater.now(a);                            // V2.06: Knopf „Check for update“ (fehlte in 2.05)
+                else if (c.equals("ble")) { boolean on = !a.prefs.getBoolean("ble", true); a.prefs.edit().putBoolean("ble", on).apply();   // V2.06: Bluetooth ein/aus (wirkt nach Neustart)
+                    a.ui.postDelayed(new Runnable() { public void run() { MainActivity.quit(a, true); } }, 300); }
                 else if (c.equals("restart") || c.equals("close")) {                    // V1.75: App neu starten / schließen
                     final boolean re = c.equals("restart");
                     a.ui.postDelayed(new Runnable() { public void run() { MainActivity.quit(a, re); } }, 200);

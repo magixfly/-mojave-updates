@@ -16,6 +16,11 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 #maps.on #mapsBar{background:#16a34a}
 #gps{width:300px;color:#9ca3af}
 #fpvs{color:#93c5fd;display:none}
+#car{color:#9ca3af;display:none}#car b{font-weight:700}
+.mj{position:relative;width:0;height:0}
+.mj i{position:absolute;left:-15px;top:-15px;width:24px;height:24px;border-radius:50%;background:#4db8ff;border:3px solid #fff;box-shadow:0 0 10px rgba(0,0,0,.7)}
+.mj b{position:absolute;left:-12px;top:-42px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:24px solid #4db8ff;transform-origin:12px 42px}
+.mj.old i,.mj.old b{opacity:.45}
 .sp{flex:1}
 #menuB{width:64px;font-size:28px;color:#4ade80;cursor:pointer}
 #menu{position:absolute;right:10px;top:66px;z-index:1100;background:#111827;border:2px solid rgba(77,184,255,.6);border-radius:12px;padding:8px;display:none;flex-direction:column;gap:8px;min-width:300px}
@@ -34,13 +39,14 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 .me i{position:absolute;left:-13px;top:-13px;width:20px;height:20px;border-radius:50%;background:#3b82f6;border:3px solid #fff;box-shadow:0 0 8px rgba(0,0,0,.6)}
 .me b{position:absolute;left:-12px;top:-38px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:22px solid #3b82f6;transform-origin:12px 38px;display:none}
 #nopos{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:900;background:rgba(11,15,20,.8);border-radius:10px;padding:8px 16px;color:#9ca3af;font-size:16px;font-weight:400}
-html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{display:none}html.ctsplit #maps{width:240px}
+html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{display:none}html.ctsplit #maps{width:240px}
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small id="ver"></small></div>
   <div class="pill" id="net" title="Box Wi-Fi">…</div>
   <div class="pill" id="maps" title="Tap: start / stop the map download"><div id="mapsBar"></div><span id="mapsT">Maps</span></div>
   <div class="pill" id="gps">No GPS</div>
+  <div class="pill" id="car" title="Mojave via the tracker ESP (Bluetooth)"></div>
   <div class="pill" id="fpvs"></div>
   <div class="sp"></div>
   <div class="pill" id="menuB">&#8943;</div>
@@ -48,6 +54,9 @@ html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{displa
 <div id="menu">
   <button id="mFollow">Follow position: on</button>
   <button id="mOvl">Place names: on</button>
+  <button id="mCar">Show Mojave: on</button>
+  <button id="mBle">Bluetooth ESP: on</button>
+  <div class="info" id="bleT">Bluetooth: –</div>
   <button id="mUpd">Check for update</button>
   <div id="upd"><div id="updBar"></div><span id="updT"></span></div>
   <button id="mAuto">Box settings (Autostart)</button>
@@ -92,7 +101,23 @@ $('mAuto').onclick=function(){$('menu').classList.remove('open');cmd('autostart'
 $('mRe').onclick=function(){cmd('restart');};
 $('mCl').onclick=function(){cmd('close');};
 /* --- called by the app --- */
-window.ctInit=function(ver,lat,lon){home=[lat,lon];$('ver').textContent='V'+ver;$('mInfo').textContent='Carlin Box V'+ver+' · maps Vienna + Lower Austria from the box memory';};
+window.ctInit=function(ver,lat,lon,ble){home=[lat,lon];$('ver').textContent='V'+ver;$('mInfo').textContent='Carlin Box V'+ver+' · maps from the shared area list (box memory)';$('mBle').textContent='Bluetooth ESP: '+(ble?'on':'off')+' (restarts app)';};
+/* --- V2.06: Mojave from the tracker ESP via Bluetooth --- */
+var car=null,carOn=ls('car','1')=='1',carFollow=false;
+$('mCar').textContent='Show Mojave: '+(carOn?'on':'off');
+$('mCar').onclick=function(){carOn=!carOn;lw('car',carOn?'1':'0');this.textContent='Show Mojave: '+(carOn?'on':'off');if(car&&!carOn){map.removeLayer(car);car=null;}$('car').style.display=carOn&&car?'flex':'none';};
+$('mBle').onclick=function(){cmd('ble');};
+window.ctEsp=function(st,name,age,rssi,pps){$('bleT').textContent='Bluetooth: '+st+(name?' · '+name:'')+(st=='connected'&&age>=0?' · data '+age+' s ago':'')+(pps?' · ESP '+pps+' pkt/s'+(rssi?' '+rssi+' dBm':''):'');
+  if(st!='connected'&&car){car.getElement()&&car.getElement().firstChild.classList.add('old');}};
+window.ctCar=function(lat,lon,kmh,hdg,sats,volt,pct,mah,lq,rssi,mode,age){
+  if(!carOn)return;var e=$('car');e.style.display='flex';
+  e.innerHTML='<b>MOJAVE</b> '+(lat!=null?Math.round(kmh)+' km/h':'no GPS')+(volt>0?' · '+volt.toFixed(1)+' V':'')+(pct>=0&&pct<=100?' '+pct+' %':'')+(lq>=0?' · LQ '+lq:'');
+  e.style.color=(lq>=0&&lq<50)||age>5?'#f5b13d':'#4ade80';
+  if(lat==null||(lat==0&&lon==0))return;
+  if(!car)car=L.marker([lat,lon],{icon:L.divIcon({className:'',html:'<div class="mj"><b></b><i></i></div>',iconSize:[0,0]}),interactive:false,zIndexOffset:1000}).addTo(map);
+  else car.setLatLng([lat,lon]);
+  var el=car.getElement()&&car.getElement().firstChild;if(el){el.classList.toggle('old',age>5);el.querySelector('b').style.transform='rotate('+hdg+'deg)';el.querySelector('b').style.display=kmh>2?'block':'none';}
+};
 window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'#4ade80':r>=-60?'#4ade80':r>=-72?'#f5b13d':'#f87171';};
 window.ctMaps=function(pct,mb,st,on){$('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
