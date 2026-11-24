@@ -70,7 +70,10 @@ class TileStore {
         bytes.set(r[0]); loaded.set(r[1]);
         saveTotal();
     }
-    void saveTotal() { a.prefs.edit().putLong("tileBytes", bytes.get()).putLong("tileCount", loaded.get()).apply(); }
+    /** V2.03: Fortschritt über Neustarts merken – sonst zählt der Prozentwert nach jedem Start wieder von 0 hoch, während die vorhandenen Kacheln geprüft werden */
+    volatile long savedDone = 0;
+    long doneNow() { return Math.max(done.get(), savedDone); }
+    void saveTotal() { a.prefs.edit().putLong("tileBytes", bytes.get()).putLong("tileCount", loaded.get()).putLong("tileDone", doneNow()).apply(); }
     static void dirSize(File f, long[] r) {
         if (f.isFile()) { if (f.length() > 0) { r[0] += f.length(); r[1]++; } return; }
         File[] l = f.listFiles();
@@ -83,6 +86,7 @@ class TileStore {
     }
 
     void start() {
+        savedDone = a.prefs.getLong("tileDone", 0);
         loadTotal();
         long t = 0;
         for (int z = ZMIN; z <= ZMAX; z++) t += count(z);
@@ -97,7 +101,7 @@ class TileStore {
     }
 
     String status() {
-        long d = done.get();
+        long d = doneNow();
         int pct = (int) Math.min(100, d * 100 / Math.max(1, total));
         String s = "Maps " + pct + " % · " + phase + " · " + (bytes.get() / (1024 * 1024)) + " MB loaded";
         if (finished) s = "Maps Vienna + Lower Austria complete";
@@ -107,7 +111,7 @@ class TileStore {
         return s;
     }
 
-    int percent() { return (int) Math.min(100, done.get() * 100 / Math.max(1, total)); }
+    int percent() { return (int) Math.min(100, doneNow() * 100 / Math.max(1, total)); }
 
     /** V1.22: any internet - Wi-Fi or the SIM card of the box. */
     boolean online() { return netType() != null; }
@@ -149,7 +153,7 @@ class TileStore {
             HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
             c.setConnectTimeout(timeout);
             c.setReadTimeout(timeout);
-            c.setRequestProperty("User-Agent", "CarlinBox/2.02");
+            c.setRequestProperty("User-Agent", "CarlinBox/2.03");
             int code = c.getResponseCode();
             if (code == 404 || code == 400) { c.disconnect(); return new byte[0]; }
             if (code != 200) { c.disconnect(); return null; }

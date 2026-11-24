@@ -105,9 +105,10 @@ public class MainActivity extends Activity {
 
     void js(final String s) { ui.post(new Runnable() { public void run() { if (loaded && web != null) web.evaluateJavascript(s, null); } }); }
 
+    int ticks = 0;
     /** jede Sekunde: Kartendownload-Status (mit Prozent für den Balken) an die Seite */
     void tick() {
-        try { updatePill(); } catch (Throwable t) { }
+        try { updatePill(); if ((++ticks % 30) == 0) tiles.saveTotal(); } catch (Throwable t) { }
         ui.postDelayed(new Runnable() { public void run() { tick(); } }, 1000);
     }
 
@@ -142,8 +143,31 @@ public class MainActivity extends Activity {
             } catch (Throwable e) { if (!"ap".equals(e.getMessage())) netTxt = wifiTxt().replace("Box: ", ""); }
             js("window.ctNet&&ctNet(" + Client.q(netTxt) + ")");
             if ((++n % 2) == 0 && prefs.getBoolean("adbAuto", true)) AdbWifi.ensure(this);   // alle 30 s
+            if ((n % 4) == 0) roam();                                                           // V2.03: alle 60 s
             try { Thread.sleep(15000); } catch (Throwable e) { }
         }
+    }
+
+    /** V2.03: mehrere Zugangspunkte mit demselben WLAN-Namen (z. B. „Media“): ist ein anderer mindestens 10 dB stärker, dorthin wechseln. */
+    void roam() {
+        try {
+            String r = HotspotBoot.shell("cmd wifi status | grep -m1 'WifiInfo'; wpa_cli -i wlan0 scan_results");
+            java.util.regex.Matcher m = java.util.regex.Pattern.compile("SSID: \"([^\"]*)\", BSSID: ([0-9a-f:]{17}).*?RSSI: (-?\\d+)").matcher(r);
+            if (!m.find()) return;
+            String ssid = m.group(1), cur = m.group(2); int rssi = Integer.parseInt(m.group(3));
+            String best = null; int bestR = -200;
+            for (String l : r.split("\n")) {
+                String[] p = l.split("\t");
+                if (p.length < 5 || !p[4].equals(ssid)) continue;
+                int sg; try { sg = Integer.parseInt(p[2].trim()); } catch (Throwable t) { continue; }
+                if (sg > bestR) { bestR = sg; best = p[0].trim(); }
+            }
+            android.util.Log.d("CTWLAN", ssid + " cur " + cur + " " + rssi + " best " + best + " " + bestR);
+            if (best != null && !best.equals(cur) && bestR >= rssi + 10) {
+                android.util.Log.d("CTWLAN", "roam -> " + best);
+                HotspotBoot.shell("wpa_cli -i wlan0 roam " + best);
+            }
+        } catch (Throwable t) { android.util.Log.d("CTWLAN", "roam: " + t); }
     }
 
     /** V1.56: Band + Signal des WLANs, mit dem die Box verbunden ist */
