@@ -1,0 +1,71 @@
+### 399_cp2  –  2026-11-24 09:03:04
+### Box: verbunden (192.168.178.235:5555)
+
+-rw-rw-r-- 1 user1 user1 902460 Nov 24 09:03 /tmp/bs.tgz
+/tmp/bs.tgz: 1 file pushed, 0 skipped. 48.9 MB/s (902460 bytes in 0.018s)
+config.txt
+crsf_sniff.py
+demo_ride.csv
+hdmi_watch.sh
+kanshi.config
+kiosk.sh
+kiosk.sh.v309
+logs
+navi
+server.py
+server.py.v1910
+server.py.v1911
+server.py.v1913
+server.py.v1914
+server.py.v1915
+server.py.v1916
+server.py.v194
+server.py.v195
+server.py.v196
+server.py.v200
+server.py.v201
+server.py.v202
+server.py.v203
+server.py.v204
+server.py.v204c
+server.py.v205
+server.py.v205b
+server.py.v205c
+server.py.v205d
+server.py.v206
+server.py.v207
+server.py.v208
+server.py.v209
+server.py.v210
+server.py.v211
+server.py.v212
+server.py.v213
+server.py.v214
+server.py.v215
+server.py.v215a
+server.py.v216a
+server.py.v216c
+server.py.v217
+server.py.v218
+server.py.v221
+server.py.v222
+server.py.v223
+server.py.v224
+server.py.v225
+server.py.v228pre
+start.sh
+start.sh.v200
+start.sh.v203
+start.sh.v212
+startmenu.sh
+tiles
+touchmode.sh
+web
+2.2G	.
+94
+tail: /data/local/tmp/ct/bodenstation/server.log: No such file or directory
+cat: /data/local/tmp/ct/run.log: No such file or directory
+/dev/mmcblk0p2   58G   18G   38G  32% /
+tilecopy started
+
+### Exit-Code: 0
