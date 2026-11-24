@@ -1,8 +1,8 @@
-Stand: 2026-11-24 19:04:42
-App: 2.06
+Stand: 2026-11-24 19:05:14
+App: 2.07
 IP: 192.168.178.235
-WLAN: WLAN Media
+WLAN: 
 Wifi is connected to "Media"
 
 ### Exit-Code: 0
-Fernwartung: Update 108 → 109
+Fernwartung: 
