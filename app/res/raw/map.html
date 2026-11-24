@@ -21,6 +21,7 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 .mj i{position:absolute;left:-15px;top:-15px;width:24px;height:24px;border-radius:50%;background:#4db8ff;border:3px solid #fff;box-shadow:0 0 10px rgba(0,0,0,.7)}
 .mj b{position:absolute;left:-12px;top:-42px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:24px solid #4db8ff;transform-origin:12px 42px}
 .mj.old i,.mj.old b{opacity:.45}
+.atip{background:rgba(11,15,20,.85)!important;color:#e5e7eb!important;border:1px solid #4db8ff!important;font:700 14px system-ui!important;box-shadow:none!important}
 .sp{flex:1}
 #menuB{width:64px;font-size:28px;color:#4ade80;cursor:pointer}
 #menu{position:absolute;right:10px;top:66px;z-index:1100;background:#111827;border:2px solid rgba(77,184,255,.6);border-radius:12px;padding:8px;display:none;flex-direction:column;gap:8px;min-width:300px}
@@ -65,7 +66,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
   <div class="info" id="mInfo"></div>
 </div>
 <div id="map"></div>
-<div id="btns"><div class="b" id="zin">+</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div></div>
+<div id="btns"><div class="b" id="zin">+</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div></div>
 <div id="nopos">No position from the box – map shows home</div>
 <script src="leaflet.js"></script>
 <script>
@@ -102,6 +103,18 @@ $('mRe').onclick=function(){cmd('restart');};
 $('mCl').onclick=function(){cmd('close');};
 /* --- called by the app --- */
 window.ctInit=function(ver,lat,lon,ble){home=[lat,lon];$('ver').textContent='V'+ver;$('mInfo').textContent='Carlin Box V'+ver+' · maps from the shared area list (box memory)';$('mBle').textContent='Bluetooth ESP: '+(ble?'on':'off')+' (restarts app)';};
+/* --- V2.07: AREAS button - areas of the shared list (gebiete.json) as overlay --- */
+var areasOn=ls('areas','0')=='1',areasL=L.layerGroup(),areasVer=null;
+function areasDraw(j){areasL.clearLayers();(j.areas||[]).forEach(function(a){
+  var lab=(a.name||a.id||'area')+' · zoom '+(a.zmax||16),col=a.auto?'#f59e0b':'#4db8ff',l=null;
+  if(a.type=='circle')l=L.circle([a.lat,a.lon],{radius:a.r,color:col,weight:2,fillColor:col,fillOpacity:.15,interactive:false});
+  else if(a.type=='rect')l=L.rectangle([[a.s,a.w],[a.n,a.e]],{color:col,weight:2,fillColor:col,fillOpacity:.15,interactive:false});
+  else if(a.type=='route'&&a.pts)l=L.polyline(a.pts,{color:'#a855f7',weight:12,opacity:.45,lineCap:'round',lineJoin:'round',interactive:false});
+  if(l){l.bindTooltip(lab,{permanent:true,direction:'center',className:'atip',opacity:.9});areasL.addLayer(l);}});}
+function areasLoad(){fetch('/__ctbox/areas?t='+Date.now()).then(function(r){return r.json();}).then(function(j){if(j.ver!==areasVer||!areasL.getLayers().length){areasVer=j.ver;areasDraw(j);}}).catch(function(){});}
+function setAreas(on){areasOn=on;lw('areas',on?'1':'0');$('areasB').classList.toggle('act',on);if(on){areasLoad();areasL.addTo(map);}else map.removeLayer(areasL);}
+$('areasB').onclick=function(){setAreas(!areasOn);};
+setAreas(areasOn);setInterval(function(){if(areasOn)areasLoad();},60000);
 /* --- V2.06: Mojave from the tracker ESP via Bluetooth --- */
 var car=null,carOn=ls('car','1')=='1',carFollow=false;
 $('mCar').textContent='Show Mojave: '+(carOn?'on':'off');

@@ -39,6 +39,11 @@ class Client extends WebViewClient {
             if (p.isEmpty() || p.equals("index.html")) return raw("map", "text/html");
             if (p.equals("leaflet.js")) return raw("leaflet", "application/javascript");
             if (p.equals("leaflet.css")) return raw("leaflet_css", "text/css");
+            if (p.equals("__ctbox/areas")) {                                             // V2.07: Gebietsliste für den Knopf AREAS
+                byte[] d = a.tiles.listFile.exists() ? TileStore.read(a.tiles.listFile) : null;
+                if (d == null) return empty(404);
+                return new WebResourceResponse("application/json", "utf-8", new ByteArrayInputStream(d));
+            }
             if (p.startsWith("__ctbox/")) {
                 String c = p.substring(8);
                 if (c.equals("toggle")) a.tiles.setStopped(!a.tiles.stopped);           // V1.22: Tippen auf „Maps“ = Download Stopp/Start

@@ -58,7 +58,7 @@ class TileStore {
     File file(int z, int x, int y) { return new File(dir, z + "/" + x + "/" + y + ".jpg"); }
     File ovlFile(int z, int x, int y) { return new File(ovlDir, z + "/" + x + "/" + y + ".png"); }
 
-    String zentrale() { String z = a.prefs.getString("zentrale", "").trim(); while (z.endsWith("/")) z = z.substring(0, z.length() - 1); return z; }
+    String zentrale() { String z = a.prefs.getString("zentrale", "http://192.168.178.243:8091").trim(); while (z.endsWith("/")) z = z.substring(0, z.length() - 1); return z; }
     int zcap() { return Math.max(8, Math.min(19, a.prefs.getInt("map_zmax", 19))); }
 
     /** Kachel für die Karte: Box-Speicher → Zentrale → Pi → basemap.at. Gespeichert wird nur, was in der Liste liegt. null/leer = nicht verfügbar. */
@@ -131,6 +131,18 @@ class TileStore {
         piOk = p != null && p.length > 0;
     }
 
+    /** V2.07: Zentrale (/api/ping listver) bzw. Pi (/gebiete.json ver) hat eine andere Listenversion als die geladene */
+    boolean listVerChanged() {
+        Areas ar = areas;
+        if (ar == null) return true;
+        try {
+            String zz = zentrale();
+            if (zOk) { byte[] d = http(zz + "/api/ping", 2000); if (d != null && d.length > 0) { int v = new JSONObject(new String(d, "UTF-8")).optInt("listver", ar.ver); return v != ar.ver; } }
+            if (piOk) { byte[] d = http(PI + "/gebiete.json", 3000); if (d != null && d.length > 10) return new JSONObject(new String(d, "UTF-8")).optInt("ver", ar.ver) != ar.ver; }
+        } catch (Throwable t) { }
+        return false;
+    }
+
     JSONObject loadList() {
         String zz = zentrale();
         String[] src = {zz.length() > 0 ? zz + "/gebiete.json" : null, PI + "/gebiete.json", GH + "gebiete.json", GH + "gebiete_default.json"};
@@ -169,9 +181,10 @@ class TileStore {
                 }
             } catch (Throwable t) { android.util.Log.d("CTAP", "sync: " + t); }
             phase = finished ? "done" : phase;
-            for (int i = 0; i < 60; i++) {   // alle 30 min neu prüfen (Liste kann sich geändert haben)
-                try { Thread.sleep(30000); } catch (Throwable t) { }
-                if (i % 2 == 0) probe();
+            for (int i = 0; i < 30; i++) {   // alle 30 min neu laden, früher wenn die Zentrale eine neue Listenversion meldet
+                try { Thread.sleep(60000); } catch (Throwable t) { }
+                probe();
+                if (listVerChanged()) break;
             }
         }
     }
@@ -303,7 +316,7 @@ class TileStore {
             HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
             c.setConnectTimeout(timeout);
             c.setReadTimeout(timeout);
-            c.setRequestProperty("User-Agent", "CarlinBox/2.06");
+            c.setRequestProperty("User-Agent", "CarlinBox/2.07");
             int code = c.getResponseCode();
             if (code == 404 || code == 400) { c.disconnect(); return new byte[0]; }
             if (code != 200) { c.disconnect(); return null; }
