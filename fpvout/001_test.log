@@ -1,0 +1,40 @@
+== 001_test on mojave-fpv, 2026-11-24 23:58:12, FPV V1.2 ==
+user: root
+Linux 6.18.50+rpt-rpi-v8 aarch64
+PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
+--- camera
+Available cameras
+-----------------
+0 : imx290 [1920x1080 12-bit RGGB] (/base/soc/i2c0mux/i2c@1/imx290@1a)
+    Modes: 'SRGGB10_CSI2P' : 1280x720 [30.00 fps - (65535, 65535)/65535x65535 crop]
+                             1920x1080 [30.00 fps - (65535, 65535)/65535x65535 crop]
+           'SRGGB12_CSI2P' : 1280x720 [30.00 fps - (65535, 65535)/65535x65535 crop]
+--- tailscale
+100.64.69.54    mojave-fpv  thorsten@  linux    -                                                           
+100.79.194.65   gamerpro    thorsten@  windows  -                                                           
+100.76.27.53    iphone-xii  thorsten@  iOS      -                                                           
+100.101.199.46  nbl         thorsten@  windows  active; direct 81.217.204.231:61632, tx 29840680 rx 112632  
+--- config
+video_width        = 1920
+video_height       = 1080
+video_fps          = 30        # Pi 4 hardware encoder: max 30 at 1080p, 60 at 720p
+video_bitrate_kbps = 4000      # 4000 = 4 Mbit/s. Lower it if the LTE upload is weak
+video_idr_period   = 30        # full picture every N frames (30 = once per second)
+video_hflip        = 0         # 1 = mirror left/right
+video_vflip        = 0         # 1 = upside down
+audio_enable       = 0
+cam2_enable        = 0
+--- memory / disk
+               total        used        free      shared  buff/cache   available
+Mem:             905         283          99          16         596         622
+/dev/mmcblk0p2   29G  4.0G   23G  15% /
+--- mediamtx
+v1.21.4
+2026/11/24 23:39:25 INF [WebRTC] [session 210abe1b] is reading from path 'cam', 1 track (H264)
+2026/11/24 23:40:12 INF [WebRTC] [session 210abe1b] closed: peer connection closed
+2026/11/24 23:41:45 INF [WebRTC] [session d78e4ddb] created by 100.101.199.46:60247
+2026/11/24 23:41:46 INF [WebRTC] [session d78e4ddb] peer connection established, local candidate: host/udp/2001:4bc9:a067:8d50:8b15:bf72:4534:44b5/8189, remote candidate: prflx/udp/fd7a:115c:a1e0::eb31:c72f/63962
+2026/11/24 23:41:46 INF [WebRTC] [session d78e4ddb] is reading from path 'cam', 1 track (H264)
+2026/11/24 23:42:40 INF [WebRTC] [session d78e4ddb] closed: peer connection closed
+
+== exit code 0, 0.2 s ==
