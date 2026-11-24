@@ -1,8 +1,8 @@
-Stand: 2026-11-24 15:16:50
-App: 2.00
+Stand: 2026-11-24 15:22:31
+App: 2.01
 IP: 192.168.178.235
-WLAN: WLAN Media
+WLAN: 
 Wifi is connected to "Media"
 
 ### Exit-Code: 0
-Fernwartung: zuletzt 034_p.sh
+Fernwartung: 
