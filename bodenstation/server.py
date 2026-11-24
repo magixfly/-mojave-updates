@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.54"
+VERSION = "3.55"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -2635,8 +2635,19 @@ def region_thread():
                     clean_tiles(want, protected_tiles())
                     CFG["areas_cleaned"] = str(d.get("ver", "")) + "/" + str(zcap); save_cfg(CFG)
                 if CFG.get("online", "1") == "1":
-                    jobs = sorted(want)
-                    REGION.update(phase="loading", total=len(jobs), done=0, msg="loading", t=time.time())
+                    # V3.55: tiles already on the SD card count as done -> progress does not restart at 0 % after a list change
+                    REGION.update(phase="checking", msg="checking tiles on the SD card", total=len(want), done=0)
+                    labels = CFG.get("labels", "1") == "1"
+                    jobs, already = [], 0
+                    for (z, x, y) in sorted(want):
+                        ok = (os.path.exists(tile_file("ortho", z, x, y)) or os.path.exists(tile_file("ki", z, x, y))
+                              or os.path.exists(os.path.join(TILES, "none", str(z), str(x), "%d" % y)))
+                        if ok and (not labels or os.path.exists(os.path.join(TILES, "overlay", str(z), str(x), "%d.png" % y))):
+                            already += 1
+                        else:
+                            jobs.append((z, x, y))
+                        REGION["done"] = already
+                    REGION.update(phase="loading", total=len(want), done=already, msg="loading", t=time.time())
                     q = queue.Queue()
                     for j in jobs:
                         q.put(j)

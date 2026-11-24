@@ -1,7 +1,7 @@
 {
- "ver": "3.54",
+ "ver": "3.55",
  "neu": [
-  "Top bar shows the progress of the map areas (Maps xx %)"
+  "Map areas: tiles already on the SD card count as done (progress no longer restarts at 0 %)"
  ],
  "dateien": [
   {
@@ -11,8 +11,8 @@
   },
   {
    "p": "server.py",
-   "s": 154071,
-   "md5": "7514aabd36d5ca9a841ae70289c413fe"
+   "s": 154952,
+   "md5": "f1b64631da215181c11e346e10fe7ebb"
   },
   {
    "p": "web/fpvstat.js",
