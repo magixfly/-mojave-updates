@@ -1,0 +1,13 @@
+### 021_run  –  2026-11-24 09:26:14
+### Box direkt (App 1.97, 192.168.178.235)
+
+14
+0
+root         29571 29568      39472  28912 do_sys_poll         0 S ld-musl
+=== start Tue Nov 24 09:26:15 CET 2026
+Mojave Ground Station V3.47 on http://localhost:8080
+{"ver": "3.47", "src": "-", "dev": "", "age": 99.0, "lat": null, "lon": null, "spd": 0.0, "hdg": 0.0, "alt": 0, "sats": 0, "v": 0.0, "cells": 0, "cell": 0.0, "cur": 0.0, "mah": 0, "pct": null, "lq": null, "rssi": null, "snr": null, "rfmode": null, "txpw": null, "roll": 0.0, "pitch": 0.0, "mode": "",
+
+### Exit-Code: 0
+
+### Dauer 30 s
