@@ -1,5 +1,5 @@
-Stand: 2026-11-24 07:15:38
-App: 1.96
+Stand: 2026-11-24 07:21:19
+App: 1.97
 IP: 192.168.178.235
 WLAN: WLAN Media
 Wifi is connected to "Media"
