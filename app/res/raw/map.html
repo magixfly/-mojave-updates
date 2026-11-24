@@ -21,6 +21,7 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 #menu{position:absolute;right:10px;top:66px;z-index:1100;background:#111827;border:2px solid rgba(77,184,255,.6);border-radius:12px;padding:8px;display:none;flex-direction:column;gap:8px;min-width:300px}
 #menu.open{display:flex}
 #menu button{font:700 22px system-ui,sans-serif;color:#e5e7eb;background:#0b0f14;border:2px solid #374151;border-radius:10px;padding:16px;text-align:left}
+#upd{position:relative;height:40px;border-radius:8px;background:#1f2937;display:none;overflow:hidden}#updBar{position:absolute;left:0;top:0;bottom:0;width:0;background:#16a34a;transition:width .5s}#updT{position:relative;display:block;line-height:40px;padding:0 10px;font-size:16px;color:#f3f4f6;text-shadow:0 0 3px #000}
 #menu .info{color:#9ca3af;font-size:16px;font-weight:400;padding:4px 6px}
 #map{position:absolute;left:0;right:0;top:60px;bottom:0;background:#0b0f14}
 #btns{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:14px}
@@ -47,6 +48,8 @@ html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{displa
 <div id="menu">
   <button id="mFollow">Follow position: on</button>
   <button id="mOvl">Place names: on</button>
+  <button id="mUpd">Check for update</button>
+  <div id="upd"><div id="updBar"></div><span id="updT"></span></div>
   <button id="mAuto">Box settings (Autostart)</button>
   <button id="mRe">Restart app</button>
   <button id="mCl">Close app</button>
@@ -84,6 +87,7 @@ map.on('click',function(){$('menu').classList.remove('open');});
 $('mFollow').onclick=function(){setFollow(!follow);};
 $('mOvl').onclick=function(){ovlOn=!ovlOn;lw('ovl',ovlOn?'1':'0');if(ovlOn)ovl.addTo(map);else map.removeLayer(ovl);this.textContent='Place names: '+(ovlOn?'on':'off');};
 $('mOvl').textContent='Place names: '+(ovlOn?'on':'off');
+$('mUpd').onclick=function(){cmd('update');$('upd').style.display='block';$('updT').textContent='Checking for update …';};
 $('mAuto').onclick=function(){$('menu').classList.remove('open');cmd('autostart');};
 $('mRe').onclick=function(){cmd('restart');};
 $('mCl').onclick=function(){cmd('close');};
@@ -101,6 +105,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   $('gps').style.color=age>30?'#f5b13d':'#4ade80';
   if(follow)map.panTo(pos,{animate:true,duration:.5});
 };
+window.ctUpd=function(t,p){var u=$('upd');if(!t){return;}u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
 window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
 new MutationObserver(function(){setTimeout(function(){map.invalidateSize();},50);}).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
 window.addEventListener('resize',function(){map.invalidateSize();});

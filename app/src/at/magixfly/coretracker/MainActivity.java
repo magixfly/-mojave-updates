@@ -122,6 +122,7 @@ public class MainActivity extends Activity {
         boolean on = tiles.loadingNow();
         String st = tiles.finished ? "complete" : tiles.full ? "storage full" : tiles.stopped ? "stopped" : net == null ? "offline" : on ? "loading" : "starting";
         int pct = tiles.finished ? 100 : tiles.percent();
+        web.evaluateJavascript("window.ctUpd&&ctUpd(" + Client.q(Updater.st) + "," + Updater.pct + ")", null);
         web.evaluateJavascript("window.ctMaps&&ctMaps(" + pct + "," + Client.q(mb) + "," + Client.q(st) + "," + (on ? 1 : 0) + ")", null);
     }
 
