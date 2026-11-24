@@ -1,13 +1,13 @@
 {
- "ver": "3.46",
+ "ver": "3.47",
  "neu": [
-  "Box mode (server can run on the Carlin box), overview page only on the Pi"
+  "Box: own ESP via Bluetooth (bridge port 8099)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 143377,
-   "md5": "2dd5105a081e6399d56ce342e8cb5a67"
+   "s": 145157,
+   "md5": "b8cb14472661d7f2a8fc0e51593a5907"
   },
   {
    "p": "web/fpvstat.js",

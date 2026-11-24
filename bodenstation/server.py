@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.46"
+VERSION = "3.47"
 BASE = os.path.dirname(os.path.abspath(__file__))
 ONBOX = os.environ.get("CT_BOX") == "1"   # V3.46: running on the Carlin box itself (Python on Android, started by boxmain.py)
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
@@ -1919,6 +1919,50 @@ def serial_thread():
             S["dev"] = ""
         time.sleep(1)
 
+def ble_thread():
+    """V3.47 (box): the box app connects to the own ESP via Bluetooth (BLE) and passes its byte stream
+    through 127.0.0.1:8099 - same CRSF stream as over USB on the Pi. Text sent back goes to the ESP."""
+    srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    srv.bind(("127.0.0.1", 8099))
+    srv.listen(1)
+    while True:
+        c, _ = srv.accept()
+        c.settimeout(1.0)
+        name = "ble"
+        print("BLE bridge connected")
+        p = Crsf("USB"); tb = bytearray(); ask = 0; last = time.time()
+        try:
+            while True:
+                if time.time() - ask > 30:   # ask the ESP for its status (firmware, GPS), like on USB
+                    ask = time.time()
+                    c.sendall(b"status\n")
+                try:
+                    d = c.recv(4096)
+                except socket.timeout:
+                    if time.time() - last > 15:
+                        raise OSError("silent")
+                    continue
+                if not d:
+                    raise OSError("closed")
+                if d.startswith(b"@dev ") and b"\n" in d:   # first line from the app: device name
+                    ln, d = d.split(b"\n", 1)
+                    name = "ble:" + ln[5:].decode("latin1", "ignore").strip()
+                with LOCK:
+                    S["dev"] = name
+                last = time.time()
+                if d:
+                    p.feed(d)
+                    esp_text(tb, d)
+        except Exception as e:
+            print("BLE bridge lost", e)
+        try:
+            c.close()
+        except Exception:
+            pass
+        with LOCK:
+            S["dev"] = ""
+
 # ---------------------------------------------------------------- test ride
 def load_demo():
     """Demo ride for the test mode (demo_ride.csv: t,lat,lon,kmh,alt,kurs,akkuV,A,mAh,t1,t2,t3,roll,nick,sats,lq,dbm)."""
@@ -2887,7 +2931,7 @@ def main():
     threading.Thread(target=phone_gps_thread, daemon=True).start()
     threading.Thread(target=navi_log_thread, daemon=True).start()
     threading.Thread(target=autopre_thread, daemon=True).start()
-    threading.Thread(target=serial_thread, daemon=True).start()
+    threading.Thread(target=ble_thread if ONBOX else serial_thread, daemon=True).start()   # V3.47: box = own ESP via Bluetooth
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
         threading.Thread(target=wifi_thread, daemon=True).start()
