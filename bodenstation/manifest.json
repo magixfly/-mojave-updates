@@ -1,13 +1,13 @@
 {
- "ver": "3.48",
+ "ver": "3.49",
  "neu": [
-  "Carlin box parts removed: STATE overview page, box chip, /api/box, /api/boxcmd, box mode and Bluetooth bridge"
+  "3D view removed completely (menu entry, tilted map, setting map3d)"
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 140308,
-   "md5": "521d09fd89c026b367fe873686e48d0a"
+   "s": 140196,
+   "md5": "6d415655e734433b0dbcaa116baebd9d"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 164693,
-   "md5": "858969fdb1967758d5a569861998514d"
+   "s": 161800,
+   "md5": "77a10b96bc84d110546c0fc7dac983bf"
   }
  ]
 }

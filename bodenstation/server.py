@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.48"
+VERSION = "3.49"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -61,7 +61,6 @@ DEFAULTS = [
     ("fpv_mode", "map", "V3.24: FPV view on the Pi (map, full, pip) - kept over a restart"),
     ("pip_pos", "", "V3.24: position/size of the FPV picture-in-picture"),
     ("theme", "glass", "V2.98: look of the tracker: glass (Liquid Glass) or hud (HUD Neon), menu Style"),
-    ("map3d", "1", "V2.0.61: 1 = 3D view (tilted satellite map like a car navigation, menu 3D view)"),
     ("me_gps", "1", "1 = use the GPS module on the ESP receiver as own position (pilot / ground station)"),
     ("me_timeout_s", "5", "Own GPS older than this = not shown"),
     ("navi", "1", "V3.29: 1 = without a car the map follows your own position (navi mode) and your drive is saved as GPX in navi/"),
@@ -2676,7 +2675,7 @@ class H(BaseHTTPRequestHandler):
                 CFG["pip_pos"] = b["pip_pos"]; ok["pip_pos"] = b["pip_pos"]
             if b.get("theme") in ("glass", "hud"):   # V2.98
                 CFG["theme"] = b["theme"]; ok["theme"] = b["theme"]
-            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "map3d", "phone_gps", "navi", "labels", "starts"):
+            for k in ("bright", "sound", "range_warn_m", "core_show", "night", "auto_zoom", "map_names", "phone_gps", "navi", "labels", "starts"):
                 if k in b:
                     v = str(int(float(b[k])))
                     CFG[k] = v

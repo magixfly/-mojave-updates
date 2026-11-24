@@ -111,10 +111,6 @@ html.fpv-full #fpvBox{display:block;left:0;top:0;right:0;bottom:0;z-index:20}
 html.fpv-full #bFpv{opacity:.7}
 html.fpv-pip body *,html.fpv-full body *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}   /* V3.00: no glass blur while the video runs (blur costs a lot of CPU on the Pi) */
 html.fpv-pip #fpvBox{display:block;right:100px;top:64px;width:36%;height:auto;aspect-ratio:16/9;border:2px solid rgba(77,184,255,.6);border-radius:10px}#fpvRs{display:none;position:absolute;right:0;bottom:0;width:44px;height:44px;background:linear-gradient(135deg,transparent 50%,rgba(77,184,255,.9) 50%) right bottom/20px 20px no-repeat;border-bottom-right-radius:8px;touch-action:none}html.fpv-pip #fpvRs{display:block}html.fpv-pip #fpvBox{touch-action:none;cursor:move}
-/* V2.0.61: 3D view - tilted map like a car navigation (Pi and Kia box) */
-html.v3d body{background:linear-gradient(180deg,#22324a 0,#10161d 38%)}
-html.v3d body #map,html.v3d #map{transform:perspective(1200px) rotateX(45deg)!important;transform-origin:50% 100%!important}   /* V2.0.62: canvas 2.6x taller, far area reaches the horizon */
-html.v3d #top,html.v3d #side,html.v3d #side2{z-index:6}html.v3d #top{background:var(--pan)}
 body.night #side,body.night #top,body.night #btns{filter:brightness(.7)}
 #uimp{position:absolute;left:calc(115px + 50%);bottom:56px;transform:translateX(-50%);width:520px;display:none}
 #uimp .bar span{white-space:nowrap}
@@ -350,7 +346,7 @@ body.many #carsN{display:flex}body.many #car1,body.many #car2{display:none}body.
     <div class="seg noWin" id="sBright"><b data-v="20">20 %</b><b data-v="40">40 %</b><b data-v="70">70 %</b><b data-v="100">100 %</b></div>
     <label>Track length (live + replay) · how much of the line stays visible</label>
     <div style="display:flex;gap:10px;align-items:center"><button class="mb" id="mTlM" style="width:90px;font-size:30px">−</button><b id="mTl" style="flex:1;text-align:center;font-size:26px"></b><button class="mb" id="mTlP" style="width:90px;font-size:30px">+</button></div>
-    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="m3d">3D view: on</button><button class="mb" id="mTheme">Style: Glass</button>
+    <button class="mb" id="mNight">Night mode: off</button><button class="mb" id="mTheme">Style: Glass</button>
     <button class="mb" id="mCore">Core info: on</button>
     <button class="mb" id="mSound">Warning sound: on</button>
     <label>Drivers</label>
@@ -446,8 +442,8 @@ function resize(){
   const c=C.cfg&&+C.cfg.ui_scale;
   S=c>0?c:Math.min(innerWidth/1280,innerHeight/720);
   const ui=$('ui');ui.style.width=innerWidth/S+'px';ui.style.height=innerHeight/S+'px';ui.style.transform=`scale(${S})`;
-  DPR=(window.devicePixelRatio||1)*S*(document.documentElement.classList.contains('v3d')&&!document.getElementById('ctMaps')&&(navigator.deviceMemory||4)<2?.75:1);   // V2.71: Pi 3D = 75 % pixels
-  W=cv.clientWidth;H=cv.clientHeight;if(W*H*DPR*DPR>15e6)DPR=Math.sqrt(15e6/(W*H));   // V3.21: Safari (iPhone) draws no canvas above ~16 Mpixel -> black corner in 3D
+  DPR=(window.devicePixelRatio||1)*S;
+  W=cv.clientWidth;H=cv.clientHeight;if(W*H*DPR*DPR>15e6)DPR=Math.sqrt(15e6/(W*H));   // V3.21: Safari (iPhone) draws no canvas above ~16 Mpixel -> black corner
   cv.width=Math.round(W*DPR);cv.height=Math.round(H*DPR);dirty=true}
 function uiScale(){resize()}
 addEventListener('resize',resize);
@@ -522,7 +518,7 @@ function draw(){
   frame++;
   const tz=Math.min(Math.floor(V.z),C.max_zoom),sc=2**(V.z-tz);
   const cx=lon2x(V.lon,tz),cy=lat2y(V.lat,tz);
-  const v3=document.documentElement.classList.contains('v3d'),oy=(v3?H*0.41:V.head?H*0.18:0)+(v3?0:MOFF.y);   // heading-up: car a bit below centre (V2.0.61: 3D view lower)
+  const oy=(V.head?H*0.18:0)+MOFF.y;   // heading-up: car a bit below centre
   ctx.setTransform(DPR,0,0,DPR,0,0);
   ctx.fillStyle='#10161d';ctx.fillRect(0,0,W,H);
   ctx.save();ctx.translate(W/2+MOFF.x,H/2+oy);ctx.rotate(V.rot);ctx.scale(sc,sc);
@@ -557,7 +553,7 @@ function draw(){
     ovPump()}
   if(STARTS.length&&(!C.cfg||C.cfg.starts!=='0')){const k=TS*2**tz;   // V3.30: where the car rides started
     for(const s of STARTS){const q=proj([s.lat,s.lon]),x=q[0]*k-cx,y=q[1]*k-cy;if(Math.abs(x)>R||Math.abs(y)>R)continue;
-      ctx.save();ctx.translate(x,y);ctx.rotate(-V.rot);ctx.scale((v3?2.2:1.4)/sc,(v3?2.2:1.4)/sc);
+      ctx.save();ctx.translate(x,y);ctx.rotate(-V.rot);ctx.scale(1.4/sc,1.4/sc);
       ctx.fillStyle='rgba(16,22,29,.85)';ctx.strokeStyle='#4ade80';ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(0,0,11,0,7);ctx.fill();ctx.stroke();
       ctx.fillStyle='#4ade80';ctx.beginPath();ctx.moveTo(-3,6);ctx.lineTo(-3,-7);ctx.lineTo(6,-3.5);ctx.lineTo(-3,0);ctx.fill();
       if(s.n>1){ctx.font='bold 12px system-ui';ctx.textAlign='left';ctx.textBaseline='middle';ctx.lineWidth=3;ctx.strokeStyle='#000';ctx.strokeText(s.n+'×',14,0);ctx.fillStyle='#fff';ctx.fillText(s.n+'×',14,0)}
@@ -566,7 +562,7 @@ function draw(){
   drawRide(tz,cx,cy,sc);
   // track
   if(track.length>1){
-    ctx.lineWidth=(v3?8:4.5)/sc;ctx.lineCap='round';ctx.lineJoin='round';if(v3){ctx.shadowColor='rgba(0,0,0,.85)';ctx.shadowBlur=5}   // V2.0.61: 3D = thick line with dark edge
+    ctx.lineWidth=4.5/sc;ctx.lineCap='round';ctx.lineJoin='round';
     // V2.0.3: points projected once (cached), segments of the same colour in one path, off-screen parts skipped
     const k=TS*2**tz,n1=trackEnd(track,SM),Rv=R+40,TA=trailA(track,n1);let pp=proj(track[TA.i0]),px=pp[0]*k-cx,py=pp[1]*k-cy,mx=px,my=py,col=null,open=false;
     const flush=()=>{if(open){ctx.stroke();open=false}};
@@ -1072,7 +1068,7 @@ function brg(a,b,c,d){const f1=a*Math.PI/180,f2=c*Math.PI/180,dl=(d-b)*Math.PI/1
 function posLine(){const me=st.me&&st.me.lat!=null&&!st.me.nofix?st.me:null;   // V3.34: no car -> own coordinates
   $('vPos').textContent=st.lat!=null&&!st.vgps?`${st.lat.toFixed(6)}, ${st.lon.toFixed(6)}`:me?`${(MEH.lat??me.lat).toFixed(6)}, ${(MEH.lon??me.lon).toFixed(6)}`:st.lat!=null?`${st.lat.toFixed(6)}, ${st.lon.toFixed(6)}`:'–'}
 // menu closes after an action button (not for map loading, saved rides or the segment buttons)
-['mHome','mClear','mTest','mTest2','mNight','m3d','mSound','mCore','mLock'].forEach(id=>$(id).addEventListener('click',()=>setTimeout(()=>{$('menu').style.display='none'},150)));
+['mHome','mClear','mTest','mTest2','mNight','mSound','mCore','mLock'].forEach(id=>$(id).addEventListener('click',()=>setTimeout(()=>{$('menu').style.display='none'},150)));
 // V1.8.1: test ride player – pause, timeline, 1x/2x/4x
 const PL={drag:false};
 function fmtS(s){s=Math.max(0,Math.round(s));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
@@ -1181,7 +1177,7 @@ function findHud(){if(!FIND.on)return;
 async function init(){
   resize();
   try{V.head=localStorage.ori==='h'}catch(e){}
-  try{let c=null;for(let i=0;i<40&&!c;i++){try{c=await j('/api/config')}catch(e){$('ver').textContent='waiting for server '+Math.round(i*100/40)+' %';await new Promise(r=>setTimeout(r,1000))}}if(!c)throw 0;   /* V3.24: after a reboot the page can be faster than the server - wait instead of demo defaults (glass, 3D...) */Object.assign(C,{max_zoom:+c.max_zoom,start_zoom:+c.start_zoom,orientation:c.orientation,cell_warn:+c.cell_warn,car_size:+c.car_size||1,auto_zoom:+c.auto_zoom,auto_zoom_out:+c.auto_zoom_out,auto_zoom_kmh:+c.auto_zoom_kmh||60});
+  try{let c=null;for(let i=0;i<40&&!c;i++){try{c=await j('/api/config')}catch(e){$('ver').textContent='waiting for server '+Math.round(i*100/40)+' %';await new Promise(r=>setTimeout(r,1000))}}if(!c)throw 0;   /* V3.24: after a reboot the page can be faster than the server - wait instead of demo defaults (glass...) */Object.assign(C,{max_zoom:+c.max_zoom,start_zoom:+c.start_zoom,orientation:c.orientation,cell_warn:+c.cell_warn,car_size:+c.car_size||1,auto_zoom:+c.auto_zoom,auto_zoom_out:+c.auto_zoom_out,auto_zoom_kmh:+c.auto_zoom_kmh||60});
     V.lat=+(c.map_lat||c.test_lat);V.lon=+(c.map_lon||c.test_lon);   /* V3.15: start at the last real position */
     try{const s0=await j('/api/state'),me0=s0.me&&s0.me.lat!=null?s0.me:null;   /* V3.40: start directly at the car / own position / home (VGPS), no jump from the test area */
       if(s0.lat!=null){V.lat=s0.lat;V.lon=s0.lon}else if(me0){V.lat=me0.lat;V.lon=me0.lon}}catch(e){}
@@ -1190,7 +1186,7 @@ async function init(){
     try{if(!localStorage.ori)V.head=c.orientation==='heading'}catch(e){V.head=c.orientation==='heading'}
     if(!document.getElementById('ctMaps')){let lf=null,lp=null;try{lf=localStorage.fpvMode;lp=localStorage.pipPos}catch(e){}if(!lf&&FPVM.includes(c.fpv_mode)){fpvWant=c.fpv_mode}if(!lp&&c.pip_pos){try{PIP=JSON.parse(c.pip_pos)}catch(e){}}}}   // V3.24: FPV view + PiP from the Pi (kiosk browser forgets localStorage)
   catch(e){DEMO=true;C.max_zoom=19;demoInit()}
-  setNight(isNight());set3d(is3d());setTheme(curTheme());loadIcons();V.z=C.start_zoom;{let s=null;try{s=localStorage.getItem('az')}catch(e){}setAz(s===null?C.auto_zoom:s==='1')}$('ver').textContent=DEMO?'demo':'V'+((C.cfg&&C.cfg.version)||'');uiScale();
+  setNight(isNight());setTheme(curTheme());loadIcons();V.z=C.start_zoom;{let s=null;try{s=localStorage.getItem('az')}catch(e){}setAz(s===null?C.auto_zoom:s==='1')}$('ver').textContent=DEMO?'demo':'V'+((C.cfg&&C.cfg.version)||'');uiScale();
   if(V.head){$('bOri').textContent='▲';$('bOri').classList.add('on')}
   (function pl(){const de=document.documentElement,k=document.getElementById('kiaOv'),ov=k&&k.style.display!=='none'&&getComputedStyle(k).display!=='none';   // V3.13: next poll only after the last one (no pile-up), slower while video / status view
     Promise.resolve(poll()).finally(()=>setTimeout(pl,(de.classList.contains('fpv-full')||ov)?500:de.classList.contains('fpv-pip')?300:150))})();loop();
@@ -1262,7 +1258,6 @@ $('mSound').onclick=()=>{const on=!soundOn();try{localStorage.setItem('snd',on?'
 function seg(id,val,fn){const el=$(id);el.querySelectorAll('b').forEach(b=>{b.classList.toggle('on',+b.dataset.v===+val);b.onclick=()=>{fn(+b.dataset.v);seg(id,+b.dataset.v,fn)}})}
 async function j2(u,b){try{return await (await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)})).json()}catch(e){return {}}}
 function isNight(){return !!(C.cfg&&C.cfg.night==='1')}
-function is3d(){return !(C.cfg&&C.cfg.map3d==='0')}
 function curTheme(){return (C.cfg&&C.cfg.theme)==='hud'?'hud':'glass'}
 function setTheme(t,save){const de=document.documentElement;de.classList.toggle('th-glass',t==='glass');de.classList.toggle('th-hud',t==='hud');$('mTheme').textContent='Style: '+(t==='hud'?'HUD':'Glass');if(save){if(C.cfg)C.cfg.theme=t;j2('/api/set',{theme:t})}dirty=true}   // V2.98
 // V2.80: CosmoStreamer video on the Pi - MAP -> Split -> FPV -> PiP; the iframe only exists outside MAP (saves memory)
@@ -1270,7 +1265,7 @@ const FPVM=['map','full','pip'];/* V2.85: no split on the Pi */let fpvMode='map'
 function setFpv(m,user){fpvMode=m;if(user){fpvWant=m;try{localStorage.fpvMode=m}catch(e){}if(!document.getElementById('ctMaps'))j2('/api/set',{fpv_mode:m})}const de=document.documentElement;
   FPVM.forEach(k=>de.classList.toggle('fpv-'+k,k===m&&k!=='map'));const f=$('fpvIf');
   if(m==='map'){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/';
-  $('bFpv').textContent={map:'FPV',full:'PiP',pip:'MAP'}[m];pipApply();setTimeout(()=>{set3d(is3d());resize()},60)}
+  $('bFpv').textContent={map:'FPV',full:'PiP',pip:'MAP'}[m];pipApply();setTimeout(resize,60)}
 // V3.01: video only when it can be seen - status view open or page hidden -> stop the video (it ran on invisibly at ~100 % CPU)
 setInterval(()=>{const f=$('fpvIf'),k=document.getElementById('kiaOv'),hid=document.hidden||(k&&getComputedStyle(k).display!=='none');
   if(fpvMode==='map'||hid){if(f.getAttribute('src'))f.removeAttribute('src')}else if(!f.getAttribute('src'))f.src='/cosmo/'},1000);
@@ -1299,16 +1294,9 @@ function pipApply(){setTimeout(mapOffCalc,30);const b=$('fpvBox').style;if(fpvMo
  addEventListener('pointermove',move);addEventListener('pointerup',up);addEventListener('pointercancel',up)})();
 function fpvPoll(){fetch('/api/devices').then(r=>r.json()).then(r=>{const c=r.d&&r.d.cosmo,on=!!(c&&c.ok)&&!document.getElementById('ctMaps');
   document.documentElement.classList.toggle('cosmoOn',on);if(!on&&fpvMode!=='map')setFpv('map');else if(on&&fpvMode==='map'&&fpvWant!=='map')setFpv(fpvWant)}).catch(()=>{})}   // V2.0.61
-function set3d(on,save){const m=cv.style,sp3=on&&(document.documentElement.classList.contains('ctsplit')||document.documentElement.classList.contains('fpv-split'));if(sp3)on=false;   // V2.76: box split view = flat map
-  ['top','left','width','height'].forEach(k=>m.removeProperty(k));document.documentElement.classList.toggle('v3d',on);
-  if(on){const t=cv.offsetTop,l=cv.offsetLeft,w=cv.offsetWidth,hh=cv.offsetHeight;   // V2.0.62: flat map area (Pi 230/52, box 262/60), canvas 2.6x taller and 1.8x wider so the far area reaches the horizon
-    const bx=!!document.getElementById('ctMaps')||(navigator.deviceMemory||4)>=2,fy=bx?3.4:2.4,ar=innerWidth/innerHeight,fx=(bx?2.4:1.7)*(!document.getElementById('ctMaps')&&ar>1.85?ar/1.7:1);   // V3.16: wide screens (iPhone) need a wider canvas, else black corner top right   // V2.79: full size also on a Pi with >= 2 GB RAM   // V2.71: Pi (1 GB) smaller canvas - full size crashed Chromium (Aw, Snap)
-    m.setProperty('top',(t+hh-hh*fy)+'px','important');m.setProperty('height',(hh*fy)+'px','important');m.setProperty('left',(l-w*(fx-1)/2)+'px','important');m.setProperty('width',(w*fx)+'px','important')}
-  if(save&&!sp3){if(C.cfg)C.cfg.map3d=on?'1':'0';j2('/api/set',{map3d:on?1:0})}resize();updMenu()}
-{let rt=0;const re3=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(is3d())set3d(true)},300)};addEventListener('resize',re3);new MutationObserver(re3).observe(document.head,{childList:true,subtree:true,characterData:true});let wasSp=null;new MutationObserver(()=>{const s=document.documentElement.classList.contains('ctsplit');if(s!==wasSp){wasSp=s;clearTimeout(rt);rt=setTimeout(()=>set3d(is3d()),200)}}).observe(document.documentElement,{attributes:true,attributeFilter:['class']})}   // V2.76: split on/off -> flat/3D again   // V2.0.62: box app adds its CSS later -> measure again
 function setNight(on,save){document.body.classList.toggle('night',on);if(save){if(C.cfg)C.cfg.night=on?'1':'0';j2('/api/set',{night:on?1:0})}updMenu()}
 $('mNight').onclick=()=>setNight(!isNight(),true);{const sc=$('scale');if(sc&&sc.parentNode.id==='side')$('ui').appendChild(sc)}   // V2.93: scale out of the side column (was hidden bottom left)
-$('m3d').onclick=()=>set3d(!is3d(),true);$('mTheme').onclick=()=>setTheme(curTheme()==='hud'?'glass':'hud',true);$('bFpv').onclick=fpvNext;$('fpvBox').onclick=()=>{if(fpvMode==='full'&&Date.now()-(window.pipTap||0)>500)fpvNext()};setTimeout(fpvPoll,3000);setInterval(fpvPoll,15000);
+$('mTheme').onclick=()=>setTheme(curTheme()==='hud'?'glass':'hud',true);$('bFpv').onclick=fpvNext;$('fpvBox').onclick=()=>{if(fpvMode==='full'&&Date.now()-(window.pipTap||0)>500)fpvNext()};setTimeout(fpvPoll,3000);setInterval(fpvPoll,15000);
 $('mCore').onclick=()=>{const v=coreShow()?'0':'1';if(C.cfg)C.cfg.core_show=v;j2('/api/set',{core_show:+v});updMenu();hud()};
 function azShow(){azIcon();const v=+C.auto_zoom_out||0;$('azV').innerHTML=v<=0?'off':`${v.toFixed(1)}<br><span style="color:var(--mut);font-size:13px">${(2**v).toFixed(1)}× wider at ${C.auto_zoom_kmh} km/h</span>`}
 function azStep(d){C.auto_zoom_out=Math.max(0,Math.min(3,Math.round(((+C.auto_zoom_out||0)+d)*10)/10));if(C.cfg)C.cfg.auto_zoom_out=String(C.auto_zoom_out);azShow();j2('/api/set',{auto_zoom_out:C.auto_zoom_out});dirty=true}
@@ -1365,7 +1353,7 @@ $('sndA').onclick=async()=>{await j2('/api/sender',{auto:!SNDAUTO});sndLoad()};
 $('sndEN').onclick=()=>{const x=SNDL.find(i=>i.mac===SNDSEL);if(!x)return;KB.mode='snd';KB.mac=x.mac;KB.t=x.name||'';KB.sh=false;kbMode();kbDraw();$('kb').style.display='flex'};
 $('sndEP').onclick=()=>{const x=SNDL.find(i=>i.mac===SNDSEL);if(!x)return;KB.mode='sndp';KB.mac=x.mac;KB.t=x.pilot||'';KB.sh=false;kbMode();kbDraw();$('kb').style.display='flex'};
 $('sndF').onclick=async()=>{if(!SNDSEL)return;await j2('/api/sender',{mac:SNDSEL,forget:true});SNDSEL=null;sndLoad()};
-function updMenu(){azShow();hwShow();$('mLabels').textContent='Place names on the map: '+((C.cfg&&C.cfg.labels==='0')?'off':'on');$('mStarts').textContent='Start points of the rides: '+((C.cfg&&C.cfg.starts==='0')?'off':'on');$('mNavi').textContent='Navi mode (map follows you without a car): '+((C.cfg&&C.cfg.navi==='0')?'off':'on');$('mPhone').textContent='Phone GPS (GPS2IP): '+((C.cfg&&C.cfg.phone_gps==='1')?(st&&st.phone?st.phone:'on'):'off');$('mNames').textContent='Names on the map: '+(mapNames()?'on':'off');$('mName1').textContent='Driver car 1: '+drvName(1)+'  ✎';$('mName2').textContent='Driver car 2: '+drvName(2)+'  ✎';$('mNight').textContent='Night mode: '+(isNight()?'on':'off');$('m3d').textContent='3D view: '+(is3d()?'on':'off');$('mCore').textContent='Core info: '+(coreShow()?'on':'off');$('mSound').textContent='Warning sound: '+(soundOn()?'on':'off');
+function updMenu(){azShow();hwShow();$('mLabels').textContent='Place names on the map: '+((C.cfg&&C.cfg.labels==='0')?'off':'on');$('mStarts').textContent='Start points of the rides: '+((C.cfg&&C.cfg.starts==='0')?'off':'on');$('mNavi').textContent='Navi mode (map follows you without a car): '+((C.cfg&&C.cfg.navi==='0')?'off':'on');$('mPhone').textContent='Phone GPS (GPS2IP): '+((C.cfg&&C.cfg.phone_gps==='1')?(st&&st.phone?st.phone:'on'):'off');$('mNames').textContent='Names on the map: '+(mapNames()?'on':'off');$('mName1').textContent='Driver car 1: '+drvName(1)+'  ✎';$('mName2').textContent='Driver car 2: '+drvName(2)+'  ✎';$('mNight').textContent='Night mode: '+(isNight()?'on':'off');$('mCore').textContent='Core info: '+(coreShow()?'on':'off');$('mSound').textContent='Warning sound: '+(soundOn()?'on':'off');
   seg('sBright',st.bright??100,v=>j2('/api/set',{bright:v}));seg('sRange',(C.cfg&&+C.cfg.range_warn_m)||0,v=>{if(C.cfg)C.cfg.range_warn_m=v;j2('/api/set',{range_warn_m:v})})}
 // ------------------------------------------------ screen lock (hold 2 s to unlock)
 let lockT=null,lockS=0;
