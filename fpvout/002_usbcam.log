@@ -1,0 +1,33 @@
+== 002_usbcam on mojave-fpv, 2026-11-25 00:12:59, FPV V1.2 ==
+--- USB devices
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 2109:3431 VIA Labs, Inc. Hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+--- video devices
+ls: cannot access '/dev/v4l/by-id/': No such file or directory
+--- microphones
+**** List of CAPTURE Hardware Devices ****
+audio_enable       = 0
+audio_device       = auto      # auto = first USB microphone, or e.g. plughw:CARD=C920,DEV=0
+audio_bitrate_kbps = 24
+cam2_enable        = 1
+cam2_device        = auto      # auto = first USB camera, or e.g. /dev/video2
+cam2_width         = 1280
+cam2_height        = 720
+cam2_fps           = 30
+cam2_bitrate_kbps  = 1500
+[fpv-setup] Mojave FPV LTE V1.2
+[fpv-setup] video server settings written
+[fpv-setup] cam2_enable = 1 but no USB camera found - path 'cam2' not created
+--- mediamtx paths
+14:  cam:
+[0:34:54.780220574] [2416]  INFO Camera camera_manager.cpp:340 libcamera v0.7.2-mediamtx
+[0:34:54.790188175] [2417]  INFO IPAProxy ipa_proxy.cpp:184 Using tuning file ./ipa_conf/rpi/vc4/imx290.json
+[0:34:54.792555132] [2417]  INFO Camera camera_manager.cpp:223 Adding camera '/base/soc/i2c0mux/i2c@1/imx290@1a' for pipeline handler rpi/vc4
+[0:34:54.792614167] [2417]  INFO RPI vc4.cpp:445 Registered camera /base/soc/i2c0mux/i2c@1/imx290@1a to Unicam device /dev/media4 and ISP device /dev/media0
+[0:34:54.793017798] [2416]  INFO Camera camera.cpp:1216 configuring streams: (0) 1280x960-YUV420/Rec709
+[0:34:54.793369728] [2417]  INFO RPI vc4.cpp:620 Sensor: /base/soc/i2c0mux/i2c@1/imx290@1a - Selected sensor format: 1920x1080-SRGGB12_1X12/RAW - Selected unicam format: 1920x1080-pRCC/RAW
+using hardware H264 encoder
+2026/11/25 00:12:59 INF [path cam] stream is available and online, 1 track (H264)
+
+== exit code 0, 3.3 s ==
