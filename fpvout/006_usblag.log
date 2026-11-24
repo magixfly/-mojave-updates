@@ -1,0 +1,37 @@
+== 006_usblag on mojave-fpv, 2026-11-25 00:31:31, FPV V1.4 ==
+--- readers
+2026/11/25 00:29:18 INF [path cam3] runOnDemand command exited: command exited with code 254
+2026/11/25 00:29:20 INF [WebRTC] [session 1b6e0c65] created by 100.101.199.46:55785
+2026/11/25 00:29:20 INF [path cam2] runOnDemand command started
+[swscaler @ 0x7f84011ed0] deprecated pixel format used, make sure you did set range correctly
+2026/11/25 00:29:21 INF [RTSP] [conn [::1]:59820] opened
+2026/11/25 00:29:21 INF [RTSP] [session 81f3bda9] created by [::1]:59820
+2026/11/25 00:29:21 INF [path cam2] stream is available and online, 1 track (H264)
+2026/11/25 00:29:21 INF [RTSP] [session 81f3bda9] is publishing to path 'cam2'
+2026/11/25 00:29:22 INF [path cam2] RTP packets are too big (1460 > 1440), remuxing them into smaller ones
+2026/11/25 00:29:22 INF [WebRTC] [session 1b6e0c65] peer connection established, local candidate: host/udp/fd7a:115c:a1e0::c531:4537/8189, remote candidate: prflx/udp/fd7
+2026/11/25 00:29:22 INF [WebRTC] [session 1b6e0c65] is reading from path 'cam2', 1 track (H264)
+2026/11/25 00:29:22 INF [path cam3] runOnDemand command stopped: not needed by anyone
+--- ffmpeg running
+3580 ffmpeg -hide_banner -loglevel warning -f v4l2 -input_format mjpeg -video_size 1920x1080 -framerate 30 -i /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 -pix_fmt yuv420p -c:v h264_v4l2m2m -b:v 3000k -g 30 -f rtsp rtsp://localho
+=== /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0
+                           gain 0x00980913 (int)    : min=0 max=100 step=1 default=0 value=0 flags=has-min-max
+           power_line_frequency 0x00980918 (menu)   : min=0 max=2 default=2 value=2 (60 Hz)
+         backlight_compensation 0x0098091c (int)    : min=0 max=160 step=1 default=30 value=30 flags=has-min-max
+                  auto_exposure 0x009a0901 (menu)   : min=0 max=3 default=3 value=3 (Aperture Priority Mode)
+				3: Aperture Priority Mode
+         exposure_time_absolute 0x009a0902 (int)    : min=1 max=5000 step=1 default=157 value=157 flags=inactive, has-min-max
+     exposure_dynamic_framerate 0x009a0903 (bool)   : default=0 value=1
+(in use right now - not measured)
+--- gstreamer parts
+ok v4l2src
+ok jpegdec
+ok v4l2h264enc
+ok v4l2jpegdec
+ok h264parse
+ok rtspclientsink
+--- load
+ 00:31:55 up 53 min,  0 users,  load average: 11.32, 6.99, 3.42
+temp=76.9'C
+
+== exit code 0, 24.7 s ==
