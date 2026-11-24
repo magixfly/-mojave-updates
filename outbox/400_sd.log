@@ -1,0 +1,17 @@
+### 400_sd  –  2026-11-24 17:31:03
+### Box: verbunden (192.168.178.235:5555)
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk0p2   58G   18G   38G  32% /
+/dev/mmcblk0p2   58G   18G   38G  32% /
+NAME     SIZE MODEL
+loop0      2G 
+mmcblk0 59.5G 
+zram0      2G 
+4.0K	/home/user1/Bodenstation/tiles/karte_info.txt
+1.2G	/home/user1/Bodenstation/tiles/ki
+508M	/home/user1/Bodenstation/tiles/ortho
+94M	/home/user1/Bodenstation/tiles/overlay
+{"ver": "3.49", "src
+
+### Exit-Code: 0
