@@ -32,6 +32,12 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 #upd{position:relative;height:40px;border-radius:8px;background:#1f2937;display:none;overflow:hidden}#updBar{position:absolute;left:0;top:0;bottom:0;width:0;background:#16a34a;transition:width .5s}#updT{position:relative;display:block;line-height:40px;padding:0 10px;font-size:16px;color:#f3f4f6;text-shadow:0 0 3px #000}
 #menu .info{color:#9ca3af;font-size:16px;font-weight:400;padding:4px 6px}
 #map{position:absolute;left:0;right:0;top:60px;bottom:0;background:#0b0f14;overflow:hidden}
+/* 2.12: frame with speed and battery while the Mojave sends data */
+#mjf{position:absolute;left:16px;bottom:16px;z-index:950;width:250px;padding:10px 14px 12px;border-radius:16px;background:rgba(11,15,20,.88);border:2px solid rgba(77,184,255,.7);display:none;font-variant-numeric:tabular-nums;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+#mjf.old{border-color:#f5b13d;opacity:.8}#mjf .h{color:#93c5fd;font:800 16px system-ui;letter-spacing:1px;display:flex;justify-content:space-between}
+#mjf .sp{color:#fff;font:800 64px/1 system-ui;margin:4px 0 8px}#mjf .sp small{font-size:20px;color:#9ca3af;margin-left:6px;font-weight:600}
+#mjf .bat{position:relative;height:30px;border-radius:9px;background:#1f2937;overflow:hidden}#mjf .bat i{position:absolute;left:0;top:0;bottom:0;width:0;background:#16a34a;transition:width .5s}
+#mjf .bat span{position:absolute;inset:0;text-align:center;font:800 18px/30px system-ui;color:#fff;text-shadow:0 1px 2px #000}#mjf .ft{color:#9ca3af;font:600 14px system-ui;margin-top:6px}
 #mapi{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0}
 html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip{font-size:15px;padding:5px 8px}html.ms #mapi .leaflet-control-attribution{font-size:14px}   /* 2.11: markers and labels keep their size */   /* 2.10: map drawn 1:1 in screen pixels (box density 1.26 made light seams) */
 #btns{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:14px}
@@ -70,6 +76,8 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
   <div class="info" id="mInfo"></div>
 </div>
 <div id="map"><div id="mapi"></div></div>
+<div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
+<div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
 <div id="btns"><div class="b" id="zin">+</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div></div>
 <div id="nopos">No position from the box – map shows home</div>
 <script src="leaflet.js"></script>
@@ -81,7 +89,8 @@ function lw(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 var home=[48.1874,15.6139];
 var DPR=window.devicePixelRatio||1,MS=Math.abs(DPR-Math.round(DPR))>.01;   // 2.11: map 1:1 in screen pixels again (no seams at density 1.26)
 if(MS)document.documentElement.classList.add('ms');
-function fitMap(){var w=document.getElementById('map'),m=document.getElementById('mapi');if(!MS)return;m.style.width=(w.clientWidth*DPR)+'px';m.style.height=(w.clientHeight*DPR)+'px';m.style.transform='scale('+(1/DPR)+')'}
+function fitMap(){var w=document.getElementById('map'),m=document.getElementById('mapi');if(!MS)return;var r=w.getBoundingClientRect(),fx=(r.left*DPR)%1,fy=(r.top*DPR)%1;   // 2.12: start on a whole screen pixel
+ m.style.left=(-fx/DPR)+'px';m.style.top=(-fy/DPR)+'px';m.style.width=(w.clientWidth*DPR+2)+'px';m.style.height=(w.clientHeight*DPR+2)+'px';m.style.transform='scale('+(1/DPR)+')'}
 fitMap();
 var map=L.map('mapi',{zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,
   maxBounds:[[46.3,13.0],[49.6,18.3]]});
@@ -130,8 +139,16 @@ $('mCar').onclick=function(){carOn=!carOn;lw('car',carOn?'1':'0');this.textConte
 $('mBle').onclick=function(){cmd('ble');};
 window.ctEsp=function(st,name,age,rssi,pps){$('bleT').textContent='Bluetooth: '+st+(name?' · '+name:'')+(st=='connected'&&age>=0?' · data '+age+' s ago':'')+(pps?' · ESP '+pps+' pkt/s'+(rssi?' '+rssi+' dBm':''):'');
   if(st!='connected'&&car){car.getElement()&&car.getElement().firstChild.classList.add('old');}};
+var mjfT=0;setInterval(function(){if(Date.now()-mjfT>10000)$('mjf').style.display='none'},2000);
 window.ctCar=function(lat,lon,kmh,hdg,sats,volt,pct,mah,lq,rssi,mode,age){
   if(!carOn)return;var e=$('car');e.style.display='flex';
+  // 2.12: frame bottom left - speed big, battery bar with % and volt, LQ
+  if(age<=10){mjfT=Date.now();var f=$('mjf');f.style.display='block';f.classList.toggle('old',age>5||(lq>=0&&lq<50));
+   $('mjfKmh').textContent=lat!=null?Math.round(kmh):'–';var p=pct>=0&&pct<=100?pct:null;
+   $('mjfBar').style.width=(p==null?0:p)+'%';$('mjfBar').style.background=p==null?'#374151':p>40?'#16a34a':p>20?'#d97706':'#dc2626';
+   $('mjfBat').textContent=(p!=null?p+' % · ':'')+(volt>0?volt.toFixed(1)+' V':'–');
+   $('mjfLq').textContent=lq>=0?'LQ '+lq:'';$('mjfLq').style.color=lq>=0&&lq<50?'#f5b13d':'#4ade80';
+   $('mjfFt').textContent=(lat!=null?(sats>0?sats+' sats':'GPS'):'no GPS')+(mah>0?' · '+Math.round(mah)+' mAh':'')+(mode?' · '+mode:'')}
   e.innerHTML='<b>MOJAVE</b> '+(lat!=null?Math.round(kmh)+' km/h':'no GPS')+(volt>0?' · '+volt.toFixed(1)+' V':'')+(pct>=0&&pct<=100?' '+pct+' %':'')+(lq>=0?' · LQ '+lq:'');
   e.style.color=(lq>=0&&lq<50)||age>5?'#f5b13d':'#4ade80';
   if(lat==null||(lat==0&&lon==0))return;
