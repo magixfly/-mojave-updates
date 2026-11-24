@@ -1,0 +1,35 @@
+== 003_v13 on mojave-fpv, 2026-11-25 00:14:35, FPV V1.2 ==
+Mojave FPV LTE V1.3 - installing
+
+[###                           ]  12%  Installing packages (takes a few minutes)
+
+[#######                       ]  25%  Downloading the video server MediaMTX
+
+[###########                   ]  37%  Copying the programs to /opt/fpv
+
+[###############               ]  50%  Settings file on the SD card
+  /boot/firmware/fpv-config.txt exists - kept as it is
+
+[##################            ]  62%  Camera IMX462 and serial port in /boot/firmware/config.txt
+
+[######################        ]  75%  Serial port: free it for the flight controller
+
+[##########################    ]  87%  Services (start automatically at power-on)
+
+[##############################] 100%  Done
+
+Installed: Mojave FPV LTE V1.3
+Next: sudo reboot
+Then open in a browser:  http://mojave-fpv.local:8080
+Settings page:            http://mojave-fpv.local:8080/settings
+restarting the bridge and the remote maintenance in 3 seconds
+DONE: Mojave FPV LTE V1.3 installed
+total 68
+drwxr-xr-x 2 root root  4096 Nov 25 00:14 .
+drwxr-xr-x 4 root root  4096 Nov 25 00:14 ..
+-rw-r--r-- 1 root root  8877 Nov 25 00:14 classic.html
+-rw-r--r-- 1 root root 24538 Nov 25 00:14 index.html
+-rw-r--r-- 1 root root 24226 Nov 25 00:14 settings.html
+VERSION = "V1.3"
+
+== exit code 0, 12.2 s ==
