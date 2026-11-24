@@ -1,0 +1,17 @@
+### 044_chk207  –  2026-11-24 19:13:24
+### Box direkt (App 2.07, 192.168.178.235)
+
+    versionName=2.07
+27007
+app laeuft
+        android.permission.BLUETOOTH_CONNECT: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.BLUETOOTH_SCAN: granted=true, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+1
+-rw------- 1 u0_a210 u0_a210 20897 2026-11-24 19:04 /data/data/at.magixfly.coretracker/files/gebiete.json
+{"ver":16,"zmin":8,"areas":[{"id":"gloggnitz","name":"Gloggnitz","type":"circle","lat":47.6756,"lon":15.9389,"r":5000,"zmax":19,"src":"navi"},{"id":"reichenau","name":"Reichenau an der Rax","type":"circle","lat":47.6967,"lon":15.8417,"r":10000,"zmax":19,"src":"navi"},{"id":"rax","name":"Rax (plateau
+1.8G	/data/data/at.magixfly.coretracker/files/tiles
+/dev/block/dm-47  86G  20G   67G  23% /data/user/0
+
+### Exit-Code: 0
+
+### Dauer 1 s
