@@ -1,0 +1,12 @@
+### 032_net  –  2026-11-24 15:01:06
+### Box direkt (App 1.99, 192.168.178.235)
+
+    inet 127.0.0.1/8 scope host lo
+    inet 192.168.178.235/24 brd 192.168.178.255 scope global wlan0
+Wifi is enabled
+Wifi scanning is always available
+==== ClientModeManager instance: ConcreteClientModeManager{id=30206 iface=wlan0 role=ROLE_CLIENT_PRIMARY} ====
+
+### Exit-Code: 0
+
+### Dauer 0 s
