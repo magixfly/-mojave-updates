@@ -29,6 +29,8 @@ public class MainActivity extends Activity {
 
     WebView web;
     LinearLayout overlay;
+    android.widget.Button startBtn;
+    volatile boolean startWanted = false;
     TextView status;
     TextView bar;
     LinearLayout barBox;
@@ -115,6 +117,24 @@ public class MainActivity extends Activity {
         barBox.addView(bar, new LinearLayout.LayoutParams(0, 56));
         overlay.addView(barBox, new LinearLayout.LayoutParams(barWidthPx, 56));
 
+        // V1.99: the tracker on the box starts only on request (button)
+        startBtn = new android.widget.Button(this);
+        startBtn.setText("Start tracker on the box");
+        startBtn.setTextSize(22);
+        startBtn.setAllCaps(false);
+        startBtn.setTextColor(0xFF0B0F14);
+        startBtn.setBackgroundColor(0xFF22C55E);
+        startBtn.setPadding(40, 20, 40, 20);
+        startBtn.setVisibility(View.GONE);
+        startBtn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
+            startBtn.setVisibility(View.GONE);
+            startWanted = true;
+            search();
+        } });
+        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(-2, -2);
+        blp.topMargin = 40;
+        overlay.addView(startBtn, blp);
+
         root.addView(overlay, new FrameLayout.LayoutParams(-1, -1, 17));
 
         fpv = new Fpv(this, root);              // V1.26: optional FPV from the CosmoStreamer
@@ -180,7 +200,14 @@ public class MainActivity extends Activity {
             for (int i = 1; i <= 15; i++) { String h = "172.20.10." + i; if (!c.contains(h)) c.add(h); }
             String found = null;
             boolean local = false;
-            if (localServer()) { found = "127.0.0.1"; local = true; }   // V1.97: tracker program on the box itself comes first (own ESP via Bluetooth), Pi only if not installed
+            localOff = false;
+            if (localServer()) { found = "127.0.0.1"; local = true; }
+            else if (localOff) {   // V1.99: box tracker installed but not running -> no Pi, show the start button
+                searching = false;
+                showOverlay("Tracker on the box is off", 0);
+                ui.post(new Runnable() { public void run() { startBtn.setVisibility(View.VISIBLE); } });
+                return;
+            }   // V1.97: tracker program on the box itself comes first (own ESP via Bluetooth), Pi only if not installed
             for (int i = 0; i < c.size() && found == null; i++) {
                 showOverlay("Searching Core Tracker … " + c.get(i), i * 100 / c.size());
                 if (ok(c.get(i))) found = c.get(i);
@@ -208,7 +235,7 @@ public class MainActivity extends Activity {
 
     // ---------------------------------------------------------------- V1.96: tracker program on the box (no Pi)
     static final String CT_DIR = "/data/local/tmp/ct";
-    volatile boolean onLocal = false, piWatch = false;
+    volatile boolean onLocal = false, piWatch = false, localOff = false;
 
     /** Starts server.py on the box (if installed) and waits up to 25 s until it answers. */
     boolean localServer() {
@@ -216,6 +243,8 @@ public class MainActivity extends Activity {
         try {
             String r = HotspotBoot.shell("[ -f " + CT_DIR + "/run.sh ] && [ -x " + CT_DIR + "/ld-musl ] && echo yes");
             if (!r.contains("yes")) return false;
+            if (!startWanted) { localOff = true; return false; }   // V1.99: installed but off -> wait for the start button
+            startWanted = false;
             HotspotBoot.shell("pgrep -f ct/boxmai[n].py >/dev/null || (setsid sh " + CT_DIR + "/run.sh >/dev/null 2>&1 </dev/null &)");
         } catch (Throwable t) { return false; }
         for (int i = 0; i < 25; i++) {
