@@ -1,0 +1,9 @@
+### 411_t353  –  2026-11-24 19:53:04
+### Box: verbunden (192.168.178.235:5555)
+
+3.53 läuft
+hw {'esp': False, 'dev': '', 'fw': '', 'gps_cfg': None, 'gps_baud': 0, 'gps_data': False, 'gps_fix': 0, 'gps_sats': 0, 'age': None} dlsrc internet dl 6
+ls: cannot access '/dev/ttyACM*': No such file or directory
+ls: cannot access '/dev/ttyUSB*': No such file or directory
+
+### Exit-Code: 1

@@ -1,0 +1,14 @@
+### 410_esp  –  2026-11-24 19:45:04
+### Box: verbunden (192.168.178.235:5555)
+
+hw {'esp': False, 'dev': '', 'fw': '', 'gps_cfg': None, 'gps_baud': 0, 'gps_data': False, 'gps_fix': 0, 'gps_sats': 0, 'age': None}
+src - dev 
+ls: cannot access '/dev/ttyACM*': No such file or directory
+ls: cannot access '/dev/ttyUSB*': No such file or directory
+  File "/usr/lib/python3.13/socket.py", line 719, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+
+### Exit-Code: 0
