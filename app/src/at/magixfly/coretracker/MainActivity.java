@@ -45,9 +45,11 @@ public class MainActivity extends Activity {
     static volatile boolean alive = false;   // V1.59: Karte läuft (für die Rückkehr nach dem Hotspot-Schalten)
     @Override protected void onDestroy() { alive = false; if (gps != null) gps.stop(); super.onDestroy(); }
 
+    static volatile MainActivity me;   // 2.10: for the remote page (mouse wheel)
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
+        me = this;
         alive = true;
         ScreenShare.server(this);                 // V1.65: Box-Bildschirm im Browser (Port 8090)
         requestWindowFeature(1);                  // kein Titelbalken

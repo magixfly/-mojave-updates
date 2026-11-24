@@ -112,6 +112,10 @@ public class ScreenShare {
             } else if (path.startsWith("/swipe")) {
                 boolean ok = A11y.swipe(num(path, "x"), num(path, "y"), num(path, "x2"), num(path, "y2"));
                 text(o, "text/plain", ok ? "ok" : "no");
+            } else if (path.startsWith("/wheel")) {   // 2.10: mouse wheel = zoom on the box map
+                MainActivity m = MainActivity.me;
+                if (m != null) m.js("window.ctWheel&&ctWheel(" + (path.contains("d=-1") ? -1 : 1) + "," + num(path, "x") + "," + num(path, "y") + ")");
+                text(o, "text/plain", m != null ? "ok" : "no");
             } else if (path.startsWith("/key")) {
                 text(o, "text/plain", A11y.key(path.contains("k=home") ? 2 : path.contains("k=recents") ? 3 : 1) ? "ok" : "no");
             } else if (path.startsWith("/state")) {
@@ -163,6 +167,7 @@ public class ScreenShare {
         + "s.src='/mjpeg';function k(x){fetch('/key?k='+x)}"
         + "function xy(e){var r=s.getBoundingClientRect();return[Math.round((e.clientX-r.left)/r.width*1920),Math.round((e.clientY-r.top)/r.height*720)]}"
         + "s.onpointerdown=function(e){d={p:xy(e),t:Date.now()};e.preventDefault()};"
+        + "var wt=0;s.addEventListener('wheel',function(e){e.preventDefault();var n=Date.now();if(n-wt<180)return;wt=n;var p=xy(e);fetch('/wheel?d='+(e.deltaY<0?1:-1)+'&x='+p[0]+'&y='+p[1])},{passive:false});"
         + "s.onpointerup=function(e){if(!d)return;var q=xy(e),p=d.p,dt=Date.now()-d.t;d=null;if(Math.abs(q[0]-p[0])+Math.abs(q[1]-p[1])>30)fetch('/swipe?x='+p[0]+'&y='+p[1]+'&x2='+q[0]+'&y2='+q[1]);else fetch('/tap?x='+p[0]+'&y='+p[1]+(dt>600?'&long=1':''))};"
         + "setInterval(function(){fetch('/state').then(r=>r.json()).then(j=>{var ok=j.age>=0&&(j.age<3000||j.run);pb.style.display=ok?'none':'block';"
         + "var pc=Math.min(95,Math.round((Date.now()-t0)/150));pb.querySelector('i').style.width=pc+'%';pb.querySelector('span').textContent=(j.state=='asking'?'Erlaubnis zur Bildschirmaufnahme … ':'Starte Aufnahme … ')+pc+' %';"
