@@ -32,7 +32,8 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 #upd{position:relative;height:40px;border-radius:8px;background:#1f2937;display:none;overflow:hidden}#updBar{position:absolute;left:0;top:0;bottom:0;width:0;background:#16a34a;transition:width .5s}#updT{position:relative;display:block;line-height:40px;padding:0 10px;font-size:16px;color:#f3f4f6;text-shadow:0 0 3px #000}
 #menu .info{color:#9ca3af;font-size:16px;font-weight:400;padding:4px 6px}
 #map{position:absolute;left:0;right:0;top:60px;bottom:0;background:#0b0f14;overflow:hidden}
-#mapi{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0}   /* 2.10: map drawn 1:1 in screen pixels (box density 1.26 made light seams) */
+#mapi{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0}
+html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip{font-size:15px;padding:5px 8px}html.ms #mapi .leaflet-control-attribution{font-size:14px}   /* 2.11: markers and labels keep their size */   /* 2.10: map drawn 1:1 in screen pixels (box density 1.26 made light seams) */
 #btns{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:14px}
 .b{width:84px;height:84px;border-radius:18px;background:rgba(11,15,20,.85);border:2px solid rgba(77,184,255,.6);color:#4ade80;font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .b.act{background:#166534;color:#fff}
@@ -78,7 +79,8 @@ function cmd(c){fetch('/__ctbox/'+c).catch(function(){});}
 function ls(k,d){try{var v=localStorage.getItem(k);return v==null?d:v;}catch(e){return d;}}
 function lw(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 var home=[48.1874,15.6139];
-var DPR=window.devicePixelRatio||1,MS=false;   // 2.10: 1:1 scaling not needed
+var DPR=window.devicePixelRatio||1,MS=Math.abs(DPR-Math.round(DPR))>.01;   // 2.11: map 1:1 in screen pixels again (no seams at density 1.26)
+if(MS)document.documentElement.classList.add('ms');
 function fitMap(){var w=document.getElementById('map'),m=document.getElementById('mapi');if(!MS)return;m.style.width=(w.clientWidth*DPR)+'px';m.style.height=(w.clientHeight*DPR)+'px';m.style.transform='scale('+(1/DPR)+')'}
 fitMap();
 var map=L.map('mapi',{zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,

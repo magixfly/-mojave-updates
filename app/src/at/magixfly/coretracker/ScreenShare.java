@@ -40,7 +40,7 @@ public class ScreenShare {
         new Thread(new Runnable() { public void run() {          // Aufnahme beenden, wenn keiner mehr zuschaut
             while (true) {
                 try { Thread.sleep(10000); } catch (Throwable t) { }
-                if (ProjService.running && System.currentTimeMillis() - lastView > 60000) ProjService.stopAll(app);
+                if (ProjService.running && System.currentTimeMillis() - lastView > 30 * 60000) ProjService.stopAll(app);   // 2.11: keep recording 30 min after the last view (Android asks again at every new start)
             }
         } }).start();
     }
