@@ -1,0 +1,11 @@
+### 048_ble2  –  2026-11-24 19:45:04
+### Box direkt (App 2.07, 192.168.178.235)
+
+	[■]: apiGetConnectionStateUsingIdentityAddress              api_get_connection_state_using_identity_address
+  ConnectionState: STATE_DISCONNECTED
+      app_if: 2, appName: at.magixfly.coretracker
+  at.magixfly.coretracker (Registered)
+
+### Exit-Code: 0
+
+### Dauer 0 s
