@@ -1,8 +1,7 @@
 {
- "ver": "3.53",
+ "ver": "3.54",
  "neu": [
-  "Map status shows where tiles come from (PC or internet)",
-  "Top bar never wraps or jumps"
+  "Top bar shows the progress of the map areas (Maps xx %)"
  ],
  "dateien": [
   {
@@ -13,7 +12,7 @@
   {
    "p": "server.py",
    "s": 154071,
-   "md5": "3e3a17b0da482335cd45a0832ad7c346"
+   "md5": "7514aabd36d5ca9a841ae70289c413fe"
   },
   {
    "p": "web/fpvstat.js",
@@ -22,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 165447,
-   "md5": "37a9a76cce33b0da6ae5d2b09296905a"
+   "s": 166194,
+   "md5": "fea95f632ec0e473c5162243599feb7c"
   }
  ]
 }
