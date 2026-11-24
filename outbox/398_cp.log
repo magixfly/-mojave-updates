@@ -1,0 +1,37 @@
+### 398_cp  –  2026-11-24 08:57:03
+### Box: verbunden (192.168.178.235:5555)
+
+VERSION = "3.47"
+uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:su:s0
+demo_ride.csv
+hdmi_watch.sh
+kiosk.sh.v309
+logs
+navi
+server.py.v1911
+server.py.v1914
+server.py.v1915
+server.py.v195
+server.py.v196
+server.py.v200
+server.py.v204
+server.py.v204c
+server.py.v205d
+server.py.v211
+server.py.v215
+server.py.v215a
+server.py.v216a
+server.py.v217
+server.py.v221
+server.py.v223
+server.py.v224
+server.py.v225
+server.py.v228pre
+web
+12M	.
+grep: config.txt: No such file or directory
+tail: /data/local/tmp/ct/bodenstation/server.log: No such file or directory
+cat: /data/local/tmp/ct/run.log: No such file or directory
+tilecopy started
+
+### Exit-Code: 0
