@@ -1,0 +1,19 @@
+### 023_sc  –  2026-11-24 09:29:02
+### Box direkt (App 1.97, 192.168.178.235)
+
+Traceback (most recent call last):
+ConnectionResetError: [Errno 104] Connection reset by peer
+tcp        0      0 127.0.0.1:52022         127.0.0.1:8080          ESTABLISHED
+tcp        0      0 127.0.0.1:8080          127.0.0.1:53210         ESTABLISHED
+tcp        0      0 127.0.0.1:52018         127.0.0.1:8080          ESTABLISHED
+tcp        0      0 127.0.0.1:52016         127.0.0.1:8080          ESTABLISHED
+tcp        0      0 127.0.0.1:8080          127.0.0.1:52018         ESTABLISHED
+tcp        0      0 127.0.0.1:8080          127.0.0.1:52016         ESTABLISHED
+tcp        0      0 127.0.0.1:8080          127.0.0.1:52022         ESTABLISHED
+tcp        0      0 127.0.0.1:52026         127.0.0.1:8080          TIME_WAIT  
+tcp6       0      0 ::ffff:127.0.0.1:52642  ::ffff:127.0.0.1:8080   TIME_WAIT  
+tcp6       0      0 ::ffff:127.0.0.1:53210  ::ffff:127.0.0.1:8080   ESTABLISHED
+
+### Exit-Code: 0
+
+### Dauer 0 s
