@@ -1,8 +1,8 @@
-Stand: 2026-11-24 17:21:32
+Stand: 2026-11-24 17:31:52
 App: 2.03
 IP: 192.168.178.235
-WLAN: 
+WLAN: WLAN Media
 Wifi is connected to "Media"
 
 ### Exit-Code: 0
-Fernwartung: 
+Fernwartung: Fehler: Unable to resolve host "api.github.com": No address associated with hostname
