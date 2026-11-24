@@ -1,7 +1,8 @@
 {
  "ver": "3.53",
  "neu": [
-  "Map status shows where tiles come from (PC or internet)"
+  "Map status shows where tiles come from (PC or internet)",
+  "Top bar never wraps or jumps"
  ],
  "dateien": [
   {
@@ -21,8 +22,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 165207,
-   "md5": "3c583a5ee9a10090447955bb61913a4b"
+   "s": 165447,
+   "md5": "37a9a76cce33b0da6ae5d2b09296905a"
   }
  ]
 }
