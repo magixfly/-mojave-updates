@@ -164,7 +164,7 @@ public class ScreenShare {
         + "function xy(e){var r=s.getBoundingClientRect();return[Math.round((e.clientX-r.left)/r.width*1920),Math.round((e.clientY-r.top)/r.height*720)]}"
         + "s.onpointerdown=function(e){d={p:xy(e),t:Date.now()};e.preventDefault()};"
         + "s.onpointerup=function(e){if(!d)return;var q=xy(e),p=d.p,dt=Date.now()-d.t;d=null;if(Math.abs(q[0]-p[0])+Math.abs(q[1]-p[1])>30)fetch('/swipe?x='+p[0]+'&y='+p[1]+'&x2='+q[0]+'&y2='+q[1]);else fetch('/tap?x='+p[0]+'&y='+p[1]+(dt>600?'&long=1':''))};"
-        + "setInterval(function(){fetch('/state').then(r=>r.json()).then(j=>{var ok=j.age>=0&&j.age<3000;pb.style.display=ok?'none':'block';"
+        + "setInterval(function(){fetch('/state').then(r=>r.json()).then(j=>{var ok=j.age>=0&&(j.age<3000||j.run);pb.style.display=ok?'none':'block';"
         + "var pc=Math.min(95,Math.round((Date.now()-t0)/150));pb.querySelector('i').style.width=pc+'%';pb.querySelector('span').textContent=(j.state=='asking'?'Erlaubnis zur Bildschirmaufnahme … ':'Starte Aufnahme … ')+pc+' %';"
         + "st.textContent=ok?'live':(j.state);if(ok)t0=Date.now();if(!ok&&j.age>5000){s.src='/mjpeg?'+Date.now()}}).catch(function(){st.textContent='Box nicht erreichbar'})},1000)"
         + "</script></body></html>";

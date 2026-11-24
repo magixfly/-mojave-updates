@@ -14,7 +14,7 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 #mapsBar{position:absolute;left:0;top:0;bottom:0;background:#166534;width:0;transition:width .5s}
 #mapsT{position:relative;color:#f3f4f6;text-shadow:0 0 3px #000,0 0 3px #000}
 #maps.on #mapsBar{background:#16a34a}
-#gps{width:230px;color:#9ca3af}
+#gps{width:300px;color:#9ca3af}
 #fpvs{color:#93c5fd;display:none}
 .sp{flex:1}
 #menuB{width:64px;font-size:28px;color:#4ade80;cursor:pointer}
@@ -97,7 +97,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   else me.setLatLng(pos);
   var a=me.getElement()&&me.getElement().querySelector('b');
   if(a){var mv=kmh>3&&brg>=0;a.style.display=mv?'block':'none';if(mv)a.style.transform='rotate('+brg+'deg)';}
-  $('gps').textContent=(gps?'GPS':'Net')+(kmh>=0?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
+  $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#4ade80';
   if(follow)map.panTo(pos,{animate:true,duration:.5});
 };
