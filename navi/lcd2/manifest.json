@@ -1,10 +1,11 @@
 {
-  "fw": "V2.37",
+  "fw": "V2.38",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1366672,
-  "md5": "b7d78c78ba229681610498034126fe83",
+  "groesse": 1362880,
+  "md5": "c31b1b6d11f3d733b79fb649cc077f5c",
   "neu": [
+    "V2.38: Wi-Fi switch removed again - Wi-Fi is always on (no clock menu, old config line \"wifi\" ignored); map centre on the PC preset (http://192.168.178.243:8091)",
     "V2.37: menu - tap the clock top right: Wi-Fi ON/OFF (OFF = MT12 only); shared area list with tracker, box and Core (gebiete.json from the PC map centre, tracker Pi or GitHub) - all areas loaded up to map_zmax, aerial tiles outside the list deleted once (Core and own areas stay); tiles first from the PC / tracker Pi; new places reported (POST /api/orte); radio add-on NaviFunk (ESP32-S3 Mini on IO43/IO44) detected automatically - Navi then stays in the hotspot and still gets the MT12 telemetry",
     "V2.36: standby progress bar also on the logo screen",
     "V2.35: standby also by holding the middle of the map for 3 s (the clock top right still works)",
