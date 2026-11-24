@@ -1,0 +1,33 @@
+### 045_ble  –  2026-11-24 19:14:04
+### Box direkt (App 2.07, 192.168.178.235)
+
+  enabled: true
+  state: ON
+  time since enabled: 00:09:17.698
+	[■]: bleGattServerUseAddressTypeInConnection                ble_gatt_server_use_address_type_in_connection
+	[ ]: bleScanAdvMetricsRedesign                              ble_scan_adv_metrics_redesign
+	[ ]: cancelPairingOnlyOnDisconnectedTransport               cancel_pairing_only_on_disconnected_transport
+	[■]: enumerateGattErrors                                    enumerate_gatt_errors
+	[■]: fixNonconnectableScannableAdvertisement                fix_nonconnectable_scannable_advertisement
+	[■]: gattCleanupRestrictedHandles                           gatt_cleanup_restricted_handles
+	[■]: gattDropAclOnOutOfResourcesFix                         gatt_drop_acl_on_out_of_resources_fix
+	[■]: gattFixDeviceBusy                                      gatt_fix_device_busy
+	[■]: gattReconnectOnBtOnFix                                 gatt_reconnect_on_bt_on_fix
+	[■]: gattRediscoverOnCanceled                               gatt_rediscover_on_canceled
+	[■]: leScanFixRemoteException                               le_scan_fix_remote_exception
+	[ ]: leScanUseAddressType                                   le_scan_use_address_type
+	[■]: leScanUseUidForImportance                              le_scan_use_uid_for_importance
+	[ ]: leaudioBroadcastExtractPeriodicScannerFromStateMachine leaudio_broadcast_extract_periodic_scanner_from_state_machine
+	[■]: leaudioBroadcastVolumeControlForConnectedDevices       leaudio_broadcast_volume_control_for_connected_devices
+	[■]: preventHogpReconnectWhenConnected                      prevent_hogp_reconnect_when_connected
+	[ ]: respectBleScanSetting                                  respect_ble_scan_setting
+  ConnectionState: STATE_DISCONNECTED
+  State: ON
+  MaxConnectedAudioDevices: 5
+  A2dpOffloadEnabled: true
+Enabled Profile Services:
+Failed to write while dumping service bluetooth_manager: Broken pipe
+
+### Exit-Code: 0
+
+### Dauer 3 s
