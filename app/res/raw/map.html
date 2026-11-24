@@ -11,6 +11,8 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 #title small{display:block;color:#9ca3af;font-size:14px;font-weight:400;letter-spacing:0}
 #net{width:300px;color:#4ade80}
 #maps{position:relative;width:360px;padding:0;cursor:pointer;background:#1f2937}
+/* 2.08: top bar never wraps or jumps - fixed widths, smaller text in the pills */
+#top>*{flex:none}#top>.sp{flex:1}#title{white-space:nowrap}#top .pill{font-size:20px}#net{width:250px}#maps{width:330px}#gps{width:300px}#car{width:480px}#car:empty,#fpvs:empty{display:none}
 #mapsBar{position:absolute;left:0;top:0;bottom:0;background:#166534;width:0;transition:width .5s}
 #mapsT{position:relative;color:#f3f4f6;text-shadow:0 0 3px #000,0 0 3px #000}
 #maps.on #mapsBar{background:#16a34a}
