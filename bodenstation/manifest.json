@@ -1,13 +1,13 @@
 {
- "ver": "3.49",
+ "ver": "3.50",
  "neu": [
-  "3D view removed completely (menu entry, tilted map, setting map3d)"
+  "Offline map of Vienna + Lower Austria (zoom 8-16, aerial + place names) loads once in the background, progress under ..."
  ],
  "dateien": [
   {
    "p": "server.py",
-   "s": 140196,
-   "md5": "6d415655e734433b0dbcaa116baebd9d"
+   "s": 145716,
+   "md5": "ed075f9f7c2bf924dfce2c7f2c3c9597"
   },
   {
    "p": "web/fpvstat.js",
@@ -16,8 +16,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 161800,
-   "md5": "77a10b96bc84d110546c0fc7dac983bf"
+   "s": 162544,
+   "md5": "732bb38af2f710dceabe97a2375c9b10"
   }
  ]
 }

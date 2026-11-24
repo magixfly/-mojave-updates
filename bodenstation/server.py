@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.49"
+VERSION = "3.50"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -33,6 +33,9 @@ DEFAULTS = [
     ("starts", "1", "V3.30: 1 = show where the car rides started (one point per 500 m, menu)"),
     ("rides_hidden", "", "V3.32: hidden rides (file names, ;) - not in the list (unless shown) and no start point"),
     ("rides_filter", "all", "V3.32: rides list filter all / mojave / other"),
+    ("region_pre", "1", "V3.50: 1 = load the whole map of Vienna + Lower Austria (aerial + place names) in the background, once, so it works offline"),
+    ("region_zmax", "16", "V3.50: highest zoom for the Vienna + Lower Austria map (16 = about 5-7 GB, 17 = about 20-28 GB)"),
+    ("region_min_free_gb", "5", "V3.50: stop the region map when less than this is free on the SD card"),
     ("autopre", "1", "V3.41: 1 = load the map (aerial + place names, zoom 14-19, 700 m) around every ride start in the background, so it is there at once"),
     ("starts_hide", "", "V3.31: start points not to show, lat,lon;lat,lon (500 m around each)"),
     ("starts_vmax", "110", "V3.31: rides faster than this (km/h) are real car drives, no start point"),
@@ -1559,6 +1562,7 @@ def snapshot():
                    "gps_baud": ESPINFO["gps_baud"], "gps_data": bool(ME["t"] and time.time() - ME["t"] < 5 and ME.get("src", "esp") == "esp"),
                    "gps_fix": ESPINFO["gps_fix"], "gps_sats": ESPINFO["gps_sats"], "age": round(time.time() - ESPINFO["t"]) if ESPINFO["t"] else None}   # V3.33
         d["autopre"] = {"done": AUTOPRE["done"], "total": AUTOPRE["total"]}   # V3.43
+        d["region"] = {k: REGION[k] for k in ("done", "total", "msg")}         # V3.50
         d["phone"] = PHONE["st"] + ((" " + PHONE["ip"]) if PHONE["ip"] else "")   # V3.28
         far = me.get("dist") if me and me.get("dist") is not None else d.get("dist")
         if ci("range_warn_m") > 0 and far and far > ci("range_warn_m") and not TEST["on"]:   # V1.9.2: no FAR in the replay
@@ -2417,6 +2421,106 @@ def autopre_thread():
             print("autopre", e)
         time.sleep(6 * 3600)
 
+# V3.50: Vienna + Lower Austria as one offline map (rough border polygon, lat/lon)
+NOE = [(48.15, 14.42), (48.32, 14.55), (48.55, 14.68), (48.62, 14.95), (48.78, 14.95), (49.03, 15.15), (48.98, 15.40),
+       (48.86, 15.80), (48.80, 16.10), (48.74, 16.45), (48.78, 16.93), (48.62, 16.98), (48.38, 16.88), (48.15, 17.08),
+       (48.02, 16.90), (47.88, 16.47), (47.78, 16.30), (47.60, 16.42), (47.42, 16.20), (47.50, 15.95), (47.62, 15.78),
+       (47.72, 15.40), (47.75, 15.05), (47.70, 14.75), (47.88, 14.55), (48.05, 14.45)]
+REGION = {"done": 0, "total": 0, "msg": "", "t": 0}
+
+def _in_poly(lat, lon, poly=NOE):
+    inside = False
+    for i in range(len(poly)):
+        a, b = poly[i], poly[i - 1]
+        if (a[0] > lat) != (b[0] > lat) and lon < (b[1] - a[1]) * (lat - a[0]) / (b[0] - a[0]) + a[1]:
+            inside = not inside
+    return inside
+
+def region_tiles(z):
+    """All tiles of zoom z that touch Vienna + Lower Austria."""
+    n = 2 ** z
+    def lat_of(y): return math.degrees(math.atan(math.sinh(math.pi * (1 - 2 * y / n))))
+    def lon_of(x): return x / n * 360.0 - 180.0
+    def tx(lo): return int((lo + 180.0) / 360.0 * n)
+    def ty(la):
+        r = math.radians(la)
+        return int((1 - math.log(math.tan(r) + 1 / math.cos(r)) / math.pi) / 2 * n)
+    out = []
+    for x in range(tx(14.42), tx(17.08) + 1):
+        for y in range(ty(49.03), ty(47.42) + 1):
+            if any(_in_poly(lat_of(y + fy), lon_of(x + fx)) for fx in (0, .5, 1) for fy in (0, .5, 1)):
+                out.append((z, x, y))
+    return out
+
+def _fetch_basemap(z, x, y):
+    """Region map: only basemap.at (Austria), never the Esri fallback (no foreign tiles)."""
+    u = CFG.get("online_url", "").replace("{z}", str(z)).replace("{x}", str(x)).replace("{y}", str(y))
+    try:
+        with DL_SEM:
+            rq = urllib.request.Request(u, headers={"User-Agent": "MojaveGroundStation/" + VERSION})
+            with urllib.request.urlopen(rq, timeout=cf("online_timeout_s")) as r:
+                data = r.read()
+    except urllib.error.HTTPError:
+        return True                       # tile does not exist -> skip
+    except Exception:
+        return False                      # network problem -> try again later
+    if len(data) >= 100:
+        p = tile_file("ortho", z, x, y)
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        with open(p + ".tmp", "wb") as f:
+            f.write(data)
+        os.replace(p + ".tmp", p)
+    return True
+
+def region_thread():
+    """V3.50: load Vienna + Lower Austria (zoom 8..region_zmax) once, quietly, 2 downloads at a time.
+    Tiles already on the SD card are skipped, so after a restart it carries on where it stopped."""
+    time.sleep(120)
+    while True:
+        try:
+            if CFG.get("region_pre", "1") == "1" and CFG.get("online", "1") == "1":
+                zmax = min(19, max(8, ci("region_zmax")))
+                REGION.update(msg="counting tiles", done=0, total=0)
+                jobs = [t for z in range(8, zmax + 1) for t in region_tiles(z)]
+                REGION.update(total=len(jobs), done=0, msg="loading", t=time.time())
+                q = queue.Queue()
+                for j in jobs:
+                    q.put(j)
+                stop = {"full": False}
+
+                def worker():
+                    while not stop["full"]:
+                        try:
+                            z, x, y = q.get_nowait()
+                        except queue.Empty:
+                            return
+                        if REGION["done"] % 200 == 0 and shutil.disk_usage(BASE).free < cf("region_min_free_gb") * 1e9:
+                            stop["full"] = True
+                            return
+                        have = os.path.exists(tile_file("ortho", z, x, y)) or os.path.exists(tile_file("ki", z, x, y))
+                        for _ in range(3):
+                            if have or time.time() < ONLINE["down_until"]:
+                                break
+                            if _fetch_basemap(z, x, y):
+                                break
+                            time.sleep(5)
+                        if CFG.get("labels", "1") == "1" and not os.path.exists(os.path.join(TILES, "overlay", str(z), str(x), "%d.png" % y)):
+                            get_overlay(z, x, y)
+                        REGION["done"] += 1
+                        if not have:
+                            time.sleep(0.02)
+                ws = [threading.Thread(target=worker, daemon=True) for _ in range(2)]
+                for w in ws:
+                    w.start()
+                for w in ws:
+                    w.join()
+                REGION["msg"] = "SD card full - stopped" if stop["full"] else "complete"
+                print("region map:", REGION["msg"], REGION["done"], "/", REGION["total"])
+        except Exception as e:
+            REGION["msg"] = "error: %s" % e
+            print("region", e)
+        time.sleep(24 * 3600)              # check once a day for missing tiles
+
 def preload(lat, lon, radius, zmin, zmax):
     jobs = []
     for z in range(zmin, zmax + 1):
@@ -2839,6 +2943,7 @@ def main():
     threading.Thread(target=phone_gps_thread, daemon=True).start()
     threading.Thread(target=navi_log_thread, daemon=True).start()
     threading.Thread(target=autopre_thread, daemon=True).start()
+    threading.Thread(target=region_thread, daemon=True).start()   # V3.50
     threading.Thread(target=serial_thread, daemon=True).start()
     threading.Thread(target=test_thread, daemon=True).start()
     if not WIN:
