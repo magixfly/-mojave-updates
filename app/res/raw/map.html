@@ -1,0 +1,107 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Carlin Box</title>
+<link rel="stylesheet" href="leaflet.css">
+<style>
+html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.2 system-ui,sans-serif;overflow:hidden;-webkit-user-select:none;user-select:none}
+#top{position:absolute;left:0;right:0;top:0;height:60px;display:flex;align-items:center;gap:10px;padding:0 10px;box-sizing:border-box;background:#0b0f14;z-index:1000}
+.pill{height:46px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid rgba(77,184,255,.6);border-radius:10px;padding:0 14px;white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums}
+#title{color:#4ade80;font-size:24px;letter-spacing:1px;padding-right:6px}
+#title small{display:block;color:#9ca3af;font-size:14px;font-weight:400;letter-spacing:0}
+#net{width:300px;color:#4ade80}
+#maps{position:relative;width:360px;padding:0;cursor:pointer;background:#1f2937}
+#mapsBar{position:absolute;left:0;top:0;bottom:0;background:#166534;width:0;transition:width .5s}
+#mapsT{position:relative;color:#f3f4f6;text-shadow:0 0 3px #000,0 0 3px #000}
+#maps.on #mapsBar{background:#16a34a}
+#gps{width:230px;color:#9ca3af}
+#fpvs{color:#93c5fd;display:none}
+.sp{flex:1}
+#menuB{width:64px;font-size:28px;color:#4ade80;cursor:pointer}
+#menu{position:absolute;right:10px;top:66px;z-index:1100;background:#111827;border:2px solid rgba(77,184,255,.6);border-radius:12px;padding:8px;display:none;flex-direction:column;gap:8px;min-width:300px}
+#menu.open{display:flex}
+#menu button{font:700 22px system-ui,sans-serif;color:#e5e7eb;background:#0b0f14;border:2px solid #374151;border-radius:10px;padding:16px;text-align:left}
+#menu .info{color:#9ca3af;font-size:16px;font-weight:400;padding:4px 6px}
+#map{position:absolute;left:0;right:0;top:60px;bottom:0;background:#0b0f14}
+#btns{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:14px}
+.b{width:84px;height:84px;border-radius:18px;background:rgba(11,15,20,.85);border:2px solid rgba(77,184,255,.6);color:#4ade80;font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.b.act{background:#166534;color:#fff}
+.leaflet-control-attribution{font-size:11px!important;background:rgba(11,15,20,.6)!important;color:#9ca3af!important}
+.leaflet-control-attribution a{color:#9ca3af!important}
+.me{position:relative;width:0;height:0}
+.me i{position:absolute;left:-13px;top:-13px;width:20px;height:20px;border-radius:50%;background:#3b82f6;border:3px solid #fff;box-shadow:0 0 8px rgba(0,0,0,.6)}
+.me b{position:absolute;left:-12px;top:-38px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:22px solid #3b82f6;transform-origin:12px 38px;display:none}
+#nopos{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:900;background:rgba(11,15,20,.8);border-radius:10px;padding:8px 16px;color:#9ca3af;font-size:16px;font-weight:400}
+html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{display:none}html.ctsplit #maps{width:240px}
+</style></head><body>
+<div id="top">
+  <div id="title">CARLIN BOX<small id="ver"></small></div>
+  <div class="pill" id="net" title="Box Wi-Fi">…</div>
+  <div class="pill" id="maps" title="Tap: start / stop the map download"><div id="mapsBar"></div><span id="mapsT">Maps</span></div>
+  <div class="pill" id="gps">No GPS</div>
+  <div class="pill" id="fpvs"></div>
+  <div class="sp"></div>
+  <div class="pill" id="menuB">&#8943;</div>
+</div>
+<div id="menu">
+  <button id="mFollow">Follow position: on</button>
+  <button id="mOvl">Place names: on</button>
+  <button id="mAuto">Box settings (Autostart)</button>
+  <button id="mRe">Restart app</button>
+  <button id="mCl">Close app</button>
+  <div class="info" id="mInfo"></div>
+</div>
+<div id="map"></div>
+<div id="btns"><div class="b" id="zin">+</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div></div>
+<div id="nopos">No position from the box – map shows home</div>
+<script src="leaflet.js"></script>
+<script>
+var $=function(i){return document.getElementById(i)};
+function cmd(c){fetch('/__ctbox/'+c).catch(function(){});}
+function ls(k,d){try{var v=localStorage.getItem(k);return v==null?d:v;}catch(e){return d;}}
+function lw(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+var home=[48.1874,15.6139];
+var map=L.map('map',{zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,
+  maxBounds:[[46.3,13.0],[49.6,18.3]]});
+map.attributionControl.setPrefix(false);
+L.tileLayer('/tile/{z}/{x}/{y}.jpg',{maxNativeZoom:19,maxZoom:20,minZoom:7,attribution:'basemap.at',keepBuffer:4}).addTo(map);
+var ovl=L.tileLayer('/ovl/{z}/{x}/{y}.png',{maxNativeZoom:19,maxZoom:20,minZoom:7});
+var ovlOn=ls('ovl','1')=='1';if(ovlOn)ovl.addTo(map);
+var v0=JSON.parse(ls('view','null')||'null');
+if(v0)map.setView([v0[0],v0[1]],v0[2]);else map.setView(home,13);
+map.on('moveend',function(){var c=map.getCenter();lw('view',JSON.stringify([c.lat,c.lng,map.getZoom()]));});
+var follow=ls('follow','1')=='1',me=null,pos=null;
+function setFollow(f){follow=f;lw('follow',f?'1':'0');$('ctr').classList.toggle('act',f);$('mFollow').textContent='Follow position: '+(f?'on':'off');if(f&&pos)map.panTo(pos);}
+setFollow(follow);
+map.on('dragstart',function(){if(follow)setFollow(false);});
+$('zin').onclick=function(){map.zoomIn();};
+$('zout').onclick=function(){map.zoomOut();};
+$('ctr').onclick=function(){if(pos){setFollow(true);map.setView(pos,Math.max(map.getZoom(),16));}else map.setView(home,15);};
+$('maps').onclick=function(){cmd('toggle');};
+$('menuB').onclick=function(e){e.stopPropagation();$('menu').classList.toggle('open');};
+map.on('click',function(){$('menu').classList.remove('open');});
+$('mFollow').onclick=function(){setFollow(!follow);};
+$('mOvl').onclick=function(){ovlOn=!ovlOn;lw('ovl',ovlOn?'1':'0');if(ovlOn)ovl.addTo(map);else map.removeLayer(ovl);this.textContent='Place names: '+(ovlOn?'on':'off');};
+$('mOvl').textContent='Place names: '+(ovlOn?'on':'off');
+$('mAuto').onclick=function(){$('menu').classList.remove('open');cmd('autostart');};
+$('mRe').onclick=function(){cmd('restart');};
+$('mCl').onclick=function(){cmd('close');};
+/* --- called by the app --- */
+window.ctInit=function(ver,lat,lon){home=[lat,lon];$('ver').textContent='V'+ver;$('mInfo').textContent='Carlin Box V'+ver+' · maps Vienna + Lower Austria from the box memory';};
+window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'#4ade80':r>=-60?'#4ade80':r>=-72?'#f5b13d':'#f87171';};
+window.ctMaps=function(pct,mb,st,on){$('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
+window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
+  pos=[lat,lon];$('nopos').style.display='none';
+  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i></div>',iconSize:[0,0]}),interactive:false}).addTo(map);}
+  else me.setLatLng(pos);
+  var a=me.getElement()&&me.getElement().querySelector('b');
+  if(a){var mv=kmh>3&&brg>=0;a.style.display=mv?'block':'none';if(mv)a.style.transform='rotate('+brg+'deg)';}
+  $('gps').textContent=(gps?'GPS':'Net')+(kmh>=0?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
+  $('gps').style.color=age>30?'#f5b13d':'#4ade80';
+  if(follow)map.panTo(pos,{animate:true,duration:.5});
+};
+window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
+new MutationObserver(function(){setTimeout(function(){map.invalidateSize();},50);}).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+window.addEventListener('resize',function(){map.invalidateSize();});
+</script>
+</body></html>

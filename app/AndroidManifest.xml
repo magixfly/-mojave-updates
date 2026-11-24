@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="at.magixfly.coretracker" android:versionCode="102" android:versionName="2.00">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="at.magixfly.coretracker" android:versionCode="103" android:versionName="2.01">
     <uses-sdk android:minSdkVersion="24" android:targetSdkVersion="35"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -15,8 +12,8 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION"/>
-    <application android:label="Core Tracker" android:usesCleartextTraffic="true" android:hardwareAccelerated="true">
-        <activity android:name="at.magixfly.coretracker.MainActivity" android:label="Core Tracker" android:exported="true" android:screenOrientation="sensorLandscape" android:configChanges="keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize">
+    <application android:label="Carlin Box" android:usesCleartextTraffic="true" android:hardwareAccelerated="true">
+        <activity android:name="at.magixfly.coretracker.MainActivity" android:label="Carlin Box" android:exported="true" android:screenOrientation="sensorLandscape" android:configChanges="keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

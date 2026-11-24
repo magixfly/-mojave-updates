@@ -5,47 +5,28 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Core Tracker für die CarlinKit-Box: zeigt die Tracker-Seite des Pi (Port 8080) im Vollbild.
- * Sucht den Pi automatisch (corepi.local, letzte Adresse, Hotspot-Adressen) mit Fortschrittsanzeige.
+ * V2.01: Carlin Box – eigenständig, ohne Core Tracker (Wunsch Thorsten 24.11.).
+ * Startseite = eigene Offline-Karte Wien + NÖ aus dem Box-Speicher (Leaflet, in der App mitgeliefert),
+ * eigene Position über das GPS der Box (falls vorhanden), FPV vom CosmoStreamer, WLAN/Hotspot-Anzeige.
+ * Kein Pi, keine Pi-Suche, kein Tracker auf der Box, kein Bluetooth-ESP, kein Status an den Pi.
  */
 public class MainActivity extends Activity {
-    static final int PORT = 8080;
-    static final String[] FIXED = {"corepi.local", "172.20.10.2", "10.42.0.1", "192.168.4.1"};
+    static final String HOST = "http://box.local/";    // wird komplett in Client.shouldInterceptRequest beantwortet
 
     WebView web;
-    LinearLayout overlay;
-    android.widget.Button startBtn;
-    volatile boolean startWanted = false;
-    TextView status;
-    TextView bar;
-    LinearLayout barBox;
     Handler ui;
     SharedPreferences prefs;
     TileStore tiles;
     Fpv fpv;
-    volatile String piBase = null;
-    volatile boolean searching = false;
-    volatile int repFail = 0;
+    Gps gps;
     volatile boolean loaded = false;
-    int barWidthPx = 600;
-    int repN = 0;
 
-    /** V1.75: App schließen bzw. neu starten (Menü der Box) */
+    /** V1.75: App schließen bzw. neu starten (Menü) */
     static void quit(android.app.Activity a, boolean restart) {
         if (restart) {
             try {
@@ -58,8 +39,10 @@ public class MainActivity extends Activity {
         if (restart) android.os.Process.killProcess(android.os.Process.myPid());
     }
 
+    static String ver(android.content.Context c) { try { return c.getPackageManager().getPackageInfo(c.getPackageName(), 0).versionName; } catch (Throwable t) { return "?"; } }
+
     static volatile boolean alive = false;   // V1.59: Karte läuft (für die Rückkehr nach dem Hotspot-Schalten)
-    @Override protected void onDestroy() { alive = false; super.onDestroy(); }
+    @Override protected void onDestroy() { alive = false; if (gps != null) gps.stop(); super.onDestroy(); }
 
     @Override
     protected void onCreate(Bundle b) {
@@ -74,86 +57,31 @@ public class MainActivity extends Activity {
         FrameLayout root = new FrameLayout(this);
         root.setBackgroundColor(0xFF0B0F14);
 
+        tiles = new TileStore(this);
         web = new WebView(this);
         WebSettings s = web.getSettings();
         s.setJavaScriptEnabled(true);
         s.setDomStorageEnabled(true);
         s.setMediaPlaybackRequiresUserGesture(false);
-        s.setUseWideViewPort(true);          // Seite so breit wie in Chrome darstellen
-        s.setLoadWithOverviewMode(true);
-        s.setTextZoom(100);                  // Schriftgröße wie in Chrome
-        s.setCacheMode(-1);                  // Standard-Cache (Kartenkacheln bleiben gespeichert)
+        s.setTextZoom(100);
+        s.setCacheMode(WebSettings.LOAD_NO_CACHE);   // Kacheln kommen ohnehin aus dem Box-Speicher
         web.setBackgroundColor(0xFF0B0F14);
         web.setWebViewClient(new Client(this));
         root.addView(web, new FrameLayout.LayoutParams(-1, -1, 17));
 
-        overlay = new LinearLayout(this);
-        overlay.setOrientation(1);
-        overlay.setGravity(17);
-        overlay.setBackgroundColor(0xFF0B0F14);
-
-        TextView title = new TextView(this);
-        title.setText("CORE TRACKER");
-        title.setTextSize(34);
-        title.setTextColor(0xFF4ADE80);
-        title.setGravity(17);
-        overlay.addView(title);
-
-        status = new TextView(this);
-        status.setTextSize(20);
-        status.setTextColor(0xFFE5E7EB);
-        status.setGravity(17);
-        status.setPadding(0, 30, 0, 30);
-        overlay.addView(status);
-
-        // Ladebalken mit Prozent darin
-        barBox = new LinearLayout(this);
-        barBox.setBackgroundColor(0xFF1F2937);
-        bar = new TextView(this);
-        bar.setBackgroundColor(0xFF22C55E);
-        bar.setTextColor(0xFF0B0F14);
-        bar.setTextSize(18);
-        bar.setGravity(17);
-        barBox.addView(bar, new LinearLayout.LayoutParams(0, 56));
-        overlay.addView(barBox, new LinearLayout.LayoutParams(barWidthPx, 56));
-
-        // V1.99: the tracker on the box starts only on request (button)
-        startBtn = new android.widget.Button(this);
-        startBtn.setText("Start tracker on the box");
-        startBtn.setTextSize(22);
-        startBtn.setAllCaps(false);
-        startBtn.setTextColor(0xFF0B0F14);
-        startBtn.setBackgroundColor(0xFF22C55E);
-        startBtn.setPadding(40, 20, 40, 20);
-        startBtn.setVisibility(View.GONE);
-        startBtn.setOnClickListener(new View.OnClickListener() { public void onClick(View v) {
-            startBtn.setVisibility(View.GONE);
-            startWanted = true;
-            search();
-        } });
-        LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(-2, -2);
-        blp.topMargin = 40;
-        overlay.addView(startBtn, blp);
-
-        root.addView(overlay, new FrameLayout.LayoutParams(-1, -1, 17));
-
-        fpv = new Fpv(this, root);              // V1.26: optional FPV from the CosmoStreamer
+        fpv = new Fpv(this, root);                // V1.26: FPV vom CosmoStreamer (Knopf links unten)
         setContentView(root);
         AdbWifi.ensure(this);
-        HotspotBoot.maybe(this);                 // V1.39: Box-Hotspot nach dem Start automatisch einschalten
-        new Thread(new Runnable() { public void run() { netLoop(); } }).start();   // V1.43: WLAN/Hotspot der Box anzeigen
+        HotspotBoot.maybe(this);                  // V1.39: WLAN-Reihenfolge / Hotspot nach dem Start
         A11y.enable(this);
-        Updater.loop(this);
-        if (getIntent() != null && getIntent().hasExtra("aptest")) {   // Test: Hotspot-Schalter per Bedienungshilfe
-            A11y.want("ap"); startActivity(new android.content.Intent("android.settings.TETHER_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)); }                      // V1.52: Selbst-Update von GitHub
-        if (getIntent() != null && getIntent().hasExtra("adbtest")) new Thread(new Runnable() { public void run() {
-            try { android.util.Log.d("CTAP", "test: " + HotspotBoot.shell("id; getprop persist.adb.tcp.port; dumpsys tethering | grep -c TetheredState")); }
-            catch (Throwable t) { android.util.Log.d("CTAP", "test-Fehler: " + t); } } }).start();
-        tiles = new TileStore(this);
+        Updater.loop(this);                       // V1.52: Selbst-Update von GitHub
         tiles.start();
-        ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000);
+        web.loadUrl(HOST);
+        gps = new Gps(this);
+        gps.start();
+        new Thread(new Runnable() { public void run() { netLoop(); } }).start();   // V1.43: WLAN/Hotspot der Box anzeigen
+        ui.postDelayed(new Runnable() { public void run() { tick(); } }, 1000);
         hideBars();
-        search();
     }
 
     void hideBars() {
@@ -162,9 +90,9 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onResume() { super.onResume(); hideBars();
-        try { if (web != null) web.onResume(); if (fpv != null && fpv.web != null) fpv.web.onResume(); } catch (Throwable t) { } }   // V1.74: weiter, wenn wieder vorne
+        try { if (web != null) web.onResume(); if (fpv != null && fpv.web != null) fpv.web.onResume(); } catch (Throwable t) { } }
     @Override protected void onPause() { super.onPause();
-        try { if (web != null) web.onPause(); if (fpv != null && fpv.web != null) fpv.web.onPause(); } catch (Throwable t) { } }   // V1.74: im Hintergrund Karte und Video anhalten (Kartendownload und Status laufen weiter)
+        try { if (web != null) web.onPause(); if (fpv != null && fpv.web != null) fpv.web.onPause(); } catch (Throwable t) { } }   // Kartendownload läuft im Hintergrund weiter
 
     @Override
     public void onWindowFocusChanged(boolean f) { super.onWindowFocusChanged(f); if (f) hideBars(); }
@@ -172,169 +100,59 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
         if (fpv != null && fpv.mode != Fpv.MAP) { fpv.setMode(Fpv.MAP); return; }
-        if (web.canGoBack()) web.goBack(); else super.onBackPressed();
+        super.onBackPressed();
     }
 
-    void showOverlay(String text, int pct) { ui.post(new Task(this, Task.OVERLAY, text, pct)); }
+    void js(final String s) { ui.post(new Runnable() { public void run() { if (loaded && web != null) web.evaluateJavascript(s, null); } }); }
 
-    void applyOverlay(String text, int pct) {
-        overlay.setVisibility(View.VISIBLE);
-        status.setText(text);
-        int p = Math.max(0, Math.min(100, pct));
-        ViewGroup.LayoutParams lp = new LinearLayout.LayoutParams(Math.max(70, barWidthPx * p / 100), 56);
-        bar.setLayoutParams(lp);
-        bar.setText(p + " %");
+    /** jede Sekunde: Kartendownload-Status (mit Prozent für den Balken) an die Seite */
+    void tick() {
+        try { updatePill(); } catch (Throwable t) { }
+        ui.postDelayed(new Runnable() { public void run() { tick(); } }, 1000);
     }
-
-    void search() {
-        if (searching) return;
-        searching = true;
-        new Thread(new Task(this, Task.WORKER, null, 0)).start();
-    }
-
-    void doSearch() {
-            List<String> c = new ArrayList<String>();
-            String last = prefs.getString("host", null);
-            if (last != null) c.add(last);
-            for (String h : FIXED) if (!c.contains(h)) c.add(h);
-            for (int i = 1; i <= 15; i++) { String h = "172.20.10." + i; if (!c.contains(h)) c.add(h); }
-            String found = null;
-            boolean local = false;
-            localOff = false;
-            if (localServer()) { found = "127.0.0.1"; local = true; }
-            else if (localOff) {   // V1.99: box tracker installed but not running -> no Pi, show the start button
-                searching = false;
-                showOverlay("Tracker on the box is off", 0);
-                ui.post(new Runnable() { public void run() { startBtn.setVisibility(View.VISIBLE); } });
-                return;
-            }   // V1.97: tracker program on the box itself comes first (own ESP via Bluetooth), Pi only if not installed
-            for (int i = 0; i < c.size() && found == null; i++) {
-                showOverlay("Searching Core Tracker … " + c.get(i), i * 100 / c.size());
-                if (ok(c.get(i))) found = c.get(i);
-            }
-            if (found == null) found = scanSubnet();     // V1.24: e.g. home Wi-Fi without corepi.local (mDNS)
-            searching = false;
-            if (found != null && found.endsWith(".local")) {   // V1.64: .local löst die Box nicht immer auf (WebView ja, Java nein) -> feste IP merken
-                try { found = java.net.InetAddress.getByName(found).getHostAddress(); } catch (Throwable t) { String ip = scanSubnet(); if (ip != null) found = ip; }
-            }
-            if (found != null) {
-                String host = found;
-                if (!local) prefs.edit().putString("host", host).apply();
-                onLocal = local;
-                if (local) BleEsp.start(this);   // V1.97: own ESP via Bluetooth, no switching back to the Pi
-                piBase = "http://" + host + ":" + PORT;
-                showOverlay("Found: " + host, 100);
-                loaded = true;
-                ui.post(new Task(this, Task.LOAD, "http://" + host + ":" + PORT + "/", 0));
-            } else {
-                showOverlay("Tracker not found – is the Pi in the hotspot? Retry in 5 s", 100);
-                ui.postDelayed(new Task(this, Task.SEARCH, null, 0), 5000);
-            }
-    }
-
-
-    // ---------------------------------------------------------------- V1.96: tracker program on the box (no Pi)
-    static final String CT_DIR = "/data/local/tmp/ct";
-    volatile boolean onLocal = false, piWatch = false, localOff = false;
-
-    /** Starts server.py on the box (if installed) and waits up to 25 s until it answers. */
-    boolean localServer() {
-        if (ok("127.0.0.1")) return true;
-        try {
-            String r = HotspotBoot.shell("[ -f " + CT_DIR + "/run.sh ] && [ -x " + CT_DIR + "/ld-musl ] && echo yes");
-            if (!r.contains("yes")) return false;
-            if (!startWanted) { localOff = true; return false; }   // V1.99: installed but off -> wait for the start button
-            startWanted = false;
-            HotspotBoot.shell("pgrep -f ct/boxmai[n].py >/dev/null || (setsid sh " + CT_DIR + "/run.sh >/dev/null 2>&1 </dev/null &)");
-        } catch (Throwable t) { return false; }
-        for (int i = 0; i < 25; i++) {
-            showOverlay("Starting tracker on the box …", i * 4);
-            if (ok("127.0.0.1")) return true;
-            try { Thread.sleep(1000); } catch (Throwable t) { }
-        }
-        return false;
-    }
-
-    /** While the box runs its own tracker: switch to the Pi as soon as it is back (it has the car data). */
-    void startPiWatch() {
-        if (piWatch) return;
-        piWatch = true;
-        new Thread(new Runnable() { public void run() {
-            while (onLocal) {
-                try { Thread.sleep(30000); } catch (Throwable t) { }
-                String h = prefs.getString("host", null);
-                if (onLocal && h != null && ok(h)) {
-                    onLocal = false;
-                    piBase = "http://" + h + ":" + PORT;
-                    ui.post(new Task(MainActivity.this, Task.LOAD, piBase + "/", 0));
-                }
-            }
-            piWatch = false;
-        } }).start();
-    }
-
-    /** V1.24: look for the tracker in the own /24 network (all addresses at once, ~2 s). */
-    String scanSubnet() {
-        try {
-            final List<String> hosts = new ArrayList<String>();
-            for (java.net.NetworkInterface ni : java.util.Collections.list(java.net.NetworkInterface.getNetworkInterfaces())) {
-                if (!ni.isUp() || ni.isLoopback()) continue;
-                for (java.net.InetAddress ia : java.util.Collections.list(ni.getInetAddresses())) {
-                    if (!(ia instanceof java.net.Inet4Address) || !ia.isSiteLocalAddress()) continue;
-                    String ip = ia.getHostAddress(), pre = ip.substring(0, ip.lastIndexOf('.') + 1);
-                    for (int i = 1; i < 255; i++) { String h = pre + i; if (!h.equals(ip) && !hosts.contains(h)) hosts.add(h); }
-                }
-            }
-            if (hosts.isEmpty()) return null;
-            showOverlay("Searching Core Tracker in the whole network (" + hosts.size() + " addresses) …", 95);
-            java.util.concurrent.ExecutorService ex = java.util.concurrent.Executors.newFixedThreadPool(48);
-            final java.util.concurrent.atomic.AtomicReference<String> hit = new java.util.concurrent.atomic.AtomicReference<String>();
-            for (final String h : hosts) ex.execute(new Scan(h, hit));
-            ex.shutdown();
-            ex.awaitTermination(15, java.util.concurrent.TimeUnit.SECONDS);
-            ex.shutdownNow();
-            return hit.get();
-        } catch (Throwable t) { return null; }
-    }
-
-    void tick() { updatePill(); ui.postDelayed(new Task(this, Task.TICK, null, 0), 1000); }
 
     static String size(long b) { return b >= 1073741824L ? String.format(java.util.Locale.US, "%.1f GB", b / 1073741824.0) : (b / 1048576) + " MB"; }
 
+    void updatePill() {
+        if (!loaded) return;
+        long b1 = tiles.bytes.get(), b2 = tiles.estimate();
+        String mb = (b1 >= 1073741824L && b2 >= 1073741824L) ? String.format(java.util.Locale.US, "%.1f/%.1f GB", b1 / 1073741824.0, b2 / 1073741824.0) : size(b1) + "/" + size(b2);
+        String net = tiles.netType();
+        boolean on = tiles.loadingNow();
+        String st = tiles.finished ? "complete" : tiles.full ? "storage full" : tiles.stopped ? "stopped" : net == null ? "offline" : on ? "loading" : "starting";
+        int pct = tiles.finished ? 100 : tiles.percent();
+        web.evaluateJavascript("window.ctMaps&&ctMaps(" + pct + "," + Client.q(mb) + "," + Client.q(st) + "," + (on ? 1 : 0) + ")", null);
+    }
+
     volatile String netTxt = "";
-    /** V1.43: WLAN der Box bzw. „Hotspot“ in der Kopfzeile (über die lokale Root-Shell, alle 15 s). */
+    /** V1.43: WLAN der Box bzw. „Hotspot“ (über die lokale Root-Shell, alle 15 s). Prüft dabei auch ADB über WLAN (Fernwartung). */
     void netLoop() {
+        int n = 0;
         while (true) {
             try {
-                String sw = wifiTxt();                     // V1.63: zuerst prüfen, ob die Box in einem WLAN hängt
-                if (HotspotBoot.apOn(this) && ("Box: SIM".equals(sw) || "Box: ?".equals(sw))) { netTxt = "Box: Hotspot" + apBand(); throw new RuntimeException("ap"); }
-                String r = HotspotBoot.shell("dumpsys tethering | grep -c TetheredState; cmd wifi status | grep -m1 'connected to'; dumpsys wifi | grep -m1 mWifiInfo | grep -o 'RSSI: -[0-9]*'; ip neigh 2>/dev/null | grep -v FAILED | grep -c -E 'ap|wlan|swlan'");
+                String sw = wifiTxt();
+                if (HotspotBoot.apOn(this) && ("Box: SIM".equals(sw) || "Box: ?".equals(sw))) { netTxt = "Hotspot" + apBand(); throw new RuntimeException("ap"); }
+                String r = HotspotBoot.shell("dumpsys tethering | grep -c TetheredState; cmd wifi status | grep -m1 'connected to'");
                 String[] l = r.split("\n");
                 int teth = 0; try { teth = Integer.parseInt(l[0].trim()); } catch (Throwable t) { }
-                String t;
                 java.util.regex.Matcher w0 = java.util.regex.Pattern.compile("connected to \"([^\"]*)\"").matcher(r);
-                if (w0.find()) t = "Box: " + w0.group(1) + " " + ghz();   // V1.63: verbunden mit einem WLAN = kein Hotspot (TetheredState zählte auch inaktive Einträge)
-                else if (teth > 0 && HotspotBoot.apOn(this)) t = "Box: Hotspot" + apBand();
-                else {
-                    java.util.regex.Matcher m = java.util.regex.Pattern.compile("connected to \"([^\"]*)\"").matcher(r);
-                    java.util.regex.Matcher q = java.util.regex.Pattern.compile("RSSI: (-\\d+)").matcher(r);
-                    t = m.find() ? "Box: " + m.group(1) + " " + ghz() : "Box: no Wi-Fi";   // V1.56: 2.4 / 5 GHz statt dBm
-                }
-                netTxt = t;
-            } catch (Throwable e) { if (!"ap".equals(e.getMessage())) netTxt = wifiTxt(); }
-            final String js = "(function(){var e=document.getElementById('ctNet');if(!e){e=document.createElement('span');e.id='ctNet';e.title='Box Wi-Fi';var a=document.getElementById('att');if(a&&a.parentNode)a.parentNode.insertBefore(e,a.nextSibling);else document.body.appendChild(e);}e.textContent='" + netTxt.replace("'", "") + "';var m=e.textContent.match(/(-\\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'':r>=-60?'#4ade80':r>=-72?'#f5b13d':'#f87171';})()";   /* V1.95: Farbe nach Signal: grün ≥ −60, orange ≥ −72, rot darunter */
-            ui.post(new Runnable() { public void run() { if (loaded) web.evaluateJavascript(js, null); } });
+                if (w0.find()) netTxt = w0.group(1) + " " + ghz();
+                else if (teth > 0 && HotspotBoot.apOn(this)) netTxt = "Hotspot" + apBand();
+                else netTxt = "no Wi-Fi";
+            } catch (Throwable e) { if (!"ap".equals(e.getMessage())) netTxt = wifiTxt().replace("Box: ", ""); }
+            js("window.ctNet&&ctNet(" + Client.q(netTxt) + ")");
+            if ((++n % 2) == 0 && prefs.getBoolean("adbAuto", true)) AdbWifi.ensure(this);   // alle 30 s
             try { Thread.sleep(15000); } catch (Throwable e) { }
         }
     }
 
-    /** V1.56: Band des WLANs, mit dem die Box verbunden ist */
+    /** V1.56: Band + Signal des WLANs, mit dem die Box verbunden ist */
     String ghz() {
         try {
             android.net.wifi.WifiManager wm = (android.net.wifi.WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
             android.net.wifi.WifiInfo wi = wm.getConnectionInfo();
             int f = wi.getFrequency(), r = wi.getRssi();
-            return (f > 4900 ? "5 GHz" : f > 2000 ? "2.4 GHz" : "") + (r < 0 && r > -127 ? " \u00b7 " + r + " dBm" : "");   // V1.95: Signalqualität dazu
+            return (f > 4900 ? "5 GHz" : f > 2000 ? "2.4 GHz" : "") + (r < 0 && r > -127 ? " · " + r + " dBm" : "");
         } catch (Throwable t) { return ""; }
     }
     /** V1.56: Band des eigenen Hotspots (alte und neue Android-API per Reflection) */
@@ -360,38 +178,5 @@ public class MainActivity extends Activity {
             String ss = wi.getSSID(); if (ss == null || ss.contains("unknown")) ss = "Wi-Fi"; ss = ss.replace("\"", "");
             return "Box: " + ss + " " + ghz();
         } catch (Throwable t) { return "Box: ?"; }
-    }
-
-    void updatePill() {
-        if (!loaded) return;
-        long b1 = tiles.bytes.get(), b2 = tiles.estimate();
-        String mb = (b1 >= 1073741824L && b2 >= 1073741824L) ? String.format(java.util.Locale.US, "%.1f/%.1f GB", b1 / 1073741824.0, b2 / 1073741824.0) : size(b1) + "/" + size(b2);   // V1.23: shorter
-        String net = tiles.netType();
-        boolean on = tiles.loadingNow();
-        String txt = tiles.finished ? "Maps \u2713"                      // V1.38: kurze Texte (Tippen = Stopp/Start bleibt)
-                : tiles.full ? "Maps " + mb + " \u00b7 full"
-                : tiles.stopped ? "Maps " + mb + " \u00b7 stopped"
-                                : net == null ? "Maps " + mb + " \u00b7 offline"
-                : on ? "Maps " + mb + " \u00b7 loading"
-                : "Maps " + mb + " \u00b7 starting";
-        if (piBase != null && (++repN % 3) == 0)                 // V1.25: tell the tracker on the Pi (shown on PC / phone / 7" display)
-            new Thread(new Report(this, piBase, txt, on, b1 / 1073741824.0, b2 / 1073741824.0, net, tiles.stopped)).start();
-        web.evaluateJavascript("(function(){var e=document.getElementById('ctMapsT');if(e)e.textContent='" + txt + "';var m=document.getElementById('ctMaps');if(m){m.dataset.dl='" + (on ? 1 : 0) + "';var i=m.querySelector('img');if(i)i.style.animationPlayState='" + (on ? "running" : "paused") + "';}})()", null);
-    }
-
-    /** Anpassungen der Tracker-Seite nur auf der Box: Karten-Anzeige mit drehendem Mojave in der Statusleiste, Schrift gleich groß. */
-    static final String CSS_JS = "(function(){var s=document.getElementById('ctbox');if(!s){s=document.createElement('style');s.id='ctbox';document.head.appendChild(s);}var css='#side{width:262px!important}#map{left:262px!important;width:calc(100% - 262px)!important}html.ctsplit #side{width:230px!important}html.ctsplit #map{left:230px!important;width:calc(100% - 230px)!important}#bFind{display:none!important}#src{display:none!important}#ver{position:absolute;left:262px;top:0;height:60px;display:flex!important;flex-direction:column;justify-content:center;align-items:flex-start;font-size:19px!important;line-height:1.2!important;font-weight:400;white-space:nowrap}#ver::before{content:attr(data-box);color:#4ade80}'+'#sys,#esp,#wifi,#ctMaps,#bInfo.on,#cl{display:inline-flex!important;align-items:center;justify-content:center;gap:8px;font-size:19px!important;font-weight:700;border:2px solid rgba(77,184,255,.6);border-radius:10px;padding:0 12px;white-space:nowrap;font-variant-numeric:tabular-nums;height:46px;box-sizing:border-box}'+'#cl{border-color:#d97757}#sys *,#esp *,#wifi *{font-size:19px!important}#sys i{width:28px!important;height:9px!important}'+'html.ctsplit #top{display:none!important}html.ctsplit #map{top:0!important;height:100%!important}html.ctsplit #side,html.ctsplit #warn{top:0!important}html.ctsplit #tGps,html.ctsplit #side .s,html.ctsplit #side .row.s,html.ctsplit #bFind,html.ctsplit #vAlt{display:none!important}html.ctsplit body #side .t .v,html.ctsplit body #side .t .v span{font-size:50px!important;line-height:1.05!important;white-space:nowrap!important}html.ctsplit body #side .t .v small{font-size:20px!important}html.ctsplit #side .l{font-size:19px!important;font-weight:800!important}html.ctsplit #side .t{padding:12px 12px 14px!important}'+'html.ctsplit .b{width:84px!important;height:84px!important;font-size:34px!important;border-radius:18px!important}html.ctsplit #bAz{font-size:17px!important}html.ctsplit #bAz span{font-size:13px!important}html.ctsplit .b svg{width:42px!important;height:42px!important}html.ctsplit #btns{top:12px!important;gap:14px!important}html.ctsplit #side{padding-bottom:160px!important}'+'#hdgComp{left:276px!important}body.two #hdgComp{left:316px!important}html.ctsplit #hdgComp{left:244px!important}'+'#side{gap:5px!important;padding-top:4px!important;padding-bottom:80px!important;box-sizing:border-box!important}#side .t{padding-top:6px!important;padding-bottom:7px!important}'+'#top{height:60px!important}#map{top:60px!important;height:calc(100% - 60px)!important}#side,#warn,#rideSide,#side2{top:60px!important}'+'#top .sp{flex:0 0 528px!important}#sys,#esp,#wifi{flex:1 1 0;min-width:0;overflow:hidden}#top{gap:10px!important}'+'#ctMaps{position:absolute;left:430px;top:7px;color:#4ade80;cursor:pointer;min-width:0;max-width:330px;justify-content:center!important;padding-left:48px!important}#ctMaps img{position:absolute;left:12px;top:4px}#cl{margin-right:4px}#sys{flex:1.6 1 0!important;padding:0 14px!important}#sys>*{flex:none}#bInfo.on{position:absolute;left:430px;top:7px;border-color:#fbbf24;min-width:330px}'+'#map{transform:perspective(1400px) rotateX(24deg) scale(1.36);transform-origin:50% 88%}'+'#att *{font-size:19px!important}#att:empty{visibility:hidden!important}#ctNet{position:static;flex:none;margin:0;align-self:center;width:226px;height:46px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:2px solid rgba(77,184,255,.6);border-radius:10px;background:#0b0f14;font-size:19px!important;font-weight:700;color:#4ade80;white-space:nowrap;overflow:hidden}'+'#att{position:static!important;flex:none!important;margin:0!important;align-self:center!important;transform:none!important;width:182px!important;height:46px!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;border:2px solid rgba(77,184,255,.6)!important;border-radius:10px!important;padding:0 8px!important;background:#0b0f14!important;font-size:19px!important;font-weight:700!important;line-height:1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;z-index:5}'+'#ctMaps img{height:28px;width:28px;object-fit:contain;animation:ctspin 3s linear infinite}@keyframes ctspin{to{transform:rotate(360deg)}}#top:has(#bInfo.on) #ctMaps{display:none!important}';var own=!!document.getElementById('hdgComp');if(!own)css+='#scale{position:fixed!important;right:110px!important;bottom:10px!important;left:auto!important;z-index:999;background:rgba(11,15,20,.65);border-radius:8px;min-width:90px;color:#f3f4f6}#scale div{border-color:#f3f4f6!important}'+'#ctcomp{position:fixed;left:276px;bottom:14px;width:104px;height:104px;z-index:999;pointer-events:none}';s.textContent=css;var tp=document.getElementById('top'),at=document.getElementById('att');if(tp&&at&&at.parentNode!==tp){var sp=tp.querySelector('.sp');tp.insertBefore(at,sp?sp.nextSibling:null);}if(!document.getElementById('ctMaps')){var v=document.getElementById('ver');var m=document.createElement('span');m.id='ctMaps'; m.innerHTML='<img src=\"car.png\"><span id=\"ctMapsT\">Maps</span>';m.onclick=function(){fetch('/__ctbox/toggle')}; if(v&&v.parentNode)v.parentNode.insertBefore(m,v.nextSibling);else document.body.appendChild(m);}if(!window.ctTouch){window.ctTouch=1;document.addEventListener('touchstart',function(e){var t=document.getElementById('ctMapsT');window.ctTn=e.touches.length;if(t&&e.touches.length>1){t.dataset.f=Date.now();t.textContent='Touch: '+e.touches.length+' fingers';}},{capture:true,passive:true});}if(own||document.getElementById('ctcomp'))return;var c=document.createElement('div');c.id='ctcomp';c.innerHTML='<svg viewBox=\"-60 -60 120 120\" width=\"104\" height=\"104\"><circle r=\"56\" fill=\"rgba(11,15,20,.72)\" stroke=\"#9ca3af\" stroke-width=\"2\"/>'+'<text y=\"-38\" text-anchor=\"middle\" fill=\"#ef4444\" font-size=\"16\" font-weight=\"800\">N</text><text x=\"42\" y=\"6\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">E</text>'+'<text y=\"49\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">S</text><text x=\"-42\" y=\"6\" text-anchor=\"middle\" fill=\"#e5e7eb\" font-size=\"13\" font-weight=\"700\">W</text>'+'<g id=\"ctarr\"><path d=\"M0,-30 L10,8 L0,2 L-10,8Z\" fill=\"#4ade80\"/></g><text id=\"cthdg\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"15\" font-weight=\"800\">–</text></svg>';document.body.appendChild(c);var a=document.getElementById('att');function upd(){if(!a)return;var hd=a.dataset.hdg;var t=a.textContent||'';var m=hd?[0,hd]:t.match(/(\\d+)\\u00b0\\s*$/); if(m&&(hd||t.indexOf('heading')<0)){var h=+m[1];document.getElementById('ctarr').setAttribute('transform','rotate('+h+')');document.getElementById('cthdg').textContent=h+'\\u00b0';  var n=a.lastChild;if(n&&n.nodeType==3)n.nodeValue=n.nodeValue.replace(/\\u00b7\\s*(\\d+)\\u00b0\\s*$/,'\\u00b7 heading $1\\u00b0');}}if(a)new MutationObserver(upd).observe(a,{childList:true,characterData:true,subtree:true,attributes:true});upd();})()";
-
-    static boolean ok(String host) {
-        try {
-            HttpURLConnection con = (HttpURLConnection) new URL("http://" + host + ":" + PORT + "/").openConnection();
-            con.setConnectTimeout(700);
-            con.setReadTimeout(1500);
-            int code = con.getResponseCode();
-            con.disconnect();
-            return code == 200;
-        } catch (Throwable t) {
-            return false;
-        }
     }
 }

@@ -14,7 +14,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Kartenkacheln auf der Box: liefert Kacheln an den Tracker (aus dem Speicher der Box)
+ * Kartenkacheln auf der Box: liefert Kacheln an die eigene Karte (aus dem Speicher der Box)
  * und lädt im Hintergrund Wien + Niederösterreich vor (nur über WLAN, z. B. Hotspot XVII).
  * Reihenfolge: Zoom 8–16 komplett, dann Zoom 17/18 ringförmig von St. Pölten nach außen.
  */
@@ -28,33 +28,37 @@ class TileStore {
     static final int WORKERS = 8;                               // V1.22: 8 downloads at the same time
 
     final MainActivity a;
-    final File dir;
+    final File dir, ovlDir;
     final BlockingQueue<long[]> q = new ArrayBlockingQueue<long[]>(400);
     final AtomicLong done = new AtomicLong(), loaded = new AtomicLong(), bytes = new AtomicLong();
     volatile long total = 1;
     volatile String phase = "";
-    volatile boolean finished = false, paused = false, full = false, driving = false, stopped = false;
+    volatile boolean finished = false, paused = false, full = false, stopped = false;
     volatile long lastOk = 0;                                   // last tile downloaded (for "loading now")
-    volatile long lastMove = 0;
 
     TileStore(MainActivity a) {
         this.a = a;
         dir = new File(a.getFilesDir(), "tiles");
         dir.mkdirs();
+        ovlDir = new File(a.getFilesDir(), "ovl");
         stopped = true;                                          // V1.43: nach jedem Start gestoppt – Tippen auf „Maps“ startet/stoppt
     }
 
     File file(int z, int x, int y) { return new File(dir, z + "/" + x + "/" + y + ".jpg"); }
 
-    /** Kachel aus dem Box-Speicher, sonst vom Pi holen und speichern. null = nicht verfügbar. */
-    byte[] get(int z, int x, int y, String piBase) {
-        File f = file(z, x, y);
-        if (f.length() > 0) return read(f);
-        if (piBase != null) {
-            byte[] d = http(piBase + "/tile/" + z + "/" + x + "/" + y, 3000);
-            if (d != null && d.length > 0) { save(f, d); return d; }
-        }
-        return null;
+    static final String OVL = "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/%d/%d/%d.png";   // V2.01: Ortsnamen/Straßen
+    File ovlFile(int z, int x, int y) { return new File(ovlDir, z + "/" + x + "/" + y + ".png"); }
+
+    /** V2.01: Kachel aus dem Box-Speicher; fehlt sie und gibt es Internet, direkt von basemap.at holen und speichern. null/leer = nicht verfügbar. */
+    byte[] get(int z, int x, int y, boolean ovl) {
+        File f = ovl ? ovlFile(z, x, y) : file(z, x, y);
+        if (f.exists()) return f.length() > 0 ? read(f) : null;
+        if (!online()) return null;
+        byte[] d = http(String.format(ovl ? OVL : SRC, z, y, x), 4000);
+        if (d == null) return null;
+        if (z <= ZMAX + 1) save(f, d);                       // 0 Byte = an dieser Stelle keine Daten
+        if (!ovl && d.length > 0) { loaded.incrementAndGet(); bytes.addAndGet(d.length); }
+        return d;
     }
 
     // ---------- Hintergrund-Download ----------
@@ -85,7 +89,6 @@ class TileStore {
         total = t;
         for (int i = 0; i < WORKERS; i++) new Thread(new TileWorker(this)).start();
         new Thread(new TileProducer(this)).start();
-        new Thread(new DriveWatch(this)).start();
     }
 
     long count(int z) {
@@ -99,7 +102,6 @@ class TileStore {
         String s = "Maps " + pct + " % · " + phase + " · " + (bytes.get() / (1024 * 1024)) + " MB loaded";
         if (finished) s = "Maps Vienna + Lower Austria complete";
         else if (full) s = "Maps: storage almost full – download paused";
-        else if (driving) s = "Maps · paused while driving";
         else if (stopped) s = "Maps " + pct + " % · stopped";
         else if (paused) s = "Maps " + pct + " % · no internet";
         return s;
@@ -147,7 +149,7 @@ class TileStore {
             HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
             c.setConnectTimeout(timeout);
             c.setReadTimeout(timeout);
-            c.setRequestProperty("User-Agent", "CoreTracker-Box/1.22");
+            c.setRequestProperty("User-Agent", "CarlinBox/2.01");
             int code = c.getResponseCode();
             if (code == 404 || code == 400) { c.disconnect(); return new byte[0]; }
             if (code != 200) { c.disconnect(); return null; }

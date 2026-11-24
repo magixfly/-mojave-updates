@@ -21,13 +21,13 @@ public class Autostart extends Activity {
     TextView st;
 
     static final String[][] OPT = {
-        {"wlanAuto", "1", "WLAN nach Reihenfolge wählen (unten), sonst Hotspot"},
-        {"apAuto", "1", "Hotspot einschalten, wenn kein WLAN aus der Liste da ist"},
-        {"ap5", "1", "Hotspot auf 5 GHz festlegen"},
-        {"bbAuto", "1", "Fernwartung direkt über GitHub (ohne Pi)"},
-        {"adbAuto", "1", "Debugging über WLAN (ADB) beim Start – Fernwartung"},
-        {"mapAuto", "0", "Core Tracker (Karte) beim Start öffnen"},
-        {"share", "1", "Bildschirm im Browser zeigen (Port 8090)"},
+        {"wlanAuto", "1", "Choose Wi-Fi by the order below, otherwise hotspot"},
+        {"apAuto", "1", "Switch on the hotspot if no Wi-Fi from the list is there"},
+        {"ap5", "1", "Hotspot on 5 GHz"},
+        {"bbAuto", "1", "Remote maintenance via GitHub"},
+        {"adbAuto", "1", "Wi-Fi debugging (ADB) at start – remote maintenance"},
+        {"mapAuto", "0", "Open Carlin Box (map) at start"},
+        {"share", "1", "Show the screen in the browser (port 8090)"},
     };
 
     @Override protected void onCreate(Bundle b) {
@@ -48,7 +48,7 @@ public class Autostart extends Activity {
             });
             l.addView(s);
         }
-        TextView ol = tv("WLAN-Reihenfolge (Komma-getrennt):", 20, 0xFF9CA3AF); ol.setPadding(0, 18, 0, 4); l.addView(ol);   // V1.88
+        TextView ol = tv("Wi-Fi order (comma-separated):", 20, 0xFF9CA3AF); ol.setPadding(0, 18, 0, 4); l.addView(ol);   // V1.88
         final android.widget.EditText oe = new android.widget.EditText(this);
         oe.setText(p.getString("wlanOrder", WlanOrder.DEF)); oe.setTextSize(22); oe.setTextColor(0xFFE5E7EB); oe.setSingleLine(true);
         oe.addTextChangedListener(new android.text.TextWatcher() {
@@ -57,7 +57,7 @@ public class Autostart extends Activity {
             public void afterTextChanged(android.text.Editable s) { p.edit().putString("wlanOrder", s.toString()).apply(); }
         });
         l.addView(oe);
-        TextView go = tv("Jetzt ausführen (Hotspot an + 5 GHz)", 22, 0xFF4ADE80);
+        TextView go = tv("Run now (hotspot on + 5 GHz)", 22, 0xFF4ADE80);
         go.setGravity(Gravity.CENTER); go.setTypeface(null, Typeface.BOLD);
         android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
         g.setColor(0xFF0B0F14); g.setStroke(3, 0x994DB8FF); g.setCornerRadius(14);
@@ -78,7 +78,7 @@ public class Autostart extends Activity {
     void status() {
         if (st == null) return;
         boolean on = HotspotBoot.apOn(this);
-        st.setText("Hotspot: " + (on ? "an" + band() : "aus") + (WlanOrder.state.length() > 0 ? "\nWLAN-Automatik: " + WlanOrder.state : "") + "\nFernwartung: " + (BoxBridge.state.length() > 0 ? BoxBridge.state : "startet …") + (BoxBridge.tok(this).length() > 0 ? " (Token ✓)" : " (kein Token)") + "\nApp-Version " + ver() + "\nBildschirm im Browser: http://" + ip() + ":" + ScreenShare.PORT);
+        st.setText("Hotspot: " + (on ? "on" + band() : "off") + (WlanOrder.state.length() > 0 ? "\nWi-Fi automatic: " + WlanOrder.state : "") + "\nRemote maintenance: " + (BoxBridge.state.length() > 0 ? BoxBridge.state : "starting …") + (BoxBridge.tok(this).length() > 0 ? " (Token ✓)" : " (no token)") + "\nApp version " + ver() + "\nScreen in the browser: http://" + ip() + ":" + ScreenShare.PORT);
     }
 
     static String ip() {
@@ -98,11 +98,11 @@ public class Autostart extends Activity {
             try {
                 Object c = wm.getClass().getMethod("getSoftApConfiguration").invoke(wm);
                 int b = (Integer) c.getClass().getMethod("getBand").invoke(c);
-                return (b & 3) == 2 ? ", 5 GHz" : (b & 3) == 1 ? ", 2,4 GHz" : (b & 3) == 3 ? ", 2,4 + 5 GHz" : "";
+                return (b & 3) == 2 ? ", 5 GHz" : (b & 3) == 1 ? ", 2.4 GHz" : (b & 3) == 3 ? ", 2.4 + 5 GHz" : "";
             } catch (NoSuchMethodException e) { }
             Object c = wm.getClass().getMethod("getWifiApConfiguration").invoke(wm);
             int b = c.getClass().getField("apBand").getInt(c);
-            return b == 1 ? ", 5 GHz" : b == 0 ? ", 2,4 GHz" : "";
+            return b == 1 ? ", 5 GHz" : b == 0 ? ", 2.4 GHz" : "";
         } catch (Throwable t) { return ""; }
     }
 

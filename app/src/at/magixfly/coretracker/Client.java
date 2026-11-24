@@ -1,52 +1,63 @@
 package at.magixfly.coretracker;
-import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebResourceResponse;
+import java.io.ByteArrayInputStream;
+
+/** V2.01: beantwortet die ganze Kartenseite selbst (http://box.local/…): Seite, Leaflet, Kacheln aus dem Box-Speicher, Menü-Befehle. */
 class Client extends WebViewClient {
     final MainActivity a;
     Client(MainActivity a) { this.a = a; }
-    @Override
-    public void onReceivedError(WebView v, int code, String desc, String url) {
-        a.loaded = false;
-        a.showOverlay("Connection to the tracker lost – searching …", 0);
-        a.ui.postDelayed(new Task(a, Task.SEARCH, null, 0), 2000);
-    }
+
+    static String q(String s) { return s == null ? "null" : org.json.JSONObject.quote(s); }
+
     @Override
     public void onPageFinished(WebView v, String url) {
-        if (a.loaded) a.overlay.setVisibility(View.GONE);
-        v.evaluateJavascript(MainActivity.CSS_JS, null);
-        // V1.61: neben „CORE TRACKER“ zwei Zeilen: Box-Version über Tracker-Version
-        // V1.75: Menü-Einträge der Box: FPV-Player, App neu starten, App schließen
-        v.evaluateJavascript("(function(){function f(){var t=document.getElementById('mTheme');if(!t)return;var L=[['mCtPl','FPV player: " + (a.fpv != null ? a.fpv.playerName() : "Janus") + "','player'],['mCtRe','Restart app','restart'],['mCtCl','Close app','close']];var at=t;L.forEach(function(x){var b=document.getElementById(x[0]);if(!b){b=document.createElement('button');b.className='mb';b.id=x[0];b.onclick=function(){fetch('/__ctbox/'+x[2]);if(x[2]=='player')setTimeout(function(){b.textContent='FPV player: '+({'FPV player: Janus':'Pion','FPV player: Pion':'Jmuxer','FPV player: Jmuxer':'Janus'})[b.textContent]},50)};at.parentNode.insertBefore(b,at.nextSibling);b.textContent=x[1];}at=b;});var pl=document.getElementById('mPlayer');if(pl)pl.style.display='none';}f();if(!window.ctMenuT)window.ctMenuT=setInterval(f,3000);})()", null);
-        v.evaluateJavascript("(function(){function f(){var e=document.getElementById('ver');if(!e)return;e.dataset.box='Box " + Report.ver(a) + "';var t=e.textContent||'';if(/^V\\d/.test(t))e.textContent='Tracker '+t;}f();if(!window.ctVerT)window.ctVerT=setInterval(f,3000);})()", null);
+        a.loaded = true;
+        v.evaluateJavascript("window.ctInit&&ctInit(" + q(MainActivity.ver(a)) + "," + TileStore.C_LAT + "," + TileStore.C_LON + ")", null);
+        if (a.gps != null) a.gps.push();
+        a.updatePill();
+        a.js("window.ctNet&&ctNet(" + q(a.netTxt) + ")");
     }
 
-    /** Kartenkacheln aus dem Speicher der Box liefern (schnell), sonst vom Pi holen und merken. */
+    static WebResourceResponse empty(int code) {
+        return new WebResourceResponse("text/plain", "utf-8", code, code == 200 ? "OK" : "Not Found", null, new ByteArrayInputStream(new byte[0]));
+    }
+    WebResourceResponse raw(String name, String mime) {
+        int id = a.getResources().getIdentifier(name, "raw", a.getPackageName());
+        return new WebResourceResponse(mime, "utf-8", a.getResources().openRawResource(id));
+    }
+
     @Override
-    public WebResourceResponse shouldInterceptRequest(WebView v, String url) {
+    public WebResourceResponse shouldInterceptRequest(WebView v, WebResourceRequest r) {
+        String url = r.getUrl().toString();
+        if (!url.startsWith(MainActivity.HOST)) return null;
+        String p = url.substring(MainActivity.HOST.length());
+        int qi = p.indexOf('?'); if (qi >= 0) p = p.substring(0, qi);
         try {
-            if (url.contains("/__ctbox/player")) {         // V1.75: FPV-Player wechseln (Janus → Pion → Jmuxer)
-                if (a.fpv != null) a.fpv.nextPlayer();
-                return new WebResourceResponse("text/plain", null, new java.io.ByteArrayInputStream(new byte[0]));
+            if (p.isEmpty() || p.equals("index.html")) return raw("map", "text/html");
+            if (p.equals("leaflet.js")) return raw("leaflet", "application/javascript");
+            if (p.equals("leaflet.css")) return raw("leaflet_css", "text/css");
+            if (p.startsWith("__ctbox/")) {
+                String c = p.substring(8);
+                if (c.equals("toggle")) a.tiles.setStopped(!a.tiles.stopped);           // V1.22: Tippen auf „Maps“ = Download Stopp/Start
+                else if (c.equals("restart") || c.equals("close")) {                    // V1.75: App neu starten / schließen
+                    final boolean re = c.equals("restart");
+                    a.ui.postDelayed(new Runnable() { public void run() { MainActivity.quit(a, re); } }, 200);
+                } else if (c.equals("autostart"))
+                    a.startActivity(new android.content.Intent(a, Autostart.class).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK));
+                a.ui.post(new Runnable() { public void run() { a.updatePill(); } });
+                return empty(200);
             }
-            if (url.contains("/__ctbox/restart") || url.contains("/__ctbox/close")) {   // V1.75: App neu starten / schließen
-                final boolean re = url.contains("restart");
-                a.ui.postDelayed(new Runnable() { public void run() { MainActivity.quit(a, re); } }, 200);
-                return new WebResourceResponse("text/plain", null, new java.io.ByteArrayInputStream(new byte[0]));
+            boolean ovl = p.startsWith("ovl/");
+            if (p.startsWith("tile/") || ovl) {
+                String[] s = p.substring(ovl ? 4 : 5).split("[/.]");
+                byte[] d = a.tiles.get(Integer.parseInt(s[0]), Integer.parseInt(s[1]), Integer.parseInt(s[2]), ovl);
+                if (d == null || d.length == 0) return empty(404);
+                return new WebResourceResponse(ovl ? "image/png" : "image/jpeg", null, new ByteArrayInputStream(d));
             }
-            if (url.contains("/__ctbox/toggle")) {         // V1.22: tap on "Maps" = stop / start the download
-                a.tiles.setStopped(!a.tiles.stopped);
-                a.ui.post(new Task(a, Task.PILL, null, 0));
-                return new WebResourceResponse("text/plain", null, new java.io.ByteArrayInputStream(new byte[0]));
-            }
-            int i = url.indexOf("/tile/");
-            if (i < 0 || a.tiles == null) return null;
-            String[] p = url.substring(i + 6).split("[/?.]");
-            int z = Integer.parseInt(p[0]), x = Integer.parseInt(p[1]), y = Integer.parseInt(p[2]);
-            byte[] d = a.tiles.get(z, x, y, a.piBase);
-            if (d == null) return null;
-            return new WebResourceResponse("image/jpeg", null, new java.io.ByteArrayInputStream(d));
-        } catch (Throwable t) { return null; }
+        } catch (Throwable t) { android.util.Log.d("CTAP", "intercept " + p + ": " + t); }
+        return empty(404);
     }
 }
