@@ -1,0 +1,13 @@
+### 041_v206  –  2026-11-24 18:35:24
+### Box direkt (App 2.05, 192.168.178.235)
+
+    versionName=2.05
+4340
+app laeuft
+1
+ls: /data/data/at.magixfly.coretracker/files/gebiete.json: No such file or directory
+/dev/block/dm-47  86G  57G   29G  67% /data/user/0
+
+### Exit-Code: 0
+
+### Dauer 449 s
