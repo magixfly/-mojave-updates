@@ -563,12 +563,12 @@ function draw(){
   if(AREAS.on&&AREAS.list){const k=TS*2**tz;   // V3.52: map areas of the shared list (like the PC page)
     ctx.save();for(const a of AREAS.list.areas||[]){const col=a.auto?'#f59e0b':a.type==='route'?'#a855f7':'#4db8ff';let lx=null,ly=null;
       if(a.type==='circle'){const q=proj([a.lat,a.lon]),x=q[0]*k-cx,y=q[1]*k-cy,r=a.r/(40075016*Math.cos(a.lat*Math.PI/180)/k);
-        if(Math.abs(x)-r>R||Math.abs(y)-r>R)continue;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fillStyle=col+'26';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=2.5/sc;ctx.stroke();lx=x;ly=y-r}
+        if(Math.abs(x)-r>R||Math.abs(y)-r>R)continue;ctx.beginPath();ctx.arc(x,y,r,0,7);if(r*sc<350){ctx.fillStyle=col+'1a';ctx.fill()}ctx.strokeStyle=col;ctx.lineWidth=2.5/sc;ctx.stroke();lx=x;ly=y-r}
       else if(a.type==='rect'){const p=proj([a.n,a.w]),q=proj([a.s,a.e]),x=p[0]*k-cx,y=p[1]*k-cy,w=(q[0]-p[0])*k,h=(q[1]-p[1])*k;
-        ctx.fillStyle=col+'26';ctx.fillRect(x,y,w,h);ctx.strokeStyle=col;ctx.lineWidth=2.5/sc;ctx.strokeRect(x,y,w,h);lx=x+w/2;ly=y}
+        if(Math.max(w,h)*sc<700){ctx.fillStyle=col+'1a';ctx.fillRect(x,y,w,h)}ctx.strokeStyle=col;ctx.lineWidth=2.5/sc;ctx.strokeRect(x,y,w,h);lx=x+w/2;ly=y}
       else if(a.type==='route'&&a.pts&&a.pts.length>1){const mpp=40075016*Math.cos(a.pts[0][0]*Math.PI/180)/k;ctx.beginPath();
         a.pts.forEach((pt,i)=>{const q=proj(pt),x=q[0]*k-cx,y=q[1]*k-cy;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});
-        ctx.strokeStyle=col+'59';ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=Math.max(6/sc,2*(a.w||2000)/mpp);ctx.stroke();
+        const lw=Math.max(6/sc,2*(a.w||2000)/mpp);ctx.strokeStyle=col+(lw*sc>200?'1f':'4d');ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=lw;ctx.stroke();
         const q=proj(a.pts[Math.floor(a.pts.length/2)]);lx=q[0]*k-cx;ly=q[1]*k-cy}
       if(lx!=null&&Math.abs(lx)<R&&Math.abs(ly)<R){ctx.save();ctx.translate(lx,ly);ctx.rotate(-V.rot);ctx.scale(1/sc,1/sc);ctx.font='bold 13px system-ui';ctx.textAlign='center';ctx.textBaseline='bottom';
         const t=a.name+' · z'+a.zmax;ctx.lineWidth=3;ctx.strokeStyle='#000';ctx.strokeText(t,0,-4);ctx.fillStyle=col;ctx.fillText(t,0,-4);ctx.restore()}}

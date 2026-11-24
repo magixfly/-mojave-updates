@@ -1,7 +1,7 @@
 {
- "ver": "3.55",
+ "ver": "3.56",
  "neu": [
-  "Map areas: tiles already on the SD card count as done (progress no longer restarts at 0 %)"
+  "AREAS: no tint over the map when you are inside a large area (map looked pale)"
  ],
  "dateien": [
   {
@@ -12,7 +12,7 @@
   {
    "p": "server.py",
    "s": 154952,
-   "md5": "f1b64631da215181c11e346e10fe7ebb"
+   "md5": "f22cb0884e126ff20b529c6ed7dc7879"
   },
   {
    "p": "web/fpvstat.js",
@@ -21,8 +21,8 @@
   },
   {
    "p": "web/index.html",
-   "s": 166194,
-   "md5": "fea95f632ec0e473c5162243599feb7c"
+   "s": 166261,
+   "md5": "813c74cb5cb80474937480ff15cb60ae"
   }
  ]
 }
