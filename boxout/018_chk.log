@@ -1,0 +1,66 @@
+### 018_chk  –  2026-11-24 09:15:56
+### Box direkt (App 1.97, 192.168.178.235)
+
+Tue Nov 24 09:15:56 CET 2026
+bodenstation  boxmain.py  ca.pem  ld-musl  python  run.sh
+2.2G	bodenstation
+config.txt
+crsf_sniff.py
+demo_ride.csv
+hdmi_watch.sh
+kanshi.config
+kiosk.sh
+kiosk.sh.v309
+logs
+navi
+server.py
+server.py.v1910
+server.py.v1911
+server.py.v1913
+server.py.v1914
+server.py.v1915
+server.py.v1916
+server.py.v194
+server.py.v195
+server.py.v196
+server.py.v200
+server.py.v201
+server.py.v202
+server.py.v203
+server.py.v204
+server.py.v204c
+server.py.v205
+server.py.v205b
+server.py.v205c
+server.py.v205d
+server.py.v206
+server.py.v207
+server.py.v208
+server.py.v209
+server.py.v210
+server.py.v211
+server.py.v212
+server.py.v213
+server.py.v214
+server.py.v215
+server.py.v215a
+server.py.v216a
+server.py.v216c
+server.py.v217
+server.py.v218
+server.py.v221
+server.py.v222
+server.py.v223
+server.py.v224
+server.py.v225
+server.py.v228pre
+karte_info.txt
+ki
+ortho
+overlay
+2.2G	bodenstation/tiles
+root          7384     1   11048980   7172 do_epoll_wait       0 S adbd
+
+### Exit-Code: 0
+
+### Dauer 0 s
