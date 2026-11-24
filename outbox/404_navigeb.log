@@ -1,0 +1,11 @@
+### 404_navigeb  –  2026-11-24 18:40:04
+### Box: verbunden (192.168.178.235:5555)
+
+Z=http://192.168.178.243:8091
+ver 4 areas [('Gloggnitz', 19, 0), ('Reichenau an der Rax', 19, 0), ('Rax (plateau)', 19, 0), ('Neusiedl am See', 19, 0), ('Neusiedler See + 5 km', 17, 0), ('Linz - A1 - Vienna - A23 - A2 - Gloggnitz', 16, 794), ('Home St. Poelten', 19, 0), ('Perchtoldsdorfer Heide', 18, 0), ('Amstetten', 18, 0)]
+{"ok":true,"ver":5}
+
+{"base":"Z:\\claude\\Karten","done":3600,"fail":0,"loaded":3602,"missing":0,"msg":"loading","phase":"loading","total":274547,"url":"http://192.168.178.243:8091","ver":"1.0"}
+
+
+### Exit-Code: 0
