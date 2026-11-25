@@ -1,0 +1,14 @@
+== 069_v199 on mojave-fpv, 2026-11-25 12:02:19, FPV V1.8.8 ==
+video_width = 1280;video_height = 720;video_fps = 60 # Pi 4 hardware encoder: max 30 at 1080p, 60 at 720p;video_bitrate_kbps = 5000 # 4000 = 4 Mbit/s. Lower it if the LTE upload is weak;video_idr_period = 60 # full picture every N frames (30 = once per second);
+VERSION = "V1.9.9"
+active
+active
+ rpiCameraWidth: 1280; rpiCameraHeight: 720; rpiCameraFPS: 60; rpiCameraBitrate: 5000000; rpiCameraIDRPeriod: 60;
+1280x720 60 fps 1280x720 60 fps video:5748KiB frame=  565 (10 s)
+encoder errors in the last 10 s: 0
+%Cpu(s): 30.6 us, 12.2 sy,  0.0 ni, 55.1 id,  0.0 wa,  0.0 hi,  2.0 si
+33.3 mediamtx;25.0 gst-lau+;16.7 tailsca+;16.7 gst-lau+;
+temp=43.3'C
+[100%] done
+
+== exit code 0, 25.2 s ==
