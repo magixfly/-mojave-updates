@@ -1,0 +1,28 @@
+== 018_hwtest2 on mojave-fpv, 2026-11-25 01:31:52, FPV V1.4.2 ==
+gpu memory now: gpu=256M, free RAM: 359 MB
+camera: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0
+main camera before: 122 pictures in 4 s
+
+##### hardware way 1280x720
+ended with code 0
+USB camera: cpu 25%  frames 271 (about 360 expected)   main camera meanwhile: 122 pictures in 4 s (120 expected)
+kernel errors so far: 0
+
+##### hardware way 1920x1080
+ended with code 0
+USB camera: cpu 8.3%  frames 16 (about 360 expected)   main camera meanwhile: 122 pictures in 4 s (120 expected)
+kernel errors so far: 0
+
+##### hardware way again (does the chip recover after stopping?) 1280x720
+ended with code 0
+USB camera: cpu 25%  frames 361 (about 360 expected)   main camera meanwhile: 122 pictures in 4 s (120 expected)
+kernel errors so far: 0
+
+main camera after: 122 pictures in 4 s
+[fpv-setup] USB camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2' with 1280x720
+temp=36.5'C
+throttled=0x0
+/var/lib/fpv-remote/018_hwtest2.sh: line 14:  1358 Killed                  timeout -s INT -k 4 13 gst-launch-1.0 -e v4l2src device=$D ! "image/jpeg,width=$W,height=$H,framerate=30/1" ! v4l2jpegdec ! "video/x-raw,format=I420" ! v4l2h264enc extra-controls=controls,video_bitrate=${K}000,h264_i_frame_period=30,repeat_sequence_header=1 ! "video/x-h264,level=(string)4" ! h264parse ! filesink location=/tmp/t.h264 > /tmp/t.log 2>&1
+/var/lib/fpv-remote/018_hwtest2.sh: line 14:  1421 Killed                  timeout -s INT -k 4 13 gst-launch-1.0 -e v4l2src device=$D ! "image/jpeg,width=$W,height=$H,framerate=30/1" ! v4l2jpegdec ! "video/x-raw,format=I420" ! v4l2h264enc extra-controls=controls,video_bitrate=${K}000,h264_i_frame_period=30,repeat_sequence_header=1 ! "video/x-h264,level=(string)4" ! h264parse ! filesink location=/tmp/t.h264 > /tmp/t.log 2>&1
+
+== exit code 0, 65.8 s ==
