@@ -1,0 +1,16 @@
+== 015_after on mojave-fpv, 2026-11-25 01:09:42, FPV V1.4.2 ==
+ 01:09:42 up 0 min,  0 users,  load average: 0.39, 0.10, 0.03
+2026/11/25 01:09:37 INF [path cam] [RPI Camera source] started
+2026/11/25 01:09:38 INF [path cam] stream is available and online, 1 track (H264)
+2026/11/25 01:09:41 INF [path cam2] runOnDemand command started
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 1500k, mode ffmpeg
+0
+gpu=76M
+temp=46.2'C
+throttled=0x0
+cam2_enable        = 1
+cam2_width = 1280
+cam2_height = 720
+cam2_pipeline = auto
+
+== exit code 0, 0.1 s ==
