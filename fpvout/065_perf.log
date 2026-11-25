@@ -1,0 +1,13 @@
+== 065_perf on mojave-fpv, 2026-11-25 11:47:12, FPV V1.8.8 ==
+cockpit: None
+cockpit: None
+cockpit: None
+cockpit: None
+cockpit: None
+ rpiCameraWidth: 1920; rpiCameraHeight: 1080; rpiCameraFPS: 30; rpiCameraBitrate: 5000000; rpiCameraIDRPeriod: 30;
+load average: 1.77, 1.98, 2.15
+temp=42.8'C
+45.5 mediamtx;36.4 gst-lau+;18.2 tailsca+;18.2 gst-lau+;18.2 mtxrpic+;
+2
+
+== exit code 0, 11.6 s ==
