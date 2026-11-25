@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.88",
+  "t": [
+   "While armed the Core does not use its radio at all (no car Wi-Fi, no home Wi-Fi, no ESP-NOW) – no 2.4 GHz next to ELRS and GPS. When you disarm, Wi-Fi comes back by itself after a few seconds"
+  ]
+ },
+ {
   "v": "V2.87",
   "t": [
    "Car Wi-Fi (Core hotspot) is off while armed – less 2.4 GHz radio next to ELRS and GPS. It comes back by itself when you disarm. Navi and ESP-NOW keep working"

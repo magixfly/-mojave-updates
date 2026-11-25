@@ -1,8 +1,8 @@
 {
- "fw": "V2.87",
- "fwDatei": "firmware/Core_V2.87.bin",
- "fwGroesse": 2037216,
- "fwMd5": "203732e87e4f10d0133b26a56d7bfb60",
+ "fw": "V2.88",
+ "fwDatei": "firmware/Core_V2.88.bin",
+ "fwGroesse": 2036544,
+ "fwMd5": "6c3604e9f9432ebb452c2a5f09e070ff",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.88",
+   "t": [
+    "While armed the Core does not use its radio at all (no car Wi-Fi, no home Wi-Fi, no ESP-NOW) – no 2.4 GHz next to ELRS and GPS. When you disarm, Wi-Fi comes back by itself after a few seconds"
+   ]
+  },
   {
    "v": "V2.87",
    "t": [
@@ -174,13 +180,6 @@
    "v": "V2.74",
    "t": [
     "Menu bar: “Firmware V2.xx” removed (version is shown under System). The green “New V2.xx” button still appears there when an update is ready"
-   ]
-  },
-  {
-   "v": "V2.73",
-   "t": [
-    "Radio for the Pi ground station / Navi restarts by itself when sending fails or the Wi-Fi mode changes (e.g. car hotspot switched off after joining home Wi-Fi)",
-    "System info: radio counters (sent, errors, restarts) for checking the ground station link"
    ]
   }
  ]
