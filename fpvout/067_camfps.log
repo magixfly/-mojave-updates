@@ -1,0 +1,19 @@
+== 067_camfps on mojave-fpv, 2026-11-25 11:56:15, FPV V1.8.8 ==
+/dev/v4l-subdev0 = imx290 10-001a
+sensor: /dev/v4l-subdev0
+ exposure 0x00980911 (int) : min=1 max=2247 step=1 default=2247 value=2024 flags=has-min-max
+ vertical_blanking 0x009e0901 (int) : min=45 max=261063 step=1 default=45 value=1169 flags=has-min-max
+ horizontal_blanking 0x009e0902 (int) : min=280 max=63615 step=1 default=280 value=280 flags=has-min-max
+ analogue_gain 0x009e0903 (int) : min=0 max=100 step=1 default=0 value=0 flags=has-min-max
+ link_frequency 0x009f0901 (intmenu): min=0 max=1 default=0 value=0 (445500000 0x1a8dca60) flags=read-only, has-min-max
+ pixel_rate 0x009f0902 (int64) : min=148500000 max=148500000 step=1 default=148500000 value=148500000 flags=read-only, has-min-max
+ Width/Height : 1920/1080; Mediabus Code : 0x3012 (MEDIA_BUS_FMT_SRGGB12_1X12);
+camera_auto_detect=0;dtoverlay=vc4-kms-v3d;dtoverlay=dwc2,dr_mode=host;dtoverlay=nospi10;# InnoMaker CAM-MIPI462RAW (IMX462) uses the built-in imx290 driver, 74.25 MHz clock;dtoverlay=imx290,clock-frequency=74250000;dtoverlay=disable-bt;
+[    0.025102] /soc/csi@7e801000: Fixed dependency cycle(s) with /soc/i2c0mux/i2c@1/imx290@1a
+[    0.040715] /soc/i2c0mux/i2c@1/imx290@1a: Fixed dependency cycle(s) with /soc/csi@7e801000
+[    1.478320] /soc/csi@7e801000: Fixed dependency cycle(s) with /soc/i2c0mux/i2c@1/imx290@1a
+[    1.478377] /soc/i2c0mux/i2c@1/imx290@1a: Fixed dependency cycle(s) with /soc/csi@7e801000
+6.18.50+rpt-rpi-v8
+libcamera0.7:arm64 0.7.2+rpt20260817-1;librpicam-app1:arm64 1.13.0-1;rpicam-apps-core 1.13.0-1;rpicam-apps-lite 1.13.0-1;
+
+== exit code 0, 0.3 s ==
