@@ -1,6 +1,6 @@
-Stand: 2026-11-25 21:05:57
+Stand: 2026-11-25 21:16:49
 App: 2.14
 IP: 192.168.190.46
-WLAN: Hotspot an
-Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 44420): connect failed: ECONNREFUSED (Connection refused)
-Fernwartung: 
+WLAN: 
+Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 39734): connect failed: ECONNREFUSED (Connection refused)
+Fernwartung: Update 116 → 117
