@@ -259,6 +259,9 @@ $('ctr').onclick=function(){if(pos){setFollow(true);map.setView(pos,Math.max(map
 $('maps').onclick=function(){cmd('toggle');};
 $('menuB').onclick=function(e){e.stopPropagation();$('menu').classList.toggle('open');};
 map.on('click',function(){$('menu').classList.remove('open');});
+var menuT=0;function menuAuto(ms){clearTimeout(menuT);menuT=setTimeout(function(){$('menu').classList.remove('open');},ms);}   // 2.45: menu closes 2 s after the last touch (update: 8 s)
+$('menu').addEventListener('pointerdown',function(e){menuAuto(e.target.closest('#mUpd,#upd')?8000:2000);},true);
+$('menu').addEventListener('scroll',function(){if(menuT)menuAuto(3000);});
 $('mFollow').onclick=function(){setFollow(!follow);};
 $('mOvl').onclick=function(){ovlOn=!ovlOn;lw('ovl',ovlOn?'1':'0');if(ovlOn)ovl.addTo(map);else map.removeLayer(ovl);this.textContent='Place names: '+(ovlOn?'on':'off');};
 $('mOvl').textContent='Place names: '+(ovlOn?'on':'off');
@@ -431,7 +434,7 @@ var azOff=+ls('azOff','0')||0;   // 2.37: auto zoom offset, long press on + / -
 function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;return Math.max(7,Math.min(19,z+azOff));}   // standing: zoom 19
 setInterval(function(){if(!az||!follow||!ani.to||Date.now()<azPause||map._animatingZoom)return;var z=azZiel(ani.kmh||0),n=Date.now();
  if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>2500&&map.getZoom()!==z)map.setZoom(z);},500);
-window.ctUpd=function(t,p){var u=$('upd');if(!t){return;}var m=t.match(/online (V[\d.]+)/);if(m)$('mUpd').textContent='Check for update · online '+m[1];u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
+window.ctUpd=function(t,p){if($('menu').classList.contains('open')&&menuT)menuAuto(8000);var u=$('upd');if(!t){return;}var m=t.match(/online (V[\d.]+)/);if(m)$('mUpd').textContent='Check for update · online '+m[1];u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
 window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
 if(HU)setTimeout(function(){setHU(true);},300);
 new MutationObserver(function(){setTimeout(function(){fitMap();map.invalidateSize();},50);}).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
