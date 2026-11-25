@@ -127,9 +127,7 @@ class TileStore {
     void probe() {
         String zz = zentrale();
         zOk = zz.length() > 0 && http(zz + "/api/ping", 1500) != null;
-        piOk = false;
-        String[] pis = {a.prefs.getString("pi", "").trim(), "http://192.168.178.111:8080", "http://192.168.178.214:8080"};   // V2.17
-        for (String u : pis) { if (u.length() == 0) continue; byte[] p = http(u + "/api/state", 1500); if (p != null && p.length > 0) { PI = u; piOk = true; break; } }
+        piOk = false;   // V2.18: the box no longer uses the tracker - maps only from the PC centre, else basemap.at
     }
 
     /** V2.07: Zentrale (/api/ping listver) bzw. Pi (/gebiete.json ver) hat eine andere Listenversion als die geladene */
@@ -146,7 +144,7 @@ class TileStore {
 
     JSONObject loadList() {
         String zz = zentrale();
-        String[] src = {zz.length() > 0 ? zz + "/gebiete.json" : null, PI + "/gebiete.json", GH + "gebiete.json", GH + "gebiete_default.json"};
+        String[] src = {zz.length() > 0 ? zz + "/gebiete.json" : null, null, GH + "gebiete.json", GH + "gebiete_default.json"};
         for (String u : src) {
             if (u == null) continue;
             byte[] d = http(u + "?t=" + System.currentTimeMillis(), 6000);
