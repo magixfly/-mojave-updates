@@ -1,0 +1,17 @@
+== 038_v18 on mojave-fpv, 2026-11-25 03:01:08, FPV V1.4.5 ==
+[30%] installing V1.8
+[70%] checking
+VERSION = "V1.8"
+active
+active
+11
+normal: 1920,1080
+{"ok": true, "on": true, "changed": true}
+emergency: 640,360 after 2785 ms
+{"on": true}
+video:25KiB frame=   13 
+{"ok": true, "on": false, "changed": false}
+back: 1920,1080 after 2732 ms
+[100%] done
+
+== exit code 0, 15.5 s ==
