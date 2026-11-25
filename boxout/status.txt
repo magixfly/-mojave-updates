@@ -1,5 +1,5 @@
-Stand: 2026-11-25 21:30:22
-App: 2.18
+Stand: 2026-11-25 21:36:09
+App: 2.20
 IP: 192.168.190.46
 WLAN: 
 Wifi is connected to "XVII"
