@@ -1,10 +1,11 @@
 {
-  "fw": "V2.51",
+  "fw": "V2.52",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1388080,
-  "md5": "b96aee1dd5ce96c6dfe4b0d335ea3978",
+  "groesse": 1388096,
+  "md5": "c28bb0b1d804d803f15519312e1b41d3",
   "neu": [
+    "V2.52: Navi page also reachable in the setup hotspot (192.168.4.1)",
     "V2.51: no Wi-Fi saved -> own hotspot Mojave-Navi (password corenavi), Navi page at 192.168.4.1; deleting tiles outside the area list off by default (areas_clean2)",
     "V2.50: Wi-Fi state shown on the logo screen and on USB every 5 s (diagnosis)",
     "V2.49: touch off by default (config touch3, 2 = on again) - everything via the Navi page; Wi-Fi always on (MT12 only while armed, back to Wi-Fi when disarmed); all saved Wi-Fis tried in turn (wlanWahl2, 0 = automatic)",
