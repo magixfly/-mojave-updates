@@ -1,0 +1,9 @@
+== 031_v153 on mojave-fpv, 2026-11-25 02:19:13, FPV V1.4.5 ==
+VERSION = "V1.5.3"
+active
+active
+all at once for 5 s: main camera 152 (150 expected), USB camera 151 (150), sound 248 (250)   cpu of video programs 116.6%
+temp=41.3'C
+throttled=0x0
+
+== exit code 0, 9.4 s ==
