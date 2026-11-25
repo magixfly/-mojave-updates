@@ -1,10 +1,11 @@
 {
-  "fw": "V2.39",
+  "fw": "V2.40",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1363216,
-  "md5": "0eeb8c32733d5bd5c5619ffe763b8233",
+  "groesse": 1364752,
+  "md5": "33d6731abb6217df76b4e4ffabe5ede6",
   "neu": [
+    "V2.40: fix Wi-Fi dropping since the area list - the list (40+ KB) is now read into PSRAM instead of the small internal RAM that Wi-Fi needs",
     "V2.39: progress of the shared area list on the display (bar at the bottom: \"Areas xx %\", orange \"cleaning xx %\" while tiles outside the list are deleted)",
     "V2.38: Wi-Fi switch removed again - Wi-Fi is always on (no clock menu, old config line \"wifi\" ignored); map centre on the PC preset (http://192.168.178.243:8091)",
     "V2.37: menu - tap the clock top right: Wi-Fi ON/OFF (OFF = MT12 only); shared area list with tracker, box and Core (gebiete.json from the PC map centre, tracker Pi or GitHub) - all areas loaded up to map_zmax, aerial tiles outside the list deleted once (Core and own areas stay); tiles first from the PC / tracker Pi; new places reported (POST /api/orte); radio add-on NaviFunk (ESP32-S3 Mini on IO43/IO44) detected automatically - Navi then stays in the hotspot and still gets the MT12 telemetry",
