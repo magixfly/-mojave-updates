@@ -1,0 +1,10 @@
+== 025_bitrate on mojave-fpv, 2026-11-25 01:58:14, FPV V1.4.5 ==
+[fpv-setup] USB camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2' with 1280x720
+video_bitrate_kbps = 4000      # 4000 = 4 Mbit/s. Lower it if the LTE upload is weak
+cam2_width = 1280
+cam2_height = 720
+cam2_bitrate_kbps = 3500
+37:      /bin/bash /opt/fpv/usbcam.sh /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280 720 30
+38-      3500 cam2 auto
+
+== exit code 0, 5.5 s ==
