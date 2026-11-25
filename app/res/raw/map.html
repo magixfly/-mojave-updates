@@ -80,6 +80,7 @@ html.th-ice{--glass:rgba(214,234,255,.16);--line:rgba(255,255,255,.34);--dim:#c5
 #mjf{background:var(--glass)!important;border:1px solid var(--line)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 #mjf .h,#mjf .ft{font-family:var(--num)!important;letter-spacing:.14em;text-transform:uppercase}#mjf .sp{font-family:var(--num)!important}
 html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice #mjf{background:linear-gradient(160deg,rgba(235,246,255,.24),rgba(170,205,235,.08))!important;backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 #ffffff73,inset 0 -1px 0 #ffffff1a,0 10px 28px #00000059}
+#menu{max-height:calc(100vh - 90px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}#menu button{padding:11px 16px!important}   /* 2.29: menu scrolls and fits the screen */
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -92,6 +93,8 @@ html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice 
   <div class="pill" id="menuB">&#8943;</div>
 </div>
 <div id="menu">
+  <button id="mUpd">Check for update</button>
+  <div id="upd"><div id="updBar"></div><span id="updT"></span></div>
   <button id="mFollow">Follow position: on</button>
   <button id="mAz">Auto zoom: on</button>
   <button id="mLook">Look: Glass</button>
@@ -99,8 +102,6 @@ html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice 
   <button id="mCar">Show Mojave: on</button>
   <button id="mBle">Bluetooth ESP: on</button>
   <div class="info" id="bleT">Bluetooth: –</div>
-  <button id="mUpd">Check for update</button>
-  <div id="upd"><div id="updBar"></div><span id="updT"></span></div>
   <button id="mAuto">Box settings (Autostart)</button>
   <button id="mRe">Restart app</button>
   <button id="mCl">Close app</button>
