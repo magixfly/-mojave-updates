@@ -91,6 +91,15 @@ html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice 
 .rdr{width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:#fff;border:4px solid #e11d48;box-shadow:0 2px 6px #000a;display:flex;align-items:center;justify-content:center;font:800 11px system-ui;color:#111}
 #scl{position:absolute;left:112px;bottom:22px;z-index:900;color:#fff;font:600 17px var(--num);letter-spacing:.06em;text-shadow:0 1px 3px #000,0 0 6px #000}
 #scl i{display:block;height:8px;border:3px solid #fff;border-top:none;box-shadow:0 2px 4px #000a;margin-bottom:3px}
+
+/* 2.31: race speed gauge top left (like the FPV cockpit) instead of the GPS pill; the pills all the same size */
+#gps{display:none!important}#net,#maps{width:400px!important;flex:none!important}
+#spd{position:absolute;left:10px;top:86px;width:270px;height:170px;z-index:900;pointer-events:none;display:grid;place-items:end center;filter:drop-shadow(0 6px 12px #000b)}
+#spd svg{position:absolute;inset:0;width:100%;height:100%}
+#spd .num{position:absolute;left:0;right:0;bottom:-2px;font:700 58px/.86 var(--num);font-variant-numeric:tabular-nums;text-align:center;color:#fff;text-shadow:0 2px 14px #000,0 0 3px #000,0 0 3px #000}
+#spd .num small{display:block;font:600 13px var(--num);color:var(--dim);letter-spacing:.28em;margin-top:4px}#spd .num em{position:absolute;left:0;right:0;top:100%;margin-top:10px;font:600 13px var(--num);font-style:normal;color:var(--dim);letter-spacing:.12em;text-shadow:0 1px 3px #000}
+#sNeedle path{opacity:.9}
+#trf{left:290px!important}
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -122,6 +131,16 @@ html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice 
 <div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
 <div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
 <div id="btns"><div class="b" id="zin">+</div><div id="zlv">Zoom –</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" style="font-size:15px;font-weight:800">TRAFFIC</div></div>
+<div id="spd"><svg viewBox="0 0 200 125">
+ <defs><radialGradient id="dialg" cx="50%" cy="100%" r="100%"><stop offset="0" stop-color="#2b323c"/><stop offset=".7" stop-color="#0c0f13"/><stop offset="1" stop-color="#000"/></radialGradient>
+ <linearGradient id="rimg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f8"/><stop offset=".45" stop-color="#6e7682"/><stop offset="1" stop-color="#1c2026"/></linearGradient></defs>
+ <path d="M6 121 A94 94 0 0 1 194 121 Z" fill="url(#dialg)" fill-opacity=".88" stroke="url(#rimg)" stroke-width="5"/>
+ <path d="M22 118 A78 78 0 0 1 178 118" fill="none" stroke="rgba(5,7,10,.72)" stroke-width="15" stroke-linecap="round"/>
+ <g id="sTicks" stroke="#ffffff66" stroke-width="1.4"></g><g id="sNums"></g>
+ <path id="sArc" d="M22 118 A78 78 0 0 1 178 118" fill="none" stroke="#3b9cff" stroke-width="7" stroke-linecap="round" stroke-dasharray="245.1" stroke-dashoffset="245.1" style="transition:stroke-dashoffset .3s linear"/>
+ <g id="sNeedle" style="transform-origin:100px 118px;transition:transform .3s linear;transform:rotate(-90deg)"><path d="M100 92 L97.6 92 L99.4 40 L100.6 40 L102.4 92Z" fill="#3b9cff" stroke="#000" stroke-width=".5"/></g>
+ <path d="M14 112 A86 86 0 0 1 150 44 A120 120 0 0 0 14 112Z" fill="#ffffff14"/></svg>
+ <div class="num"><span id="spdv">0</span><small>KM/H</small><em id="spdg"></em></div></div>
 <div id="trf"><div class="h">ASFINAG traffic <span id="trfT"></span></div><div id="trfL">loading …</div></div>
 <div id="scl"><i></i><span></span></div>
 <div id="nopos">No position from the box – map shows home</div>
@@ -232,6 +251,12 @@ window.ctCar=function(lat,lon,kmh,hdg,sats,volt,pct,mah,lq,rssi,mode,age){
 };
 window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'#60a5fa':r>=-60?'#60a5fa':r>=-72?'#f5b13d':'#f87171';};
 window.ctMaps=function(pct,mb,st,on){$('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
+/* 2.31: speed gauge 0-160 km/h */
+var SMAX=160;(function(){var t='',n='';for(var v=0;v<=SMAX;v+=10){var a=Math.PI*(1-v/SMAX),c=Math.cos(a),si=Math.sin(a),r1=v%20?70:66,r0=78;t+='<line x1="'+(100+r0*c).toFixed(1)+'" y1="'+(118-r0*si).toFixed(1)+'" x2="'+(100+r1*c).toFixed(1)+'" y2="'+(118-r1*si).toFixed(1)+'"/>';
+ if(v%40==0)n+='<text x="'+(100+56*c).toFixed(1)+'" y="'+(121-56*si).toFixed(1)+'" fill="#8f9bab" font-size="9" font-family="Bahnschrift,DIN Alternate,sans-serif" text-anchor="middle">'+v+'</text>';}
+ $('sTicks').innerHTML=t;$('sNums').innerHTML=n;})();
+function spdSet(k,acc,gps){var f=Math.max(0,Math.min(1,k/SMAX));$('spdv').textContent=Math.round(k);$('sArc').style.strokeDashoffset=(245.1*(1-f)).toFixed(1);$('sNeedle').style.transform='rotate('+(-90+180*f).toFixed(1)+'deg)';
+ $('spdg').textContent=(gps?'GPS':'WI-FI POS')+(acc>0?' ±'+Math.round(acc)+' M':'');}
 var fahrt=false;   // 2.23: GPS noise while parked (e.g. 4 km/h) -> 0; driving starts above 7 km/h, ends below 4 km/h
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   if(kmh>=0){if(fahrt?kmh<4:kmh<7){fahrt=false;kmh=0;}else fahrt=true;}
@@ -246,6 +271,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#60a5fa';
+  spdSet(kmh>0?kmh:0,acc,gps);
 };
 // 2.15: animation - dot glides, map follows it, map turns with the driving direction (heading up)
 var ani={cur:null,from:null,to:null,t0:0,t1:0,dur:1000,hdg:0,rot:0};
