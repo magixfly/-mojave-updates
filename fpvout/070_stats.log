@@ -1,0 +1,12 @@
+== 070_stats on mojave-fpv, 2026-11-25 12:22:05, FPV V1.8.8 ==
+{'ping': 5, 'mb': 0, 'vd': 310, 'vm': 59, 'how': 'estimated', 'jb': 37, 'dec': 19.8, 'fps': 63, 'drop': 0, 'res': '1280x720', 'lite': 0, 'pip': 0, 'hz': 24}
+{'ping': 6, 'mb': 0, 'vd': 310, 'vm': 60, 'how': 'estimated', 'jb': 37, 'dec': 19.8, 'fps': 63, 'drop': 0, 'res': '1280x720', 'lite': 0, 'pip': 0, 'hz': 24}
+{'ping': 4, 'mb': 0, 'vd': 310, 'vm': 59, 'how': 'estimated', 'jb': 37, 'dec': 19.8, 'fps': 63, 'drop': 0, 'res': '1280x720', 'lite': 0, 'pip': 0, 'hz': 24}
+{'ping': 4, 'mb': 0, 'vd': 310, 'vm': 59, 'how': 'estimated', 'jb': 37, 'dec': 19.8, 'fps': 63, 'drop': 0, 'res': '1280x720', 'lite': 0, 'pip': 0, 'hz': 24}
+{'ping': 5, 'mb': 0, 'vd': 310, 'vm': 59, 'how': 'estimated', 'jb': 37, 'dec': 19.8, 'fps': 63, 'drop': 0, 'res': '1280x720', 'lite': 0, 'pip': 0, 'hz': 24}
+{'ping': 3, 'mb': 0, 'vd': 310, 'vm': 58, 'how': 'estimated', 'jb': 37, 'dec': 19.8, 'fps': 63, 'drop': 0, 'res': '1280x720', 'lite': 0, 'pip': 0, 'hz': 24}
+ rpiCameraWidth: 1280; rpiCameraHeight: 720; rpiCameraFPS: 60; rpiCameraBitrate: 5000000;
+15: source: rpiCamera;16: rpiCameraWidth: 1280;17: rpiCameraHeight: 720;18: rpiCameraFPS: 60;19: rpiCameraBitrate: 5000000;20: rpiCameraIDRPeriod: 60;21: rpiCameraHFlip: false;22: rpiCameraVFlip: false;
+load average: 1.22, 1.91, 2.05
+
+== exit code 0, 12.7 s ==
