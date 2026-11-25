@@ -132,6 +132,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 /* 2.36: visual feedback on every button */
 .b,.pill,#cmp,#menu button,#spw button,#tw{transition:transform .08s ease,box-shadow .15s ease,background-color .15s}
 .tap{transform:scale(.93)!important;box-shadow:0 0 0 3px var(--acc),0 0 22px rgba(59,156,255,.7)!important;background-color:rgba(59,156,255,.35)!important}
+#azh{position:absolute;right:96px;top:120px;white-space:nowrap;display:none;background:var(--glass);border:1px solid var(--acc);border-radius:12px;padding:10px 16px;font:600 18px var(--num);letter-spacing:.08em;color:#fff}#azh.on{display:block}   /* 2.37 */
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -164,7 +165,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 <div id="cmp" title="Tap: north up / driving direction up"><svg viewBox="-32 -32 64 64" id="cmpS"><circle r="29" fill="none" stroke="#4b5563" stroke-width="2"/><path d="M0,-26 L9,0 L-9,0Z" fill="#ef4444"/><path d="M0,26 L9,0 L-9,0Z" fill="#e5e7eb"/><text y="-12" text-anchor="middle" font-size="0" fill="#fff">N</text></svg><span id="cmpT">N</span></div>
 <div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
 <div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
-<div id="btns"><div class="b" id="zin">+</div><div id="zlv">Zoom –</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" style="font-size:15px;font-weight:800">TRAFFIC</div></div>
+<div id="btns"><div class="b" id="zin">+</div><div id="zlv">Zoom –</div><div id="azh"></div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" style="font-size:15px;font-weight:800">TRAFFIC</div></div>
 <div id="spd"><div id="leds"></div><div class="num"><span id="spdv">0</span><small>KM/H</small></div><div id="limB">LIMIT <b id="limBV">–</b></div><em id="spdg"></em></div>
 <div id="lim"><b id="limV">–</b></div>
 <div id="spw"><div class="h">SPEED WARNING · tolerance before the tone</div>
@@ -203,8 +204,14 @@ var follow=ls('follow','1')=='1',me=null,pos=null;
 function setFollow(f){follow=f;lw('follow',f?'1':'0');$('ctr').classList.toggle('act',f);$('mFollow').textContent='Follow position: '+(f?'on':'off');if(f&&pos)map.panTo(pos);}
 setFollow(follow);
 map.on('dragstart',function(){if(follow)setFollow(false);});
-$('zin').onclick=function(){azPause=Date.now()+30000;map.zoomIn();};
-$('zout').onclick=function(){azPause=Date.now()+30000;map.zoomOut();};
+/* 2.37: short tap = zoom (auto zoom pauses 30 s); hold 0.7 s = auto zoom closer / further for good (like the tracker) */
+function azHint(t){var e=$('azh');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(function(){e.classList.remove('on');},2200);}
+function zKnopf(id,d){var el=$(id),tm=null,lang=false;
+ el.addEventListener('pointerdown',function(){lang=false;tm=setTimeout(function(){lang=true;azOff=Math.max(-4,Math.min(3,azOff+d));lw('azOff',azOff);azPause=0;azWant=0;
+   azHint('Auto zoom '+(azOff>0?'+':'')+azOff+(azOff>0?' (closer)':azOff<0?' (further out)':' (standard)'));},700);});
+ ['pointerup','pointerleave','pointercancel'].forEach(function(ev){el.addEventListener(ev,function(){clearTimeout(tm);});});
+ el.onclick=function(){if(lang)return;azPause=Date.now()+30000;if(d>0)map.zoomIn();else map.zoomOut();};}
+zKnopf('zin',1);zKnopf('zout',-1);
 $('ctr').onclick=function(){if(pos){setFollow(true);map.setView(pos,Math.max(map.getZoom(),16));}else map.setView(home,15);};
 $('maps').onclick=function(){cmd('toggle');};
 $('menuB').onclick=function(e){e.stopPropagation();$('menu').classList.toggle('open');};
@@ -370,7 +377,8 @@ requestAnimationFrame(tick);
 var az=ls('az','1')=='1',azPause=0,azWant=0,azSeit=0;
 function setAz(v){az=v;lw('az',v?'1':'0');$('mAz').textContent='Auto zoom: '+(v?'on':'off');}
 setAz(az);$('mAz').onclick=function(){setAz(!az);};
-function azZiel(k){return k<15?18:k<35?17:k<60?16:k<95?15:14;}
+var azOff=+ls('azOff','0')||0;   // 2.37: auto zoom offset, long press on + / -
+function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;return Math.max(7,Math.min(19,z+azOff));}   // standing: zoom 19
 setInterval(function(){if(!az||!follow||!ani.to||Date.now()<azPause||map._animatingZoom)return;var z=azZiel(ani.kmh||0),n=Date.now();
  if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>2500&&map.getZoom()!==z)map.setZoom(z);},500);
 window.ctUpd=function(t,p){var u=$('upd');if(!t){return;}u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
