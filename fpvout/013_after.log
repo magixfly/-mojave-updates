@@ -1,0 +1,22 @@
+== 013_after on mojave-fpv, 2026-11-25 01:00:48, FPV V1.4.2 ==
+ 01:00:48 up 0 min,  0 users,  load average: 0.90, 0.20, 0.06
+VERSION = "V1.4.2"
+--- video server
+2026/11/25 01:00:43 INF [path cam] [RPI Camera source] started
+2026/11/25 01:00:44 INF [path cam] stream is available and online, 1 track (H264)
+2026/11/25 01:00:47 INF [path cam2] runOnDemand command started
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 1500k, mode ffmpeg
+--- cameras
+usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0
+usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index1
+14:  cam:
+25:  cam2:
+--- holders
+                     USER        PID ACCESS COMMAND
+/dev/video0:         root       1203 F.... mtxrpicam
+1203 /dev/shm/mediamtx-rpicamera-1795564843326759453/mtxrpicam
+1276 ffmpeg -hide_banner -loglevel warning -fflags nobuffer -flags low_delay -probesize 32
+temp=36.0'C
+throttled=0x0
+
+== exit code 0, 0.1 s ==
