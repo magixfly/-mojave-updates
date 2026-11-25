@@ -1,0 +1,11 @@
+== 035_v172 on mojave-fpv, 2026-11-25 02:43:37, FPV V1.4.5 ==
+[30%] installing V1.7.2
+[90%] checking
+VERSION = "V1.7.2"
+active
+active
+12
+{'v': 'V1.7.2', 'fc_ok': False}
+{"paths": ["cam", "mic", "cam2"]}[100%] done
+
+== exit code 0, 7.2 s ==
