@@ -1,0 +1,59 @@
+== 022_diag on mojave-fpv, 2026-11-25 01:52:14, FPV V1.4.2 ==
+--- usb
+ls: cannot access '/dev/v4l/by-id/': No such file or directory
+--- config
+cam2_enable = 1
+cam2_device        = auto      # auto = first USB camera, or e.g. /dev/video2
+cam2_width = 1280
+cam2_height = 720
+cam2_fps           = 30
+cam2_bitrate_kbps = 1500
+cam2_pipeline = auto
+14:  cam:
+--- state
+-rw-r--r-- 1 root root 0 Nov 25 01:47 /run/fpv-usbcam-cam2.ffmpeg
+--- video server, last 5 min
+2026/11/25 01:51:35 INF [WebRTC] [session 568664cd] created by 100.101.199.46:50195
+2026/11/25 01:51:35 INF [WebRTC] [session 568664cd] peer connection established, local candidate: host/udp/fe80::d034:a0f5:158f:f80e/8189, remote candidate: prflx/udp/fd7a:115c:a1e0::eb31:c72f/57767
+2026/11/25 01:51:35 INF [WebRTC] [session 568664cd] is reading from path 'cam', 1 track (H264)
+2026/11/25 01:51:38 INF reloading configuration (file changed)
+2026/11/25 01:51:38 INF shutting down gracefully
+2026/11/25 01:51:38 INF [MoQ] closing
+Stopping fpv-mediamtx.service - Mojave FPV LTE - video server (MediaMTX)...
+2026/11/25 01:51:38 INF [WebRTC] closing
+2026/11/25 01:51:38 INF [WebRTC] [session 568664cd] closed: terminated
+2026/11/25 01:51:38 INF [RTSP] closing
+2026/11/25 01:51:38 INF [path cam] [RPI Camera source] stopped: path is closing
+2026/11/25 01:51:38 INF waiting for running hooks
+fpv-mediamtx.service: Deactivated successfully.
+Stopped fpv-mediamtx.service - Mojave FPV LTE - video server (MediaMTX).
+fpv-mediamtx.service: Consumed 1.074s CPU time.
+Started fpv-mediamtx.service - Mojave FPV LTE - video server (MediaMTX).
+2026/11/25 01:51:38 INF MediaMTX v1.21.4, linux, arm64
+2026/11/25 01:51:38 INF configuration loaded from /etc/fpv/mediamtx.yml
+2026/11/25 01:51:38 INF [path cam] [RPI Camera source] started
+2026/11/25 01:51:38 INF [RTSP] started with listeners on :8554 (TCP/RTSP), :8000 (UDP/RTP), :8001 (UDP/RTCP)
+2026/11/25 01:51:38 INF [WebRTC] started with listeners on :8889 (TCP/HTTP), :8189 (UDP/ICE)
+2026/11/25 01:51:38 INF [MoQ] started with listeners on :8892 (TCP/HTTP2), :8892 (UDP/HTTP3), :8893 (UDP/QUIC)
+using hardware H264 encoder
+2026/11/25 01:51:39 INF [path cam] stream is available and online, 1 track (H264)
+2026/11/25 01:51:41 INF [WebRTC] [session b3cfd181] created by 100.101.199.46:51310
+2026/11/25 01:51:42 INF [WebRTC] [session b3cfd181] peer connection established, local candidate: host/udp/2001:4bc9:a067:8d50:8b15:bf72:4534:44b5/8189, remote candidate: prflx/udp/fd7a:115c:a1e0::eb31:c72f/566
+2026/11/25 01:51:42 INF [WebRTC] [session b3cfd181] is reading from path 'cam', 1 track (H264)
+2026/11/25 01:51:51 INF [WebRTC] [session 53ec3c89] created by 100.101.199.46:64975
+2026/11/25 01:51:51 INF [WebRTC] [session 53ec3c89] peer connection established, local candidate: host/udp/2001:4bc9:a067:8d50:8b15:bf72:4534:44b5/8189, remote candidate: prflx/udp/fd7a:115c:a1e0::eb31:c72f/597
+2026/11/25 01:51:51 INF [WebRTC] [session 53ec3c89] is reading from path 'cam', 1 track (H264)
+--- kernel
+[    1.785482] usb 1-1.1: new high-speed USB device number 3 using xhci_hcd
+[    1.897531] usb 1-1.1: New USB device found, idVendor=328f, idProduct=006d, bcdDevice= 2.05
+[    1.897562] usb 1-1.1: New USB device strings: Mfr=2, Product=1, SerialNumber=3
+[    5.953644] uvcvideo 1-1.1:1.0: Found UVC 1.00 device HD Webcam eMeet C960 (328f:006d)
+[    5.962731] uvcvideo 1-1.1:1.0: Failed to query (GET_INFO) UVC control 5 on unit 1: 0 (exp. 1).
+[    5.981940] usbcore: registered new interface driver uvcvideo
+[  218.311702] uvcvideo 1-1.1:1.1: Failed to resubmit video URB (-1).
+[  978.178926] usb 1-1.1: USB disconnect, device number 3
+gpu=256M
+temp=36.0'C
+ 01:52:15 up 21 min,  0 users,  load average: 0.80, 1.12, 0.92
+
+== exit code 0, 0.2 s ==
