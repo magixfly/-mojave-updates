@@ -1,0 +1,12 @@
+== 080_v1916 on mojave-fpv, 2026-11-25 13:08:11, FPV V1.8.8 ==
+drives before: 2
+VERSION = "V1.9.16"
+active
+active
+1
+drives after: 1
+1
+min_s 30 [58]
+[100%] done
+
+== exit code 0, 8.3 s ==
