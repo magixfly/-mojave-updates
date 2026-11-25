@@ -1,10 +1,10 @@
 mojave-fpv remote maintenance, FPV V1.8.8
-time      2026-11-25 09:26:27 CET
-uptime    up 38 minutes
+time      2026-11-25 09:36:45 CET
+uptime    up 49 minutes
 addresses 192.168.178.169 100.64.69.54 fd7a:115c:a1e0::c531:4537
 wifi      Optimus Prime
 tailscale 100.64.69.54
-temp      42.4 C
+temp      43.8 C
 throttled throttled=0x0
 services  video=active bridge=active
-last      058_v191 at 2026-11-25 09:25:56
+last      060_v193 at 2026-11-25 09:35:47
