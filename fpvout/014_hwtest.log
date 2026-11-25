@@ -1,0 +1,72 @@
+== 014_hwtest on mojave-fpv, 2026-11-25 01:04:08, FPV V1.4.2 ==
+camera: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0
+================ PHASE 1: video server stopped
+
+##### A hardware decode + hardware encode
+cpu 16.7%  file 1758708 bytes  frames 271 (in about 12 s, 360 would be perfect)
+
+##### B same with fixed picture format
+cpu 16.7%  file 2319116 bytes  frames 361 (in about 12 s, 360 would be perfect)
+
+##### C software decode (gstreamer)
+cpu 45.5%  file 2315371 bytes  frames 361 (in about 12 s, 360 would be perfect)
+
+##### D ffmpeg (what runs now)
+cpu 54.5%  file 2069327 bytes  frames 329 (in about 12 s, 360 would be perfect)
+[swscaler @ 0x7f88012520] deprecated pixel format used, make sure you did set range correctly
+
+================ PHASE 2: main camera running, USB camera free
+2026/11/25 01:05:03 INF [path cam] [RPI Camera source] started
+2026/11/25 01:05:04 INF [path cam] stream is available and online, 1 track (H264)
+
+##### A hardware decode + hardware encode
+cpu 0%  file 0 bytes  frames N/A (in about 12 s, 360 would be perfect)
+
+##### B same with fixed picture format
+cpu 0%  file 0 bytes  frames N/A (in about 12 s, 360 would be perfect)
+
+##### C software decode (gstreamer)
+cpu 0%  file 0 bytes  frames N/A (in about 12 s, 360 would be perfect)
+
+##### D ffmpeg (what runs now)
+cpu 0%  file 0 bytes  frames N/A (in about 12 s, 360 would be perfect)
+[vost#0:0/h264_v4l2m2m @ 0x55c32cba00] Task finished with error code: -22 (Invalid argument)
+[vost#0:0/h264_v4l2m2m @ 0x55c32cba00] Terminating thread with return code -22 (Invalid argument)
+[out#0/h264 @ 0x55c32cb2c0] Nothing was written into output file, because at least one of its streams received no packets.
+[video4linux2,v4l2 @ 0x55c32c9b40] Some buffers are still owned by the caller on close.
+ioctl(VIDIOC_QBUF): Bad file descriptor
+
+================ CLEAN-UP AND CHECK
+[fpv-setup] USB camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2' with 1280x720
+left-over processes:
+(end of list)
+new kernel messages:
+[  173.020607] bcm2835_mmal_vchiq: timed out waiting for sync completion
+[  173.020636] bcm2835-isp bcm2835-isp: bcm2835_isp_s_ctrl: Failed setting ctrl "Gamma" (009819e5), err -62
+[  176.092576] bcm2835_mmal_vchiq: timed out waiting for sync completion
+[  179.676466] bcm2835_mmal_vchiq: timed out waiting for sync completion
+[  179.676484] bcm2835_mmal_vchiq: vchiq_mmal_component_init: failed to create component -62 (Not enough GPU mem?)
+[  179.676492] bcm2835-codec bcm2835-codec: bcm2835_codec_create_component: failed to create component ril.video_decode
+[  183.260375] bcm2835_mmal_vchiq: timed out waiting for sync completion
+[  183.260393] bcm2835_mmal_vchiq: vchiq_mmal_component_init: failed to create component -62 (Not enough GPU mem?)
+[  183.260401] bcm2835-codec bcm2835-codec: bcm2835_codec_create_component: failed to create component ril.video_encode
+[  195.804179] bcm2835_mmal_vchiq: timed out waiting for sync completion
+[  195.804197] bcm2835_mmal_vchiq: vchiq_mmal_component_init: failed to create component -62 (Not enough GPU mem?)
+[  195.804203] bcm2835-codec bcm2835-codec: bcm2835_codec_create_component: failed to create component ril.video_encode
+(end of list)
+main camera still online:
+2026/11/25 01:05:50 INF [WebRTC] [session 733cffc0] closed: path 'cam2' is not configured
+2026/11/25 01:05:53 INF [WebRTC] [session 5d9cc5de] closed: path 'cam2' is not configured
+2026/11/25 01:05:56 INF [WebRTC] [session 2752f9c3] closed: path 'cam2' is not configured
+2026/11/25 01:05:59 INF [WebRTC] [session c0d08924] closed: path 'cam2' is not configured
+temp=34.5'C
+throttled=0x0
+reboot in 10 s
+/var/lib/fpv-remote/014_hwtest.sh: line 11:  1346 Killed                  timeout -s KILL 13 "$@" > /tmp/t.log 2>&1
+/var/lib/fpv-remote/014_hwtest.sh: line 11:  1372 Killed                  timeout -s KILL 13 "$@" > /tmp/t.log 2>&1
+/var/lib/fpv-remote/014_hwtest.sh: line 11:  1396 Killed                  timeout -s KILL 13 "$@" > /tmp/t.log 2>&1
+/var/lib/fpv-remote/014_hwtest.sh: line 11:  1485 Killed                  timeout -s KILL 13 "$@" > /tmp/t.log 2>&1
+/var/lib/fpv-remote/014_hwtest.sh: line 11:  1507 Killed                  timeout -s KILL 13 "$@" > /tmp/t.log 2>&1
+/var/lib/fpv-remote/014_hwtest.sh: line 11:  1528 Killed                  timeout -s KILL 13 "$@" > /tmp/t.log 2>&1
+
+== exit code 0, 111.4 s ==
