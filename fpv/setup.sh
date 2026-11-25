@@ -3,7 +3,7 @@
 # First time (on the Pi):  curl -fsSL https://raw.githubusercontent.com/magixfly/-mojave-updates/carlin/fpv/setup.sh | sudo bash
 # Later updates come through the remote maintenance (fpvin/NNN_name.sh):  ... | bash -s V1.3
 set -e
-VER="${1:-V1.9.15}"
+VER="${1:-V1.9.16}"
 BASE="https://raw.githubusercontent.com/magixfly/-mojave-updates/carlin/fpv"
 if [ "$(id -u)" != "0" ]; then echo "Please run with sudo"; exit 1; fi
 T=$(mktemp -d)
