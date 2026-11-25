@@ -1,11 +1,12 @@
 {
-  "fw": "V2.43",
+  "fw": "V2.44",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1365344,
-  "md5": "9e87e22d9ffce109040db3ee8a8cdda8",
+  "groesse": 1385104,
+  "md5": "4cf19cec018ec1c810e13ffe41ab4fd4",
   "neu": [
-    "V2.43: touch fix for the rotated picture (Rotate 180°) - touches were mirrored left/right: NET (bottom left) hit the zoom button, the thumb on the right edge switched NET or the clock (standby); yellow ring shows where a touch landed; config touch_flip_x (-1 auto, 0 off, 1 on)",
+    "V2.44: V2.43 touch mirroring undone (NET hit the zoom buttons); no invisible zoom buttons on the logo screen; yellow touch ring on every screen; config touch_mirror (0 off, 1 on)",
+    "V2.43: touch mirroring for the rotated picture (turned out wrong - undone in V2.44)",
     "V2.42: ghost taps filtered - short taps (< 0.12 s) ignored, NET (speed field) only after a deliberate press of 0.4-1 s (ghost taps switched Wi-Fi off and showed \"Zoom 19\"); ghost tap counter on the Navi page; area list still off (areas2=1)",
     "V2.41: shared area list switched off for now (Wi-Fi kept dropping since V2.37) - no list loading, no clean-up, no tiles from PC/Pi, no place reports; turn on with config areas2=1",
     "V2.40: fix Wi-Fi dropping since the area list - the list (40+ KB) is now read into PSRAM instead of the small internal RAM that Wi-Fi needs",
