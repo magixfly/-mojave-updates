@@ -1,0 +1,19 @@
+== 051_usbdiag on mojave-fpv, 2026-11-25 09:05:19, FPV V1.8.8 ==
+no fallback markers
+1140 gst-launch-1.0 -q alsasrc device=plughw:CARD=C960,DEV=0 buffer-time=40000 latency-time=10000 ! audioconvert ! audioresample ! audio/x-raw,rate=48
+1402 /bin/bash /opt/fpv/usbcam.sh /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280 720 30 3500 cam2 auto
+1410 /bin/bash /opt/fpv/usbcam.sh /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280 720 30 3500 cam2 auto
+1412 gst-launch-1.0 -q v4l2src device=/dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 do-timestamp=true ! image/jpeg,width
+08:45:32 mojave-fpv mediamtx[1077]: 2026/11/25 08:45:32 INF [path cam2] runOnDemand command started
+08:45:32 mojave-fpv mediamtx[1325]: [usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 3500k, mode hw
+08:45:33 mojave-fpv mediamtx[1077]: 2026/11/25 08:45:33 INF [path cam2] stream is available and online, 1 track (H264)
+08:51:39 mojave-fpv mediamtx[1077]: 2026/11/25 08:51:39 INF [path cam2] runOnDemand command stopped: not needed by anyone
+08:51:43 mojave-fpv mediamtx[1077]: 2026/11/25 08:51:43 INF [path cam2] runOnDemand command started
+08:51:43 mojave-fpv mediamtx[1365]: [usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 3500k, mode hw
+08:51:43 mojave-fpv mediamtx[1077]: 2026/11/25 08:51:43 INF [path cam2] stream is available and online, 1 track (H264)
+08:55:04 mojave-fpv mediamtx[1077]: 2026/11/25 08:55:04 INF [path cam2] runOnDemand command stopped: not needed by anyone
+08:55:04 mojave-fpv mediamtx[1077]: 2026/11/25 08:55:04 INF [path cam2] runOnDemand command started
+08:55:04 mojave-fpv mediamtx[1402]: [usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 3500k, mode hw
+08:55:05 mojave-fpv mediamtx[1077]: 2026/11/25 08:55:05 INF [path cam2] stream is available and online, 1 track (H264)
+
+== exit code 0, 0.1 s ==
