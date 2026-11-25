@@ -1,10 +1,11 @@
 {
-  "fw": "V2.52",
+  "fw": "V2.53",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1388096,
-  "md5": "c28bb0b1d804d803f15519312e1b41d3",
+  "groesse": 1388912,
+  "md5": "f58a39fc36499f9fec497de87bbf3ba7",
   "neu": [
+    "V2.53: settings (Wi-Fi etc.) also kept in the ESP memory - survive without SD card; SD error shown on the Navi page",
     "V2.52: Navi page also reachable in the setup hotspot (192.168.4.1)",
     "V2.51: no Wi-Fi saved -> own hotspot Mojave-Navi (password corenavi), Navi page at 192.168.4.1; deleting tiles outside the area list off by default (areas_clean2)",
     "V2.50: Wi-Fi state shown on the logo screen and on USB every 5 s (diagnosis)",
