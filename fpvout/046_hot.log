@@ -1,0 +1,13 @@
+== 046_hot on mojave-fpv, 2026-11-25 03:23:54, FPV V1.4.5 ==
+{"ok": true, "on": false, "changed": false}
+ rpiCameraWidth: 1920; rpiCameraFPS: 30; rpiCameraBitrate: 5000000; rpiCameraIDRPeriod: 30;
+--- bitrate 4000 -> 500 (same size)
+kbit/s per 2 s: [3312, 5099, 4004, 755, 710, 717, 735, 557] ended after 16.7 s
+--- fps 30 -> 15 too
+kbit/s per 2 s: [656, 1243, 897, 643, 731, 720, 559, 344] ended after 16.8 s
+2026/11/25 03:24:00 INF reloading configuration (file changed)
+2026/11/25 03:24:17 INF reloading configuration (file changed)
+--- back
+kbit/s per 2 s: [45, 1002, 767, 1124, 3048, 5051, 4890, 5081] ended after 16.6 s
+
+== exit code 0, 50.7 s ==
