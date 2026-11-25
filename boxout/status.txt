@@ -1,6 +1,10 @@
-Stand: 2026-11-25 21:16:49
+Stand: 2026-11-25 21:24:01
 App: 2.14
 IP: 192.168.190.46
 WLAN: 
-Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 39734): connect failed: ECONNREFUSED (Connection refused)
-Fernwartung: Update 116 → 117
+Wifi is connected to "XVII"
+    wlan1 - TetheredState - lastError = 0
+Failed to write while dumping service tethering: Broken pipe
+
+### Exit-Code: 0
+Fernwartung: Update 116 → 118
