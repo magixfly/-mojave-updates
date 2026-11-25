@@ -1,0 +1,32 @@
+== 019_hw1080 on mojave-fpv, 2026-11-25 01:33:30, FPV V1.4.2 ==
+
+##### 1080p A: chip decode, level 4.2
+cpu 0%  frames 18 (about 360 expected)   main camera meanwhile: 122 (120 expected)
+kernel errors so far: 0
+
+##### 1080p B: chip decode, no format given, level 4.2
+cpu 0%  frames 18 (about 360 expected)   main camera meanwhile: 122 (120 expected)
+kernel errors so far: 0
+
+##### 1080p C: chip decode + converter
+cpu 0%  frames 20 (about 360 expected)   main camera meanwhile: 122 (120 expected)
+kernel errors so far: 0
+
+##### 1080p D: software decode (gstreamer) + chip encode
+cpu 66.7%  frames 371 (about 360 expected)   main camera meanwhile: 122 (120 expected)
+kernel errors so far: 0
+
+##### 1080p E: ffmpeg as before
+cpu 95.2%  frames 219 (about 360 expected)   main camera meanwhile:  (120 expected)
+[vost#0:0/h264_v4l2m2m @ 0x557c938a00] Error submitting a packet to the muxer: Immediate exit requested
+[out#0/h264 @ 0x557c9382c0] Error muxing a packet
+[out#0/h264 @ 0x557c9382c0] Task finished with error code: -1414092869 (Immediate exit requested)
+[out#0/h264 @ 0x557c9382c0] Error writing trailer: Immediate exit requested
+kernel errors so far: 0
+
+main camera after: 122
+[fpv-setup] USB camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2' with 1280x720
+temp=38.4'C
+/var/lib/fpv-remote/019_hw1080.sh: line 6:  1674 Killed                  timeout -s INT -k 4 13 "$@" > /tmp/t.log 2>&1
+
+== exit code 0, 88.1 s ==
