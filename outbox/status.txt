@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-Stand: 2026-11-25 08:13:03
-=======
-Stand: 2026-11-25 03:10:04
->>>>>>> 7d7f712 (FPV V1.8.3: emergency picture by button, key E, channel 10)
+Stand: 2026-11-25 08:19:04
 Box: verbunden (192.168.178.235:5555)
 Pi: 192.168.178.214
