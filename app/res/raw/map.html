@@ -137,17 +137,56 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 #muteB,#menuB{width:86px!important;height:56px!important;border-radius:28px!important;font-size:34px!important;padding:0!important;display:flex;align-items:center;justify-content:center}#menuB{font-size:40px!important;letter-spacing:.05em}   /* 2.39: bigger */
 #menu>*{flex:none!important}#upd{min-height:44px}#updT{position:relative;display:block;padding:10px 12px;font:600 16px var(--num);letter-spacing:.04em;white-space:normal}   /* 2.40: menu items no longer squeezed to 0 (update text was invisible) */
 #title small,#title small span{color:var(--ink)!important}   /* 2.41: version + clock in the same colour as the name */
+
+/* 2.44: race design - one font, one 12 px edge grid, equal heights, carbon panels with accent stripe */
+:root{--e:12px;--r:12px;--h:52px;--bw:76px;--panel:linear-gradient(180deg,rgba(28,34,44,.88),rgba(6,8,11,.88));--carbon:repeating-linear-gradient(45deg,rgba(255,255,255,.035) 0 3px,transparent 3px 6px)}
+html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{font-family:var(--num)!important}
+#top{height:auto!important;padding:var(--e) var(--e) 34px!important;gap:10px!important;align-items:flex-start!important;background:linear-gradient(rgba(0,0,0,.8),transparent)!important}
+#title{font:italic 800 25px/1 var(--num)!important;letter-spacing:.2em!important;padding:2px 8px 0 0!important}
+#title small{display:block;margin-top:5px;font:italic 600 23px/1 var(--num)!important;letter-spacing:.08em!important;font-variant-numeric:tabular-nums}
+.pill,.b,#cmp,#spd,#mjf,#menu,#trf,#spw,#azh{background:var(--carbon),var(--panel)!important;border:1px solid rgba(255,255,255,.11)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 6px 18px rgba(0,0,0,.6)!important;filter:none!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.pill{height:var(--h)!important;border-radius:var(--r)!important;padding:0 18px 0 20px!important;font:italic 700 19px var(--num)!important;letter-spacing:.08em!important;text-shadow:0 1px 2px #000}
+#net,#esp,#maps,#fpvs{box-shadow:inset 4px 0 0 currentColor,inset 0 1px 0 rgba(255,255,255,.09),0 6px 18px rgba(0,0,0,.6)!important}
+#maps{color:var(--acc)}#mapsBar{border-radius:var(--r)!important}
+#net::before,#gps::before{display:none!important}
+#net,#maps{width:350px!important}#esp{width:310px;flex:none!important;display:none}#car{display:none!important}
+#muteB,#menuB{width:var(--bw)!important;height:var(--h)!important;border-radius:var(--r)!important;padding:0!important;color:var(--ink)!important}
+#muteB svg,#menuB svg{width:30px;height:30px}#muteB.off{color:#ff4d4d!important;box-shadow:inset 0 -3px 0 #ff4d4d,0 6px 18px rgba(0,0,0,.6)!important}
+#menu{top:calc(var(--h) + var(--e) + 8px)!important;right:var(--e)!important;border-radius:var(--r)!important;min-width:360px}
+#menu button{border-radius:10px!important;font:italic 600 19px var(--num)!important;letter-spacing:.08em!important;text-transform:uppercase}
+#btns{right:var(--e)!important;width:calc(var(--bw)*2 + 10px);align-items:stretch!important;gap:10px!important}
+#zrow{gap:10px!important}.b{width:var(--bw)!important;height:var(--bw)!important;border-radius:var(--r)!important;font:600 42px var(--num)!important}
+#ctr,#areasB,#trfB{width:auto!important;height:60px!important;gap:10px;font:italic 700 17px var(--num)!important;letter-spacing:.16em!important}
+#ctr svg{width:28px;height:28px}
+.b.act{color:var(--acc)!important;box-shadow:inset 0 -4px 0 var(--acc),0 0 18px rgba(59,156,255,.35),0 6px 18px rgba(0,0,0,.6)!important}
+#zlv{text-align:right!important;margin:-2px 2px!important;font:italic 700 16px var(--num)!important;letter-spacing:.18em!important;color:var(--dim)!important}
+#spd{left:var(--e)!important;top:84px!important;width:310px!important;box-sizing:border-box;border-radius:var(--r)!important;padding:12px 16px 10px!important;transform-origin:20% 30%}
+#spd .num{font:italic 800 78px/.9 var(--num)!important;letter-spacing:-.02em}
+#spd .num small{font:italic 600 14px var(--num)!important;letter-spacing:.32em!important;color:var(--dim)}
+#spd em{font:italic 600 12px var(--num)!important;letter-spacing:.16em!important;color:var(--dim)}
+#limB{border-radius:6px!important;font:italic 700 15px var(--num)!important;letter-spacing:.16em!important}
+#spd.over{border-color:#ff4d4d!important}
+#spd.pump{animation:pump .42s ease-in-out 3}
+@keyframes pump{0%,100%{transform:scale(1)}50%{transform:scale(1.2);outline:3px solid #ff4d4d;outline-offset:2px}}
+#mjf{left:var(--e)!important;top:auto!important;bottom:calc(var(--bw) + var(--e)*2)!important;width:310px!important;box-sizing:border-box;border-radius:var(--r)!important}
+#mjf .sp{font:italic 800 56px/1 var(--num)!important}#mjf .bat{border-radius:6px!important}#mjf .bat span{font-family:var(--num)!important}
+#cmp{left:var(--e)!important;bottom:var(--e)!important;width:var(--bw)!important;height:var(--bw)!important}
+#cmp svg{width:58px!important;height:58px!important}#cmpT{font:italic 700 11px var(--num)!important;letter-spacing:.1em}
+#scl{left:calc(var(--bw) + var(--e)*2)!important;bottom:calc(var(--e) + 6px)!important;font:italic 700 16px var(--num)!important;letter-spacing:.1em!important}
+#tw{border-radius:var(--r)!important}#tw b{font-style:italic!important}
+.b.tap,.pill.tap,#cmp.tap,#menu button.tap,#spw button.tap{transform:scale(.93)!important;box-shadow:0 0 0 3px var(--acc),0 0 22px rgba(59,156,255,.7)!important;background:rgba(59,156,255,.35)!important}
 </style></head><body>
 <div id="top">
   <div id="title">CORE DASH<small><span id="ver"></span> · <span id="uhr"></span></small></div>
   <div class="pill" id="net" title="Box Wi-Fi">…</div>
   <div class="pill" id="maps" title="Tap: start / stop the map download"><div id="mapsBar"></div><span id="mapsT">Maps</span></div>
   <div class="pill" id="gps">No GPS</div>
+  <div class="pill" id="esp" title="Bluetooth ESP / MT12"></div>
   <div class="pill" id="car" title="Mojave via the tracker ESP (Bluetooth)"></div>
   <div class="pill" id="fpvs"></div>
   <div class="sp"></div>
   <div class="pill" id="muteB" title="Sound on / off">🔊</div>
-  <div class="pill" id="menuB"><b style="font:900 30px system-ui;letter-spacing:5px;color:#fff;margin-left:5px">•••</b></div>
+  <div class="pill" id="menuB"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.4" fill="currentColor"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/><circle cx="19" cy="12" r="2.4" fill="currentColor"/></svg></div>
 </div>
 <div id="menu">
   <button id="mUpd">Check for update</button>
@@ -169,7 +208,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 <div id="cmp" title="Tap: north up / driving direction up"><svg viewBox="-32 -32 64 64" id="cmpS"><circle r="29" fill="none" stroke="#4b5563" stroke-width="2"/><path d="M0,-26 L9,0 L-9,0Z" fill="#ef4444"/><path d="M0,26 L9,0 L-9,0Z" fill="#e5e7eb"/><text y="-12" text-anchor="middle" font-size="0" fill="#fff">N</text></svg><span id="cmpT">N</span></div>
 <div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
 <div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
-<div id="btns"><div id="zrow"><div class="b" id="zout">&minus;</div><div class="b" id="zin">+</div></div><div id="zlv">Zoom –</div><div id="azh"></div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" style="font-size:15px;font-weight:800">TRAFFIC</div></div>
+<div id="btns"><div id="zrow"><div class="b" id="zout">&minus;</div><div class="b" id="zin">+</div></div><div id="zlv">Zoom –</div><div id="azh"></div><div class="b" id="ctr" title="Center on own position"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></svg>CENTER</div><div class="b" id="areasB" title="Show the shared map areas" >AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" >TRAFFIC</div></div>
 <div id="spd"><div id="leds"></div><div class="num"><span id="spdv">0</span><small>KM/H</small></div><div id="limB">LIMIT <b id="limBV">–</b></div><em id="spdg"></em></div>
 <div id="lim"><b id="limV">–</b></div>
 <div id="spw"><div class="h">SPEED WARNING · tolerance before the tone</div>
@@ -247,7 +286,7 @@ function setAreas(on){areasOn=on;lw('areas',on?'1':'0');$('areasB').classList.to
 $('areasB').onclick=function(){setAreas(!areasOn);};
 /* --- 2.33: TRAFFIC - warns actively: ASFINAG message on the motorway I am on, in my direction, ahead within 30 km -> banner + tone; fixed speed cameras on the map --- */
 var trfOn=ls('trf','1')=='1',rdrL=L.layerGroup(),rdrGeladen=false,trfMsgs=[],trfT=0,trfWarned={},geoC=JSON.parse(ls('geoC','{}')||'{}'),geoQ=[],geoBusy=false,curRef='',twTimer=null;
-var stumm=ls('stumm','0')=='1';function muteUi(){$('muteB').textContent=stumm?'🔇':'🔊';$('muteB').classList.toggle('off',stumm);}muteUi();
+var stumm=ls('stumm','0')=='1';function muteUi(){$('muteB').innerHTML=stumm?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 9h4l5-4v14l-5-4H3z" fill="currentColor"/><path d="M16 9l6 6M22 9l-6 6"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 9h4l5-4v14l-5-4H3z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.8 5.5a9 9 0 0 1 0 13"/></svg>';$('muteB').classList.toggle('off',stumm);}muteUi();
 document.addEventListener('pointerdown',function(e){var t=e.target.closest&&e.target.closest('.b,.pill,#cmp,#menu button,#spw button,#tw');if(!t)return;t.classList.add('tap');setTimeout(function(){t.classList.remove('tap');},220);},true);   // 2.36
 $('muteB').onclick=function(){stumm=!stumm;lw('stumm',stumm?'1':'0');muteUi();};
 function trfArt(t){t=(t||'').toLowerCase();return /stau|unfall|sperre|gesperrt|gefahr|panne|geisterfahrer|stockend|glätte|nebel/.test(t)?'stau':/baustelle|arbeiten|fahrstreifen/.test(t)?'bau':'info';}
@@ -287,10 +326,17 @@ var car=null,carOn=ls('car','1')=='1',carFollow=false;
 $('mCar').textContent='Show Mojave: '+(carOn?'on':'off');
 $('mCar').onclick=function(){carOn=!carOn;lw('car',carOn?'1':'0');this.textContent='Show Mojave: '+(carOn?'on':'off');if(car&&!carOn){map.removeLayer(car);car=null;}$('car').style.display=carOn&&car?'flex':'none';};
 $('mBle').onclick=function(){cmd('ble');};
-window.ctEsp=function(st,name,age,rssi,pps){$('bleT').textContent='Bluetooth: '+st+(name?' · '+name:'')+(st=='connected'&&age>=0?' · data '+age+' s ago':'')+(pps?' · ESP '+pps+' pkt/s'+(rssi?' '+rssi+' dBm':''):'');
+var espS={st:'',name:'',rssi:0,pps:0,lq:-1,t:0};   // 2.44: ESP / MT12 shown in the top bar like the Wi-Fi
+function espUi(){var e=$('esp'),s=espS;if(s.st!='connected'){e.style.display='none';return;}e.style.display='flex';
+ var mt=s.pps>0,lqOk=s.lq>=0&&Date.now()-s.t<6000,t=mt?'MT12':'ESP · NO MT12';
+ if(mt)t+=lqOk?' · LQ '+s.lq:(s.rssi?' · '+s.rssi+' dBm':'');
+ e.textContent=t;e.style.color=!mt||(lqOk&&s.lq<50)||(s.rssi&&s.rssi<-82)?'#f5b13d':'#3b9cff';}
+setInterval(espUi,3000);
+window.ctEsp=function(st,name,age,rssi,pps){espS.st=st;espS.name=name;espS.rssi=rssi;espS.pps=pps;espUi();$('bleT').textContent='Bluetooth: '+st+(name?' · '+name:'')+(st=='connected'&&age>=0?' · data '+age+' s ago':'')+(pps?' · ESP '+pps+' pkt/s'+(rssi?' '+rssi+' dBm':''):'');
   if(st!='connected'&&car){car.getElement()&&car.getElement().firstChild.classList.add('old');}};
 var mjfT=0;setInterval(function(){if(Date.now()-mjfT>10000)$('mjf').style.display='none'},2000);
 window.ctCar=function(lat,lon,kmh,hdg,sats,volt,pct,mah,lq,rssi,mode,age){
+  if(lq>=0){espS.lq=lq;espS.t=Date.now();}
   if(!carOn)return;var e=$('car');e.style.display='flex';
   // 2.12: frame bottom left - speed big, battery bar with % and volt, LQ
   if(age<=10){mjfT=Date.now();var f=$('mjf');f.style.display='block';f.classList.toggle('old',age>5||(lq>=0&&lq<50));
@@ -342,7 +388,7 @@ function spwTick(p,kmh,hdg){if(!p)return;
  var e=$('lim');e.classList.toggle('on',!!limNow);e.classList.toggle('est',limEst);$('limV').textContent=limNow||'–';var lb=$('limB');lb.classList.toggle('on',!!limNow);lb.classList.toggle('est',limEst);$('limBV').textContent=limNow||'–';
  var tol=limNow?(spwT[limNow]!=null?spwT[limNow]:spwT.x):0,over=spwOn&&limNow&&fahrt&&kmh>limNow*(1+tol/100);
  e.classList.toggle('over',!!over);$('spd').classList.toggle('over',!!over);lb.classList.toggle('over',!!over);
- if(over&&(!spwOver||Date.now()-spwLast>12000)){ton();spwLast=Date.now();}spwOver=!!over;}
+ if(over&&(!spwOver||Date.now()-spwLast>12000)){ton();spwLast=Date.now();var sp=$('spd');sp.classList.remove('pump');void sp.offsetWidth;sp.classList.add('pump');}spwOver=!!over;}
 var fahrt=false;   // 2.23: GPS noise while parked (e.g. 4 km/h) -> 0; driving starts above 7 km/h, ends below 4 km/h
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   if(kmh>=0){if(fahrt?kmh<4:kmh<7){fahrt=false;kmh=0;}else fahrt=true;}
