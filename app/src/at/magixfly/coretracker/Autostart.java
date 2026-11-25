@@ -26,7 +26,7 @@ public class Autostart extends Activity {
         {"ap5", "1", "Hotspot on 5 GHz"},
         {"bbAuto", "1", "Remote maintenance via GitHub"},
         {"adbAuto", "1", "Wi-Fi debugging (ADB) at start – remote maintenance"},
-        {"mapAuto", "0", "Open Carlin Box (map) at start"},
+        {"mapAuto", "0", "Open Core Dash (map) at start"},
         {"share", "1", "Show the screen in the browser (port 8090)"},
     };
 

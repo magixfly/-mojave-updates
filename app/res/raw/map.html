@@ -1,7 +1,7 @@
 <!doctype html>
 <html><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Carlin Box</title>
+<title>Core Dash</title>
 <link rel="stylesheet" href="leaflet.css">
 <style>
 html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.2 system-ui,sans-serif;overflow:hidden;-webkit-user-select:none;user-select:none}
@@ -139,7 +139,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 #title small,#title small span{color:var(--ink)!important}   /* 2.41: version + clock in the same colour as the name */
 </style></head><body>
 <div id="top">
-  <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
+  <div id="title">CORE DASH<small><span id="ver"></span> · <span id="uhr"></span></small></div>
   <div class="pill" id="net" title="Box Wi-Fi">…</div>
   <div class="pill" id="maps" title="Tap: start / stop the map download"><div id="mapsBar"></div><span id="mapsT">Maps</span></div>
   <div class="pill" id="gps">No GPS</div>
@@ -229,7 +229,7 @@ $('mRe').onclick=function(){cmd('restart');};
 $('mCl').onclick=function(){cmd('close');};
 /* --- called by the app --- */
 function uhr(){var d=new Date();$('uhr').textContent=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);}uhr();setInterval(uhr,5000);   // 2.20: clock next to the version
-window.ctInit=function(ver,lat,lon,ble){home=[lat,lon];$('ver').textContent='V'+ver;$('mInfo').textContent='Carlin Box V'+ver+' · maps from the shared area list (box memory)';$('mBle').textContent='Bluetooth ESP: '+(ble?'on':'off')+' (restarts app)';};
+window.ctInit=function(ver,lat,lon,ble){home=[lat,lon];$('ver').textContent='V'+ver;$('mInfo').textContent='Core Dash V'+ver+' · maps from the shared area list (box memory)';$('mBle').textContent='Bluetooth ESP: '+(ble?'on':'off')+' (restarts app)';};
 /* --- V2.07: AREAS button - areas of the shared list (gebiete.json) as overlay --- */
 var areasOn=ls('areas','0')=='1',areasL=L.layerGroup(),areasVer=null;
 function areasDraw(j){areasL.clearLayers();(j.areas||[]).forEach(function(a){
