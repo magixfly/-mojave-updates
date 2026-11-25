@@ -1,0 +1,9 @@
+== 048_cam2state on mojave-fpv, 2026-11-25 03:29:40, FPV V1.4.5 ==
+no fallback markers
+03:23:40 mojave-fpv mediamtx[5289]: [usbcam] cam2s: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 is still in use
+03:23:40 mojave-fpv mediamtx[4818]: 2026/11/25 03:23:40 INF [path cam2s] runOnDemand command exited: command exited with code 1
+03:23:47 mojave-fpv mediamtx[4818]: 2026/11/25 03:23:47 INF [path cam2s] runOnDemand command stopped: timed out
+4831 gst-launch-1.0 -q alsasrc device=plughw:CARD=C960,DEV=0 buffer-time=40000 latency-time=10000 ! audioconvert ! audioresample ! audio/x-r
+5116 ffmpeg -hide_banner -loglevel warning -fflags nobuffer -flags low_delay -probesize 32 -analyzeduration 0 -f v4l2 -input_format mjpeg -v
+
+== exit code 0, 0.2 s ==
