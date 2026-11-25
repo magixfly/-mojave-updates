@@ -64,14 +64,27 @@ class TileStore {
     /** Kachel für die Karte: Box-Speicher → Zentrale → Pi → basemap.at. Gespeichert wird nur, was in der Liste liegt. null/leer = nicht verfügbar. */
     byte[] get(int z, int x, int y, boolean ovl) {
         File f = ovl ? ovlFile(z, x, y) : file(z, x, y);
-        if (f.exists()) return f.length() > 0 ? read(f) : null;
+        if (f.exists()) { if (f.length() == 0) return null; byte[] d0 = read(f); return !ovl && weiss(d0) ? new byte[0] : d0; }
         if (!online()) return null;
         byte[] d = fetch(z, x, y, ovl, 4000);
         if (d == null) return null;
+        if (!ovl && weiss(d)) d = new byte[0];   // V2.25: basemap.at is white outside Austria -> empty = dark background
         Areas ar = areas;
         if (ar == null || ar.has(z, x, y)) save(f, d);
         if (!ovl && d.length > 0) { loaded.incrementAndGet(); bytes.addAndGet(d.length); }
         return d;
+    }
+
+    /** V2.25: tile is (almost) completely white = outside Austria at basemap.at */
+    static boolean weiss(byte[] d) {
+        try {
+            if (d == null || d.length == 0 || d.length > 20000) return false;   // white tiles are small JPEGs
+            android.graphics.BitmapFactory.Options o = new android.graphics.BitmapFactory.Options(); o.inSampleSize = 16;
+            android.graphics.Bitmap b = android.graphics.BitmapFactory.decodeByteArray(d, 0, d.length, o);
+            if (b == null) return false;
+            for (int y = 0; y < b.getHeight(); y++) for (int x = 0; x < b.getWidth(); x++) { int c = b.getPixel(x, y); if (((c >> 16) & 255) < 240 || ((c >> 8) & 255) < 240 || (c & 255) < 240) { b.recycle(); return false; } }
+            b.recycle(); return true;
+        } catch (Throwable t) { return false; }
     }
 
     /** Daten (leer = gibt es nicht) oder null (Netzfehler). Reihenfolge Zentrale → Pi → basemap.at. */

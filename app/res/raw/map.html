@@ -7,15 +7,15 @@
 html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.2 system-ui,sans-serif;overflow:hidden;-webkit-user-select:none;user-select:none}
 #top{position:absolute;left:0;right:0;top:0;height:60px;display:flex;align-items:center;gap:10px;padding:0 10px;box-sizing:border-box;background:#0b0f14;z-index:1000}
 .pill{height:46px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid rgba(77,184,255,.6);border-radius:10px;padding:0 14px;white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums}
-#title{color:#4ade80;font-size:24px;letter-spacing:1px;padding-right:6px}
+#title{color:#60a5fa;font-size:24px;letter-spacing:1px;padding-right:6px}
 #title small{display:block;color:#9ca3af;font-size:25px;line-height:1.05;font-weight:400;letter-spacing:0}
-#net{width:300px;color:#4ade80}
+#net{width:300px;color:#60a5fa}
 #maps{position:relative;width:360px;padding:0;cursor:pointer;background:#1f2937}
 /* 2.08: top bar never wraps or jumps - fixed widths, smaller text in the pills */
 #top>*{flex:none}#top>.sp{flex:1 1 0;min-width:0}#title{white-space:nowrap}#top .pill{font-size:20px;flex:0 1 auto;min-width:0}#top #menuB{flex:none}#net{width:240px}#maps{width:320px}#gps{width:280px}#car{width:460px}#car:empty,#fpvs:empty{display:none}
-#mapsBar{position:absolute;left:0;top:0;bottom:0;background:#166534;width:0;transition:width .5s}
+#mapsBar{position:absolute;left:0;top:0;bottom:0;background:#1e40af;width:0;transition:width .5s}
 #mapsT{position:relative;color:#f3f4f6;text-shadow:0 0 3px #000,0 0 3px #000}
-#maps.on #mapsBar{background:#16a34a}
+#maps.on #mapsBar{background:#2563eb}
 #gps{width:300px;color:#9ca3af}
 #fpvs{color:#93c5fd;display:none}
 #car{color:#9ca3af;display:none}#car b{font-weight:700}
@@ -25,29 +25,29 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 .mj.old i,.mj.old b{opacity:.45}
 .atip{background:rgba(11,15,20,.85)!important;color:#e5e7eb!important;border:1px solid #4db8ff!important;font:700 14px system-ui!important;box-shadow:none!important}
 .sp{flex:1}
-#menuB{width:64px;font-size:28px;color:#4ade80;cursor:pointer}
+#menuB{width:64px;font-size:28px;color:#60a5fa;cursor:pointer}
 #menu{position:absolute;right:10px;top:66px;z-index:1100;background:#111827;border:2px solid rgba(77,184,255,.6);border-radius:12px;padding:8px;display:none;flex-direction:column;gap:8px;min-width:300px}
 #menu.open{display:flex}
 #menu button{font:700 22px system-ui,sans-serif;color:#e5e7eb;background:#0b0f14;border:2px solid #374151;border-radius:10px;padding:16px;text-align:left}
-#upd{position:relative;height:40px;border-radius:8px;background:#1f2937;display:none;overflow:hidden}#updBar{position:absolute;left:0;top:0;bottom:0;width:0;background:#16a34a;transition:width .5s}#updT{position:relative;display:block;line-height:40px;padding:0 10px;font-size:16px;color:#f3f4f6;text-shadow:0 0 3px #000}
+#upd{position:relative;height:40px;border-radius:8px;background:#1f2937;display:none;overflow:hidden}#updBar{position:absolute;left:0;top:0;bottom:0;width:0;background:#2563eb;transition:width .5s}#updT{position:relative;display:block;line-height:40px;padding:0 10px;font-size:16px;color:#f3f4f6;text-shadow:0 0 3px #000}
 #menu .info{color:#9ca3af;font-size:16px;font-weight:400;padding:4px 6px}
 #map{position:absolute;left:0;right:0;top:60px;bottom:0;background:#0b0f14;overflow:hidden}
 /* 2.12: frame with speed and battery while the Mojave sends data */
 #mjf{position:absolute;left:16px;bottom:16px;z-index:950;width:250px;padding:10px 14px 12px;border-radius:16px;background:rgba(11,15,20,.88);border:2px solid rgba(77,184,255,.7);display:none;font-variant-numeric:tabular-nums;box-shadow:0 4px 16px rgba(0,0,0,.6)}
 #mjf.old{border-color:#f5b13d;opacity:.8}#mjf .h{color:#93c5fd;font:800 16px system-ui;letter-spacing:1px;display:flex;justify-content:space-between}
 #mjf .sp{color:#fff;font:800 64px/1 system-ui;margin:4px 0 8px}#mjf .sp small{font-size:20px;color:#9ca3af;margin-left:6px;font-weight:600}
-#mjf .bat{position:relative;height:30px;border-radius:9px;background:#1f2937;overflow:hidden}#mjf .bat i{position:absolute;left:0;top:0;bottom:0;width:0;background:#16a34a;transition:width .5s}
+#mjf .bat{position:relative;height:30px;border-radius:9px;background:#1f2937;overflow:hidden}#mjf .bat i{position:absolute;left:0;top:0;bottom:0;width:0;background:#2563eb;transition:width .5s}
 #mjf .bat span{position:absolute;inset:0;text-align:center;font:800 18px/30px system-ui;color:#fff;text-shadow:0 1px 2px #000}#mjf .ft{color:#9ca3af;font:600 14px system-ui;margin-top:6px}
 #mapi{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0}
 #rot{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:50% 50%;will-change:transform}   /* 2.15: map turns with the driving direction */
 html.hu .leaflet-container img.leaflet-tile{mix-blend-mode:normal;outline:1px solid transparent}html.hu .leaflet-tile{width:257px!important;height:257px!important}   /* 2.15: turned map - overlap tiles 1 px, no plus-lighter (no seams) */
 #cmp{position:absolute;left:14px;bottom:14px;z-index:900;width:84px;height:84px;border-radius:50%;background:rgba(11,15,20,.85);border:2px solid rgba(77,184,255,.6);display:flex;align-items:center;justify-content:center;cursor:pointer}
-#cmp svg{width:64px;height:64px;transition:none}#cmp.act{background:#166534}
+#cmp svg{width:64px;height:64px;transition:none}#cmp.act{background:#1e40af}
 #cmpT{position:absolute;bottom:-2px;left:0;right:0;text-align:center;font:800 11px system-ui;color:#9ca3af}
 html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip{font-size:15px;padding:5px 8px}html.ms #mapi .leaflet-control-attribution{font-size:14px}   /* 2.11: markers and labels keep their size */   /* 2.10: map drawn 1:1 in screen pixels (box density 1.26 made light seams) */
 #btns{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:14px}
-.b{width:84px;height:84px;border-radius:18px;background:rgba(11,15,20,.85);border:2px solid rgba(77,184,255,.6);color:#4ade80;font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.b.act{background:#166534;color:#fff}
+.b{width:84px;height:84px;border-radius:18px;background:rgba(11,15,20,.85);border:2px solid rgba(77,184,255,.6);color:#60a5fa;font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.b.act{background:#1e40af;color:#fff}
 /* 2.10: no oversized tiles - Leaflet 1.9 blends tile edges with plus-lighter, overlapping tiles gave bright lines */.leaflet-container,#map{background:#1a1f24!important}   /* 2.09: seams between tiles showed the light grey Leaflet background */
 .leaflet-control-attribution{font-size:11px!important;background:rgba(11,15,20,.6)!important;color:#9ca3af!important}
 .leaflet-control-attribution a{color:#9ca3af!important}
@@ -57,6 +57,16 @@ html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip
 .me.mv i,.me.mv b{display:none!important}.me u{display:none;position:absolute;left:-22px;top:-22px;width:44px;height:44px}.me.mv u{display:block}   /* 2.19: moving -> one navigation arrow */
 #nopos{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:900;background:rgba(11,15,20,.8);border-radius:10px;padding:8px 16px;color:#9ca3af;font-size:16px;font-weight:400}
 html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{display:none}html.ctsplit #maps{width:240px}
+
+/* 2.25: looks - Glass (liquid glass) and Carbon, menu "Look" */
+html.th-glass #map{top:0}
+html.th-glass #top{background:linear-gradient(180deg,rgba(15,23,42,.55),rgba(15,23,42,.25));backdrop-filter:blur(16px) saturate(170%);-webkit-backdrop-filter:blur(16px) saturate(170%);border-bottom:1px solid rgba(255,255,255,.18)}
+html.th-glass .pill,html.th-glass .b,html.th-glass #cmp,html.th-glass #menu,html.th-glass #mjf,html.th-glass #nopos{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.05)) !important;backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);border:1px solid rgba(255,255,255,.32) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(0,0,0,.25),0 6px 18px rgba(0,0,0,.35)}
+html.th-glass #menu button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22)}
+html.th-glass .b.act,html.th-glass #cmp.act{background:linear-gradient(180deg,rgba(96,165,250,.55),rgba(37,99,235,.35)) !important}
+html.th-carbon #top,html.th-carbon .pill,html.th-carbon .b,html.th-carbon #cmp,html.th-carbon #menu,html.th-carbon #mjf{background:radial-gradient(#000 15%,transparent 16%) 0 0,radial-gradient(#000 15%,transparent 16%) 4px 4px,radial-gradient(rgba(255,255,255,.08) 15%,transparent 20%) 0 1px,radial-gradient(rgba(255,255,255,.08) 15%,transparent 20%) 4px 5px,linear-gradient(180deg,#2a2d31,#15171a) !important;background-size:8px 8px,8px 8px,8px 8px,8px 8px,100% 100% !important;border-color:rgba(96,165,250,.55) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.5)}
+html.th-carbon #menu button{background:rgba(0,0,0,.45)}
+html.th-carbon .b.act,html.th-carbon #cmp.act{background:linear-gradient(180deg,#2563eb,#1e3a8a) !important}
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -71,6 +81,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 <div id="menu">
   <button id="mFollow">Follow position: on</button>
   <button id="mAz">Auto zoom: on</button>
+  <button id="mLook">Look: Glass</button>
   <button id="mOvl">Place names: on</button>
   <button id="mCar">Show Mojave: on</button>
   <button id="mBle">Bluetooth ESP: on</button>
@@ -161,18 +172,18 @@ window.ctCar=function(lat,lon,kmh,hdg,sats,volt,pct,mah,lq,rssi,mode,age){
   // 2.12: frame bottom left - speed big, battery bar with % and volt, LQ
   if(age<=10){mjfT=Date.now();var f=$('mjf');f.style.display='block';f.classList.toggle('old',age>5||(lq>=0&&lq<50));
    $('mjfKmh').textContent=lat!=null?Math.round(kmh):'–';var p=pct>=0&&pct<=100?pct:null;
-   $('mjfBar').style.width=(p==null?0:p)+'%';$('mjfBar').style.background=p==null?'#374151':p>40?'#16a34a':p>20?'#d97706':'#dc2626';
+   $('mjfBar').style.width=(p==null?0:p)+'%';$('mjfBar').style.background=p==null?'#374151':p>40?'#2563eb':p>20?'#d97706':'#dc2626';
    $('mjfBat').textContent=(p!=null?p+' % · ':'')+(volt>0?volt.toFixed(1)+' V':'–');
-   $('mjfLq').textContent=lq>=0?'LQ '+lq:'';$('mjfLq').style.color=lq>=0&&lq<50?'#f5b13d':'#4ade80';
+   $('mjfLq').textContent=lq>=0?'LQ '+lq:'';$('mjfLq').style.color=lq>=0&&lq<50?'#f5b13d':'#60a5fa';
    $('mjfFt').textContent=(lat!=null?(sats>0?sats+' sats':'GPS'):'no GPS')+(mah>0?' · '+Math.round(mah)+' mAh':'')+(mode?' · '+mode:'')}
   e.innerHTML='<b>MOJAVE</b> '+(lat!=null?Math.round(kmh)+' km/h':'no GPS')+(volt>0?' · '+volt.toFixed(1)+' V':'')+(pct>=0&&pct<=100?' '+pct+' %':'')+(lq>=0?' · LQ '+lq:'');
-  e.style.color=(lq>=0&&lq<50)||age>5?'#f5b13d':'#4ade80';
+  e.style.color=(lq>=0&&lq<50)||age>5?'#f5b13d':'#60a5fa';
   if(lat==null||(lat==0&&lon==0))return;
   if(!car)car=L.marker([lat,lon],{icon:L.divIcon({className:'',html:'<div class="mj"><b></b><i></i></div>',iconSize:[0,0]}),interactive:false,zIndexOffset:1000}).addTo(map);
   else car.setLatLng([lat,lon]);
   var el=car.getElement()&&car.getElement().firstChild;if(el){el.classList.toggle('old',age>5);el.querySelector('b').style.transform='rotate('+hdg+'deg)';el.querySelector('b').style.display=kmh>2?'block':'none';}
 };
-window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'#4ade80':r>=-60?'#4ade80':r>=-72?'#f5b13d':'#f87171';};
+window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'#60a5fa':r>=-60?'#60a5fa':r>=-72?'#f5b13d':'#f87171';};
 window.ctMaps=function(pct,mb,st,on){$('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
 var fahrt=false;   // 2.23: GPS noise while parked (e.g. 4 km/h) -> 0; driving starts above 7 km/h, ends below 4 km/h
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
@@ -187,7 +198,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   if(a){var mv=fahrt&&brg>=0;var mr=me.getElement().firstChild;mr.classList.toggle('mv',mv);if(mv)mr.querySelector('u').style.transform='rotate('+brg+'deg)';}
   ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
-  $('gps').style.color=age>30?'#f5b13d':'#4ade80';
+  $('gps').style.color=age>30?'#f5b13d':'#60a5fa';
 };
 // 2.15: animation - dot glides, map follows it, map turns with the driving direction (heading up)
 var ani={cur:null,from:null,to:null,t0:0,t1:0,dur:1000,hdg:0,rot:0};
@@ -195,6 +206,9 @@ HU=ls('hu','0')=='1';
 function setHU(h){HU=h;lw('hu',h?'1':'0');document.documentElement.classList.toggle('hu',h);$('cmp').classList.toggle('act',h);$('cmpT').textContent=h?'▲':'N';
  if(!h){ani.rot=0;$('rot').style.transform='';}if(h)map.dragging.disable();else map.dragging.enable();fitMap();map.invalidateSize();if(h&&!follow)setFollow(true);}
 $('cmp').onclick=function(){setHU(!HU);};
+var LOOKS=['glass','carbon','plain'],look=ls('look','glass');   // 2.25
+function setLook(l){look=l;lw('look',l);LOOKS.forEach(function(x){document.documentElement.classList.toggle('th-'+x,x===l);});$('mLook').textContent='Look: '+(l==='glass'?'Glass':l==='carbon'?'Carbon':'Plain');setTimeout(function(){fitMap();map.invalidateSize();},60);}
+setLook(look);$('mLook').onclick=function(){setLook(LOOKS[(LOOKS.indexOf(look)+1)%LOOKS.length]);};
 function tick(){var t=performance.now();
  if(ani.to&&me){var k=Math.min(1,(t-ani.t0)/ani.dur),la=ani.from[0]+(ani.to[0]-ani.from[0])*k,lo=ani.from[1]+(ani.to[1]-ani.from[1])*k;
   if(!ani.cur||Math.abs(la-ani.cur[0])>1e-8||Math.abs(lo-ani.cur[1])>1e-8){ani.cur=[la,lo];me.setLatLng(ani.cur);}
