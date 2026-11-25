@@ -135,6 +135,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 #azh{position:absolute;right:96px;top:120px;white-space:nowrap;display:none;background:var(--glass);border:1px solid var(--acc);border-radius:12px;padding:10px 16px;font:600 18px var(--num);letter-spacing:.08em;color:#fff}#azh.on{display:block}   /* 2.37 */
 #btns{align-items:flex-end}#zrow{display:flex;gap:10px}#zlv{margin:-4px 0!important;align-self:stretch;text-align:right!important}   /* 2.38: + and - side by side */
 #muteB,#menuB{width:86px!important;height:56px!important;border-radius:28px!important;font-size:34px!important;padding:0!important;display:flex;align-items:center;justify-content:center}#menuB{font-size:40px!important;letter-spacing:.05em}   /* 2.39: bigger */
+#menu>*{flex:none!important}#upd{min-height:44px}#updT{position:relative;display:block;padding:10px 12px;font:600 16px var(--num);letter-spacing:.04em;white-space:normal}   /* 2.40: menu items no longer squeezed to 0 (update text was invisible) */
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -383,7 +384,7 @@ var azOff=+ls('azOff','0')||0;   // 2.37: auto zoom offset, long press on + / -
 function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;return Math.max(7,Math.min(19,z+azOff));}   // standing: zoom 19
 setInterval(function(){if(!az||!follow||!ani.to||Date.now()<azPause||map._animatingZoom)return;var z=azZiel(ani.kmh||0),n=Date.now();
  if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>2500&&map.getZoom()!==z)map.setZoom(z);},500);
-window.ctUpd=function(t,p){var u=$('upd');if(!t){return;}u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
+window.ctUpd=function(t,p){var u=$('upd');if(!t){return;}var m=t.match(/online (V[\d.]+)/);if(m)$('mUpd').textContent='Check for update · online '+m[1];u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
 window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
 if(HU)setTimeout(function(){setHU(true);},300);
 new MutationObserver(function(){setTimeout(function(){fitMap();map.invalidateSize();},50);}).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
