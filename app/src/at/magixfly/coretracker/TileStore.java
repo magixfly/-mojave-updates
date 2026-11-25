@@ -28,7 +28,7 @@ class TileStore {
     static final long KEEP_FREE = 8L * 1024 * 1024 * 1024;     // mindestens 8 GB frei lassen
     static final String SRC = "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/%d/%d/%d.jpeg";
     static final String OVL = "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/%d/%d/%d.png";   // V2.01: Ortsnamen/Straßen
-    static final String PI = "http://192.168.178.214:8080";
+    static volatile String PI = "http://192.168.178.111:8080";   // V2.17: tracker on the network cable now (.111), Wi-Fi .214 as second try
     static final String GH = "https://raw.githubusercontent.com/magixfly/-mojave-updates/main/bodenstation/";
     static final int WORKERS = 6;
 
@@ -127,8 +127,9 @@ class TileStore {
     void probe() {
         String zz = zentrale();
         zOk = zz.length() > 0 && http(zz + "/api/ping", 1500) != null;
-        byte[] p = http(PI + "/api/state", 1500);
-        piOk = p != null && p.length > 0;
+        piOk = false;
+        String[] pis = {a.prefs.getString("pi", "").trim(), "http://192.168.178.111:8080", "http://192.168.178.214:8080"};   // V2.17
+        for (String u : pis) { if (u.length() == 0) continue; byte[] p = http(u + "/api/state", 1500); if (p != null && p.length > 0) { PI = u; piOk = true; break; } }
     }
 
     /** V2.07: Zentrale (/api/ping listver) bzw. Pi (/gebiete.json ver) hat eine andere Listenversion als die geladene */
