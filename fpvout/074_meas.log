@@ -1,0 +1,8 @@
+== 074_meas on mojave-fpv, 2026-11-25 12:35:02, FPV V1.8.8 ==
+{"ping": 17, "mb": 5.1, "vd": 290, "vm": 38, "how": "estimated", "jb": 25, "dec": 1.6, "fps": 59, "drop": 0, "res": "1280x720", "lite": 1, "pip": 0, "hz": 57, "impl": "", "hw": null}
+{"ping": 4, "mb": 0, "vd": 280, "vm": 29, "how": "estimated", "jb": 25, "dec": 1.6, "fps": 62, "drop": 0, "res": "1280x720", "lite": 1, "pip": 0, "hz": 57, "impl": "", "hw": null}
+{"ping": 11, "mb": 0, "vd": 280, "vm": 32, "how": "estimated", "jb": 25, "dec": 1.6, "fps": 62, "drop": 0, "res": "1280x720", "lite": 1, "pip": 0, "hz": 57, "impl": "", "hw": null}
+VERSION = "V1.9.12"
+[100%] done
+
+== exit code 0, 12.4 s ==
