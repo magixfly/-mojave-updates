@@ -6,7 +6,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 
-/** V2.36: warning tones played by Android itself (the WebView sound stayed silent on the box) - as navigation prompt, so the car plays it and lowers the music */
+/** V2.36: warning tones played by Android itself (the WebView sound stayed silent on the box) - V2.43: played as media like Spotify (the navigation channel stayed silent on the box) */
 class Ton {
     static final int SR = 22050;
 
@@ -25,7 +25,7 @@ class Ton {
                     }
                 }
                 AudioManager am = (AudioManager) c.getSystemService(Context.AUDIO_SERVICE);
-                AudioAttributes aa = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ASSISTANCE_NAVIGATION_GUIDANCE).setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+                AudioAttributes aa = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build();
                 am.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
                 AudioTrack tr = new AudioTrack(aa, new AudioFormat.Builder().setSampleRate(SR).setEncoding(AudioFormat.ENCODING_PCM_16BIT).setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build(),
                         pcm.length * 2, AudioTrack.MODE_STATIC, AudioManager.AUDIO_SESSION_ID_GENERATE);
