@@ -24,4 +24,12 @@ class Live {
         } catch (Throwable t) { android.util.Log.d("CTLIVE", "radars: " + t); }
         return f.exists() ? TileStore.read(f) : null;
     }
+
+    /** V2.32: roads around the position from OpenStreetMap (speed limits) - Overpass, ways with geometry */
+    static byte[] roads(double lat, double lon) {
+        try {
+            String q = "[out:json][timeout:12];way(around:350," + lat + "," + lon + ")[highway~\"^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|road)$\"];out tags geom;";
+            return TileStore.http("https://overpass-api.de/api/interpreter?data=" + java.net.URLEncoder.encode(q, "UTF-8"), 15000);
+        } catch (Throwable t) { return null; }
+    }
 }

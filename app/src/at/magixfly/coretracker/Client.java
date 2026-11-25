@@ -45,6 +45,9 @@ class Client extends WebViewClient {
                 return new WebResourceResponse("application/json", "utf-8", new ByteArrayInputStream(d));
             }
             if (p.equals("__ctbox/traffic")) { byte[] d = Live.traffic(); return d == null ? empty(503) : new WebResourceResponse("application/xml", "utf-8", new ByteArrayInputStream(d)); }   // V2.30
+            if (p.equals("__ctbox/roads")) {   // V2.32: speed limits around the position
+                android.net.Uri u = r.getUrl(); double la = Double.parseDouble(u.getQueryParameter("lat")), lo = Double.parseDouble(u.getQueryParameter("lon"));
+                byte[] d = Live.roads(la, lo); return d == null || d.length == 0 ? empty(503) : new WebResourceResponse("application/json", "utf-8", new ByteArrayInputStream(d)); }
             if (p.equals("__ctbox/radars")) { byte[] d = Live.radars(a); return d == null ? empty(503) : new WebResourceResponse("application/json", "utf-8", new ByteArrayInputStream(d)); }   // V2.30
             if (p.startsWith("__ctbox/")) {
                 String c = p.substring(8);
