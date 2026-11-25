@@ -1,0 +1,48 @@
+== 024_diag2 on mojave-fpv, 2026-11-25 01:56:01, FPV V1.4.5 ==
+ 01:56:01 up 0 min,  0 users,  load average: 1.09, 0.34, 0.12
+VERSION = "V1.4.5"
+--- usb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 2109:3431 VIA Labs, Inc. Hub
+Bus 001 Device 003: ID 328f:006d EMEET HD Webcam eMeet C960
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0
+usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index1
+--- kernel usb
+[    1.777608] usb 1-1.2: new high-speed USB device number 3 using xhci_hcd
+[    1.889476] usb 1-1.2: New USB device found, idVendor=328f, idProduct=006d, bcdDevice= 2.05
+[    1.889505] usb 1-1.2: New USB device strings: Mfr=2, Product=1, SerialNumber=3
+[    1.889513] usb 1-1.2: Product: HD Webcam eMeet C960
+[    1.889520] usb 1-1.2: Manufacturer: EMEET
+[    1.889526] usb 1-1.2: SerialNumber: A250712000216711
+[    6.296525] uvcvideo 1-1.2:1.0: Found UVC 1.00 device HD Webcam eMeet C960 (328f:006d)
+[    6.304582] uvcvideo 1-1.2:1.0: Failed to query (GET_INFO) UVC control 5 on unit 1: 0 (exp. 1).
+[    6.323107] usbcore: registered new interface driver uvcvideo
+[    6.402668] usb 1-1.2: 3:1: cannot get freq at ep 0x84
+[   23.036986] usb 1-1.2: 3:1: cannot get freq at ep 0x84
+--- paths
+14:  cam:
+25:  live:
+35:  cam2:
+37:      /bin/bash /opt/fpv/usbcam.sh /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280 720 30
+ls: cannot access '/run/fpv-usbcam-*': No such file or directory
+--- video server
+--- setup log
+[fpv-setup] Mojave FPV LTE V1.4.5
+[fpv-setup] video server settings written
+[fpv-setup] sound from plughw:CARD=C960,DEV=0 on path 'live'
+[fpv-setup] USB camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2' with 1280x720
+Finished fpv-setup.service - Mojave FPV LTE - apply fpv-config.txt.
+--- read test
+USB camera: 178 pictures in 6 s (180 expected)
+2026/11/25 01:56:03 INF [path cam2] runOnDemand command started
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 1500k, mode hw
+2026/11/25 01:56:03 INF [path cam2] stream is available and online, 1 track (H264)
+2026/11/25 01:56:03 INF [RTSP] [session 6133b694] is publishing to path 'cam2'
+2026/11/25 01:56:03 INF [RTSP] [session 3e22806a] is reading from path 'cam2', with TCP, 1 track (H264)
+1125 gst-launch-1.0 rtspclientsink name=s location=rtsp://localhost:8554/live rtspsrc loca
+1427 gst-launch-1.0 -q v4l2src device=/dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A25071
+gpu=256M
+throttled=0x0
+
+== exit code 0, 8.8 s ==
