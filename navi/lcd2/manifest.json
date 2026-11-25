@@ -1,10 +1,11 @@
 {
-  "fw": "V2.54",
+  "fw": "V2.56",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1388960,
-  "md5": "de928bf3322b526692c190fadaaba4b7",
+  "groesse": 1391664,
+  "md5": "963c403b568ffd6d5d9f0f7632407878",
   "neu": [
+    "V2.56: \"Load first\" areas from the PC editor are loaded before everything else; at home the list is checked every minute; newest areas first",
     "V2.54: area list gives the SD/display bus back every 40 ms (watchdog restarts with a slow SD card); SD speed shown on the Navi page",
     "V2.53: settings (Wi-Fi etc.) also kept in the ESP memory - survive without SD card; SD error shown on the Navi page",
     "V2.52: Navi page also reachable in the setup hotspot (192.168.4.1)",
