@@ -44,6 +44,8 @@ class Client extends WebViewClient {
                 if (d == null) return empty(404);
                 return new WebResourceResponse("application/json", "utf-8", new ByteArrayInputStream(d));
             }
+            if (p.equals("__ctbox/traffic")) { byte[] d = Live.traffic(); return d == null ? empty(503) : new WebResourceResponse("application/xml", "utf-8", new ByteArrayInputStream(d)); }   // V2.30
+            if (p.equals("__ctbox/radars")) { byte[] d = Live.radars(a); return d == null ? empty(503) : new WebResourceResponse("application/json", "utf-8", new ByteArrayInputStream(d)); }   // V2.30
             if (p.startsWith("__ctbox/")) {
                 String c = p.substring(8);
                 if (c.equals("toggle")) a.tiles.setStopped(!a.tiles.stopped);           // V1.22: Tippen auf „Maps“ = Download Stopp/Start

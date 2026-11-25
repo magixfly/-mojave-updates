@@ -81,6 +81,16 @@ html.th-ice{--glass:rgba(214,234,255,.16);--line:rgba(255,255,255,.34);--dim:#c5
 #mjf .h,#mjf .ft{font-family:var(--num)!important;letter-spacing:.14em;text-transform:uppercase}#mjf .sp{font-family:var(--num)!important}
 html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice #mjf{background:linear-gradient(160deg,rgba(235,246,255,.24),rgba(170,205,235,.08))!important;backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 #ffffff73,inset 0 -1px 0 #ffffff1a,0 10px 28px #00000059}
 #menu{max-height:calc(100vh - 90px);overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}#menu button{padding:11px 16px!important}   /* 2.29: menu scrolls and fits the screen */
+
+/* 2.30: TRAFFIC button (ASFINAG messages + fixed speed cameras), scale bar */
+.b{width:74px!important;height:74px!important}#btns{gap:10px!important}
+#trf{position:absolute;left:14px;top:84px;bottom:118px;width:520px;z-index:950;display:none;flex-direction:column;background:var(--glass);border:1px solid var(--line);border-radius:16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:10px 12px;color:var(--ink)}
+#trf.on{display:flex}#trf .h{font:700 16px var(--num);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+#trfL{overflow-y:auto;-webkit-overflow-scrolling:touch;font:500 16px/1.3 system-ui}#trfL div{padding:8px 4px;border-top:1px solid var(--line)}#trfL b{display:block;font:700 15px var(--num);letter-spacing:.1em;text-transform:uppercase}
+#trfL .stau b{color:#ff4d4d}#trfL .bau b{color:#ffb020}#trfL .info b{color:var(--acc)}
+.rdr{width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:#fff;border:4px solid #e11d48;box-shadow:0 2px 6px #000a;display:flex;align-items:center;justify-content:center;font:800 11px system-ui;color:#111}
+#scl{position:absolute;left:112px;bottom:22px;z-index:900;color:#fff;font:600 17px var(--num);letter-spacing:.06em;text-shadow:0 1px 3px #000,0 0 6px #000}
+#scl i{display:block;height:8px;border:3px solid #fff;border-top:none;box-shadow:0 2px 4px #000a;margin-bottom:3px}
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -111,7 +121,9 @@ html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice 
 <div id="cmp" title="Tap: north up / driving direction up"><svg viewBox="-32 -32 64 64" id="cmpS"><circle r="29" fill="none" stroke="#4b5563" stroke-width="2"/><path d="M0,-26 L9,0 L-9,0Z" fill="#ef4444"/><path d="M0,26 L9,0 L-9,0Z" fill="#e5e7eb"/><text y="-12" text-anchor="middle" font-size="0" fill="#fff">N</text></svg><span id="cmpT">N</span></div>
 <div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
 <div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
-<div id="btns"><div class="b" id="zin">+</div><div id="zlv">Zoom –</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div></div>
+<div id="btns"><div class="b" id="zin">+</div><div id="zlv">Zoom –</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" style="font-size:15px;font-weight:800">TRAFFIC</div></div>
+<div id="trf"><div class="h">ASFINAG traffic <span id="trfT"></span></div><div id="trfL">loading …</div></div>
+<div id="scl"><i></i><span></span></div>
 <div id="nopos">No position from the box – map shows home</div>
 <script src="leaflet.js"></script>
 <script>
@@ -173,6 +185,26 @@ function zlv(){$('zlv').textContent='Zoom '+map.getZoom();}map.on('zoomend',zlv)
 function areasLoad(){fetch('/__ctbox/areas?t='+Date.now()).then(function(r){return r.json();}).then(function(j){if(j.ver!==areasVer||!areasL.getLayers().length){areasVer=j.ver;areasDraw(j);}}).catch(function(){});}
 function setAreas(on){areasOn=on;lw('areas',on?'1':'0');$('areasB').classList.toggle('act',on);if(on){areasLoad();areasL.addTo(map);}else map.removeLayer(areasL);}
 $('areasB').onclick=function(){setAreas(!areasOn);};
+/* --- 2.30: TRAFFIC - ASFINAG traffic messages (list, motorways) + fixed speed cameras (OpenStreetMap) --- */
+var trfOn=false,rdrL=L.layerGroup(),rdrGeladen=false,trfTimer=null;
+function trfArt(t){t=(t||'').toLowerCase();return /stau|unfall|sperre|gesperrt|gefahr|panne|geisterfahrer/.test(t)?'stau':/baustelle|arbeiten|fahrstreifen/.test(t)?'bau':'info';}
+function trfLaden(){fetch('/__ctbox/traffic?t='+Date.now()).then(function(r){return r.text();}).then(function(x){
+  var d=new DOMParser().parseFromString(x,'application/xml'),e=[].slice.call(d.getElementsByTagName('entry')),o={stau:0,bau:1,info:2};
+  var l=e.map(function(n){var t=(n.getElementsByTagName('title')[0]||{}).textContent||'',c=(n.getElementsByTagName('content')[0]||{}).textContent||'';var a=trfArt(t);return {t:t,c:c,a:a!=='info'?a:trfArt(c)};});
+  l.sort(function(p,q){return o[p.a]-o[q.a];});
+  $('trfT').textContent='· '+l.length+' · '+new Date().toTimeString().slice(0,5);
+  $('trfL').innerHTML=l.length?l.map(function(m){return '<div class="'+m.a+'"><b>'+m.t.replace(/</g,'&lt;')+'</b>'+m.c.replace(/</g,'&lt;')+'</div>';}).join(''):'no messages';
+ }).catch(function(){$('trfL').textContent='no connection to ASFINAG';});}
+function rdrLaden(){if(rdrGeladen)return;fetch('/__ctbox/radars').then(function(r){return r.json();}).then(function(j){rdrGeladen=true;rdrL.clearLayers();
+  (j.elements||[]).forEach(function(n){var mx=n.tags&&n.tags.maxspeed;L.marker([n.lat,n.lon],{icon:L.divIcon({className:'',html:'<div class="rdr">'+(mx&&/^\d+$/.test(mx)?mx:'')+'</div>',iconSize:[0,0]}),interactive:false}).addTo(rdrL);});
+ }).catch(function(){});}
+function setTrf(on){trfOn=on;$('trfB').classList.toggle('act',on);$('trf').classList.toggle('on',on);clearInterval(trfTimer);
+ if(on){trfLaden();trfTimer=setInterval(trfLaden,120000);rdrLaden();rdrL.addTo(map);}else map.removeLayer(rdrL);}
+$('trfB').onclick=function(){setTrf(!trfOn);};
+/* --- 2.30: scale bar (map is drawn 1:1 in screen pixels, so one CSS pixel = DPR map pixels) --- */
+function scl(){var c=map.getCenter(),mpp=156543.034*Math.cos(c.lat*Math.PI/180)/Math.pow(2,map.getZoom())*(MS?DPR:1),max=mpp*170,st=[5,10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000],v=st[0];
+ for(var i=0;i<st.length;i++)if(st[i]<=max)v=st[i];var w=v/mpp;$('scl').querySelector('i').style.width=Math.round(w)+'px';$('scl').querySelector('span').textContent=v>=1000?(v/1000)+' km':v+' m';}
+map.on('zoomend moveend',scl);setTimeout(scl,500);
 setAreas(areasOn);setInterval(function(){if(areasOn)areasLoad();},60000);
 /* --- V2.06: Mojave from the tracker ESP via Bluetooth --- */
 var car=null,carOn=ls('car','1')=='1',carFollow=false;
