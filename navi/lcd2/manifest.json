@@ -1,10 +1,11 @@
 {
-  "fw": "V2.47",
+  "fw": "V2.48",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
   "groesse": 1386000,
-  "md5": "e598bef2703edc270a5c68746c93286d",
+  "md5": "df2fb8e19bd7dbef57fc3f84f262c06d",
   "neu": [
+    "V2.48: touch mirrored left/right by default (finger right -> ring left in the test video); config touch_mx (1 on, 0 off)",
     "V2.47: area list tiles handled column by column - before, big areas at zoom 19 (e.g. 10 km circle = 120000 tiles) needed megabytes of memory and the Navi dropped out of the Wi-Fi",
     "V2.46: shared area list on again (list from the PC map centre, tiles from PC / tracker first, new places reported, aerial tiles outside the list cleaned once) - config areas3 (1 on, 0 off)",
     "V2.45: ghost touches while holding the case - NET only switches Wi-Fi on (back to MT12 automatically when armed); standby by touch only by holding the clock, not the middle of the map",
