@@ -1,0 +1,23 @@
+== 044_v185 on mojave-fpv, 2026-11-25 03:17:44, FPV V1.4.5 ==
+[fpv-setup] USB camera /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 on path 'cam2' with 1280x720
+[fpv-setup] small version on path 'cam2s' with 640x360, 500 kbit/s
+VERSION = "V1.8.5"
+active
+active
+{"paths": ["cam", "mic", "cam2", "cam2s"]}
+device /dev/v4l/by-id/usb-
+
+cam2s: 640x360 640x360 video:319KiB frame=  151  (6941 ms incl. 5 s reading)
+then cam2: 1280x720 1280x720 video:2208KiB frame=  151  (8548 ms incl. 5 s reading)
+then cam2s again: 640x360 640x360 video:318KiB frame=  151  (8307 ms incl. 5 s reading)
+/run/fpv-usbcam-cam2.ffmpeg
+/run/fpv-usbcam-cam2s.ffmpeg
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 3500k, mode ffmpeg
+[usbcam] cam2s: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 640x360@15 500k, mode hw
+[usbcam] cam2s: mode hw failed - using ffmpeg until the next restart
+[usbcam] cam2s: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 640x360@15 500k, mode ffmpeg
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 3500k, mode ffmpeg
+[usbcam] cam2s: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 640x360@15 500k, mode ffmpeg
+[100%] done
+
+== exit code 0, 33.7 s ==
