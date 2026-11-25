@@ -1,0 +1,23 @@
+== 052_v189 on mojave-fpv, 2026-11-25 09:09:27, FPV V1.8.8 ==
+--- state before
+load average: 0.77, 0.95, 0.95
+temp=39.4'C
+throttled=0x0
+Mem:             730         328          46          16         426         401
+ SSID: Optimus Prime; freq: 2437.0; signal: -42 dBm; rx bitrate: 72.2 MBit/s; tx bitrate: 72.2 MBit/s;
+ rpiCameraWidth: 1920; rpiCameraFPS: 30; rpiCameraBitrate: 5000000; rpiCameraIDRPeriod: 30;
+   1140 root      20   0  943852  27676  21460 S  27.3   3.7   3:53.56 gst-lau+
+   1077 root      20   0 1317308  72164  41288 S  18.2   9.6   5:03.15 mediamtx
+   1218 root      20   0  329812  10940   9396 S  18.2   1.5   2:37.15 mtxrpic+
+   1561 root      20   0   10180   4792   2800 R  18.2   0.6   0:00.03 top
+   1081 root      20   0 1288108  43548  26004 S   9.1   5.8   3:49.85 tailsca+
+   1412 root      20   0 1017968  24356  18132 S   9.1   3.3   1:18.24 gst-lau+
+--- after
+VERSION = "V1.8.9"
+active
+active
+2
+{"paths": ["cam", "mic", "cam2", "cam2s"]}
+[100%] done
+
+== exit code 0, 8.7 s ==
