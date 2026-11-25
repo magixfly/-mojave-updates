@@ -58,16 +58,28 @@ html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip
 #nopos{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:900;background:rgba(11,15,20,.8);border-radius:10px;padding:8px 16px;color:#9ca3af;font-size:16px;font-weight:400}
 html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{display:none}html.ctsplit #maps{width:240px}
 
-/* 2.25: looks - Glass (liquid glass) and Carbon, menu "Look" */
-html.th-glass #map{top:0}
-html.th-glass #top{background:linear-gradient(180deg,rgba(15,23,42,.55),rgba(15,23,42,.25));backdrop-filter:blur(16px) saturate(170%);-webkit-backdrop-filter:blur(16px) saturate(170%);border-bottom:1px solid rgba(255,255,255,.18)}
-html.th-glass .pill,html.th-glass .b,html.th-glass #cmp,html.th-glass #menu,html.th-glass #mjf,html.th-glass #nopos{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.05)) !important;backdrop-filter:blur(14px) saturate(180%);-webkit-backdrop-filter:blur(14px) saturate(180%);border:1px solid rgba(255,255,255,.32) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(0,0,0,.25),0 6px 18px rgba(0,0,0,.35)}
-html.th-glass #menu button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22)}
-html.th-glass .b.act,html.th-glass #cmp.act{background:linear-gradient(180deg,rgba(96,165,250,.55),rgba(37,99,235,.35)) !important}
-html.th-carbon #top,html.th-carbon .pill,html.th-carbon .b,html.th-carbon #cmp,html.th-carbon #menu,html.th-carbon #mjf{background:radial-gradient(#000 15%,transparent 16%) 0 0,radial-gradient(#000 15%,transparent 16%) 4px 4px,radial-gradient(rgba(255,255,255,.08) 15%,transparent 20%) 0 1px,radial-gradient(rgba(255,255,255,.08) 15%,transparent 20%) 4px 5px,linear-gradient(180deg,#2a2d31,#15171a) !important;background-size:8px 8px,8px 8px,8px 8px,8px 8px,100% 100% !important;border-color:rgba(96,165,250,.55) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.5)}
-html.th-carbon #menu button{background:rgba(0,0,0,.45)}
-html.th-carbon .b.act,html.th-carbon #cmp.act{background:linear-gradient(180deg,#2563eb,#1e3a8a) !important}
 #zlv{margin:-8px 0;text-align:center;font:800 20px system-ui;color:#fff;text-shadow:0 0 4px #000,0 0 4px #000}   /* 2.27: zoom level between + and - */
+
+/* 2.28: same look as the FPV race cockpit - dark glass, thin lines, condensed numbers, small spaced capitals; accent blue. Looks: Carbon (default) / Iced glass */
+:root{--glass:rgba(8,11,15,.72);--line:rgba(255,255,255,.12);--ink:#f3f6f9;--dim:#8f9bab;--acc:#3b9cff;--num:Bahnschrift,"DIN Alternate","Roboto Condensed","Arial Narrow",system-ui,sans-serif}
+html.th-ice{--glass:rgba(214,234,255,.16);--line:rgba(255,255,255,.34);--dim:#c5d6e6;--acc:#63d8ff}
+#map{top:0!important}
+#top{background:linear-gradient(#000c,#0000)!important;height:72px!important;align-items:flex-start!important;padding-top:8px!important;pointer-events:none}#top>*{pointer-events:auto}
+#title{font:700 22px var(--num)!important;letter-spacing:.2em!important;text-transform:uppercase;color:var(--ink)!important;text-shadow:0 1px 8px #000}
+#title small{font:500 22px var(--num)!important;color:var(--dim)!important;letter-spacing:.08em!important}
+.pill{height:44px!important;border-radius:22px!important;background:var(--glass)!important;border:1px solid var(--line)!important;font:600 18px var(--num)!important;letter-spacing:.05em;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);filter:drop-shadow(0 5px 9px #000b);text-shadow:0 1px 2px #000d,0 0 6px #0007}
+#net::before,#gps::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor;flex:none}
+#mapsBar{background:rgba(59,156,255,.35)!important;border-radius:22px}#maps.on #mapsBar{background:rgba(59,156,255,.55)!important}
+.b,#cmp{background:var(--glass)!important;border:1px solid var(--line)!important;color:var(--ink)!important;border-radius:18px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);filter:drop-shadow(0 5px 9px #000b)}
+#cmp{border-radius:50%!important}
+.b.act,#cmp.act{border-color:var(--acc)!important;color:var(--acc)!important;box-shadow:inset 0 0 0 1px var(--acc),0 0 14px rgba(59,156,255,.45)}
+#areasB{font:700 15px var(--num)!important;letter-spacing:.14em}
+#zlv{font:600 18px var(--num)!important;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+#menu{background:var(--glass)!important;border:1px solid var(--line)!important;border-radius:16px!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#menu button{background:rgba(255,255,255,.05)!important;border:1px solid var(--line)!important;font:600 20px var(--num)!important;letter-spacing:.06em;color:var(--ink)!important}
+#mjf{background:var(--glass)!important;border:1px solid var(--line)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#mjf .h,#mjf .ft{font-family:var(--num)!important;letter-spacing:.14em;text-transform:uppercase}#mjf .sp{font-family:var(--num)!important}
+html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice #mjf{background:linear-gradient(160deg,rgba(235,246,255,.24),rgba(170,205,235,.08))!important;backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5);box-shadow:inset 0 1px 0 #ffffff73,inset 0 -1px 0 #ffffff1a,0 10px 28px #00000059}
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -208,8 +220,8 @@ HU=ls('hu','0')=='1';
 function setHU(h){HU=h;lw('hu',h?'1':'0');document.documentElement.classList.toggle('hu',h);$('cmp').classList.toggle('act',h);$('cmpT').textContent=h?'▲':'N';
  if(!h){ani.rot=0;$('rot').style.transform='';}if(h)map.dragging.disable();else map.dragging.enable();fitMap();map.invalidateSize();if(h&&!follow)setFollow(true);}
 $('cmp').onclick=function(){setHU(!HU);};
-var LOOKS=['glass','carbon','plain'],look=ls('look','glass');   // 2.25
-function setLook(l){look=l;lw('look',l);LOOKS.forEach(function(x){document.documentElement.classList.toggle('th-'+x,x===l);});$('mLook').textContent='Look: '+(l==='glass'?'Glass':l==='carbon'?'Carbon':'Plain');setTimeout(function(){fitMap();map.invalidateSize();},60);}
+var LOOKS=['carbon','ice'],look=ls('look2','carbon');   // 2.28: looks like the FPV cockpit
+function setLook(l){look=l;lw('look2',l);LOOKS.forEach(function(x){document.documentElement.classList.toggle('th-'+x,x===l);});$('mLook').textContent='Look: '+(l==='ice'?'Iced glass':'Carbon');setTimeout(function(){fitMap();map.invalidateSize();},60);}
 setLook(look);$('mLook').onclick=function(){setLook(LOOKS[(LOOKS.indexOf(look)+1)%LOOKS.length]);};
 function tick(){var t=performance.now();
  if(ani.to&&me){var k=Math.min(1,(t-ani.t0)/ani.dur),la=ani.from[0]+(ani.to[0]-ani.from[0])*k,lo=ani.from[1]+(ani.to[1]-ani.from[1])*k;
