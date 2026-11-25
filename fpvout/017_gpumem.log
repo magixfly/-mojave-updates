@@ -1,0 +1,13 @@
+== 017_gpumem on mojave-fpv, 2026-11-25 01:30:22, FPV V1.4.2 ==
+17:camera_auto_detect=0
+26:dtoverlay=vc4-kms-v3d
+49:dtoverlay=dwc2,dr_mode=host
+52:dtoverlay=nospi10
+59:dtoverlay=imx290,clock-frequency=74250000
+62:dtoverlay=disable-bt
+65:gpu_mem=256
+gpu=76M
+Mem:             905         373         255          16         347         531
+reboot in 6 s
+
+== exit code 0, 0.1 s ==
