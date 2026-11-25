@@ -1,0 +1,21 @@
+== 068_fps60 on mojave-fpv, 2026-11-25 11:59:50, FPV V1.8.8 ==
+
+now 1080p30:      1920x1080 1920x1080 video:2700KiB frame=  130 | vblank 1169 | cpu mtxrpicam 8.3
+1080p asked 60:   1920x1080 1920x1080 video:2791KiB frame=  136 | vblank 45 | cpu mtxrpicam 35.7
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+1080p60 level 4.2: 1920x1080 1920x1080 video:2037KiB frame=  193 | vblank 45 | cpu mtxrpicam 33.3
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+720p asked 60:    1280x720 1280x720 video:2550KiB frame=  244 | vblank 30 | cpu mtxrpicam 18.2
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+encoder_hardware_h264_encode(): ioctl(VIDIOC_QBUF) failed
+restored:         1920x1080 1920x1080 video:2709KiB frame=  128 | vblank 1169 | cpu mtxrpicam 15.4
+temp=43.8'C
+
+== exit code 0, 53.4 s ==
