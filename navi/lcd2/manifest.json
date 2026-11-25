@@ -1,10 +1,11 @@
 {
-  "fw": "V2.40",
+  "fw": "V2.41",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1364752,
-  "md5": "33d6731abb6217df76b4e4ffabe5ede6",
+  "groesse": 1364816,
+  "md5": "1308fa1c2c369b3603b1de95a9006313",
   "neu": [
+    "V2.41: shared area list switched off for now (Wi-Fi kept dropping since V2.37) - no list loading, no clean-up, no tiles from PC/Pi, no place reports; turn on with config areas2=1",
     "V2.40: fix Wi-Fi dropping since the area list - the list (40+ KB) is now read into PSRAM instead of the small internal RAM that Wi-Fi needs",
     "V2.39: progress of the shared area list on the display (bar at the bottom: \"Areas xx %\", orange \"cleaning xx %\" while tiles outside the list are deleted)",
     "V2.38: Wi-Fi switch removed again - Wi-Fi is always on (no clock menu, old config line \"wifi\" ignored); map centre on the PC preset (http://192.168.178.243:8091)",
