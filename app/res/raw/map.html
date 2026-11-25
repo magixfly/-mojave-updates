@@ -292,7 +292,8 @@ window.ctCar=function(lat,lon,kmh,hdg,sats,volt,pct,mah,lq,rssi,mode,age){
   var el=car.getElement()&&car.getElement().firstChild;if(el){el.classList.toggle('old',age>5);el.querySelector('b').style.transform='rotate('+hdg+'deg)';el.querySelector('b').style.display=kmh>2?'block':'none';}
 };
 window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'#60a5fa':r>=-60?'#60a5fa':r>=-72?'#f5b13d':'#f87171';};
-window.ctMaps=function(pct,mb,st,on){$('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
+window.ctMaps=function(pct,mb,st,on){$('maps').style.display=(pct>=100||st=='complete')?'none':'';   // 2.35: hidden when all maps are loaded
+ $('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
 /* 2.34: race LED bar */
 var SMAX=160;(function(){var h='';for(var i=0;i<16;i++)h+='<i></i>';$('leds').innerHTML=h;})();
 function spdSet(k,acc,gps){var n=Math.round(Math.max(0,Math.min(1,k/SMAX))*16),L=$('leds').children;for(var i=0;i<16;i++)L[i].className=i<n?(i<8?'lb':i<12?'ly':'lr'):'';
