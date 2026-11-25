@@ -1,0 +1,11 @@
+== 030_v152 on mojave-fpv, 2026-11-25 02:16:49, FPV V1.4.5 ==
+before:   Stream #0:0: Audio: opus, 48000 Hz, stereo, fltp   Stream #0:0: Audio: pcm_s16le, 48000 Hz, stereo, s16, 1536 kb/s mean_volume: -28.8 dB max_volume: -15.2 dB 
+[fpv-setup] sound from plughw:CARD=C960,DEV=0 on path 'mic', gain 4, 64 kbit/s
+VERSION = "V1.5.2"
+  Front Left: Capture 256 [100%] [0.00dB] [on]
+2026/11/25 02:16:56 INF [path mic] runOnInit command stopped
+2026/11/25 02:16:56 INF [path mic] runOnInit command started
+2026/11/25 02:16:57 INF [path mic] stream is available and online, 1 track (Opus)
+after:    Stream #0:0: Audio: opus, 48000 Hz, stereo, fltp   Stream #0:0: Audio: pcm_s16le, 48000 Hz, stereo, s16, 1536 kb/s mean_volume: -16.1 dB max_volume: -4.4 dB 
+
+== exit code 0, 20.5 s ==
