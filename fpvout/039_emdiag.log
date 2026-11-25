@@ -1,0 +1,13 @@
+== 039_emdiag on mojave-fpv, 2026-11-25 03:04:29, FPV V1.4.5 ==
+MainPID=4231
+ rpiCameraWidth: 640; rpiCameraHeight: 360; rpiCameraFPS: 20; rpiCameraBitrate: 300000; rpiCameraIDRPeriod: 20;
+{"ok": true, "on": true, "changed": false}
+ rpiCameraWidth: 640; rpiCameraHeight: 360; rpiCameraFPS: 20; rpiCameraBitrate: 300000; rpiCameraIDRPeriod: 20;
+ rpiCameraWidth: 640; rpiCameraHeight: 360; rpiCameraFPS: 20; rpiCameraBitrate: 300000; rpiCameraIDRPeriod: 20;
+ntries --
+640x360 640x360 0x556 video:159KiB frame=   84 
+MainPID=4231
+{"ok": true, "on": false, "changed": true}
+ rpiCameraWidth: 1920; rpiCameraHeight: 1080; rpiCameraFPS: 30; rpiCameraBitrate: 4000000; rpiCameraIDRPeriod: 30;
+
+== exit code 0, 19.8 s ==
