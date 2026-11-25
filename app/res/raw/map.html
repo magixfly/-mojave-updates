@@ -54,6 +54,7 @@ html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip
 .me{position:relative;width:0;height:0}
 .me i{position:absolute;left:-13px;top:-13px;width:20px;height:20px;border-radius:50%;background:#3b82f6;border:3px solid #fff;box-shadow:0 0 8px rgba(0,0,0,.6)}
 .me b{position:absolute;left:-12px;top:-38px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:22px solid #3b82f6;transform-origin:12px 38px;display:none}
+.me.mv i,.me.mv b{display:none!important}.me u{display:none;position:absolute;left:-22px;top:-22px;width:44px;height:44px}.me.mv u{display:block}   /* 2.19: moving -> one navigation arrow */
 #nopos{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:900;background:rgba(11,15,20,.8);border-radius:10px;padding:8px 16px;color:#9ca3af;font-size:16px;font-weight:400}
 html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{display:none}html.ctsplit #maps{width:240px}
 </style></head><body>
@@ -69,6 +70,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 </div>
 <div id="menu">
   <button id="mFollow">Follow position: on</button>
+  <button id="mAz">Auto zoom: on</button>
   <button id="mOvl">Place names: on</button>
   <button id="mCar">Show Mojave: on</button>
   <button id="mBle">Bluetooth ESP: on</button>
@@ -115,8 +117,8 @@ var follow=ls('follow','1')=='1',me=null,pos=null;
 function setFollow(f){follow=f;lw('follow',f?'1':'0');$('ctr').classList.toggle('act',f);$('mFollow').textContent='Follow position: '+(f?'on':'off');if(f&&pos)map.panTo(pos);}
 setFollow(follow);
 map.on('dragstart',function(){if(follow)setFollow(false);});
-$('zin').onclick=function(){map.zoomIn();};
-$('zout').onclick=function(){map.zoomOut();};
+$('zin').onclick=function(){azPause=Date.now()+30000;map.zoomIn();};
+$('zout').onclick=function(){azPause=Date.now()+30000;map.zoomOut();};
 $('ctr').onclick=function(){if(pos){setFollow(true);map.setView(pos,Math.max(map.getZoom(),16));}else map.setView(home,15);};
 $('maps').onclick=function(){cmd('toggle');};
 $('menuB').onclick=function(e){e.stopPropagation();$('menu').classList.toggle('open');};
@@ -173,12 +175,13 @@ window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').mat
 window.ctMaps=function(pct,mb,st,on){$('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   pos=[lat,lon];$('nopos').style.display='none';
-  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i></div>',iconSize:[0,0]}),interactive:false}).addTo(map);ani.cur=pos.slice();}
+  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i><u><svg viewBox="-22 -22 44 44" width="44" height="44"><path d="M0,-19 L14,15 L0,7 L-14,15Z" fill="#3b82f6" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></u></div>',iconSize:[0,0]}),interactive:false}).addTo(map);ani.cur=pos.slice();}
   // 2.15: smooth - glide from where the dot is now to the new fix over the time between fixes
   var t=performance.now();ani.dur=ani.t1?Math.max(300,Math.min(1500,t-ani.t1)):1000;ani.from=ani.cur?ani.cur.slice():pos.slice();ani.to=pos.slice();ani.t0=t;ani.t1=t;
   var a=me.getElement()&&me.getElement().querySelector('b');
   if(kmh>3&&brg>=0)ani.hdg=brg;
-  if(a){var mv=kmh>3&&brg>=0;a.style.display=mv?'block':'none';if(mv)a.style.transform='rotate('+brg+'deg)';}
+  if(a){var mv=kmh>3&&brg>=0;var mr=me.getElement().firstChild;mr.classList.toggle('mv',mv);if(mv)mr.querySelector('u').style.transform='rotate('+brg+'deg)';}
+  ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#4ade80';
 };
@@ -197,6 +200,13 @@ function tick(){var t=performance.now();
  $('cmpS').style.transform='rotate('+ani.rot.toFixed(1)+'deg)';
  requestAnimationFrame(tick);}
 requestAnimationFrame(tick);
+// 2.19: auto zoom by speed (only while following); + / - pause it for 30 s
+var az=ls('az','1')=='1',azPause=0,azWant=0,azSeit=0;
+function setAz(v){az=v;lw('az',v?'1':'0');$('mAz').textContent='Auto zoom: '+(v?'on':'off');}
+setAz(az);$('mAz').onclick=function(){setAz(!az);};
+function azZiel(k){return k<15?18:k<35?17:k<60?16:k<95?15:14;}
+setInterval(function(){if(!az||!follow||!ani.to||Date.now()<azPause||map._animatingZoom)return;var z=azZiel(ani.kmh||0),n=Date.now();
+ if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>2500&&map.getZoom()!==z)map.setZoom(z);},500);
 window.ctUpd=function(t,p){var u=$('upd');if(!t){return;}u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
 window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
 if(HU)setTimeout(function(){setHU(true);},300);
