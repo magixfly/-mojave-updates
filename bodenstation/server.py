@@ -10,7 +10,7 @@ import urllib.request, bisect, re, socket
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 
-VERSION = "3.56"
+VERSION = "3.57"
 BASE = os.path.dirname(os.path.abspath(__file__))
 WIN = os.name == "nt"                 # V2.0.27: also runs on Windows 10/11 (ESP32 receiver on a COM port)
 CFG_FILE = os.path.join(BASE, "config.txt")
@@ -2639,7 +2639,14 @@ def region_thread():
                     REGION.update(phase="checking", msg="checking tiles on the SD card", total=len(want), done=0)
                     labels = CFG.get("labels", "1") == "1"
                     jobs, already = [], 0
-                    for (z, x, y) in sorted(want):
+                    # V3.57: "load first" areas (prio from the PC editor) before everything else, newest prio first
+                    pr = {}
+                    for a in d.get("areas", []):
+                        if int(a.get("prio", 0) or 0) > 0:
+                            for z in range(int(d.get("zmin", 8)), min(int(a.get("zmax", 16)), zcap) + 1):
+                                for t in area_tiles(a, z):
+                                    pr[t] = max(pr.get(t, 0), int(a["prio"]))
+                    for (z, x, y) in sorted(want, key=lambda t: (-pr.get(t, 0), t)):
                         ok = (os.path.exists(tile_file("ortho", z, x, y)) or os.path.exists(tile_file("ki", z, x, y))
                               or os.path.exists(os.path.join(TILES, "none", str(z), str(x), "%d" % y)))
                         if ok and (not labels or os.path.exists(os.path.join(TILES, "overlay", str(z), str(x), "%d.png" % y))):
@@ -2673,11 +2680,26 @@ def region_thread():
                             if CFG.get("labels", "1") == "1" and not os.path.exists(os.path.join(TILES, "overlay", str(z), str(x), "%d.png" % y)):
                                 get_overlay(z, x, y)
                             REGION["done"] += 1
+                    def listwatch():   # V3.57: list changed on the PC (e.g. "load first") -> stop this pass, start again at once
+                        while any(w.is_alive() for w in ws):
+                            time.sleep(30)
+                            try:
+                                if zentrale():
+                                    with urllib.request.urlopen(zentrale() + "/api/ping", timeout=5) as r:
+                                        if json.loads(r.read().decode()).get("listver") != REGION.get("listver"):
+                                            stop["full"] = "list"
+                                            return
+                            except Exception:
+                                pass
                     ws = [threading.Thread(target=worker, daemon=True) for _ in range(4)]
+                    threading.Thread(target=listwatch, daemon=True).start()
                     for w in ws:
                         w.start()
                     for w in ws:
                         w.join()
+                    if stop["full"] == "list":
+                        REGION.update(phase="list", msg="new area list - starting again")
+                        continue
                     REGION.update(phase="done", msg="SD card full - stopped" if stop["full"] else "complete")
                 print("areas:", REGION["msg"], REGION["done"], "/", REGION["total"])
         except Exception as e:

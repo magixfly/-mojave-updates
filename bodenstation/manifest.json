@@ -1,7 +1,7 @@
 {
- "ver": "3.56",
+ "ver": "3.57",
  "neu": [
-  "AREAS: no tint over the map when you are inside a large area (map looked pale)"
+  "Load first: areas marked in the PC editor are loaded before everything else; a list change on the PC restarts loading at once"
  ],
  "dateien": [
   {
@@ -11,8 +11,8 @@
   },
   {
    "p": "server.py",
-   "s": 154952,
-   "md5": "f22cb0884e126ff20b529c6ed7dc7879"
+   "s": 156462,
+   "md5": "14124b99875895877c0b78edcd1351a1"
   },
   {
    "p": "web/fpvstat.js",
