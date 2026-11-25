@@ -1,10 +1,10 @@
-Stand: 2026-11-25 21:36:09
+Stand: 2026-11-25 21:46:33
 App: 2.20
 IP: 192.168.190.46
-WLAN: 
+WLAN: Hotspot an
 Wifi is connected to "XVII"
     wlan1 - TetheredState - lastError = 0
 Failed to write while dumping service tethering: Broken pipe
 
 ### Exit-Code: 0
-Fernwartung: 
+Fernwartung: Update 122 → 124
