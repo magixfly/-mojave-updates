@@ -107,8 +107,8 @@ fitMap();
 var map=L.map('mapi',{zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,
   maxBounds:[[46.3,13.0],[49.6,18.3]]});
 map.attributionControl.setPrefix(false);
-L.tileLayer('/tile/{z}/{x}/{y}.jpg',{maxNativeZoom:19,maxZoom:20,minZoom:7,attribution:'basemap.at',keepBuffer:2,updateWhenZooming:false,updateWhenIdle:true}).addTo(map);
-var ovl=L.tileLayer('/ovl/{z}/{x}/{y}.png',{maxNativeZoom:19,maxZoom:20,minZoom:7,keepBuffer:1,updateWhenZooming:false,updateWhenIdle:true});   // 2.22: load tiles only for the zoom you stop at, not for every step in between
+L.tileLayer('/tile/{z}/{x}/{y}.jpg',{maxNativeZoom:19,maxZoom:20,minZoom:7,attribution:'basemap.at',keepBuffer:2,updateWhenZooming:false,updateWhenIdle:false}).addTo(map);
+var ovl=L.tileLayer('/ovl/{z}/{x}/{y}.png',{maxNativeZoom:19,maxZoom:20,minZoom:7,keepBuffer:1,updateWhenZooming:false,updateWhenIdle:false});   // 2.22: load tiles only for the zoom you stop at, not for every step in between
 var ovlOn=ls('ovl','1')=='1';if(ovlOn)ovl.addTo(map);
 var v0=JSON.parse(ls('view','null')||'null');
 if(v0)map.setView([v0[0],v0[1]],v0[2]);else map.setView(home,13);
