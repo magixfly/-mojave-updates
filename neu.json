@@ -1,5 +1,12 @@
 [
  {
+  "v": "V2.89",
+  "t": [
+   "Core hotspot (car Wi-Fi) and ESP-NOW radio are off by default – they disturb the GPS. The Core only joins home Wi-Fi or the phone hotspot (2.4 GHz only). Switch them on again under Wi-Fi → Core hotspot and Display → Navi → Navi on",
+   "New transmitter button action Core hotspot on/off – emergency access at 192.168.4.1 until the Core restarts"
+  ]
+ },
+ {
   "v": "V2.88",
   "t": [
    "While armed the Core does not use its radio at all (no car Wi-Fi, no home Wi-Fi, no ESP-NOW) – no 2.4 GHz next to ELRS and GPS. When you disarm, Wi-Fi comes back by itself after a few seconds"
