@@ -1,0 +1,28 @@
+== 037_emtest on mojave-fpv, 2026-11-25 02:54:06, FPV V1.4.5 ==
+start: 1920,1080
+16:    rpiCameraWidth: 1920
+17:    rpiCameraHeight: 1080
+18:    rpiCameraFPS: 30
+19:    rpiCameraBitrate: 4000000
+--- A: bitrate only
+02:54:08.578216 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:08 INF [RTSP] [session 934e01a5] destroyed: torn down by [::1]:39974
+02:54:08.580318 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:08 INF [RTSP] [conn [::1]:39974] closed: read tcp [::1]:8554->[::1]:39974: read: connection reset by peer
+02:54:08.619272 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:08 INF reloading configuration (file changed)
+--- B: size 640x360
+640x360 readable after  s
+02:54:14.853018 mojave-fpv mediamtx[3646]: [0:59:11.178568731] [3647]  INFO RPI vc4.cpp:620 Sensor: /base/soc/i2c0mux/i2c@1/imx290@1a - Selected sensor format: 1280x720-SRGGB12_1X12/RAW - Selec
+02:54:14.857176 mojave-fpv mediamtx[3646]: using hardware H264 encoder
+02:54:14.996231 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:14 INF [RTSP] [conn [::1]:34592] opened
+02:54:14.997708 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:14 INF [RTSP] [conn [::1]:34592] closed: no stream is available on path 'cam'
+02:54:15.044947 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:15 INF [path cam] stream is available and online, 1 track (H264)
+02:54:15.590891 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:15 INF [RTSP] [conn [::1]:34598] opened
+02:54:15.592705 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:15 INF [RTSP] [session 8a0352b7] created by [::1]:34598
+02:54:15.593828 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:15 INF [RTSP] [session 8a0352b7] is reading from path 'cam', with TCP, 1 track (H264)
+02:54:16.978688 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:16 INF [RTSP] [session 8a0352b7] destroyed: torn down by [::1]:34598
+02:54:16.979531 mojave-fpv mediamtx[2846]: 2026/11/25 02:54:16 INF [RTSP] [conn [::1]:34598] closed: EOF
+frame=  100 fps= 41 q=-1.0 Lsize=N/A time=00:00:04.06 bitrate=N/A speed=1.65x    
+--- back
+end: 1920,1080
+/var/lib/fpv-remote/037_emtest.sh: line 9: bc: command not found
+
+== exit code 0, 22.2 s ==
