@@ -133,6 +133,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 .b,.pill,#cmp,#menu button,#spw button,#tw{transition:transform .08s ease,box-shadow .15s ease,background-color .15s}
 .tap{transform:scale(.93)!important;box-shadow:0 0 0 3px var(--acc),0 0 22px rgba(59,156,255,.7)!important;background-color:rgba(59,156,255,.35)!important}
 #azh{position:absolute;right:96px;top:120px;white-space:nowrap;display:none;background:var(--glass);border:1px solid var(--acc);border-radius:12px;padding:10px 16px;font:600 18px var(--num);letter-spacing:.08em;color:#fff}#azh.on{display:block}   /* 2.37 */
+#btns{align-items:flex-end}#zrow{display:flex;gap:10px}#zlv{margin:-4px 0!important;align-self:stretch;text-align:right!important}   /* 2.38: + and - side by side */
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -165,7 +166,7 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
 <div id="cmp" title="Tap: north up / driving direction up"><svg viewBox="-32 -32 64 64" id="cmpS"><circle r="29" fill="none" stroke="#4b5563" stroke-width="2"/><path d="M0,-26 L9,0 L-9,0Z" fill="#ef4444"/><path d="M0,26 L9,0 L-9,0Z" fill="#e5e7eb"/><text y="-12" text-anchor="middle" font-size="0" fill="#fff">N</text></svg><span id="cmpT">N</span></div>
 <div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
 <div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
-<div id="btns"><div class="b" id="zin">+</div><div id="zlv">Zoom –</div><div id="azh"></div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" style="font-size:15px;font-weight:800">TRAFFIC</div></div>
+<div id="btns"><div id="zrow"><div class="b" id="zout">&minus;</div><div class="b" id="zin">+</div></div><div id="zlv">Zoom –</div><div id="azh"></div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" style="font-size:15px;font-weight:800">TRAFFIC</div></div>
 <div id="spd"><div id="leds"></div><div class="num"><span id="spdv">0</span><small>KM/H</small></div><div id="limB">LIMIT <b id="limBV">–</b></div><em id="spdg"></em></div>
 <div id="lim"><b id="limV">–</b></div>
 <div id="spw"><div class="h">SPEED WARNING · tolerance before the tone</div>
