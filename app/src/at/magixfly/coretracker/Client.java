@@ -53,6 +53,7 @@ class Client extends WebViewClient {
             if (p.startsWith("__ctbox/")) {
                 String c = p.substring(8);
                 if (c.equals("toggle")) a.tiles.setStopped(!a.tiles.stopped);           // V1.22: Tippen auf „Maps“ = Download Stopp/Start
+                else if (c.startsWith("ton")) Ton.play(a, c.endsWith("2") ? 2 : 1);      // V2.36: warning tone via Android
                 else if (c.equals("update")) Updater.now(a);                            // V2.06: Knopf „Check for update“ (fehlte in 2.05)
                 else if (c.equals("ble")) { boolean on = !a.prefs.getBoolean("ble", true); a.prefs.edit().putBoolean("ble", on).apply();   // V2.06: Bluetooth ein/aus (wirkt nach Neustart)
                     a.ui.postDelayed(new Runnable() { public void run() { MainActivity.quit(a, true); } }, 300); }
