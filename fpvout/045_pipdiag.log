@@ -1,0 +1,14 @@
+== 045_pipdiag on mojave-fpv, 2026-11-25 03:22:54, FPV V1.4.5 ==
+[fpv-setup] small version on path 'cam2s' with 640x360, 500 kbit/s
+ Size: Discrete 1920x1080; Interval: Discrete 0.033s (30.000 fps); Size: Discrete 1280x960; Interval: Discrete 0.033s (30.000 fps); Size: Discrete 1280x720; Interval: Discrete 0.033s (30.000 fps); Size: Discrete 1024x576; Interval: Discrete 0.033s (30.000 fps); Size: Discrete 800x600; Interval: Discrete 0.033s (30.000 fps); Size: Discrete 640x480; Interval: Discrete 0.033s (30.000 fps); Size: Discrete 640x360; Interval: Discrete 0.033s (30.000 fps); Size: Discrete 640x480; Interval: Discrete 0.033s (30.000 fps); Size: Discrete 640x360; Interval: Discrete 0.033s (30.000 fps);
+
+cam2s:  (20672 ms incl. 5 s reading)
+cam2: 1280x720 1280x720 video:1995KiB frame=  140  (5839 ms incl. 5 s reading)
+cam2s:  (20630 ms incl. 5 s reading)
+cam2: 1280x720 1280x720 video:1781KiB frame=  122  (5797 ms incl. 5 s reading)
+[usbcam] cam2s: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 is still in use
+[usbcam] cam2s: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 is still in use
+%Cpu(s): 24.6 us, 20.0 sy,  0.0 ni, 41.5 id,  0.0 wa,  0.0 hi, 13.8 si,  0.0 st 
+MiB Mem :    730.4 total,    227.2 free,    374.5 used,    194.5 buff/cache     
+
+== exit code 0, 58.7 s ==
