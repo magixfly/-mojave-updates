@@ -1,5 +1,11 @@
 [
  {
+  "v": "V2.87",
+  "t": [
+   "Car Wi-Fi (Core hotspot) is off while armed – less 2.4 GHz radio next to ELRS and GPS. It comes back by itself when you disarm. Navi and ESP-NOW keep working"
+  ]
+ },
+ {
   "v": "V2.86",
   "t": [
    "Battery: correction of V2.85 – the FC measures everything except the motor. Base current = FC value (no extra any more), motor current while armed again from the voltage drop",

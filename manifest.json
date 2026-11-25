@@ -1,8 +1,8 @@
 {
- "fw": "V2.86",
- "fwDatei": "firmware/Core_V2.86.bin",
- "fwGroesse": 2035584,
- "fwMd5": "d8f25b73dc04ca4c51ef7932b63bfa26",
+ "fw": "V2.87",
+ "fwDatei": "firmware/Core_V2.87.bin",
+ "fwGroesse": 2037216,
+ "fwMd5": "203732e87e4f10d0133b26a56d7bfb60",
  "dateien": [
   {
    "p": "/anim/demon_eyes.mjv",
@@ -87,6 +87,12 @@
   "/player.html"
  ],
  "neu": [
+  {
+   "v": "V2.87",
+   "t": [
+    "Car Wi-Fi (Core hotspot) is off while armed – less 2.4 GHz radio next to ELRS and GPS. It comes back by itself when you disarm. Navi and ESP-NOW keep working"
+   ]
+  },
   {
    "v": "V2.86",
    "t": [
@@ -175,12 +181,6 @@
    "t": [
     "Radio for the Pi ground station / Navi restarts by itself when sending fails or the Wi-Fi mode changes (e.g. car hotspot switched off after joining home Wi-Fi)",
     "System info: radio counters (sent, errors, restarts) for checking the ground station link"
-   ]
-  },
-  {
-   "v": "V2.72",
-   "t": [
-    "Pi ground station without Wi-Fi: the Core sends battery, temperatures, wet sensor and warning limits twice per second by radio (ESP-NOW broadcast) – the ground station hears it directly, no pairing, the Navi is not affected"
    ]
   }
  ]
