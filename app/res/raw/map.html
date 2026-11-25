@@ -174,14 +174,17 @@ window.ctCar=function(lat,lon,kmh,hdg,sats,volt,pct,mah,lq,rssi,mode,age){
 };
 window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'#4ade80':r>=-60?'#4ade80':r>=-72?'#f5b13d':'#f87171';};
 window.ctMaps=function(pct,mb,st,on){$('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
+var fahrt=false;   // 2.23: GPS noise while parked (e.g. 4 km/h) -> 0; driving starts above 7 km/h, ends below 4 km/h
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
+  if(kmh>=0){if(fahrt?kmh<4:kmh<7){fahrt=false;kmh=0;}else fahrt=true;}
+  if(!fahrt&&pos&&ani.cur){var dm=L.latLng(lat,lon).distanceTo(L.latLng(ani.cur[0],ani.cur[1]));if(dm<Math.max(8,acc>0?acc:8)){lat=ani.cur[0];lon=ani.cur[1];}}   // parked: dot stays still
   pos=[lat,lon];$('nopos').style.display='none';
   if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i><u><svg viewBox="-22 -22 44 44" width="44" height="44"><path d="M0,-19 L14,15 L0,7 L-14,15Z" fill="#3b82f6" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></u></div>',iconSize:[0,0]}),interactive:false}).addTo(map);ani.cur=pos.slice();}
   // 2.15: smooth - glide from where the dot is now to the new fix over the time between fixes
   var t=performance.now();ani.dur=ani.t1?Math.max(300,Math.min(1500,t-ani.t1)):1000;ani.from=ani.cur?ani.cur.slice():pos.slice();ani.to=pos.slice();ani.t0=t;ani.t1=t;
   var a=me.getElement()&&me.getElement().querySelector('b');
-  if(kmh>3&&brg>=0)ani.hdg=brg;
-  if(a){var mv=kmh>3&&brg>=0;var mr=me.getElement().firstChild;mr.classList.toggle('mv',mv);if(mv)mr.querySelector('u').style.transform='rotate('+brg+'deg)';}
+  if(fahrt&&brg>=0)ani.hdg=brg;
+  if(a){var mv=fahrt&&brg>=0;var mr=me.getElement().firstChild;mr.classList.toggle('mv',mv);if(mv)mr.querySelector('u').style.transform='rotate('+brg+'deg)';}
   ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#4ade80';
