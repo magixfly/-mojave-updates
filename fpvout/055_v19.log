@@ -1,0 +1,26 @@
+== 055_v19 on mojave-fpv, 2026-11-25 09:22:00, FPV V1.8.8 ==
+VERSION = "V1.9"
+active
+active
+/dev/mmcblk0p2   29G  3.9G   24G  15% /
+[50%] test recording 12 s
+{"ok": true, "on": true, "id": "20261125_092208", "t": 0}
+%Cpu(s): 28.3 us, 15.2 sy,  0.0 ni, 54.3 id,  0.0 wa,  0.0 hi,  2.2 si,  0.0 st 
+26.1 ffmpeg;19.6 ffmpeg;27.8 ffmpeg;
+{"ok": true, "saved": "20261125_092208", "on": false, "id": null, "t": 0}
+-rw-r--r-- 1 root root 3675507 Nov 25 09:22 cam2.mp4
+-rw-r--r-- 1 root root 5632942 Nov 25 09:22 cam.mp4
+-rw-r--r-- 1 root root     397 Nov 25 09:22 meta.json
+-rw-r--r-- 1 root root  113899 Nov 25 09:22 mic.mp4
+-rw-r--r-- 1 root root    9188 Nov 25 09:22 tl.jsonl
+{"id": "20261125_092208", "start": 1795594928000, "dur": 12635, "segs": [{"path": "cam", "file": "cam.mp4", "t0": 4694, "t1": 12712, "mime": "video/mp4", "size": 5632942}, {"path": "mic", "file": "mic.mp4", "t0": 3800, "t1": 12712, "mime": "audio/mp4", "size": 113899}, {"path": "cam2", "file": "cam2.mp4", "t0": 5316, "t1": 12712, "mime": "video/mp4", "size": 3675507}], "v": "V1.9", "sum": null}
+
+cam: h264,1920,1080 8.962600 
+cam2: h264,1280,720 8.442222 
+mic: opus 9.160000 
+[rec] drive 20261125_092208 started (cam, mic, cam2)
+[rec] drive 20261125_092208 saved, 13 s
+{"ok": true}
+[100%] done
+
+== exit code 0, 24.5 s ==
