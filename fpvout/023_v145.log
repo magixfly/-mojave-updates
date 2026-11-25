@@ -1,0 +1,7 @@
+== 023_v145 on mojave-fpv, 2026-11-25 01:52:48, FPV V1.4.2 ==
+VERSION = "V1.4.5"
+no USB camera plugged in
+[fpv-setup] cam2_enable = 1 but no USB camera found - path 'cam2' not created
+14:  cam:
+
+== exit code 0, 0.8 s ==
