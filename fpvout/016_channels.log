@@ -1,0 +1,10 @@
+== 016_channels on mojave-fpv, 2026-11-25 01:28:16, FPV V1.4.2 ==
+control_enable = 1
+throttle_limit_pct = 30        # max throttle over IP in percent of full
+control_mode = msp_rx
+steer_channel = 4
+throttle_channel = 1
+active
+active
+
+== exit code 0, 3.1 s ==
