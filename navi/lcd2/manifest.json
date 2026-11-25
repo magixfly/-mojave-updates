@@ -1,10 +1,11 @@
 {
-  "fw": "V2.50",
+  "fw": "V2.51",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
-  "groesse": 1386640,
-  "md5": "afc7b4645f39c2299a7dcbebca32c0e2",
+  "groesse": 1388080,
+  "md5": "f058b57c9e37548099b700ceac89453e",
   "neu": [
+    "V2.51: no Wi-Fi saved -> own hotspot Mojave-Navi (password corenavi), Navi page at 192.168.4.1 to enter the Wi-Fi",
     "V2.50: Wi-Fi state shown on the logo screen and on USB every 5 s (diagnosis)",
     "V2.49: touch off by default (config touch3, 2 = on again) - everything via the Navi page; Wi-Fi always on (MT12 only while armed, back to Wi-Fi when disarmed); all saved Wi-Fis tried in turn (wlanWahl2, 0 = automatic)",
     "V2.48: touch mirrored left/right by default (finger right -> ring left in the test video); config touch_mx (1 on, 0 off)",
