@@ -8,7 +8,7 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 #top{position:absolute;left:0;right:0;top:0;height:60px;display:flex;align-items:center;gap:10px;padding:0 10px;box-sizing:border-box;background:#0b0f14;z-index:1000}
 .pill{height:46px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid rgba(77,184,255,.6);border-radius:10px;padding:0 14px;white-space:nowrap;overflow:hidden;font-variant-numeric:tabular-nums}
 #title{color:#4ade80;font-size:24px;letter-spacing:1px;padding-right:6px}
-#title small{display:block;color:#9ca3af;font-size:18px;font-weight:400;letter-spacing:0}
+#title small{display:block;color:#9ca3af;font-size:25px;line-height:1.05;font-weight:400;letter-spacing:0}
 #net{width:300px;color:#4ade80}
 #maps{position:relative;width:360px;padding:0;cursor:pointer;background:#1f2937}
 /* 2.08: top bar never wraps or jumps - fixed widths, smaller text in the pills */
@@ -107,8 +107,8 @@ fitMap();
 var map=L.map('mapi',{zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,
   maxBounds:[[46.3,13.0],[49.6,18.3]]});
 map.attributionControl.setPrefix(false);
-L.tileLayer('/tile/{z}/{x}/{y}.jpg',{maxNativeZoom:19,maxZoom:20,minZoom:7,attribution:'basemap.at',keepBuffer:4}).addTo(map);
-var ovl=L.tileLayer('/ovl/{z}/{x}/{y}.png',{maxNativeZoom:19,maxZoom:20,minZoom:7});
+L.tileLayer('/tile/{z}/{x}/{y}.jpg',{maxNativeZoom:19,maxZoom:20,minZoom:7,attribution:'basemap.at',keepBuffer:2,updateWhenZooming:false,updateWhenIdle:true}).addTo(map);
+var ovl=L.tileLayer('/ovl/{z}/{x}/{y}.png',{maxNativeZoom:19,maxZoom:20,minZoom:7,keepBuffer:1,updateWhenZooming:false,updateWhenIdle:true});   // 2.22: load tiles only for the zoom you stop at, not for every step in between
 var ovlOn=ls('ovl','1')=='1';if(ovlOn)ovl.addTo(map);
 var v0=JSON.parse(ls('view','null')||'null');
 if(v0)map.setView([v0[0],v0[1]],v0[2]);else map.setView(home,13);

@@ -36,6 +36,7 @@ class Areas {
                 want.addAll(vor);
             } else for (int z = zmin; z <= zm; z++) add(o, z);
         }
+        for (int z = 7; z <= 11; z++) box(z, 46.35, 49.05, 9.45, 17.2);   // V2.22: whole of Austria up to zoom 11 (~1400 tiles) - zooming out is instant
     }
 
     boolean has(int z, long x, long y) { return want.contains(key(z, x, y)); }
