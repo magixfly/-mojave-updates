@@ -1,0 +1,9 @@
+== 040_v181 on mojave-fpv, 2026-11-25 03:06:25, FPV V1.4.5 ==
+VERSION = "V1.8.1"
+active
+active
+{"on": false}
+ rpiCameraWidth: 1920; rpiCameraBitrate: 4000000;
+[100%] done
+
+== exit code 0, 6.8 s ==
