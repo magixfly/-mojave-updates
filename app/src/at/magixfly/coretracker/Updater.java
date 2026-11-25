@@ -16,11 +16,12 @@ class Updater {
     static final String BASE = "https://raw.githubusercontent.com/magixfly/-mojave-updates/carlin/apk/";
 
     /** V2.05: Stand für den Knopf „Check for update“ im Menü (Text + Prozent für den Balken) */
-    static volatile String st = ""; static volatile int pct = -1; static volatile boolean busy = false;
+    static volatile String st = ""; static volatile int pct = -1; static volatile boolean busy = false; static volatile int online = 0;   // V2.33: online versionCode
+    static String vn(int code) { return code > 102 ? "V2." + String.format("%02d", code - 102) : "build " + code; }   // V2.33: versionCode -> name (2.13 = 115)
     static void now(final MainActivity a) {
         if (busy) return;
         new Thread(new Runnable() { public void run() {
-            try { if (!check(a)) { st = "Up to date (V" + MainActivity.ver(a) + ")"; pct = -1; } }
+            try { st = "Checking GitHub …"; pct = 0; if (!check(a)) { st = "Up to date · installed V" + MainActivity.ver(a) + " · online " + (online > 0 ? vn(online) : "?"); pct = -1; } }
             catch (Throwable t) { st = "Update failed: " + t.getMessage(); pct = -1; }
         } }).start();
     }
@@ -47,9 +48,9 @@ class Updater {
     }
     static boolean check2(MainActivity a) throws Exception {
         int cur = a.getPackageManager().getPackageInfo(a.getPackageName(), 0).versionCode;
-        int neu = Integer.parseInt(get(BASE + "ver.txt"));
+        int neu = Integer.parseInt(get(BASE + "ver.txt").trim()); online = neu;
         if (neu <= cur) { st = ""; pct = -1; return false; }
-        st = "Downloading update …";
+        st = "Downloading " + vn(neu) + " …";
         Log.d("CTAP", "Update " + cur + " -> " + neu);
         PackageInstaller pi = a.getPackageManager().getPackageInstaller();
         PackageInstaller.SessionParams sp = new PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL);
@@ -68,7 +69,7 @@ class Updater {
         PendingIntent p = PendingIntent.getActivity(a, 7, i, 0x02000000 /*FLAG_MUTABLE*/ | PendingIntent.FLAG_UPDATE_CURRENT);
         s.commit(p.getIntentSender());
         s.close();
-        st = "Installing update – the app restarts …"; pct = 100;
+        st = "Installing " + vn(neu) + " – the app restarts …"; pct = 100;
         return true;
     }
 }

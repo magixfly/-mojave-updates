@@ -112,6 +112,13 @@ html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice 
 #spwRows input{width:90px;font:700 22px var(--num);text-align:center;background:#0006;color:#fff;border:1px solid var(--line);border-radius:8px;padding:4px}
 #spw .r{display:flex;gap:8px}#spw .r button{flex:1;font:600 18px var(--num);color:var(--ink);background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:10px;padding:12px}
 #spw .i{font:400 14px system-ui;color:var(--dim)}
+
+/* 2.33: active traffic warnings (only my road, my direction, ahead) as a banner + tone; mute */
+#tw{position:absolute;left:50%;top:84px;transform:translateX(-50%);z-index:1150;width:760px;display:none;flex-direction:column;gap:4px;background:rgba(120,14,24,.82);border:1px solid #ff6b81;border-radius:18px;padding:14px 20px;color:#fff;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 10px 30px #000b}
+#tw.on{display:flex;animation:twin .35s ease-out}@keyframes twin{from{transform:translate(-50%,-20px);opacity:0}}
+#tw b{font:700 24px var(--num);letter-spacing:.12em;text-transform:uppercase}#tw span{font:500 19px/1.3 system-ui}#tw em{font:600 17px var(--num);font-style:normal;letter-spacing:.08em;color:#ffd1d8}
+#tw.bau{background:rgba(120,72,6,.82);border-color:#ffb020}
+#muteB{width:64px!important;font-size:26px!important;padding:0!important}#muteB.off{color:#ff4d4d!important;border-color:#ff4d4d!important}
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -121,6 +128,7 @@ html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice 
   <div class="pill" id="car" title="Mojave via the tracker ESP (Bluetooth)"></div>
   <div class="pill" id="fpvs"></div>
   <div class="sp"></div>
+  <div class="pill" id="muteB" title="Sound on / off">🔊</div>
   <div class="pill" id="menuB">&#8943;</div>
 </div>
 <div id="menu">
@@ -160,7 +168,7 @@ html.th-ice .pill,html.th-ice .b,html.th-ice #cmp,html.th-ice #menu,html.th-ice 
  <div id="spwRows"></div>
  <div class="r"><button id="spwTest">▶ Test tone</button><button id="spwDef">Suggested values</button><button id="spwOk">Close</button></div>
  <div class="i">Speed limit from OpenStreetMap (road you are on). Without a sign there: Austrian rules - town 50, outside 100, motorway 130 (dashed sign = estimated).</div></div>
-<div id="trf"><div class="h">ASFINAG traffic <span id="trfT"></span></div><div id="trfL">loading …</div></div>
+<div id="tw"><b id="twT"></b><span id="twC"></span><em id="twD"></em></div>
 <div id="scl"><i></i><span></span></div>
 <div id="nopos">No position from the box – map shows home</div>
 <script src="leaflet.js"></script>
@@ -223,22 +231,38 @@ function zlv(){$('zlv').textContent='Zoom '+map.getZoom();}map.on('zoomend',zlv)
 function areasLoad(){fetch('/__ctbox/areas?t='+Date.now()).then(function(r){return r.json();}).then(function(j){if(j.ver!==areasVer||!areasL.getLayers().length){areasVer=j.ver;areasDraw(j);}}).catch(function(){});}
 function setAreas(on){areasOn=on;lw('areas',on?'1':'0');$('areasB').classList.toggle('act',on);if(on){areasLoad();areasL.addTo(map);}else map.removeLayer(areasL);}
 $('areasB').onclick=function(){setAreas(!areasOn);};
-/* --- 2.30: TRAFFIC - ASFINAG traffic messages (list, motorways) + fixed speed cameras (OpenStreetMap) --- */
-var trfOn=false,rdrL=L.layerGroup(),rdrGeladen=false,trfTimer=null;
-function trfArt(t){t=(t||'').toLowerCase();return /stau|unfall|sperre|gesperrt|gefahr|panne|geisterfahrer/.test(t)?'stau':/baustelle|arbeiten|fahrstreifen/.test(t)?'bau':'info';}
-function trfLaden(){fetch('/__ctbox/traffic?t='+Date.now()).then(function(r){return r.text();}).then(function(x){
-  var d=new DOMParser().parseFromString(x,'application/xml'),e=[].slice.call(d.getElementsByTagName('entry')),o={stau:0,bau:1,info:2};
-  var l=e.map(function(n){var t=(n.getElementsByTagName('title')[0]||{}).textContent||'',c=(n.getElementsByTagName('content')[0]||{}).textContent||'';var a=trfArt(t);return {t:t,c:c,a:a!=='info'?a:trfArt(c)};});
-  l.sort(function(p,q){return o[p.a]-o[q.a];});
-  $('trfT').textContent='· '+l.length+' · '+new Date().toTimeString().slice(0,5);
-  $('trfL').innerHTML=l.length?l.map(function(m){return '<div class="'+m.a+'"><b>'+m.t.replace(/</g,'&lt;')+'</b>'+m.c.replace(/</g,'&lt;')+'</div>';}).join(''):'no messages';
- }).catch(function(){$('trfL').textContent='no connection to ASFINAG';});}
+/* --- 2.33: TRAFFIC - warns actively: ASFINAG message on the motorway I am on, in my direction, ahead within 30 km -> banner + tone; fixed speed cameras on the map --- */
+var trfOn=ls('trf','1')=='1',rdrL=L.layerGroup(),rdrGeladen=false,trfMsgs=[],trfT=0,trfWarned={},geoC=JSON.parse(ls('geoC','{}')||'{}'),geoQ=[],geoBusy=false,curRef='',twTimer=null;
+var stumm=ls('stumm','0')=='1';function muteUi(){$('muteB').textContent=stumm?'🔇':'🔊';$('muteB').classList.toggle('off',stumm);}muteUi();
+$('muteB').onclick=function(){stumm=!stumm;lw('stumm',stumm?'1':'0');muteUi();};
+function trfArt(t){t=(t||'').toLowerCase();return /stau|unfall|sperre|gesperrt|gefahr|panne|geisterfahrer|stockend|glätte|nebel/.test(t)?'stau':/baustelle|arbeiten|fahrstreifen/.test(t)?'bau':'info';}
+function refN(r){return (r||'').replace(/\s+/g,'').toUpperCase().split(';')[0];}
+function trfLaden(){trfT=Date.now();fetch('/__ctbox/traffic?t='+trfT).then(function(r){return r.text();}).then(function(x){
+  var d=new DOMParser().parseFromString(x,'application/xml');trfMsgs=[].slice.call(d.getElementsByTagName('entry')).map(function(n){
+   var g=function(t){return ((n.getElementsByTagName(t)[0]||{}).textContent||'').trim();},t=g('title'),c=g('content'),a=trfArt(t);a=a!=='info'?a:trfArt(c);
+   var road=(c.match(/^([AS]\d+)/)||[])[1]||'',dir=(c.match(/Richtung ([^,]+)/)||[])[1]||'',loc=(c.match(/zwischen ([^,(]+?)\s*(\(|und)/)||c.match(/(?:bei|Höhe) ([^,(]+)/)||[])[1]||'';
+   if(!loc){var pt=c.split(',');loc=(pt[2]||'').replace(/\(.*?\)/g,'').trim();}
+   return {id:g('id'),t:t,c:c,a:a,road:road,dir:dir.trim(),loc:loc.trim()};});
+ }).catch(function(){});}
+function geo(q,cb){if(!q)return cb(null);if(geoC[q]!==undefined)return cb(geoC[q]);geoQ.push([q,cb]);geoRun();}
+function geoRun(){if(geoBusy||!geoQ.length)return;geoBusy=true;var it=geoQ.shift();fetch('/__ctbox/geo?q='+encodeURIComponent(it[0]+', Österreich')).then(function(r){return r.json();}).then(function(j){var v=j&&j[0]?[+j[0].lat,+j[0].lon]:null;geoC[it[0]]=v;lw('geoC',JSON.stringify(geoC));it[1](v);}).catch(function(){it[1](null);}).then(function(){setTimeout(function(){geoBusy=false;geoRun();},1100);});}
+function brg(a,b){var f1=a[0]*Math.PI/180,f2=b[0]*Math.PI/180,dl=(b[1]-a[1])*Math.PI/180;return (Math.atan2(Math.sin(dl)*Math.cos(f2),Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl))*180/Math.PI+360)%360;}
+function wdiff(a,b){return Math.abs(((a-b)%360+540)%360-180);}
+function warnTon(){if(stumm)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();var t=actx.currentTime;
+ [[988,0],[784,.22],[659,.44]].forEach(function(f){var o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f[0];g.gain.setValueAtTime(0,t+f[1]);g.gain.linearRampToValueAtTime(.4,t+f[1]+.02);g.gain.exponentialRampToValueAtTime(.001,t+f[1]+.5);o.connect(g);g.connect(actx.destination);o.start(t+f[1]);o.stop(t+f[1]+.55);});}catch(e){}}
+function twShow(m,km){var e=$('tw');e.className='on'+(m.a==='bau'?' bau':'');$('twT').textContent=m.t+' · '+m.road;$('twC').textContent=m.c;$('twD').textContent='ahead in about '+Math.round(km)+' km';
+ clearTimeout(twTimer);twTimer=setTimeout(function(){e.className='';},25000);warnTon();}
+$('tw').onclick=function(){$('tw').className='';};
+function trfTick(p,hdg){if(!trfOn||!p)return;if(Date.now()-trfT>120000)trfLaden();if(!fahrt||hdg==null||!curRef)return;
+ trfMsgs.forEach(function(m){if(m.a!=='stau'||refN(m.road)!==curRef||trfWarned[m.id])return;
+  geo(m.loc,function(L1){if(!L1)return;var dkm=L.latLng(p).distanceTo(L.latLng(L1))/1000;if(dkm>30||dkm<.3)return;if(wdiff(brg(p,L1),hdg)>60)return;   // ahead of me
+   geo(m.dir,function(D){if(D&&wdiff(brg(p,D),hdg)>90)return;   // the message is for the other direction
+    if(trfWarned[m.id])return;trfWarned[m.id]=1;twShow(m,dkm);});});});}
 function rdrLaden(){if(rdrGeladen)return;fetch('/__ctbox/radars').then(function(r){return r.json();}).then(function(j){rdrGeladen=true;rdrL.clearLayers();
   (j.elements||[]).forEach(function(n){var mx=n.tags&&n.tags.maxspeed;L.marker([n.lat,n.lon],{icon:L.divIcon({className:'',html:'<div class="rdr">'+(mx&&/^\d+$/.test(mx)?mx:'')+'</div>',iconSize:[0,0]}),interactive:false}).addTo(rdrL);});
  }).catch(function(){});}
-function setTrf(on){trfOn=on;$('trfB').classList.toggle('act',on);$('trf').classList.toggle('on',on);clearInterval(trfTimer);
- if(on){trfLaden();trfTimer=setInterval(trfLaden,120000);rdrLaden();rdrL.addTo(map);}else map.removeLayer(rdrL);}
-$('trfB').onclick=function(){setTrf(!trfOn);};
+function setTrf(on){trfOn=on;lw('trf',on?'1':'0');$('trfB').classList.toggle('act',on);if(on){trfLaden();rdrLaden();rdrL.addTo(map);}else{map.removeLayer(rdrL);$('tw').className='';}}
+$('trfB').onclick=function(){setTrf(!trfOn);};setTrf(trfOn);
 /* --- 2.30: scale bar (map is drawn 1:1 in screen pixels, so one CSS pixel = DPR map pixels) --- */
 function scl(){var c=map.getCenter(),mpp=156543.034*Math.cos(c.lat*Math.PI/180)/Math.pow(2,map.getZoom())*(MS?DPR:1),max=mpp*170,st=[5,10,20,50,100,200,500,1000,2000,5000,10000,20000,50000,100000],v=st[0];
  for(var i=0;i<st.length;i++)if(st[i]<=max)v=st[i];var w=v/mpp;$('scl').querySelector('i').style.width=Math.round(w)+'px';$('scl').querySelector('span').textContent=v>=1000?(v/1000)+' km':v+' m';}
@@ -288,7 +312,7 @@ function spwRows(){$('spwRows').innerHTML=[30,50,60,70,80,100,130,'x'].map(funct
 $('mSpwE').onclick=function(){$('menu').classList.remove('open');spwRows();$('spw').classList.add('on');};
 $('spwOk').onclick=function(){$('spw').classList.remove('on');};
 $('spwDef').onclick=function(){spwT=JSON.parse(JSON.stringify(SPW_DEF));lw('spwT',JSON.stringify(spwT));spwRows();};
-var actx=null;function ton(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();var t=actx.currentTime;
+var actx=null;function ton(){if(stumm)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();var t=actx.currentTime;
  [[880,0],[1175,.18]].forEach(function(f){var o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f[0];g.gain.setValueAtTime(0,t+f[1]);g.gain.linearRampToValueAtTime(.35,t+f[1]+.02);g.gain.exponentialRampToValueAtTime(.001,t+f[1]+.45);o.connect(g);g.connect(actx.destination);o.start(t+f[1]);o.stop(t+f[1]+.5);});}catch(e){}}
 $('spwTest').onclick=ton;document.addEventListener('pointerdown',function(){if(actx&&actx.state==='suspended')actx.resume();},true);
 function limOf(tg){var m=tg.maxspeed||tg['maxspeed:forward']||'',h=tg.highway||'';
@@ -302,7 +326,7 @@ function limFind(p,hdg){var best=null,bd=1e9;rdWays.forEach(function(w){var g=w.
 function rdLoad(p){if(rdBusy)return;rdBusy=true;rdT=Date.now();fetch('/__ctbox/roads?lat='+p[0].toFixed(5)+'&lon='+p[1].toFixed(5)).then(function(r){return r.json();}).then(function(j){rdWays=(j.elements||[]).filter(function(e){return e.geometry;});rdAt=p.slice();}).catch(function(){}).then(function(){rdBusy=false;});}
 function spwTick(p,kmh,hdg){if(!p)return;
  if(fahrt&&(!rdAt||L.latLng(p).distanceTo(L.latLng(rdAt))>220)&&Date.now()-rdT>8000)rdLoad(p);
- var w=rdWays.length?limFind(p,fahrt?hdg:null):null;if(w){var r=limOf(w.tags||{});limNow=r[0];limEst=r[1];}else if(!fahrt)limNow=limNow;
+ var w=rdWays.length?limFind(p,fahrt?hdg:null):null;if(w){var r=limOf(w.tags||{});limNow=r[0];limEst=r[1];curRef=refN((w.tags||{}).ref);}else curRef='';
  var e=$('lim');e.classList.toggle('on',!!limNow);e.classList.toggle('est',limEst);$('limV').textContent=limNow||'–';
  var tol=limNow?(spwT[limNow]!=null?spwT[limNow]:spwT.x):0,over=spwOn&&limNow&&fahrt&&kmh>limNow*(1+tol/100);
  e.classList.toggle('over',!!over);$('spd').classList.toggle('over',!!over);
@@ -323,6 +347,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   $('gps').style.color=age>30?'#f5b13d':'#60a5fa';
   spdSet(kmh>0?kmh:0,acc,gps);
   spwTick([lat,lon],kmh>0?kmh:0,brg>=0?brg:null);
+  trfTick([lat,lon],fahrt&&brg>=0?brg:null);
 };
 // 2.15: animation - dot glides, map follows it, map turns with the driving direction (heading up)
 var ani={cur:null,from:null,to:null,t0:0,t1:0,dur:1000,hdg:0,rot:0};

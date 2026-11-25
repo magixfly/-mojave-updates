@@ -32,4 +32,15 @@ class Live {
             return TileStore.http("https://overpass-api.de/api/interpreter?data=" + java.net.URLEncoder.encode(q, "UTF-8"), 15000);
         } catch (Throwable t) { return null; }
     }
+
+    /** V2.33: place name -> coordinates (Nominatim, Austria) for the traffic messages, which have no coordinates */
+    static byte[] geo(String q) {
+        try {
+            java.net.HttpURLConnection c = (java.net.HttpURLConnection) new java.net.URL("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=at&q=" + java.net.URLEncoder.encode(q, "UTF-8")).openConnection();
+            c.setConnectTimeout(8000); c.setReadTimeout(8000); c.setRequestProperty("User-Agent", "CarlinBox/2.33 (private car display)");
+            if (c.getResponseCode() != 200) return null;
+            java.io.InputStream in = c.getInputStream(); java.io.ByteArrayOutputStream o = new java.io.ByteArrayOutputStream(); byte[] b = new byte[8192]; int n;
+            while ((n = in.read(b)) > 0) o.write(b, 0, n); in.close(); return o.toByteArray();
+        } catch (Throwable t) { return null; }
+    }
 }
