@@ -67,6 +67,7 @@ html.th-glass .b.act,html.th-glass #cmp.act{background:linear-gradient(180deg,rg
 html.th-carbon #top,html.th-carbon .pill,html.th-carbon .b,html.th-carbon #cmp,html.th-carbon #menu,html.th-carbon #mjf{background:radial-gradient(#000 15%,transparent 16%) 0 0,radial-gradient(#000 15%,transparent 16%) 4px 4px,radial-gradient(rgba(255,255,255,.08) 15%,transparent 20%) 0 1px,radial-gradient(rgba(255,255,255,.08) 15%,transparent 20%) 4px 5px,linear-gradient(180deg,#2a2d31,#15171a) !important;background-size:8px 8px,8px 8px,8px 8px,8px 8px,100% 100% !important;border-color:rgba(96,165,250,.55) !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 4px 12px rgba(0,0,0,.5)}
 html.th-carbon #menu button{background:rgba(0,0,0,.45)}
 html.th-carbon .b.act,html.th-carbon #cmp.act{background:linear-gradient(180deg,#2563eb,#1e3a8a) !important}
+#zlv{margin:-8px 0;text-align:center;font:800 20px system-ui;color:#fff;text-shadow:0 0 4px #000,0 0 4px #000}   /* 2.27: zoom level between + and - */
 </style></head><body>
 <div id="top">
   <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -97,7 +98,7 @@ html.th-carbon .b.act,html.th-carbon #cmp.act{background:linear-gradient(180deg,
 <div id="cmp" title="Tap: north up / driving direction up"><svg viewBox="-32 -32 64 64" id="cmpS"><circle r="29" fill="none" stroke="#4b5563" stroke-width="2"/><path d="M0,-26 L9,0 L-9,0Z" fill="#ef4444"/><path d="M0,26 L9,0 L-9,0Z" fill="#e5e7eb"/><text y="-12" text-anchor="middle" font-size="0" fill="#fff">N</text></svg><span id="cmpT">N</span></div>
 <div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
 <div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
-<div id="btns"><div class="b" id="zin">+</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div></div>
+<div id="btns"><div class="b" id="zin">+</div><div id="zlv">Zoom –</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div></div>
 <div id="nopos">No position from the box – map shows home</div>
 <script src="leaflet.js"></script>
 <script>
@@ -155,6 +156,7 @@ function areasDraw(j){areasL.clearLayers();(j.areas||[]).forEach(function(a){
 // 2.13: fill only when the area is smaller than the screen - inside a big area the map stayed tinted (looked pale)
 function areasFill(){var sz=map.getSize();areasL.eachLayer(function(l){if(!l.getBounds||!l.setStyle||l instanceof L.Polyline&&!(l instanceof L.Polygon)&&!(l instanceof L.Circle))return;var b=l instanceof L.Circle?l.getLatLng().toBounds(l.getRadius()*2):l.getBounds(),p1=map.latLngToContainerPoint(b.getNorthWest()),p2=map.latLngToContainerPoint(b.getSouthEast());var big=Math.abs(p2.x-p1.x)>sz.x*.6||Math.abs(p2.y-p1.y)>sz.y*.6;l.setStyle({fillOpacity:big?.06:.25});});}
 map.on('zoomend',areasFill);
+function zlv(){$('zlv').textContent='Zoom '+map.getZoom();}map.on('zoomend',zlv);zlv();
 function areasLoad(){fetch('/__ctbox/areas?t='+Date.now()).then(function(r){return r.json();}).then(function(j){if(j.ver!==areasVer||!areasL.getLayers().length){areasVer=j.ver;areasDraw(j);}}).catch(function(){});}
 function setAreas(on){areasOn=on;lw('areas',on?'1':'0');$('areasB').classList.toggle('act',on);if(on){areasLoad();areasL.addTo(map);}else map.removeLayer(areasL);}
 $('areasB').onclick=function(){setAreas(!areasOn);};
