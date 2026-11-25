@@ -59,7 +59,7 @@ html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip
 html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{display:none}html.ctsplit #maps{width:240px}
 </style></head><body>
 <div id="top">
-  <div id="title">CARLIN BOX<small id="ver"></small></div>
+  <div id="title">CARLIN BOX<small><span id="ver"></span> · <span id="uhr"></span></small></div>
   <div class="pill" id="net" title="Box Wi-Fi">…</div>
   <div class="pill" id="maps" title="Tap: start / stop the map download"><div id="mapsBar"></div><span id="mapsT">Maps</span></div>
   <div class="pill" id="gps">No GPS</div>
@@ -131,6 +131,7 @@ $('mAuto').onclick=function(){$('menu').classList.remove('open');cmd('autostart'
 $('mRe').onclick=function(){cmd('restart');};
 $('mCl').onclick=function(){cmd('close');};
 /* --- called by the app --- */
+function uhr(){var d=new Date();$('uhr').textContent=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);}uhr();setInterval(uhr,5000);   // 2.20: clock next to the version
 window.ctInit=function(ver,lat,lon,ble){home=[lat,lon];$('ver').textContent='V'+ver;$('mInfo').textContent='Carlin Box V'+ver+' · maps from the shared area list (box memory)';$('mBle').textContent='Bluetooth ESP: '+(ble?'on':'off')+' (restarts app)';};
 /* --- V2.07: AREAS button - areas of the shared list (gebiete.json) as overlay --- */
 var areasOn=ls('areas','0')=='1',areasL=L.layerGroup(),areasVer=null;
