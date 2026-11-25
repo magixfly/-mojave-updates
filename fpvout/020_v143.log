@@ -1,0 +1,23 @@
+== 020_v143 on mojave-fpv, 2026-11-25 01:36:32, FPV V1.4.2 ==
+VERSION = "V1.4.3"
+
+##### USB camera 1280x720 through the video server, main camera running
+USB camera: 237 pictures in 8 s (240 expected), cpu 25%   main camera: 122 in 4 s (120 expected)
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1280x720@30 1500k, mode hw
+kernel errors so far: 0
+
+##### USB camera 1920x1080 through the video server, main camera running
+USB camera: 237 pictures in 8 s (240 expected), cpu 75%   main camera: 122 in 4 s (120 expected)
+ERROR: from element /GstPipeline:pipeline0/GstRTSPClientSink:rtspclientsink0: Could not write to resource.
+[usbcam] cam2: /dev/v4l/by-id/usb-EMEET_HD_Webcam_eMeet_C960_A250712000216711-video-index0 1920x1080@30 3000k, mode sw
+kernel errors so far: 0
+
+RESULT: keeping 1920x1080
+cam2_width = 1920
+cam2_height = 1080
+cam2_bitrate_kbps = 3000
+cam2_pipeline = auto
+temp=36.5'C
+throttled=0x0
+
+== exit code 0, 65.4 s ==
