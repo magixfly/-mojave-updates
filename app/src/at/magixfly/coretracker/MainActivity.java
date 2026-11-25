@@ -46,11 +46,28 @@ public class MainActivity extends Activity {
     @Override protected void onDestroy() { alive = false; if (gps != null) gps.stop(); super.onDestroy(); }
 
     static volatile MainActivity me;   // 2.10: for the remote page (mouse wheel)
+    /** V2.16: answer from the package installer - without root (car hotspot, no ADB) Android asks "Install?" -> show it, A11y taps it */
+    void instAntwort(android.content.Intent i) {
+        try {
+            if (i == null) return;
+            int st = i.getIntExtra(android.content.pm.PackageInstaller.EXTRA_STATUS, -999);
+            if (st == -999) return;
+            if (st == android.content.pm.PackageInstaller.STATUS_PENDING_USER_ACTION) {
+                android.content.Intent c = (android.content.Intent) i.getParcelableExtra(android.content.Intent.EXTRA_INTENT);
+                if (c != null) { c.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK); A11y.want("inst"); startActivity(c); }
+            } else if (st != android.content.pm.PackageInstaller.STATUS_SUCCESS) {
+                Updater.st = "Update failed: " + i.getStringExtra(android.content.pm.PackageInstaller.EXTRA_STATUS_MESSAGE); Updater.pct = -1;
+            }
+        } catch (Throwable t) { android.util.Log.d("CTAP", "inst: " + t); }
+    }
+    @Override protected void onNewIntent(android.content.Intent i) { super.onNewIntent(i); instAntwort(i); }
+
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         me = this;
         alive = true;
+        instAntwort(getIntent());
         ScreenShare.server(this);                 // V1.65: Box-Bildschirm im Browser (Port 8090)
         requestWindowFeature(1);                  // kein Titelbalken
         getWindow().addFlags(0x80 | 0x400);       // Bildschirm an lassen + Vollbild
