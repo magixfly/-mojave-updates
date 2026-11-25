@@ -1,10 +1,10 @@
-mojave-fpv remote maintenance, FPV V1.4.5
-time      2026-11-25 05:37:47 CET
-uptime    up 3 hours, 42 minutes
+mojave-fpv remote maintenance, FPV V1.8.7
+time      2026-11-25 05:37:33 CET
+uptime    up 0 minutes
 addresses 192.168.178.169 100.64.69.54 fd7a:115c:a1e0::c531:4537
 wifi      Optimus Prime
 tailscale 100.64.69.54
-temp      48.2 C
+temp      38.5 C
 throttled throttled=0x0
 services  video=active bridge=active
-last      049_v187 at 2026-11-25 03:31:13
+last      050_v188 at 2026-11-25 05:37:25
