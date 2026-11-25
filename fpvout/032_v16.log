@@ -1,0 +1,18 @@
+== 032_v16 on mojave-fpv, 2026-11-25 02:29:06, FPV V1.4.5 ==
+[10%] installing the noise filter (gstreamer1.0-plugins-bad)
+apt exit 0
+[60%] installing V1.6
+[fpv-setup] sound from plughw:CARD=C960,DEV=0 on path 'mic', gain 1, 64 kbit/s, noise filter on
+[90%] checking
+VERSION = "V1.6"
+active
+active
+2026/11/25 02:29:16 INF [path mic] runOnInit command exited: command exited with code -1
+2026/11/25 02:29:16 INF [path mic] runOnInit command stopped
+2026/11/25 02:29:17 INF [path mic] runOnInit command started
+2026/11/25 02:29:17 INF [path mic] stream is available and online, 1 track (Opus)
+mean_volume: -49.5 dB max_volume: -20.2 dB 
+{'v': 'V1.6', 'trip_m': 0.0, 'home_set': False, 'home_dist_m': None, 'fc_ok': False}
+[100%] done
+
+== exit code 0, 26.4 s ==
