@@ -1,0 +1,10 @@
+== 060_v193 on mojave-fpv, 2026-11-25 09:35:47, FPV V1.8.8 ==
+recording running before the update: False
+VERSION = "V1.9.3"
+active
+active
+dur 8386 [('cam', 0, 8463, 0), ('mic', 0, 8463, 37), ('cam2', 0, 8463, 147)]
+{"ok": true}
+drives kept: 0
+
+== exit code 0, 25.6 s ==
