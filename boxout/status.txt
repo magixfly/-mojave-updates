@@ -1,5 +1,5 @@
-Stand: 2026-11-25 22:16:03
-App: 2.38
+Stand: 2026-11-25 22:21:48
+App: 2.42
 IP: 192.168.190.46
 WLAN: 
 Wifi is connected to "XVII"
@@ -7,4 +7,4 @@ Wifi is connected to "XVII"
 Failed to write while dumping service tethering: Broken pipe
 
 ### Exit-Code: 0
-Fernwartung: zuletzt 062_upd.sh
+Fernwartung: 
