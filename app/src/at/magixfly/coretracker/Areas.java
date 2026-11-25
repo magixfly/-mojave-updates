@@ -13,6 +13,7 @@ class Areas {
     final JSONObject json;
     final int ver, zmin, zcap;
     final HashSet<Long> want = new HashSet<Long>();
+    final java.util.HashMap<Long, Long> prio = new java.util.HashMap<Long, Long>();   // V2.14: "load first" areas (prio from the PC editor)
     int zmaxAll = 0;
 
     static long key(int z, long x, long y) { return ((long) z << 56) | (x << 28) | y; }
@@ -27,7 +28,13 @@ class Areas {
             JSONObject o = a.getJSONObject(i);
             int zm = Math.min(o.optInt("zmax", 16), zcap);
             zmaxAll = Math.max(zmaxAll, zm);
-            for (int z = zmin; z <= zm; z++) add(o, z);
+            long pr = o.optLong("prio", 0);
+            if (pr > 0) {   // V2.14: remember which tiles belong to a "load first" area
+                HashSet<Long> vor = new HashSet<Long>(want); want.clear();
+                for (int z = zmin; z <= zm; z++) add(o, z);
+                for (Long k : want) { Long p0 = prio.get(k); if (p0 == null || p0 < pr) prio.put(k, pr); }
+                want.addAll(vor);
+            } else for (int z = zmin; z <= zm; z++) add(o, z);
         }
     }
 

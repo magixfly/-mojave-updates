@@ -181,7 +181,7 @@ class TileStore {
                 }
             } catch (Throwable t) { android.util.Log.d("CTAP", "sync: " + t); }
             phase = finished ? "done" : phase;
-            for (int i = 0; i < 30; i++) {   // alle 30 min neu laden, früher wenn die Zentrale eine neue Listenversion meldet
+            if (!listVerChanged()) for (int i = 0; i < 30; i++) {   // V2.14: list already changed -> at once; sonst alle 30 min neu laden, früher wenn die Zentrale eine neue Listenversion meldet
                 try { Thread.sleep(60000); } catch (Throwable t) { }
                 probe();
                 if (listVerChanged()) break;
@@ -196,7 +196,11 @@ class TileStore {
         for (Long k : ar.want) jobs.add(new long[]{k >>> 56, (k >>> 28) & 0xFFFFFFFL, k & 0xFFFFFFFL});
         final long[][] c = new long[20][];
         for (int z = 0; z < 20; z++) c[z] = new long[]{lonX(C_LON, z), latY(C_LAT, z)};
+        final java.util.HashMap<Long, Long> pr = ar.prio;
         java.util.Collections.sort(jobs, new java.util.Comparator<long[]>() { public int compare(long[] p, long[] q) {
+            Long a1 = pr.get(Areas.key((int) p[0], p[1], p[2])), a2 = pr.get(Areas.key((int) q[0], q[1], q[2]));   // V2.14: "load first" areas before everything
+            long v1 = a1 == null ? 0 : a1, v2 = a2 == null ? 0 : a2;
+            if (v1 != v2) return v1 > v2 ? -1 : 1;
             if (p[0] != q[0]) return p[0] < q[0] ? -1 : 1;
             long[] h = c[(int) p[0]];
             long dp = Math.max(Math.abs(p[1] - h[0]), Math.abs(p[2] - h[1])), dq = Math.max(Math.abs(q[1] - h[0]), Math.abs(q[2] - h[1]));
@@ -204,8 +208,10 @@ class TileStore {
         } });
         total = jobs.size(); done.set(0);
         phase = "loading";
+        long chk = System.currentTimeMillis();
         for (long[] t : jobs) {
             if (areas != ar) return;                              // neue Liste -> neu anfangen
+            if (System.currentTimeMillis() - chk > 60000) { chk = System.currentTimeMillis(); probe(); if (listVerChanged()) { q.clear(); return; } }   // V2.14: list changed on the PC (e.g. "load first") -> start again at once
             File f = file((int) t[0], (int) t[1], (int) t[2]);
             if (f.exists()) { done.incrementAndGet(); continue; }
             while (full) Thread.sleep(60000);
