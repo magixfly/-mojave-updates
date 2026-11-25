@@ -1,0 +1,35 @@
+== 050_v188 on mojave-fpv, 2026-11-25 05:37:25, FPV V1.8.7 ==
+VERSION = "V1.8.8"
+active
+active
+{"on": false}
+[100%] done
+tar: pi/apply_config.py: time stamp 2026-11-25 08:17:39 is 9612.893477569 s in the future
+tar: pi/fpvcfg.py: time stamp 2026-11-25 08:17:39 is 9612.893259236 s in the future
+tar: pi/fpv-config.txt: time stamp 2026-11-25 08:17:39 is 9612.893198569 s in the future
+tar: pi/systemd/fpv-setup.service: time stamp 2026-11-25 08:17:39 is 9612.893141384 s in the future
+tar: pi/systemd/fpv-remote.service: time stamp 2026-11-25 08:17:39 is 9612.893085921 s in the future
+tar: pi/systemd/fpv-mediamtx.service: time stamp 2026-11-25 08:17:39 is 9612.893040495 s in the future
+tar: pi/systemd/fpv-bridge.service: time stamp 2026-11-25 08:17:39 is 9612.892993847 s in the future
+tar: pi/systemd: time stamp 2026-11-25 08:17:39 is 9612.892961717 s in the future
+tar: pi/usbcam.sh: time stamp 2026-11-25 08:17:39 is 9612.892917829 s in the future
+tar: pi/settings.py: time stamp 2026-11-25 08:17:39 is 9612.892814458 s in the future
+tar: pi/cockpit/index.html: time stamp 2026-11-25 08:20:49 is 9802.89171894 s in the future
+tar: pi/cockpit/classic.html: time stamp 2026-11-25 08:17:39 is 9612.89128281 s in the future
+tar: pi/cockpit/settings.html: time stamp 2026-11-25 08:17:39 is 9612.890889977 s in the future
+tar: pi/cockpit: time stamp 2026-11-25 08:17:39 is 9612.890855625 s in the future
+tar: pi/remote.py: time stamp 2026-11-25 08:17:39 is 9612.890793773 s in the future
+tar: pi/bridge.py: time stamp 2026-11-25 08:17:39 is 9612.890344514 s in the future
+tar: pi/fpv-remote.txt: time stamp 2026-11-25 08:17:39 is 9612.89024081 s in the future
+tar: pi/tools/fake_fc.py: time stamp 2026-11-25 08:17:39 is 9612.890176495 s in the future
+tar: pi/tools: time stamp 2026-11-25 08:17:39 is 9612.890146051 s in the future
+tar: pi/__pycache__/remote.cpython-313.pyc: time stamp 2026-11-25 08:17:39 is 9612.89005381 s in the future
+tar: pi/__pycache__/bridge.cpython-313.pyc: time stamp 2026-11-25 08:17:39 is 9612.889736143 s in the future
+tar: pi/__pycache__/settings.cpython-313.pyc: time stamp 2026-11-25 08:17:41 is 9614.888739717 s in the future
+tar: pi/__pycache__/apply_config.cpython-313.pyc: time stamp 2026-11-25 08:17:41 is 9614.888611088 s in the future
+tar: pi/__pycache__/fpvcfg.cpython-313.pyc: time stamp 2026-11-25 08:17:41 is 9614.888523069 s in the future
+tar: pi/__pycache__: time stamp 2026-11-25 08:17:41 is 9614.88848218 s in the future
+tar: pi/install.sh: time stamp 2026-11-25 08:17:39 is 9612.888430754 s in the future
+tar: pi: time stamp 2026-11-25 08:17:39 is 9612.88833281 s in the future
+
+== exit code 0, 6.7 s ==
