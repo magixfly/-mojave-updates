@@ -39,6 +39,11 @@ html,body{margin:0;height:100%;background:#0b0f14;color:#e5e7eb;font:700 19px/1.
 #mjf .bat{position:relative;height:30px;border-radius:9px;background:#1f2937;overflow:hidden}#mjf .bat i{position:absolute;left:0;top:0;bottom:0;width:0;background:#16a34a;transition:width .5s}
 #mjf .bat span{position:absolute;inset:0;text-align:center;font:800 18px/30px system-ui;color:#fff;text-shadow:0 1px 2px #000}#mjf .ft{color:#9ca3af;font:600 14px system-ui;margin-top:6px}
 #mapi{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:0 0}
+#rot{position:absolute;left:0;top:0;width:100%;height:100%;transform-origin:50% 50%;will-change:transform}   /* 2.15: map turns with the driving direction */
+html.hu .leaflet-container img.leaflet-tile{mix-blend-mode:normal;outline:1px solid transparent}html.hu .leaflet-tile{width:257px!important;height:257px!important}   /* 2.15: turned map - overlap tiles 1 px, no plus-lighter (no seams) */
+#cmp{position:absolute;left:14px;bottom:14px;z-index:900;width:84px;height:84px;border-radius:50%;background:rgba(11,15,20,.85);border:2px solid rgba(77,184,255,.6);display:flex;align-items:center;justify-content:center;cursor:pointer}
+#cmp svg{width:64px;height:64px;transition:none}#cmp.act{background:#166534}
+#cmpT{position:absolute;bottom:-2px;left:0;right:0;text-align:center;font:800 11px system-ui;color:#9ca3af}
 html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip{font-size:15px;padding:5px 8px}html.ms #mapi .leaflet-control-attribution{font-size:14px}   /* 2.11: markers and labels keep their size */   /* 2.10: map drawn 1:1 in screen pixels (box density 1.26 made light seams) */
 #btns{position:absolute;right:14px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:14px}
 .b{width:84px;height:84px;border-radius:18px;background:rgba(11,15,20,.85);border:2px solid rgba(77,184,255,.6);color:#4ade80;font-size:40px;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -75,7 +80,8 @@ html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsp
   <button id="mCl">Close app</button>
   <div class="info" id="mInfo"></div>
 </div>
-<div id="map"><div id="mapi"></div></div>
+<div id="map"><div id="rot"><div id="mapi"></div></div></div>
+<div id="cmp" title="Tap: north up / driving direction up"><svg viewBox="-32 -32 64 64" id="cmpS"><circle r="29" fill="none" stroke="#4b5563" stroke-width="2"/><path d="M0,-26 L9,0 L-9,0Z" fill="#ef4444"/><path d="M0,26 L9,0 L-9,0Z" fill="#e5e7eb"/><text y="-12" text-anchor="middle" font-size="0" fill="#fff">N</text></svg><span id="cmpT">N</span></div>
 <div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
 <div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
 <div id="btns"><div class="b" id="zin">+</div><div class="b" id="zout">&minus;</div><div class="b" id="ctr" title="Center on own position">&#8982;</div><div class="b" id="areasB" title="Show the shared map areas" style="font-size:17px;font-weight:800">AREAS</div></div>
@@ -89,7 +95,11 @@ function lw(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 var home=[48.1874,15.6139];
 var DPR=window.devicePixelRatio||1,MS=Math.abs(DPR-Math.round(DPR))>.01;   // 2.11: map 1:1 in screen pixels again (no seams at density 1.26)
 if(MS)document.documentElement.classList.add('ms');
-function fitMap(){var w=document.getElementById('map'),m=document.getElementById('mapi');if(!MS)return;var r=w.getBoundingClientRect(),fx=(r.left*DPR)%1,fy=(r.top*DPR)%1;   // 2.12: start on a whole screen pixel
+var HU=false;   // 2.15: heading up
+function sizeRot(){var w=document.getElementById('map'),R=document.getElementById('rot'),W=w.clientWidth,H=w.clientHeight,a=W,b=H;
+ if(HU){a=b=Math.ceil(Math.sqrt(W*W+H*H))+4;}R.style.width=a+'px';R.style.height=b+'px';R.style.left=((W-a)/2)+'px';R.style.top=((H-b)/2)+'px'}
+sizeRot();
+function fitMap(){sizeRot();var w=document.getElementById('rot'),m=document.getElementById('mapi');if(!MS)return;var r0=document.getElementById('map').getBoundingClientRect(),r={left:r0.left+parseFloat(w.style.left||0),top:r0.top+parseFloat(w.style.top||0)},fx=(r.left*DPR)%1,fy=(r.top*DPR)%1;   // 2.12: start on a whole screen pixel
  m.style.left=(-fx/DPR)+'px';m.style.top=(-fy/DPR)+'px';m.style.width=(w.clientWidth*DPR+2)+'px';m.style.height=(w.clientHeight*DPR+2)+'px';m.style.transform='scale('+(1/DPR)+')'}
 fitMap();
 var map=L.map('mapi',{zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,
@@ -100,7 +110,7 @@ var ovl=L.tileLayer('/ovl/{z}/{x}/{y}.png',{maxNativeZoom:19,maxZoom:20,minZoom:
 var ovlOn=ls('ovl','1')=='1';if(ovlOn)ovl.addTo(map);
 var v0=JSON.parse(ls('view','null')||'null');
 if(v0)map.setView([v0[0],v0[1]],v0[2]);else map.setView(home,13);
-map.on('moveend',function(){var c=map.getCenter();lw('view',JSON.stringify([c.lat,c.lng,map.getZoom()]));});
+var vT=0;map.on('moveend',function(){var n=Date.now();if(n-vT<3000)return;vT=n;var c=map.getCenter();lw('view',JSON.stringify([c.lat,c.lng,map.getZoom()]));});   // 2.15: at most every 3 s (map moves every frame now)
 var follow=ls('follow','1')=='1',me=null,pos=null;
 function setFollow(f){follow=f;lw('follow',f?'1':'0');$('ctr').classList.toggle('act',f);$('mFollow').textContent='Follow position: '+(f?'on':'off');if(f&&pos)map.panTo(pos);}
 setFollow(follow);
@@ -163,20 +173,37 @@ window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').mat
 window.ctMaps=function(pct,mb,st,on){$('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   pos=[lat,lon];$('nopos').style.display='none';
-  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i></div>',iconSize:[0,0]}),interactive:false}).addTo(map);}
-  else me.setLatLng(pos);
+  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i></div>',iconSize:[0,0]}),interactive:false}).addTo(map);ani.cur=pos.slice();}
+  // 2.15: smooth - glide from where the dot is now to the new fix over the time between fixes
+  var t=performance.now();ani.dur=ani.t1?Math.max(300,Math.min(1500,t-ani.t1)):1000;ani.from=ani.cur?ani.cur.slice():pos.slice();ani.to=pos.slice();ani.t0=t;ani.t1=t;
   var a=me.getElement()&&me.getElement().querySelector('b');
+  if(kmh>3&&brg>=0)ani.hdg=brg;
   if(a){var mv=kmh>3&&brg>=0;a.style.display=mv?'block':'none';if(mv)a.style.transform='rotate('+brg+'deg)';}
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#4ade80';
-  if(follow)map.panTo(pos,{animate:true,duration:.5});
 };
+// 2.15: animation - dot glides, map follows it, map turns with the driving direction (heading up)
+var ani={cur:null,from:null,to:null,t0:0,t1:0,dur:1000,hdg:0,rot:0};
+HU=ls('hu','0')=='1';
+function setHU(h){HU=h;lw('hu',h?'1':'0');document.documentElement.classList.toggle('hu',h);$('cmp').classList.toggle('act',h);$('cmpT').textContent=h?'▲':'N';
+ if(!h){ani.rot=0;$('rot').style.transform='';}if(h)map.dragging.disable();else map.dragging.enable();fitMap();map.invalidateSize();if(h&&!follow)setFollow(true);}
+$('cmp').onclick=function(){setHU(!HU);};
+function tick(){var t=performance.now();
+ if(ani.to&&me){var k=Math.min(1,(t-ani.t0)/ani.dur),la=ani.from[0]+(ani.to[0]-ani.from[0])*k,lo=ani.from[1]+(ani.to[1]-ani.from[1])*k;
+  if(!ani.cur||Math.abs(la-ani.cur[0])>1e-8||Math.abs(lo-ani.cur[1])>1e-8){ani.cur=[la,lo];me.setLatLng(ani.cur);}
+  if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();if(Math.abs(cp.x-sz.x/2)+Math.abs(cp.y-sz.y/2)>.6)map.setView(ani.cur,map.getZoom(),{animate:false});}}
+ var goal=HU?-ani.hdg:0,d=((goal-ani.rot+540)%360)-180;
+ if(Math.abs(d)>.05){ani.rot+=d*.12;if(!HU&&Math.abs(ani.rot)<.1)ani.rot=0;$('rot').style.transform=ani.rot?'rotate('+ani.rot.toFixed(2)+'deg)':'';}
+ $('cmpS').style.transform='rotate('+ani.rot.toFixed(1)+'deg)';
+ requestAnimationFrame(tick);}
+requestAnimationFrame(tick);
 window.ctUpd=function(t,p){var u=$('upd');if(!t){return;}u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
 window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
+if(HU)setTimeout(function(){setHU(true);},300);
 new MutationObserver(function(){setTimeout(function(){fitMap();map.invalidateSize();},50);}).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
 window.addEventListener('resize',function(){fitMap();map.invalidateSize();});
 // 2.10: mouse wheel from the remote page (screen pixels 1920x720)
-window.ctWheel=function(d,x,y){var r=document.getElementById('mapi').getBoundingClientRect();var cx=(x/DPR-r.left)*(MS?DPR:1),cy=(y/DPR-r.top)*(MS?DPR:1);
+window.ctWheel=function(d,x,y){if(HU){map.setZoom(Math.max(map.getMinZoom(),Math.min(map.getMaxZoom(),map.getZoom()+d))); return;}var r=document.getElementById('mapi').getBoundingClientRect();var cx=(x/DPR-r.left)*(MS?DPR:1),cy=(y/DPR-r.top)*(MS?DPR:1);
  if(cx<0||cy<0)return;map.setZoomAround(map.containerPointToLatLng([cx,cy]),Math.max(map.getMinZoom(),Math.min(map.getMaxZoom(),map.getZoom()+d)))};
 </script>
 </body></html>
