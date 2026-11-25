@@ -175,6 +175,7 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 #scl{left:calc(var(--bw) + var(--e)*2)!important;bottom:calc(var(--e) + 6px)!important;font:italic 700 16px var(--num)!important;letter-spacing:.1em!important}
 #tw{border-radius:var(--r)!important}#tw b{font-style:italic!important}
 .b.tap,.pill.tap,#cmp.tap,#menu button.tap,#spw button.tap{transform:scale(.93)!important;box-shadow:0 0 0 3px var(--acc),0 0 22px rgba(59,156,255,.7)!important;background:rgba(59,156,255,.35)!important}
+.me::after{content:"";position:absolute;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%}   /* 2.46: bigger tap area on the blue dot */
 </style></head><body>
 <div id="top">
   <div id="title">CORE DASH<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -195,6 +196,9 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
   <button id="mAz">Auto zoom: on</button>
   <button id="mSpw">Speed warning: on</button>
   <button id="mSpwE">Speed warning settings</button>
+  <button id="mTrk">Track: on</button>
+  <button id="mTrkL">Track length: 5 km</button>
+  <button id="mTrkC">Clear track</button>
   <button id="mOvl">Place names: on</button>
   <button id="mCar">Show Mojave: on</button>
   <button id="mBle">Bluetooth ESP: on</button>
@@ -393,11 +397,27 @@ function spwTick(p,kmh,hdg){if(!p)return;
  e.classList.toggle('over',!!over);$('spd').classList.toggle('over',!!over);lb.classList.toggle('over',!!over);
  if(over&&(!spwOver||Date.now()-spwLast>12000)){ton();spwLast=Date.now();var sp=$('spd');sp.classList.remove('pump');void sp.offsetWidth;sp.classList.add('pump');}spwOver=!!over;}
 var fahrt=false;   // 2.23: GPS noise while parked (e.g. 4 km/h) -> 0; driving starts above 7 km/h, ends below 4 km/h
+/* 2.46: driven track as a line; tap the blue dot = line on / off; length in the menu */
+var TRKL=[1,2,5,10,25,50,100,0],trkOn=ls('trk','1')=='1',trkLen=+ls('trkL','5'),trkP=[];
+try{trkP=JSON.parse(ls('trkP','[]'))||[];}catch(e){trkP=[];}
+var trkC=L.polyline([],{color:'#000',opacity:.55,weight:10,interactive:false,lineCap:'round',lineJoin:'round'}),trkL=L.polyline([],{color:'#3b9cff',opacity:.95,weight:5,interactive:false,lineCap:'round',lineJoin:'round'}),trkN=0;
+function trkCut(){if(trkLen>0){var d=0,i=trkP.length-1;for(;i>0;i--){d+=L.latLng(trkP[i]).distanceTo(L.latLng(trkP[i-1]));if(d>trkLen*1000)break;}if(i>0)trkP=trkP.slice(i);}if(trkP.length>20000)trkP=trkP.slice(-20000);}
+function trkDraw(){trkC.setLatLngs(trkP);trkL.setLatLngs(trkP);}
+function trkSave(){lw('trkP',JSON.stringify(trkP));}
+function trkUi(){$('mTrk').textContent='Track: '+(trkOn?'on':'off');$('mTrkL').textContent='Track length: '+(trkLen?trkLen+' km':'all');}
+function setTrk(on,hint){trkOn=on;lw('trk',on?'1':'0');if(on){trkC.addTo(map);trkL.addTo(map);trkDraw();}else{map.removeLayer(trkC);map.removeLayer(trkL);}trkUi();
+ if(hint){var h=$('azh');h.textContent='TRACK '+(on?'ON':'OFF');h.classList.add('on');clearTimeout(h._t);h._t=setTimeout(function(){h.classList.remove('on')},1500);}}
+function trkAdd(lat,lon,acc,gps){if(!gps||!fahrt||(acc>0&&acc>30))return;var q=[Math.round(lat*1e5)/1e5,Math.round(lon*1e5)/1e5],l=trkP[trkP.length-1];
+ if(l&&L.latLng(l).distanceTo(L.latLng(q))<8)return;trkP.push(q);trkCut();if(trkOn)trkDraw();if(++trkN%15==0)trkSave();}
+$('mTrk').onclick=function(){setTrk(!trkOn);};
+$('mTrkL').onclick=function(){var i=TRKL.indexOf(trkLen);trkLen=TRKL[(i+1)%TRKL.length];lw('trkL',String(trkLen));trkCut();trkDraw();trkSave();trkUi();};
+$('mTrkC').onclick=function(){trkP=[];trkDraw();trkSave();};
+setTrk(trkOn);window.addEventListener('pagehide',trkSave);setInterval(trkSave,60000);
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   if(kmh>=0){if(fahrt?kmh<4:kmh<7){fahrt=false;kmh=0;}else fahrt=true;}
   if(!fahrt&&pos&&ani.cur){var dm=L.latLng(lat,lon).distanceTo(L.latLng(ani.cur[0],ani.cur[1]));if(dm<Math.max(8,acc>0?acc:8)){lat=ani.cur[0];lon=ani.cur[1];}}   // parked: dot stays still
   pos=[lat,lon];$('nopos').style.display='none';
-  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i><u><svg viewBox="-22 -22 44 44" width="44" height="44"><path d="M0,-19 L14,15 L0,7 L-14,15Z" fill="#3b82f6" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></u></div>',iconSize:[0,0]}),interactive:false}).addTo(map);ani.cur=pos.slice();}
+  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i><u><svg viewBox="-22 -22 44 44" width="44" height="44"><path d="M0,-19 L14,15 L0,7 L-14,15Z" fill="#3b82f6" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></u></div>',iconSize:[0,0]}),interactive:true,bubblingMouseEvents:false}).addTo(map);me.on('click',function(){setTrk(!trkOn,1);});ani.cur=pos.slice();}
   // 2.15: smooth - glide from where the dot is now to the new fix over the time between fixes
   var t=performance.now();ani.dur=ani.t1?Math.max(300,Math.min(1500,t-ani.t1)):1000;ani.from=ani.cur?ani.cur.slice():pos.slice();ani.to=pos.slice();ani.t0=t;ani.t1=t;
   var a=me.getElement()&&me.getElement().querySelector('b');
@@ -406,6 +426,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#60a5fa';
+  trkAdd(lat,lon,acc,gps);
   spdSet(kmh>0?kmh:0,acc,gps);
   spwTick([lat,lon],kmh>0?kmh:0,brg>=0?brg:null);
   trfTick([lat,lon],fahrt&&brg>=0?brg:null);
