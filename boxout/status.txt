@@ -1,8 +1,6 @@
-Stand: 2026-11-25 15:56:20
+Stand: 2026-11-25 20:55:39
 App: 2.14
-IP: 192.168.178.235
-WLAN: WLAN Media
-Wifi is connected to "Media"
-
-### Exit-Code: 0
+IP: Box-IP
+WLAN: 
+Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 39720): connect failed: ECONNREFUSED (Connection refused)
 Fernwartung: 
