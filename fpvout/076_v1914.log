@@ -1,0 +1,11 @@
+== 076_v1914 on mojave-fpv, 2026-11-25 12:43:35, FPV V1.8.8 ==
+before {"ping": 4, "mb": 4, "vd": 180, "vm": 30, "how": "estimated", "jb": 26, "dec": 1.8, "fps": 58, "drop": 0, "res": "1280x720", "lite": 1, "pip": 0, "hz": 60, "impl": "", "hw": null}
+before {"ping": 14, "mb": 4, "vd": 180, "vm": 33, "how": "estimated", "jb": 37, "dec": 1.8, "fps": 62, "drop": 0, "res": "1280x720", "lite": 1, "pip": 0, "hz": 60, "impl": "", "hw": null}
+before {"ping": 7, "mb": 4, "vd": 190, "vm": 40, "how": "estimated", "jb": 27, "dec": 2.4, "fps": 61, "drop": 0, "res": "1280x720", "lite": 1, "pip": 0, "hz": 60, "impl": "", "hw": null}
+VERSION = "V1.9.14"
+active
+active
+1
+[100%] done
+
+== exit code 0, 16.9 s ==
