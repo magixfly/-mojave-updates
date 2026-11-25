@@ -1,10 +1,11 @@
 {
-  "fw": "V2.45",
+  "fw": "V2.46",
   "board": "ESP32-S3-Touch-LCD-2",
   "datei": "Navi_update.bin",
   "groesse": 1385088,
-  "md5": "92bb8778f28410cfeafa76a800b8326f",
+  "md5": "8014d4ba86c9d4a2908ea8301b3d1897",
   "neu": [
+    "V2.46: shared area list on again (list from the PC map centre, tiles from PC / tracker first, new places reported, aerial tiles outside the list cleaned once) - config areas3 (1 on, 0 off)",
     "V2.45: ghost touches while holding the case - NET only switches Wi-Fi on (back to MT12 automatically when armed); standby by touch only by holding the clock, not the middle of the map",
     "V2.44: V2.43 touch mirroring undone (NET hit the zoom buttons); no invisible zoom buttons on the logo screen; yellow touch ring on every screen; config touch_mirror (0 off, 1 on)",
     "V2.43: touch mirroring for the rotated picture (turned out wrong - undone in V2.44)",
