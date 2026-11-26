@@ -1,0 +1,5 @@
+### 074_perf_adb  –  2026-11-26 17:44:05
+### Box direkt (App 2.47, 192.168.29.25)
+
+Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 39220): connect failed: ECONNREFUSED (Connection refused)
+### Dauer 0 s
