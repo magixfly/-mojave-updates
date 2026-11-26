@@ -176,6 +176,10 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 #tw{border-radius:var(--r)!important}#tw b{font-style:italic!important}
 .b.tap,.pill.tap,#cmp.tap,#menu button.tap,#spw button.tap{transform:scale(.93)!important;box-shadow:0 0 0 3px var(--acc),0 0 22px rgba(59,156,255,.7)!important;background:rgba(59,156,255,.35)!important}
 .me::after{content:"";position:absolute;left:-30px;top:-30px;width:60px;height:60px;border-radius:50%}   /* 2.46: bigger tap area on the blue dot */
+/* 2.47: speed - no live blur behind the panels (the box GPU re-blurred every frame while the map moves); panels a bit more opaque instead */
+*{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+:root{--panel:linear-gradient(180deg,rgba(28,34,44,.93),rgba(6,8,11,.93))}
+.pill,.b,#cmp,#spd,#mjf{will-change:auto}
 </style></head><body>
 <div id="top">
   <div id="title">CORE DASH<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -400,7 +404,7 @@ var fahrt=false;   // 2.23: GPS noise while parked (e.g. 4 km/h) -> 0; driving s
 /* 2.46: driven track as a line; tap the blue dot = line on / off; length in the menu */
 var TRKL=[1,2,5,10,25,50,100,0],trkOn=ls('trk','1')=='1',trkLen=+ls('trkL','5'),trkP=[];
 try{trkP=JSON.parse(ls('trkP','[]'))||[];}catch(e){trkP=[];}
-var trkC=L.polyline([],{color:'#000',opacity:.55,weight:10,interactive:false,lineCap:'round',lineJoin:'round'}),trkL=L.polyline([],{color:'#3b9cff',opacity:.95,weight:5,interactive:false,lineCap:'round',lineJoin:'round'}),trkN=0;
+var trkC=L.polyline([],{smoothFactor:2,color:'#000',opacity:.55,weight:10,interactive:false,lineCap:'round',lineJoin:'round'}),trkL=L.polyline([],{smoothFactor:2,color:'#3b9cff',opacity:.95,weight:5,interactive:false,lineCap:'round',lineJoin:'round'}),trkN=0;
 function trkCut(){if(trkLen>0){var d=0,i=trkP.length-1;for(;i>0;i--){d+=L.latLng(trkP[i]).distanceTo(L.latLng(trkP[i-1]));if(d>trkLen*1000)break;}if(i>0)trkP=trkP.slice(i);}if(trkP.length>20000)trkP=trkP.slice(-20000);}
 function trkDraw(){trkC.setLatLngs(trkP);trkL.setLatLngs(trkP);}
 function trkSave(){lw('trkP',JSON.stringify(trkP));}
@@ -444,7 +448,7 @@ function tick(){var t=performance.now();
   if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();if(Math.abs(cp.x-sz.x/2)+Math.abs(cp.y-sz.y/2)>.6)map.setView(ani.cur,map.getZoom(),{animate:false});}}
  var goal=HU?-ani.hdg:0,d=((goal-ani.rot+540)%360)-180;
  if(Math.abs(d)>.05){ani.rot+=d*.12;if(!HU&&Math.abs(ani.rot)<.1)ani.rot=0;$('rot').style.transform=ani.rot?'rotate('+ani.rot.toFixed(2)+'deg)':'';}
- $('cmpS').style.transform='rotate('+ani.rot.toFixed(1)+'deg)';
+ var cr=ani.rot.toFixed(1);if(cr!==ani.cr){ani.cr=cr;$('cmpS').style.transform='rotate('+cr+'deg)';}
  requestAnimationFrame(tick);}
 requestAnimationFrame(tick);
 // 2.19: auto zoom by speed (only while following); + / - pause it for 30 s
