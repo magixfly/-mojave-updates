@@ -1,0 +1,5 @@
+### 073_perf  –  2026-11-26 17:40:19
+### Box direkt (App 2.47, 100.98.59.36)
+
+Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 37752): connect failed: ECONNREFUSED (Connection refused)
+### Dauer 0 s
