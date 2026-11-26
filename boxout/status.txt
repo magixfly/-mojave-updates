@@ -1,9 +1,8 @@
-Stand: 2026-11-26 18:08:17
-App: 2.50
-IP: 100.98.59.36
+Stand: 2026-11-26 18:13:28
+App: 2.51
+IP: 192.168.29.25
 WLAN: 
-2026-11-26T17:41:26.631720 - [wlan1] TetheredState got CMD_TETHER_CONNECTION_CHANGED
-Failed to write while dumping service tethering: Broken pipe
+wlan1 - TetheredState - lastError = 0
 
 ### Exit-Code: 0
 Fernwartung: 
