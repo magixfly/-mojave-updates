@@ -180,6 +180,17 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
 :root{--panel:linear-gradient(180deg,rgba(28,34,44,.93),rgba(6,8,11,.93))}
 .pill,.b,#cmp,#spd,#mjf{will-change:auto}
+/* 2.49: speed - the box WebView rasterises in software: no blurred shadows, no carbon pattern, no glow; flat panels with a thin edge */
+.pill,.b,#cmp,#spd,#mjf,#menu,#trf,#spw,#azh,#tw{background:rgba(10,13,18,.94)!important;box-shadow:none!important;border:1px solid rgba(255,255,255,.16)!important}
+#net,#esp,#maps,#fpvs{box-shadow:inset 4px 0 0 currentColor!important}
+.b.act{box-shadow:inset 0 -4px 0 var(--acc)!important}
+#muteB.off{box-shadow:inset 0 -3px 0 #ff4d4d!important}
+#leds i.lb,#leds i.ly,#leds i.lr{box-shadow:none!important}#leds i{transition:none!important;transform:none!important}
+*{text-shadow:none!important}
+#scl,#zlv{text-shadow:0 0 2px #000,0 0 2px #000!important}
+#top{background:linear-gradient(rgba(0,0,0,.65),transparent)!important}
+.b,.pill,#cmp,#menu button,#spw button,#tw{transition:none!important}
+.b.tap,.pill.tap,#cmp.tap,#menu button.tap,#spw button.tap{transform:none!important;box-shadow:inset 0 0 0 3px var(--acc)!important;background:rgba(59,156,255,.35)!important}
 </style></head><body>
 <div id="top">
   <div id="title">CORE DASH<small><span id="ver"></span> · <span id="uhr"></span></small></div>
