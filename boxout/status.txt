@@ -1,6 +1,8 @@
-Stand: 2026-11-26 17:25:52
-App: 2.46
+Stand: 2026-11-26 17:32:30
+App: 2.47
 IP: 172.20.10.14
-WLAN: 
-Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43284): connect failed: ECONNREFUSED (Connection refused)
+WLAN: WLAN XVII
+Wifi is connected to "XVII"
+
+### Exit-Code: 0
 Fernwartung: 
