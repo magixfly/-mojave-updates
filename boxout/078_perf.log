@@ -1,0 +1,39 @@
+### 078_perf  –  2026-11-26 18:00:14
+### Box direkt (App 2.48, 172.20.10.14)
+
+5555
+35
+== top
+  Mem:  7681088K total,  7448568K used,   232520K free,   549916K buffers
+ Swap:  4194300K total,   240560K used,  3953740K free,  2256180K cached
+800%cpu 172%user   1%nice  93%sys 504%idle   1%iow  20%irq  11%sirq   0%host
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+ 4988 u0_i9007     10 -10 313G 285M 146M S 95.5   3.8   1:03.14 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+ 4824 u0_a210      10 -10  39G 436M 217M S 32.5   5.8   0:31.03 at.magixfly.coretracker
+ 1373 system       -2   0  11G  52M  28M S 24.0   0.6   5:57.59 surfaceflinger
+ 1660 mediacodec   20   0  92M 9.3M 3.5M S 12.0   0.1   2:10.31 media.codec hw/android.hardware.media.omx@1.0-service
+ 1596 system       18  -2  19G 331M 162M S 10.5   4.4   5:44.76 system_server
+ 1069 root         RT -20  99M 4.4M 2.7M S  8.5   0.0   1:55.45 sdCarplaySvc -c sd_msm6350
+ 1606 system       20   0  10G 6.0M 3.7M S  7.5   0.0   0:54.18 cnss_diag -q -f -t HELIUM
+ 3024 bluetooth    20   0  15G 127M  59M S  7.0   1.6   2:12.60 com.android.bluetooth
+ 2358 root         20   0  60M 1.0M 120K S  5.5   0.0   2:02.03 sdsdk816
+ 1287 system       -3  -8  11G  11M 8.5M S  5.0   0.1   1:47.14 vendor.qti.hardware.display.composer-service
+== load
+4.32 2.99 3.69 12/4070 6035
+== mem
+		total        used        free      shared     buffers
+Mem:             7501        7268         232          90         537
+-/+ buffers/cache:           6731         769
+== dns
+ping basemap.at -1096 ms
+== log
+11-26 18:00:11.669  1767  2644 D LOWI-9.0.0.79: [LOWIScanResultReceiver] Send scan meas to listener
+11-26 18:00:11.669  1767  2644 D LOWI-9.0.0.79: [LOWIScanResultReceiver] Enter passive listening mode
+11-26 18:00:11.670  1767  1858 D LOWI-9.0.0.79: [LOWIControllerExtn] sendLOWILpDiscoveryScanResponse: Not a discovery scan response
+11-26 18:00:18.596  1767  2644 D LOWI-9.0.0.79: [LOWIScanResultReceiver] Send scan meas to listener
+11-26 18:00:18.596  1767  2644 D LOWI-9.0.0.79: [LOWIScanResultReceiver] Enter passive listening mode
+11-26 18:00:18.596  1767  1858 D LOWI-9.0.0.79: [LOWIControllerExtn] sendLOWILpDiscoveryScanResponse: Not a discovery scan response
+
+### Exit-Code: 0
+
+### Dauer 5 s
