@@ -1,0 +1,17 @@
+### 082_cpu  –  2026-11-26 18:15:33
+### Box direkt (App 2.51, 192.168.29.25)
+
+app versionName=2.51
+800%cpu 131%user   2%nice  98%sys 542%idle   0%iow  20%irq   6%sirq   0%host
+  PID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ ARGS
+16212 u0_a210      10 -10  39G 378M 159M S 54.0   5.0   0:59.32 at.magixfly.coretracker
+16315 u0_i9011     10 -10 313G 211M 128M S 30.6   2.8   0:33.23 com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
+ 1373 system       -2 -20  11G  51M  29M R 28.0   0.6   8:24.90 surfaceflinger
+ 3024 bluetooth    20   0  15G 137M  59M S 14.0   1.8   4:08.23 com.android.bluetooth
+ 1660 mediacodec   20   0  92M 7.6M 4.7M S 13.0   0.1   2:59.27 media.codec hw/android.hardware.media.omx@1.0-service
+ 1596 system       18  -2  19G 355M 184M S 12.6   4.7   7:44.64 system_server
+1.60 1.85 2.78 11/4061 18197
+
+### Exit-Code: 0
+
+### Dauer 3 s
