@@ -191,6 +191,8 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 #top{background:linear-gradient(rgba(0,0,0,.65),transparent)!important}
 .b,.pill,#cmp,#menu button,#spw button,#tw{transition:none!important}
 .b.tap,.pill.tap,#cmp.tap,#menu button.tap,#spw button.tap{transform:none!important;box-shadow:inset 0 0 0 3px var(--acc)!important;background:rgba(59,156,255,.35)!important}
+#cmp{touch-action:none}   /* 2.52: the browser must not take over the compass drag (it broke off) */
+#net{width:auto!important;min-width:0;max-width:420px}#net svg{width:22px!important;height:22px!important}   /* 2.52: connection pill only as wide as its text, smaller icons */
 </style></head><body>
 <div id="top">
   <div id="title">CORE DASH<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -477,7 +479,9 @@ function hint(t){var h=$('azh');h.textContent=t;h.classList.add('on');clearTimeo
  function ang(e){var b=c.getBoundingClientRect();return Math.atan2(e.clientY-(b.top+b.height/2),e.clientX-(b.left+b.width/2))*180/Math.PI;}
  c.addEventListener('pointerdown',function(e){st={a:ang(e),r:HU?ani.rot:manRot,x:e.clientX,y:e.clientY,drag:false};try{c.setPointerCapture(e.pointerId);}catch(x){}e.preventDefault();});
  c.addEventListener('pointermove',function(e){if(!st)return;if(!st.drag&&Math.abs(e.clientX-st.x)+Math.abs(e.clientY-st.y)<10)return;st.drag=true;
-  var r=st.r+(ang(e)-st.a);manRot=((r%360)+360)%360;if(manRot>180)manRot-=360;if(HU){HU=false;lw('hu','0');rotMode();}if(!st.big){st.big=1;rotMode();}ani.rot=manRot;$('rot').style.transform='rotate('+manRot.toFixed(1)+'deg)';});
+  var r=st.r+(ang(e)-st.a);manRot=((r%360)+360)%360;if(manRot>180)manRot-=360;if(HU){HU=false;lw('hu','0');rotMode();}if(!st.big){st.big=1;rotMode();}ani.rot=manRot;
+  if(!st.raf)st.raf=requestAnimationFrame(function(){if(st)st.raf=0;$('rot').style.transform='rotate('+manRot.toFixed(1)+'deg)';$('cmpS').style.transform='rotate('+manRot.toFixed(1)+'deg)';});});   // 2.52: one update per frame
+ c.addEventListener('pointercancel',function(){if(!st)return;var d=st.drag;st=null;if(d)setMan(manRot);});   // 2.52: Android cancelled the gesture - keep the angle
  c.addEventListener('pointerup',function(){if(!st)return;var d=st.drag;st=null;if(d){setMan(manRot);return;}
   if(manRot){setMan(0);}else setHU(!HU);});
 })();
