@@ -1,9 +1,8 @@
-Stand: 2026-11-26 18:03:03
-App: 2.49
-IP: 172.20.10.14
+Stand: 2026-11-26 18:08:17
+App: 2.50
+IP: 100.98.59.36
 WLAN: 
-Wifi is connected to "XVII"
-    2026-11-26T17:41:26.631720 - [wlan1] TetheredState got CMD_TETHER_CONNECTION_CHANGED
+2026-11-26T17:41:26.631720 - [wlan1] TetheredState got CMD_TETHER_CONNECTION_CHANGED
 Failed to write while dumping service tethering: Broken pipe
 
 ### Exit-Code: 0
