@@ -1,0 +1,16 @@
+### 072_ts_chk  –  2026-11-26 17:35:36
+### Box direkt (App 2.47, 172.20.10.14)
+
+    inet 127.0.0.1/8 scope host lo
+    inet 172.20.10.14/28 brd 172.20.10.15 scope global wlan0
+    inet 100.78.120.103/28 scope global rmnet_data2
+    inet 100.98.59.36/32 scope global tun0
+VPN&VALIDATED&NOT_ROAMING&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=23850Kbps LinkDnBandwidth>=23850Kbps Specifier: <TelephonyNetworkSpecifier [mSubId = 2]> SubscriptionIds: {2} UnderlyingNetworks: Null]}  factorySerialNumber=6}
+VPN&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED RequestorUid: 1000 RequestorPkg: android UnderlyingNetworks: Null] ]
+VPN&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Forbidden: LOCAL_NETWORK Uid: 1000 RequestorUid: 1000 RequestorPkg: android UnderlyingNetworks: Null] ]
+Failed to write while dumping service connectivity: Broken pipe
+com.tailscale.ipn
+
+### Exit-Code: 0
+
+### Dauer 0 s
