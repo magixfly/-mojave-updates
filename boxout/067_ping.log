@@ -1,0 +1,5 @@
+### 067_ping  –  2026-11-26 08:14:30
+### Box direkt (App 2.46, Box-IP)
+
+Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 44720): connect failed: ECONNREFUSED (Connection refused)
+### Dauer 0 s
