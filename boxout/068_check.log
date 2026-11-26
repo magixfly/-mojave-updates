@@ -1,0 +1,12 @@
+### 068_check  –  2026-11-26 17:27:57
+### Box direkt (App 2.46, 172.20.10.14)
+
+Thu Nov 26 17:27:57 CET 2026
+uid=0(root) gid=0(root) groups=0(root),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),3012(readtracefs) context=u:r:su:s0
+    inet 127.0.0.1/8 scope host lo
+    inet 172.20.10.14/28 brd 172.20.10.15 scope global wlan0
+    inet 100.78.120.103/28 scope global rmnet_data2
+
+### Exit-Code: 0
+
+### Dauer 0 s
