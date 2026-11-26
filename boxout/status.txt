@@ -1,8 +1,9 @@
-Stand: 2026-11-26 19:45:00
+Stand: 2026-11-26 19:55:16
 App: 2.52
 IP: 192.168.29.25
 WLAN: Hotspot an
 wlan1 - TetheredState - lastError = 0
+Failed to write while dumping service tethering: Broken pipe
 
 ### Exit-Code: 0
 Fernwartung: 
