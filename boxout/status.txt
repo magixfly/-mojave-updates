@@ -1,6 +1,6 @@
-Stand: 2026-11-26 08:14:32
+Stand: 2026-11-26 17:25:52
 App: 2.46
-IP: Box-IP
+IP: 172.20.10.14
 WLAN: 
-Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 44736): connect failed: ECONNREFUSED (Connection refused)
-Fernwartung: zuletzt 067_ping.sh
+Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 43284): connect failed: ECONNREFUSED (Connection refused)
+Fernwartung: 
