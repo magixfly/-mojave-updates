@@ -1,8 +1,6 @@
-Stand: 2026-11-26 17:32:30
+Stand: 2026-11-26 17:42:54
 App: 2.47
-IP: 172.20.10.14
-WLAN: WLAN XVII
-Wifi is connected to "XVII"
-
-### Exit-Code: 0
-Fernwartung: 
+IP: 192.168.29.25
+WLAN: Hotspot an
+Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 39058): connect failed: ECONNREFUSED (Connection refused)
+Fernwartung: zuletzt 073_perf.sh
