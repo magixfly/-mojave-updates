@@ -248,7 +248,7 @@ var DPR=window.devicePixelRatio||1,MS=Math.abs(DPR-Math.round(DPR))>.01;   // 2.
 if(MS)document.documentElement.classList.add('ms');
 var HU=false;   // 2.15: heading up
 function sizeRot(){var w=document.getElementById('map'),R=document.getElementById('rot'),W=w.clientWidth,H=w.clientHeight,a=W,b=H;
- if(HU){a=b=Math.ceil(Math.sqrt(W*W+H*H))+4;}R.style.width=a+'px';R.style.height=b+'px';R.style.left=((W-a)/2)+'px';R.style.top=((H-b)/2)+'px'}
+ if(HU||(typeof manRot!="undefined"&&manRot)){a=b=Math.ceil(Math.sqrt(W*W+H*H))+4;}R.style.width=a+'px';R.style.height=b+'px';R.style.left=((W-a)/2)+'px';R.style.top=((H-b)/2)+'px'}
 sizeRot();
 function fitMap(){sizeRot();var w=document.getElementById('rot'),m=document.getElementById('mapi');if(!MS)return;var r0=document.getElementById('map').getBoundingClientRect(),r={left:r0.left+parseFloat(w.style.left||0),top:r0.top+parseFloat(w.style.top||0)},fx=(r.left*DPR)%1,fy=(r.top*DPR)%1;   // 2.12: start on a whole screen pixel
  m.style.left=(-fx/DPR)+'px';m.style.top=(-fy/DPR)+'px';m.style.width=(w.clientWidth*DPR+2)+'px';m.style.height=(w.clientHeight*DPR+2)+'px';m.style.transform='scale('+(1/DPR)+')'}
@@ -380,7 +380,18 @@ window.ctCar=function(lat,lon,kmh,hdg,sats,volt,pct,mah,lq,rssi,mode,age){
   else car.setLatLng([lat,lon]);
   var el=car.getElement()&&car.getElement().firstChild;if(el){el.classList.toggle('old',age>5);el.querySelector('b').style.transform='rotate('+hdg+'deg)';el.querySelector('b').style.display=kmh>2?'block':'none';}
 };
-window.ctNet=function(t){var e=$('net');e.textContent=t||'…';var m=(t||'').match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=!m?'#60a5fa':r>=-60?'#60a5fa':r>=-72?'#f5b13d':'#f87171';};
+/* 2.51: connection icon - Wi-Fi, phone hotspot, own hotspot (+LTE), LTE only */
+var NI={wifi:'<path d="M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="19.5" r="1.6" fill="currentColor"/>',
+ phone:'<rect x="5" y="3" width="10" height="18" rx="2"/><path d="M8 18h4"/><path d="M18 7.5a5 5 0 0 1 0 6M20.5 5a8.5 8.5 0 0 1 0 11"/>',
+ ap:'<path d="M12 11v10M9 21h6"/><circle cx="12" cy="9" r="2" fill="currentColor"/><path d="M7.5 4.5a6.5 6.5 0 0 0 0 9M16.5 4.5a6.5 6.5 0 0 1 0 9M4.5 2a10.5 10.5 0 0 0 0 14M19.5 2a10.5 10.5 0 0 1 0 14"/>',
+ lte:'<path d="M4 20v-3M9 20v-7M14 20v-11M19 20v-15" stroke-width="3"/>',
+ none:'<path d="M3 3l18 18M2 9a15 15 0 0 1 6-3.5M22 9a15 15 0 0 0-9-4M12 19.5h.01"/>'};
+function nIco(k){return '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none">'+NI[k]+'</svg>';}
+window.ctNet=function(t){t=t||'';var k='',p=t.indexOf('|');if(p>0&&p<12){k=t.slice(0,p);t=t.slice(p+1);}var e=$('net');
+ if(!k){e.textContent=t||'…';}
+ else{var lte=k.indexOf('lte')>=0,ap=k.indexOf('ap')==0,txt=k=='lte'?'LTE · SIM':ap?(t.replace(/^no Wi-Fi$/i,'Hotspot')+(lte?' · LTE':'')):k=='none'?'Offline':t;
+  e.innerHTML=(ap?nIco('ap')+(lte?nIco('lte'):''):nIco(k=='none'?'none':k))+'<span style="overflow:hidden;text-overflow:ellipsis">'+txt.replace(/</g,'&lt;')+'</span>';}
+ var m=t.match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=k=='none'?'#f87171':!m?'#60a5fa':r>=-60?'#60a5fa':r>=-72?'#f5b13d':'#f87171';};
 window.ctMaps=function(pct,mb,st,on){$('maps').style.display=(pct>=100||st=='complete')?'none':'';   // 2.35: hidden when all maps are loaded
  $('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
 /* 2.34: race LED bar */
@@ -455,16 +466,28 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
 // 2.15: animation - dot glides, map follows it, map turns with the driving direction (heading up)
 var ani={cur:null,from:null,to:null,t0:0,t1:0,dur:1000,hdg:0,rot:0};
 HU=ls('hu','0')=='1';
-function setHU(h){HU=h;lw('hu',h?'1':'0');document.documentElement.classList.toggle('hu',h);$('cmp').classList.toggle('act',h);$('cmpT').textContent=h?'▲':'N';
- if(!h){ani.rot=0;$('rot').style.transform='';}if(h)map.dragging.disable();else map.dragging.enable();fitMap();map.invalidateSize();if(h&&!follow)setFollow(true);}
-$('cmp').onclick=function(){setHU(!HU);};
+var manRot=+ls('manRot','0')||0;   // 2.51: map turned by hand (drag the compass)
+function rotMode(){var r=HU||manRot!=0;document.documentElement.classList.toggle('hu',r);$('cmp').classList.toggle('act',r);$('cmpT').textContent=HU?'▲':manRot?'↻':'N';
+ if(!r){ani.rot=0;$('rot').style.transform='';}if(r)map.dragging.disable();else map.dragging.enable();fitMap();map.invalidateSize();if(r&&!follow)setFollow(true);}
+function setHU(h){HU=h;lw('hu',h?'1':'0');if(h){manRot=0;lw('manRot','0');}rotMode();
+ if(h&&!fahrt)hint('HEADING UP WHILE DRIVING · DRAG THE COMPASS TO TURN');}
+function setMan(r){manRot=((r%360)+360)%360;if(manRot>180)manRot-=360;if(Math.abs(manRot)<2)manRot=0;lw('manRot',String(manRot));if(HU){HU=false;lw('hu','0');}rotMode();}
+function hint(t){var h=$('azh');h.textContent=t;h.classList.add('on');clearTimeout(h._t);h._t=setTimeout(function(){h.classList.remove('on')},2500);}
+(function(){var c=$('cmp'),st=null;
+ function ang(e){var b=c.getBoundingClientRect();return Math.atan2(e.clientY-(b.top+b.height/2),e.clientX-(b.left+b.width/2))*180/Math.PI;}
+ c.addEventListener('pointerdown',function(e){st={a:ang(e),r:HU?ani.rot:manRot,x:e.clientX,y:e.clientY,drag:false};try{c.setPointerCapture(e.pointerId);}catch(x){}e.preventDefault();});
+ c.addEventListener('pointermove',function(e){if(!st)return;if(!st.drag&&Math.abs(e.clientX-st.x)+Math.abs(e.clientY-st.y)<10)return;st.drag=true;
+  var r=st.r+(ang(e)-st.a);manRot=((r%360)+360)%360;if(manRot>180)manRot-=360;if(HU){HU=false;lw('hu','0');rotMode();}if(!st.big){st.big=1;rotMode();}ani.rot=manRot;$('rot').style.transform='rotate('+manRot.toFixed(1)+'deg)';});
+ c.addEventListener('pointerup',function(){if(!st)return;var d=st.drag;st=null;if(d){setMan(manRot);return;}
+  if(manRot){setMan(0);}else setHU(!HU);});
+})();
 document.documentElement.classList.add('th-carbon');   // 2.34: only Carbon (Iced glass removed)
 function tick(){var t=performance.now();
  if(ani.to&&me){var k=Math.min(1,(t-ani.t0)/ani.dur),la=ani.from[0]+(ani.to[0]-ani.from[0])*k,lo=ani.from[1]+(ani.to[1]-ani.from[1])*k;
   if(!ani.cur||Math.abs(la-ani.cur[0])>1e-8||Math.abs(lo-ani.cur[1])>1e-8){ani.cur=[la,lo];me.setLatLng(ani.cur);}
   if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();if(Math.abs(cp.x-sz.x/2)+Math.abs(cp.y-sz.y/2)>.6)map.setView(ani.cur,map.getZoom(),{animate:false});}}
- var goal=HU?-ani.hdg:0,d=((goal-ani.rot+540)%360)-180;
- if(Math.abs(d)>.05){ani.rot+=d*.12;if(!HU&&Math.abs(ani.rot)<.1)ani.rot=0;$('rot').style.transform=ani.rot?'rotate('+ani.rot.toFixed(2)+'deg)':'';}
+ var goal=HU?-ani.hdg:manRot,d=((goal-ani.rot+540)%360)-180;
+ if(Math.abs(d)>.05){ani.rot+=d*.12;if(!HU&&!manRot&&Math.abs(ani.rot)<.1)ani.rot=0;$('rot').style.transform=ani.rot?'rotate('+ani.rot.toFixed(2)+'deg)':'';}
  var cr=ani.rot.toFixed(1);if(cr!==ani.cr){ani.cr=cr;$('cmpS').style.transform='rotate('+cr+'deg)';}
  requestAnimationFrame(tick);}
 requestAnimationFrame(tick);
@@ -478,7 +501,7 @@ setInterval(function(){if(!az||!follow||!ani.to||Date.now()<azPause||map._animat
  if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>2500&&map.getZoom()!==z)map.setZoom(z);},500);
 window.ctUpd=function(t,p){if($('menu').classList.contains('open')&&menuT)menuAuto(8000);var u=$('upd');if(!t){return;}var m=t.match(/online (V[\d.]+)/);if(m)$('mUpd').textContent='Check for update · online '+m[1];u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
 window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
-if(HU)setTimeout(function(){setHU(true);},300);
+if(HU||manRot)setTimeout(rotMode,300);   // 2.51
 new MutationObserver(function(){setTimeout(function(){fitMap();map.invalidateSize();},50);}).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
 window.addEventListener('resize',function(){fitMap();map.invalidateSize();});
 // 2.10: mouse wheel from the remote page (screen pixels 1920x720)

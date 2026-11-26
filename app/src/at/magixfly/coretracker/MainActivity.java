@@ -148,6 +148,23 @@ public class MainActivity extends Activity {
 
     volatile String netTxt = "";
     /** V1.43: WLAN der Box bzw. „Hotspot“ (über die lokale Root-Shell, alle 15 s). Prüft dabei auch ADB über WLAN (Fernwartung). */
+    /** 2.51: wifi = Wi-Fi, phone = Wi-Fi that is a phone hotspot (metered), ap = own hotspot (+ ",lte" when the SIM carries it), lte = SIM only, none */
+    String netTyp() {
+        boolean wifi = false, cell = false, metered = false;
+        try {
+            android.net.ConnectivityManager cm = (android.net.ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+            for (android.net.Network nw : cm.getAllNetworks()) {
+                android.net.NetworkCapabilities nc = cm.getNetworkCapabilities(nw);
+                if (nc == null || !nc.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET)) continue;
+                if (nc.hasTransport(android.net.NetworkCapabilities.TRANSPORT_WIFI)) { wifi = true; metered = !nc.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_NOT_METERED); }
+                if (nc.hasTransport(android.net.NetworkCapabilities.TRANSPORT_CELLULAR)) cell = true;
+            }
+        } catch (Throwable t) { }
+        if (wifi) return metered ? "phone" : "wifi";
+        if (HotspotBoot.apOn(this)) return cell ? "ap,lte" : "ap";
+        return cell ? "lte" : "none";
+    }
+
     void netLoop() {
         int n = 0;
         while (true) {
@@ -162,6 +179,7 @@ public class MainActivity extends Activity {
                 else if (teth > 0 && HotspotBoot.apOn(this)) netTxt = "Hotspot" + apBand();
                 else netTxt = "no Wi-Fi";
             } catch (Throwable e) { if (!"ap".equals(e.getMessage())) netTxt = wifiTxt().replace("Box: ", ""); }
+            netTxt = netTyp() + "|" + netTxt.replace("|", " ");   // 2.51: connection type for the icon (wifi / phone hotspot / own hotspot / LTE)
             js("window.ctNet&&ctNet(" + Client.q(netTxt) + ")");
             if ((++n % 2) == 0 && prefs.getBoolean("adbAuto", true)) AdbWifi.ensure(this);   // alle 30 s
             if ((n % 4) == 0) roam();                                                           // V2.03: alle 60 s
