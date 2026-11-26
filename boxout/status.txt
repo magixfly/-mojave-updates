@@ -1,6 +1,10 @@
-Stand: 2026-11-26 17:53:56
-App: 2.47
+Stand: 2026-11-26 17:59:41
+App: 2.48
 IP: 172.20.10.14
-WLAN: kein WLAN → Hotspot
-Shell-Fehler: java.net.ConnectException: failed to connect to /127.0.0.1 (port 5555) from /:: (port 39428): connect failed: ECONNREFUSED (Connection refused)
-Fernwartung: Update 149 → 150
+WLAN: 
+Wifi is connected to "XVII"
+    2026-11-26T17:41:26.631720 - [wlan1] TetheredState got CMD_TETHER_CONNECTION_CHANGED
+Failed to write while dumping service tethering: Broken pipe
+
+### Exit-Code: 0
+Fernwartung: 
