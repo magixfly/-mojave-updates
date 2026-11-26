@@ -321,7 +321,7 @@ function trfLaden(){trfT=Date.now();fetch('/__ctbox/traffic?t='+trfT).then(funct
    return {id:g('id'),t:t,c:c,a:a,road:road,dir:dir.trim(),loc:loc.trim()};});
  }).catch(function(){});}
 function geo(q,cb){if(!q)return cb(null);if(geoC[q]!==undefined)return cb(geoC[q]);geoQ.push([q,cb]);geoRun();}
-function geoRun(){if(geoBusy||!geoQ.length)return;geoBusy=true;var it=geoQ.shift();fetch('/__ctbox/geo?q='+encodeURIComponent(it[0]+', Österreich')).then(function(r){return r.json();}).then(function(j){var v=j&&j[0]?[+j[0].lat,+j[0].lon]:null;geoC[it[0]]=v;lw('geoC',JSON.stringify(geoC));it[1](v);}).catch(function(){it[1](null);}).then(function(){setTimeout(function(){geoBusy=false;geoRun();},1100);});}
+function geoRun(){if(geoBusy||!geoQ.length)return;geoBusy=true;var it=geoQ.shift();fetch('/__ctbox/geo?q='+encodeURIComponent(it[0]+', Österreich')).then(function(r){return r.json();}).then(function(j){var v=j&&j[0]?[+j[0].lat,+j[0].lon]:null;geoC[it[0]]=v;clearTimeout(geoRun.t);geoRun.t=setTimeout(function(){lw('geoC',JSON.stringify(geoC));},5000);it[1](v);}).catch(function(){it[1](null);}).then(function(){setTimeout(function(){geoBusy=false;geoRun();},1100);});}
 function brg(a,b){var f1=a[0]*Math.PI/180,f2=b[0]*Math.PI/180,dl=(b[1]-a[1])*Math.PI/180;return (Math.atan2(Math.sin(dl)*Math.cos(f2),Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl))*180/Math.PI+360)%360;}
 function wdiff(a,b){return Math.abs(((a-b)%360+540)%360-180);}
 function warnTon(){if(stumm)return;cmd('ton2');}
@@ -333,9 +333,15 @@ function trfTick(p,hdg){if(!trfOn||!p)return;if(Date.now()-trfT>120000)trfLaden(
   geo(m.loc,function(L1){if(!L1)return;var dkm=L.latLng(p).distanceTo(L.latLng(L1))/1000;if(dkm>30||dkm<.3)return;if(wdiff(brg(p,L1),hdg)>60)return;   // ahead of me
    geo(m.dir,function(D){if(D&&wdiff(brg(p,D),hdg)>90)return;   // the message is for the other direction
     if(trfWarned[m.id])return;trfWarned[m.id]=1;twShow(m,dkm);});});});}
-function rdrLaden(){if(rdrGeladen)return;fetch('/__ctbox/radars').then(function(r){return r.json();}).then(function(j){rdrGeladen=true;rdrL.clearLayers();
-  (j.elements||[]).forEach(function(n){var mx=n.tags&&n.tags.maxspeed;L.marker([n.lat,n.lon],{icon:L.divIcon({className:'',html:'<div class="rdr">'+(mx&&/^\d+$/.test(mx)?mx:'')+'</div>',iconSize:[0,0]}),interactive:false}).addTo(rdrL);});
- }).catch(function(){});}
+function rdrLaden(){if(rdrGeladen)return;fetch('/__ctbox/radars').then(function(r){return r.json();}).then(function(j){rdrGeladen=true;
+  rdrAll=(j.elements||[]).map(function(n){var mx=n.tags&&n.tags.maxspeed;return [n.lat,n.lon,mx&&/^\d+$/.test(mx)?mx:''];});rdrZeigen();}).catch(function(){});}
+/* 2.50: speed - only the speed cameras in view (zoom 11+, max 120) as markers, not all of Austria at once */
+var rdrAll=[],rdrM={},rdrTm=0;
+function rdrZeigen(){if(!trfOn)return;var z=map.getZoom(),b=map.getBounds().pad(.3),keep={},n=0;
+  if(z>=11)for(var i=0;i<rdrAll.length&&n<120;i++){var r=rdrAll[i];if(!b.contains([r[0],r[1]]))continue;var k=r[0]+','+r[1];keep[k]=1;n++;
+    if(!rdrM[k])rdrM[k]=L.marker([r[0],r[1]],{icon:L.divIcon({className:'',html:'<div class="rdr">'+r[2]+'</div>',iconSize:[0,0]}),interactive:false}).addTo(rdrL);}
+  for(var k in rdrM)if(!keep[k]){rdrL.removeLayer(rdrM[k]);delete rdrM[k];}}
+map.on('moveend zoomend',function(){if(!rdrTm)rdrTm=setTimeout(function(){rdrTm=0;rdrZeigen();},700);});
 function setTrf(on){trfOn=on;lw('trf',on?'1':'0');$('trfB').classList.toggle('act',on);if(on){trfLaden();rdrLaden();rdrL.addTo(map);}else{map.removeLayer(rdrL);$('tw').className='';}}
 $('trfB').onclick=function(){setTrf(!trfOn);};setTrf(trfOn);
 /* --- 2.30: scale bar (map is drawn 1:1 in screen pixels, so one CSS pixel = DPR map pixels) --- */
