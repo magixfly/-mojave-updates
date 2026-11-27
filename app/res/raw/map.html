@@ -295,17 +295,18 @@ function uhr(){var d=new Date();$('uhr').textContent=('0'+d.getHours()).slice(-2
 window.ctInit=function(ver,lat,lon,ble){home=[lat,lon];$('ver').textContent='V'+ver;$('mInfo').textContent='Core Dash V'+ver+' · maps from the shared area list (box memory)';$('mBle').textContent='Bluetooth ESP: '+(ble?'on':'off')+' (restarts app)';};
 /* --- V2.07: AREAS button - areas of the shared list (gebiete.json) as overlay --- */
 var areasOn=ls('areas','0')=='1',areasL=L.layerGroup(),areasVer=null;
+function kreisPts(la,lo,r){var p=[],k=Math.cos(la*Math.PI/180);for(var i=0;i<144;i++){var w=i/144*2*Math.PI;p.push([la+r/111320*Math.cos(w),lo+r/(111320*k)*Math.sin(w)]);}return p;}
 function areasDraw(j){areasL.clearLayers();(j.areas||[]).forEach(function(a){
   var lab=(a.name||a.id||'area')+' · zoom '+(a.zmax||16),col=a.auto?'#ffb020':'#ff3df5',l=null;
-  if(a.type=='circle')l=L.circle([a.lat,a.lon],{radius:a.r,color:col,weight:4,opacity:1,fillColor:col,fillOpacity:.25,interactive:false});
+  if(a.type=='circle')l=L.polygon(kreisPts(a.lat,a.lon,a.r),{color:col,weight:4,opacity:1,fillColor:col,fillOpacity:.25,interactive:false});   // 2.53: circle as polygon - Leaflet clips it to the screen, a huge SVG circle at zoom 19 flickered
   else if(a.type=='rect')l=L.rectangle([[a.s,a.w],[a.n,a.e]],{color:col,weight:4,opacity:1,fillColor:col,fillOpacity:.25,interactive:false});
   else if(a.type=='route'&&a.pts)l=L.polyline(a.pts,{color:'#ff3df5',weight:12,opacity:.55,lineCap:'round',lineJoin:'round',interactive:false});
   if(l){l.bindTooltip(lab,{permanent:true,direction:'center',className:'atip',opacity:.9});areasL.addLayer(l);}});areasFill();}
 // 2.13: fill only when the area is smaller than the screen - inside a big area the map stayed tinted (looked pale)
-function areasFill(){var sz=map.getSize();areasL.eachLayer(function(l){if(!l.getBounds||!l.setStyle||l instanceof L.Polyline&&!(l instanceof L.Polygon)&&!(l instanceof L.Circle))return;var b=l instanceof L.Circle?l.getLatLng().toBounds(l.getRadius()*2):l.getBounds(),p1=map.latLngToContainerPoint(b.getNorthWest()),p2=map.latLngToContainerPoint(b.getSouthEast());var big=Math.abs(p2.x-p1.x)>sz.x*.6||Math.abs(p2.y-p1.y)>sz.y*.6;l.setStyle({fillOpacity:big?.06:.25});});}
+function areasFill(){var sz=map.getSize();areasL.eachLayer(function(l){if(!l.getBounds||!l.setStyle||l instanceof L.Polyline&&!(l instanceof L.Polygon)&&!(l instanceof L.Circle))return;var b=l.getBounds(),p1=map.latLngToContainerPoint(b.getNorthWest()),p2=map.latLngToContainerPoint(b.getSouthEast());var big=Math.abs(p2.x-p1.x)>sz.x*.6||Math.abs(p2.y-p1.y)>sz.y*.6;l.setStyle({fillOpacity:big?.06:.25});});}
 map.on('zoomend',areasFill);
 function zlv(){$('zlv').textContent='Zoom '+map.getZoom();}map.on('zoomend',zlv);zlv();
-function areasLoad(){fetch('/__ctbox/areas?t='+Date.now()).then(function(r){return r.json();}).then(function(j){if(j.ver!==areasVer||!areasL.getLayers().length){areasVer=j.ver;areasDraw(j);}}).catch(function(){});}
+function areasLoad(){fetch('/__ctbox/areas?t='+Date.now()).then(function(r){return r.json();}).then(function(j){var v=JSON.stringify(j.areas||[]);if(v!==areasVer||!areasL.getLayers().length){areasVer=v;areasDraw(j);}}).catch(function(){});}
 function setAreas(on){areasOn=on;lw('areas',on?'1':'0');$('areasB').classList.toggle('act',on);if(on){areasLoad();areasL.addTo(map);}else map.removeLayer(areasL);}
 $('areasB').onclick=function(){setAreas(!areasOn);};
 /* --- 2.33: TRAFFIC - warns actively: ASFINAG message on the motorway I am on, in my direction, ahead within 30 km -> banner + tone; fixed speed cameras on the map --- */
