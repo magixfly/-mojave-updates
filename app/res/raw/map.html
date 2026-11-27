@@ -223,6 +223,8 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 #limB.est{border-style:dashed!important;opacity:.85}
 #limB.over{animation:limp .7s infinite}
 #spd.haslim .num{align-self:flex-start;margin-left:18px}
+#road{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:950;display:none;max-width:46%;padding:8px 18px;border-radius:12px;background:rgba(10,13,18,.94);border:1px solid rgba(255,255,255,.16);color:#fff;font:italic 700 20px var(--num);letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+#road.on{display:block}   /* 2.68: current street name like a car navi */
 </style></head><body>
 <div id="top">
   <div id="title"><span class="t1">CORE</span><span class="t2">DASH</span><small><span id="uhr"></span><span id="ver"></span></small></div>
@@ -266,6 +268,7 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
  <div id="spwRows"></div>
  <div class="r"><button id="spwTest">▶ Test tone</button><button id="spwDef">Suggested values</button><button id="spwOk">Close</button></div>
  <div class="i">Speed limit from OpenStreetMap (road you are on). Without a sign there: Austrian rules - town 50, outside 100, motorway 130 (dashed sign = estimated).</div></div>
+<div id="road"></div>
 <div id="tw"><b id="twT"></b><span id="twC"></span><em id="twD"></em></div>
 <div id="scl"><i></i><span></span></div>
 <div id="nopos">No position from the box – map shows home</div>
@@ -308,7 +311,7 @@ map.on('dragstart drag zoomstart',function(e){if(e.type!=='zoomstart'||handPan)p
 /* 2.37: short tap = zoom (auto zoom pauses 30 s); hold 0.7 s = auto zoom closer / further for good (like the tracker) */
 function azHint(t){var e=$('azh');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(function(){e.classList.remove('on');},2200);}
 function zKnopf(id,d){var el=$(id),tm=null,lang=false;
- el.addEventListener('pointerdown',function(){lang=false;tm=setTimeout(function(){lang=true;azOff=Math.max(-4,Math.min(3,azOff+d));lw('azOff',azOff);azPause=0;azWant=0;
+ el.addEventListener('pointerdown',function(){lang=false;tm=setTimeout(function(){lang=true;azOff=Math.max(-4,Math.min(4,azOff+d*.5));azPause=0;azWant=0;
    azHint('Auto zoom '+(azOff>0?'+':'')+azOff+(azOff>0?' (closer)':azOff<0?' (further out)':' (standard)'));},700);});
  ['pointerup','pointerleave','pointercancel'].forEach(function(ev){el.addEventListener(ev,function(){clearTimeout(tm);});});
  el.onclick=function(){if(lang)return;azPause=Date.now()+30000;if(d>0)map.zoomIn();else map.zoomOut();};}
@@ -465,7 +468,7 @@ var limSeen=0;
 function spwTick(p,kmh,hdg){if(!p)return;
  // 2.62: load the roads around a point 300 m ahead (radius 550 m) and reload when that point is passed - at 150 km/h the old area ran out
  if(fahrt&&(!rdAt||L.latLng(p).distanceTo(L.latLng(rdAt))>260)&&Date.now()-rdT>5000){var q=p;if(hdg!=null){var k=Math.cos(p[0]*Math.PI/180);q=[p[0]+300*Math.cos(hdg*Math.PI/180)/111320,p[1]+300*Math.sin(hdg*Math.PI/180)/(111320*k)];}rdLoad(q);}
- var w=rdWays.length?limFind(p,fahrt?hdg:null):null;if(w){var r=limOf(w.tags||{});limNow=r[0];limEst=r[1];curRef=refN((w.tags||{}).ref);limSeen=Date.now();}else{curRef='';if(limNow&&Date.now()-limSeen>40000)limNow=0;}
+ var w=rdWays.length?limFind(p,fahrt?hdg:null):null;if(w){var r=limOf(w.tags||{});limNow=r[0];limEst=r[1];curRef=refN((w.tags||{}).ref);limSeen=Date.now();curW=w;curHw=(w.tags||{}).highway||'';var tg=w.tags||{},nm=tg.name||tg.ref||'';$('road').textContent=nm;$('road').classList.toggle('on',!!nm&&fahrt);}else{curRef='';if(limNow&&Date.now()-limSeen>40000){limNow=0;curW=null;curHw='';$('road').classList.remove('on');}}
  var e=$('lim');e.classList.toggle('on',!!limNow);e.classList.toggle('est',limEst);$('limV').textContent=limNow||'–';var lb=$('limB');lb.classList.toggle('on',!!limNow);$('spd').classList.toggle('haslim',!!limNow);lb.classList.toggle('est',limEst);$('limBV').textContent=limNow||'–';
  var tol=limNow?(spwT[limNow]!=null?spwT[limNow]:spwT.x):0,over=spwOn&&limNow&&fahrt&&kmh>limNow*(1+tol/100);
  e.classList.toggle('over',!!over);$('spd').classList.toggle('over',!!over);lb.classList.toggle('over',!!over);
@@ -491,12 +494,20 @@ $('mTrkC').onclick=function(){trkP=[];trkDraw();trkSave();};
 setTrk(trkOn);window.addEventListener('pagehide',trkSave);setInterval(trkSave,60000);
 /* 2.55: speed camera warning - fixed camera ahead (max 600 m, within 25 deg of the driving direction) -> banner + tone, once per camera */
 var rdrDone={};
-function rdrWarn(la,lo,kmh){if(!trfOn||!fahrt||!rdrAll.length||kmh<20)return;var k=Math.cos(la*Math.PI/180),best=null,bd=1e9,h=ani.hdg;
- for(var i=0;i<rdrAll.length;i++){var r=rdrAll[i],dy=(r[0]-la)*111320,dx=(r[1]-lo)*111320*k;if(Math.abs(dy)>700||Math.abs(dx)>700)continue;var d=Math.sqrt(dx*dx+dy*dy);if(d>600||d<30)continue;
+function rdrWarn(la,lo,kmh){if(!trfOn||!rdrAll.length)return;var k=Math.cos(la*Math.PI/180),h=ani.hdg,e=$('tw');
+ // 2.68: active camera - distance counts down, at 150 m it stops and beeps again, gone after passing
+ if(rdrAkt){var r=rdrAkt.r,dy=(r[0]-la)*111320,dx=(r[1]-lo)*111320*k,d=Math.sqrt(dx*dx+dy*dy),b=(Math.atan2(dx,dy)*180/Math.PI+360)%360,db=Math.abs(((b-h+540)%360)-180);
+  if(db>100||d>rdrAkt.max+150||d<15){rdrAkt=null;if(e.classList.contains('rdrw'))e.className='';return;}
+  if(d<=150&&!rdrAkt.b2){rdrAkt.b2=1;warnTon();}
+  $('twD').textContent='ahead in '+(rdrAkt.b2?150:Math.round(d/10)*10)+' m';clearTimeout(twTimer);twTimer=setTimeout(function(){e.className='';rdrAkt=null;},20000);return;}
+ if(!fahrt||kmh<20)return;
+ var max=(limNow>=100||/^motorway/.test(curHw))?600:(limNow&&limNow<=50)?300:450,best=null,bd=1e9;   // town 300 m, motorway 600 m
+ for(var i=0;i<rdrAll.length;i++){var r=rdrAll[i],dy=(r[0]-la)*111320,dx=(r[1]-lo)*111320*k;if(Math.abs(dy)>700||Math.abs(dx)>700)continue;var d=Math.sqrt(dx*dx+dy*dy);if(d>max||d<30)continue;
   var b=(Math.atan2(dx,dy)*180/Math.PI+360)%360,db=Math.abs(((b-h+540)%360)-180);if(db>25)continue;var key=r[0]+','+r[1];if(rdrDone[key])continue;if(d<bd){bd=d;best=r;}}
- if(!best)return;rdrDone[best[0]+','+best[1]]=Date.now();
- var e=$('tw');e.className='on rdrw';$('twT').textContent='SPEED CAMERA'+(best[2]?' · '+best[2]+' km/h':'');$('twC').textContent='';$('twD').textContent='ahead in '+Math.round(bd/10)*10+' m';
- clearTimeout(twTimer);twTimer=setTimeout(function(){e.className='';},12000);warnTon();}
+ if(!best)return;rdrDone[best[0]+','+best[1]]=Date.now();rdrAkt={r:best,max:max,b2:bd<=150};
+ e.className='on rdrw';$('twT').textContent='SPEED CAMERA'+(best[2]?' · '+best[2]+' km/h':'');$('twC').textContent='';$('twD').textContent='ahead in '+Math.round(Math.max(bd,150)/10)*10+' m';
+ clearTimeout(twTimer);twTimer=setTimeout(function(){e.className='';rdrAkt=null;},20000);warnTon();}
+var rdrAkt=null,curHw='',curW=null;
 setInterval(function(){var t=Date.now();for(var k in rdrDone)if(t-rdrDone[k]>900000)delete rdrDone[k];},60000);
 /* 2.55: every drive is recorded on the box (GPX) and uploaded to GitHub tracks/, the PC map program fetches it */
 var recB=[],recL=null,recT=0;
@@ -515,8 +526,8 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   // 2.15: smooth - glide from where the dot is now to the new fix over the time between fixes
   var t=performance.now();ani.dur=ani.t1?Math.max(300,Math.min(1500,t-ani.t1)):1000;ani.from=ani.cur?ani.cur.slice():pos.slice();ani.to=pos.slice();ani.t0=t;ani.t1=t;
   var a=me.getElement()&&me.getElement().querySelector('b');
-  if(fahrt&&brg>=0&&kmh>=12){var dh=((brg-ani.hdg+540)%360)-180;ani.hdg=(ani.hdg+dh*(Math.abs(dh)>60?1:.35)+360)%360;}   // 2.54: smooth the GPS heading (it jumps a few degrees each second)
-  if(a){var mv=fahrt&&brg>=0;var mr=me.getElement().firstChild;mr.classList.toggle('mv',mv);if(mv)mr.querySelector('u').style.transform='rotate('+brg+'deg)';}
+  if(fahrt&&brg>=0&&kmh>=12){var dh=((brg-ani.hdg+540)%360)-180;ani.hdg=(ani.hdg+dh*(Math.abs(dh)>60?1:kmh<60?.6:.35)+360)%360;}   // 2.54: smooth the GPS heading (it jumps a few degrees each second)
+  if(a){var mv=fahrt&&brg>=0;var mr=me.getElement().firstChild;if(mv){ani.brgT=brg;if(ani.icn==null)ani.icn=brg;}mr.classList.toggle('mv',mv||ani.icn!=null);}   // 2.68: the car stays when standing (last direction)
   ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#60a5fa';
@@ -552,10 +563,12 @@ var feT=0;function folgen(px,py){if(zg)return;if(Math.abs(px)+Math.abs(py)>400){
 function tick(){var t=performance.now();
  if(ani.to&&me){var k=Math.min(1,(t-ani.t0)/ani.dur),la=ani.from[0]+(ani.to[0]-ani.from[0])*k,lo=ani.from[1]+(ani.to[1]-ani.from[1])*k;
   if(!ani.cur||Math.abs(la-ani.cur[0])>1e-8||Math.abs(lo-ani.cur[1])>1e-8){ani.cur=[la,lo];me.setLatLng(ani.cur);}
-  if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();var px=Math.round(cp.x-sz.x/2),py=Math.round(cp.y-sz.y/2);if(px||py)folgen(px,py);}}
+  if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();var oT=(HU&&fahrt)?.24*document.getElementById('map').clientHeight*(MS?DPR:1):0;ani.off=(ani.off||0)+(oT-(ani.off||0))*.04;var ra=ani.rot*Math.PI/180;   // 2.68: navi view - car sits low, more road ahead
+   var px=Math.round(cp.x-sz.x/2-ani.off*Math.sin(ra)),py=Math.round(cp.y-sz.y/2-ani.off*Math.cos(ra));if(px||py)folgen(px,py);}}
+ if(ani.brgT!=null&&me){var di=((ani.brgT-ani.icn+540)%360)-180;if(Math.abs(di)>.3){ani.icn=(ani.icn+di*.12+360)%360;var u=me.getElement()&&me.getElement().querySelector('u');if(u)u.style.transform='rotate('+ani.icn.toFixed(1)+'deg)';}}   // 2.68: car turns smoothly (no corners in roundabouts)
  var goal=HU?-ani.hdg:manRot,d=((goal-ani.rot+540)%360)-180;
  // 2.54: heading up turns only for changes over 4 deg (no constant wobble), and the map is redrawn at most every 0.5 deg - the box GPU is slow at turning the map
- if(HU&&!ani.turn&&Math.abs(d)>4)ani.turn=1;
+ if(HU&&!ani.turn&&Math.abs(d)>((ani.kmh||0)>60?4:1.2))ani.turn=1;   // 2.68: in town / roundabouts follow closely
  if((!HU||ani.turn)&&Math.abs(d)>.05){ani.rot+=d*.12;if(!HU&&!manRot&&Math.abs(ani.rot)<.1)ani.rot=0;if(Math.abs(d)<.3)ani.turn=0;
   if(ani.rw==null||Math.abs(ani.rot-ani.rw)>=.5||Math.abs(d)<.3){ani.rw=ani.rot;$('rot').style.transform=ani.rot?'rotate('+ani.rot.toFixed(1)+'deg)':'';$('cmpS').style.transform='rotate('+ani.rot.toFixed(1)+'deg)';}}
  else if(HU&&!ani.turn)ani.turn=0;
@@ -565,8 +578,15 @@ requestAnimationFrame(tick);
 var az=ls('az','1')=='1',azPause=0,azWant=0,azSeit=0;
 function setAz(v){az=v;lw('az',v?'1':'0');$('mAz').textContent='Auto zoom: '+(v?'on':'off');}
 setAz(az);$('mAz').onclick=function(){setAz(!az);};
-var azOff=+ls('azOff','0')||0;   // 2.37: auto zoom offset, long press on + / -
-function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;return Math.max(7,Math.min(19,z+azOff));}   // standing: zoom 19
+var azOff=2.5;   // 2.68: auto zoom offset +2.5 at every start (car), long press on + / - changes it in 0.5 steps
+function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;if(fahrt){var j=jAhead();if(j==2)z=Math.max(z,17);else if(j==1&&k<85)z=Math.min(18,z+1);azJ=j;}return Math.max(7,Math.min(19,z+azOff));}
+/* 2.68: roundabout (2) or junction (1) ahead on the loaded OSM roads -> zoom in earlier */
+var azJ=0;function jAhead(){if(!rdWays.length||!pos)return 0;var la=pos[0],lo=pos[1],k=Math.cos(la*Math.PI/180),h=ani.hdg,best=0;
+ for(var n=0;n<rdWays.length;n++){var w=rdWays[n],g=w.geometry||[],t=w.tags||{},ro=t.junction==='roundabout';if(w===curW&&!ro)continue;if(/^(service|track|footway|path|cycleway)$/.test(t.highway||''))continue;
+  for(var i=0;i<g.length;i++){var dy=(g[i].lat-la)*111320,dx=(g[i].lon-lo)*111320*k;if(Math.abs(dx)>320||Math.abs(dy)>320)continue;var d=Math.sqrt(dx*dx+dy*dy);if(d<25||d>(ro?300:220))continue;
+   var b=(Math.atan2(dx,dy)*180/Math.PI+360)%360,db=Math.abs(((b-h+540)%360)-180);
+   if(ro&&db<30)return 2;if(db<Math.max(5,Math.atan(14/d)*180/Math.PI))best=1;}}
+ return best;}   // standing: zoom 19
 /* 2.67: auto zoom glides smoothly (about 1.2 s, ease in/out, in-between zoom levels) instead of jumping */
 var zg=null;function zoomGlide(z){var z0=map.getZoom(),t0=performance.now(),D=Math.min(1600,700+Math.abs(z-z0)*250),last=0;zg=1;
  (function st(t){var k=Math.min(1,(t-t0)/D),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2,zz=z0+(z-z0)*e;
@@ -574,7 +594,7 @@ var zg=null;function zoomGlide(z){var z0=map.getZoom(),t0=performance.now(),D=Ma
   if(k<1)requestAnimationFrame(st);else zg=null;})(t0);}
 map.on('zoomend',function(){if(zg||map._animatingZoom)return;var z=map.getZoom();if(Math.abs(z-Math.round(z))>.01)map.setZoom(Math.round(z));});   // pinch ends on a whole level
 setInterval(function(){if(!az||!follow||!ani.to||Date.now()<azPause||map._animatingZoom)return;var z=azZiel(ani.kmh||0),n=Date.now();
- if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>2500&&!zg&&Math.round(map.getZoom())!==z)zoomGlide(z);},500);
+ if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>(azJ&&z>map.getZoom()?600:2500)&&!zg&&Math.round(map.getZoom())!==z)zoomGlide(z);},500);
 window.ctUpd=function(t,p){if($('menu').classList.contains('open')&&menuT)menuAuto(8000);var u=$('upd');if(!t){return;}var m=t.match(/online (V[\d.]+)/);if(m)$('mUpd').textContent='Check for update · online '+m[1];u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
 window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
 if(HU||manRot)setTimeout(rotMode,300);   // 2.51
