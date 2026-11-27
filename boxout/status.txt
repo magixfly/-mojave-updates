@@ -1,6 +1,6 @@
-Stand: 2026-11-27 15:45:45
+Stand: 2026-11-27 17:46:54
 App: 2.72
-IP: 192.168.220.111
+IP: 192.168.93.131
 WLAN: kein WLAN → Hotspot
 wlan1 - TetheredState - lastError = 0
 Failed to write while dumping service tethering: Broken pipe
