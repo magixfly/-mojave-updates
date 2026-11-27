@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
         FrameLayout root = new FrameLayout(this);
         root.setBackgroundColor(0xFF0B0F14);
 
-        tiles = new TileStore(this);
+        tiles = TileStore.get(this);   // V2.64: maybe already running since power-on
         web = new WebView(this);
         WebSettings s = web.getSettings();
         s.setJavaScriptEnabled(true);
@@ -95,7 +95,6 @@ public class MainActivity extends Activity {
         HotspotBoot.maybe(this);                  // V1.39: WLAN-Reihenfolge / Hotspot nach dem Start
         A11y.enable(this);
         Updater.loop(this);                       // V1.52: Selbst-Update von GitHub
-        tiles.start();
         web.loadUrl(HOST);
         gps = new Gps(this);
         gps.start();

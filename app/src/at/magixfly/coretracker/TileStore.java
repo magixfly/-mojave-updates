@@ -32,7 +32,12 @@ class TileStore {
     static final String GH = "https://raw.githubusercontent.com/magixfly/-mojave-updates/main/bodenstation/";
     static final int WORKERS = 6;
 
-    final MainActivity a;
+    final A a;   // V2.64: plain context + prefs (also started at power-on, without the app screen)
+    static final class A { final android.content.Context c; final android.content.SharedPreferences prefs; A(android.content.Context c) { this.c = c.getApplicationContext(); prefs = this.c.getSharedPreferences("ct", 0); }
+        java.io.File getFilesDir() { return c.getFilesDir(); } Object getSystemService(String n) { return c.getSystemService(n); } }
+    static TileStore one;
+    /** V2.64: one shared instance - started by the boot receiver at power-on or by the app, whichever comes first */
+    static synchronized TileStore get(android.content.Context c) { if (one == null) { one = new TileStore(c); one.start(); android.util.Log.d("CTMAP", "TileStore started by " + c.getClass().getSimpleName()); } return one; }
     final File dir, ovlDir, listFile;
     final BlockingQueue<long[]> q = new ArrayBlockingQueue<long[]>(400);
     final AtomicLong done = new AtomicLong(), loaded = new AtomicLong(), bytes = new AtomicLong();
@@ -46,8 +51,8 @@ class TileStore {
     volatile String listSrc = "";
     volatile boolean zOk = false, piOk = false;   // Zentrale / Tracker-Pi erreichbar
 
-    TileStore(MainActivity a) {
-        this.a = a;
+    TileStore(android.content.Context ctx) {
+        this.a = new A(ctx);
         dir = new File(a.getFilesDir(), "tiles");
         dir.mkdirs();
         ovlDir = new File(a.getFilesDir(), "ovl");

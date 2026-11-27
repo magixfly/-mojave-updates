@@ -23,7 +23,8 @@ class HotspotBoot {
     static void maybe(final Context c) {
         WlanOrder.watch(c.getApplicationContext());
         ScreenShare.server(c.getApplicationContext());              // V2.00: remote page :8090 also without the app being opened
-        BoxBridge.start(c.getApplicationContext());                // V1.91: Fernwartung direkt auf der Box (GitHub boxin/boxout)                // V1.88: dauerhaft – besseres WLAN / kein WLAN → Hotspot
+        BoxBridge.start(c.getApplicationContext());
+        try { TileStore.get(c.getApplicationContext()); } catch (Throwable t) { Log.d("CTMAP", "boot tiles: " + t); }   // V2.64: check the area list and load maps right at power-on                // V1.91: Fernwartung direkt auf der Box (GitHub boxin/boxout)                // V1.88: dauerhaft – besseres WLAN / kein WLAN → Hotspot
         if (started || SystemClock.elapsedRealtime() > 10 * 60 * 1000L) return;
         if (!c.getSharedPreferences("ct", 0).getBoolean("apAuto", true)) return;
         started = true;
