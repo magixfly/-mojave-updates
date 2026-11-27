@@ -1,5 +1,5 @@
-Stand: 2026-11-27 12:20:26
-App: 2.53
+Stand: 2026-11-27 12:26:39
+App: 2.54
 IP: 192.168.15.227
 WLAN: 
 wlan1 - TetheredState - lastError = 0
