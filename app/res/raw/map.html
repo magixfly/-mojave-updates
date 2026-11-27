@@ -564,7 +564,7 @@ var feT=0;function folgen(px,py){if(zg)return;if(Math.abs(px)+Math.abs(py)>400){
 function tick(){var t=performance.now();
  if(ani.to&&me){var k=Math.min(1,(t-ani.t0)/ani.dur),la=ani.from[0]+(ani.to[0]-ani.from[0])*k,lo=ani.from[1]+(ani.to[1]-ani.from[1])*k;
   if(!ani.cur||Math.abs(la-ani.cur[0])>1e-8||Math.abs(lo-ani.cur[1])>1e-8){ani.cur=[la,lo];me.setLatLng(ani.cur);}
-  if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();var oT=(HU&&fahrt)?.24*document.getElementById('map').clientHeight*(MS?DPR:1):0;ani.off=(ani.off||0)+(oT-(ani.off||0))*.04;var ra=ani.rot*Math.PI/180;   // 2.68: navi view - car sits low, more road ahead
+  if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();var oT=HU?.24*document.getElementById('map').clientHeight*(MS?DPR:1):0;ani.off=(ani.off||0)+(oT-(ani.off||0))*.04;var ra=ani.rot*Math.PI/180;   // 2.68: navi view - car sits low, more road ahead
    var px=Math.round(cp.x-sz.x/2-ani.off*Math.sin(ra)),py=Math.round(cp.y-sz.y/2-ani.off*Math.cos(ra));if(px||py)folgen(px,py);}}
  if(ani.brgT!=null&&me){var di=((ani.brgT-ani.icn+540)%360)-180;if(Math.abs(di)>.3){ani.icn=(ani.icn+di*.12+360)%360;var u=me.getElement()&&me.getElement().querySelector('u');if(u)u.style.transform='rotate('+ani.icn.toFixed(1)+'deg)';}}   // 2.68: car turns smoothly (no corners in roundabouts)
  var goal=HU?-ani.hdg:manRot,d=((goal-ani.rot+540)%360)-180;
@@ -580,7 +580,8 @@ var az=ls('az','1')=='1',azPause=0,azWant=0,azSeit=0;
 function setAz(v){az=v;lw('az',v?'1':'0');$('mAz').textContent='Auto zoom: '+(v?'on':'off');}
 setAz(az);$('mAz').onclick=function(){setAz(!az);};
 var azOff=2.5;   // 2.68: auto zoom offset +2.5 at every start (car), long press on + / - changes it in 0.5 steps
-function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;if(fahrt){var j=jAhead();if(j==2)z=Math.max(z,17);else if(j==1&&k<85)z=Math.min(18,z+1);azJ=j;}return Math.max(7,Math.min(19,Math.round(z+azOff)));}   // 2.70: whole zoom levels only - in-between levels made the box redraw scaled tiles all the time (flicker)
+function azZiel(k){if(!fahrt||k<10)return Math.max(7,Math.min(20,Math.round(16.5+azOff+1)));   // 2.71: below 10 km/h / standing: closest (+3.5 -> zoom 20)
+ var z=k<15?18:k<35?17:k<60?16:k<95?15:14;if(fahrt){var j=jAhead();if(j==2)z=Math.max(z,17);else if(j==1&&k<85)z=Math.min(18,z+1);azJ=j;}return Math.max(7,Math.min(19,Math.round(z+azOff)));}   // 2.70: whole zoom levels only - in-between levels made the box redraw scaled tiles all the time (flicker)
 /* 2.68: roundabout (2) or junction (1) ahead on the loaded OSM roads -> zoom in earlier */
 var azJ=0;function jAhead(){if(!rdWays.length||!pos)return 0;var la=pos[0],lo=pos[1],k=Math.cos(la*Math.PI/180),h=ani.hdg,best=0;
  for(var n=0;n<rdWays.length;n++){var w=rdWays[n],g=w.geometry||[],t=w.tags||{},ro=t.junction==='roundabout';if(w===curW&&!ro)continue;if(/^(service|track|footway|path|cycleway)$/.test(t.highway||''))continue;
