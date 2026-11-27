@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THERMOGRIP</title>
+<style>
+:root{--bg:#0d1b33;--card:#16294a;--line:#24406e;--txt:#e8f0ff;--mut:#9fb4d9;--acc:#4dabf7;--ok:#51cf66;--warn:#ffa94d;--err:#ff6b6b}
+*{box-sizing:border-box}body{margin:0;font:16px/1.4 -apple-system,system-ui,sans-serif;background:var(--bg);color:var(--txt)}
+header{padding:16px 18px 6px}h1{margin:0;font-size:22px;letter-spacing:.06em}h1 small{color:var(--acc);font-size:13px;margin-left:6px}
+main{padding:8px 12px 40px;max-width:720px;margin:auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
+.card h2{margin:0 0 10px;font-size:15px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.tile{background:#0f2242;border-radius:10px;padding:10px}.tile b{display:block;font-size:22px}.tile span{color:var(--mut);font-size:13px}
+.row{display:grid;grid-template-columns:1fr 110px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}.row label{font-weight:600;font-size:14px;word-break:break-all}.row small{display:block;color:var(--mut);font-weight:400;font-size:12px}
+input[type=text]{width:100%;padding:9px;border-radius:8px;border:1px solid var(--line);background:#0b1730;color:var(--txt);font-size:16px}
+input.chg{border-color:var(--warn)}
+button{background:var(--acc);color:#04142c;border:0;border-radius:10px;padding:12px 16px;font-size:16px;font-weight:700;margin:6px 6px 0 0}
+button.sec{background:#2b4a7d;color:var(--txt)}
+.bar{height:26px;border-radius:13px;background:#0b1730;border:1px solid var(--line);overflow:hidden;position:relative;margin:8px 0}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#339af0,#51cf66);transition:width .2s}
+.bar em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:13px}
+.msg{color:var(--mut);font-size:14px;min-height:20px}.ok{color:var(--ok)}.er{color:var(--err)}
+</style></head><body>
+<header><h1>THERMOGRIP<small id="ver"></small></h1></header>
+<main>
+<div class="card"><h2>Status</h2><div class="grid" id="st"><div class="tile"><b>…</b><span>loading</span></div></div></div>
+
+<div class="card"><h2>Settings (config.txt)</h2>
+<div id="cfg"></div>
+<button onclick="save(false)">Save</button><button class="sec" onclick="save(true)">Save &amp; restart</button>
+<div class="msg" id="cmsg">Changes are used after a restart.</div></div>
+
+<div class="card"><h2>Update from the internet</h2>
+<div class="msg">Status: <b id="upd">…</b></div>
+<button onclick="ucheck()">Check now</button><button class="sec" onclick="uinst()">Install update</button>
+<div class="msg" id="imsg">Installing switches the heater off. The display shows the progress, then the Pico restarts.</div></div>
+
+<div class="card"><h2>Firmware update (files from this phone/PC)</h2>
+<div class="msg">Choose the new files (main.py, fonts.bin, web.py, web.html). config.txt is kept.</div>
+<input type="file" id="files" multiple style="margin:10px 0;color:var(--mut)">
+<div class="bar"><i id="pb"></i><em id="pt">0 %</em></div>
+<button onclick="upload()">Upload &amp; restart</button>
+<div class="msg" id="umsg"></div></div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const L={temp:["Temperature","°C"],target:["Target","°C"],pad:["Pad","°C"],heater:["Heater","%"],battery:["Battery","%"],volts:["Battery","V"],cells:["Cells","S"],left:["Time left","min"],state:["State",""],wifi:["WiFi",""]};
+async function status(){try{const s=await (await fetch("/api/status")).json();$("ver").textContent=s.version||"";
+let h="";for(const k in L){if(s[k]===undefined||s[k]===null)continue;h+=`<div class="tile"><b>${s[k]}${L[k][1]?" "+L[k][1]:""}</b><span>${L[k][0]}</span></div>`}
+$("st").innerHTML=h;$("upd").textContent=s.update||"-"}catch(e){}}
+async function ucheck(){$("imsg").textContent="Checking …";try{const r=await (await fetch("/api/update/check",{method:"POST"})).json();$("imsg").textContent=r.update;$("upd").textContent=r.update}catch(e){$("imsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
+async function uinst(){try{const r=await (await fetch("/api/update/install",{method:"POST"})).json();
+$("imsg").innerHTML=r.ok?'<span class="ok">Installing – watch the display, page reloads in 60 s</span>':'No update available – press “Check now” first.';if(r.ok)setTimeout(()=>location.reload(),60000)}catch(e){$("imsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
+let orig={};
+async function loadCfg(){const c=await (await fetch("/api/config")).json();let h="";
+for(const [k,v,com] of c){orig[k]=v;h+=`<div class="row"><label>${k}<small>${com.replace(/</g,"&lt;")}</small></label><input type="text" data-k="${k}" value="${v.replace(/"/g,"&quot;")}" oninput="this.classList.toggle('chg',this.value!=orig['${k}'])"></div>`}
+$("cfg").innerHTML=h}
+async function save(rst){const d={};document.querySelectorAll("#cfg input").forEach(i=>{if(i.value!=orig[i.dataset.k])d[i.dataset.k]=i.value});
+if(!Object.keys(d).length&&!rst){$("cmsg").textContent="Nothing changed.";return}
+try{await fetch("/api/config",{method:"POST",body:JSON.stringify(d)});for(const k in d)orig[k]=d[k];
+document.querySelectorAll("#cfg input").forEach(i=>i.classList.remove("chg"));
+$("cmsg").innerHTML='<span class="ok">Saved ✓</span>'+(rst?" – restarting …":" – restart to apply.");
+if(rst){await fetch("/api/restart",{method:"POST"});setTimeout(()=>location.reload(),8000)}}catch(e){$("cmsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
+function put(f,done,total,all){return new Promise((ok,bad)=>{const x=new XMLHttpRequest();x.open("POST","/upload?name="+encodeURIComponent(f.name));
+x.upload.onprogress=e=>{const p=Math.round((done+e.loaded)/all*100);$("pb").style.width=p+"%";$("pt").textContent=p+" %"};
+x.onload=()=>x.status==200?ok():bad(x.responseText);x.onerror=()=>bad("connection lost");x.send(f)})}
+async function upload(){const fs=[...$("files").files];if(!fs.length){$("umsg").textContent="No file chosen.";return}
+const okN=["main.py","fonts.bin","web.py","web.html","config.txt"];for(const f of fs)if(!okN.includes(f.name)){$("umsg").innerHTML='<span class="er">Not allowed: '+f.name+'</span>';return}
+const all=fs.reduce((a,f)=>a+f.size,0);let done=0;
+try{for(const f of fs){$("umsg").textContent="Uploading "+f.name+" …";await put(f,done,f.size,all);done+=f.size}
+$("pb").style.width="100%";$("pt").textContent="100 %";$("umsg").innerHTML='<span class="ok">Done ✓</span> – restarting …';
+await fetch("/api/restart",{method:"POST"});setTimeout(()=>location.reload(),10000)}catch(e){$("umsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
+status();loadCfg();setInterval(status,2000);
+</script></body></html>

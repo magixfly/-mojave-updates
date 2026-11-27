@@ -1,0 +1,5 @@
+THERMOGRIP – Update-Ordner für GitHub
+Diesen Ordner als "thermogrip" in das Repository magixfly/-mojave-updates (Branch main) hochladen.
+Der Pico liest: https://raw.githubusercontent.com/magixfly/-mojave-updates/main/thermogrip/version.json
+Neue Firmware = neue Dateien + version.json mit höherer Versionsnummer (Größe + CRC32 je Datei).
+Keine config.txt hochladen (enthält WLAN-Passwörter)!

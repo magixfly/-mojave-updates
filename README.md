@@ -9,3 +9,8 @@ Core-Webseite → Reiter **System** → **Online-Update** → „Nach Updates su
 - `tools/manifest.py` – erzeugt `manifest.json` neu
 
 Der Core lädt nur Dateien, deren Prüfsumme anders ist als auf der SD. Die Firmware nur, wenn die Version anders ist.
+
+## THERMOGRIP (Senderheizung, Pico 2 W)
+
+Ordner `thermogrip/` – der Pico holt sich hier neue Firmware selbst (`version.json` + Dateien mit Größe und CRC32).
+Keine `config.txt` hochladen (WLAN-Passwörter).
