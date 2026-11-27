@@ -527,7 +527,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   var t=performance.now();ani.dur=ani.t1?Math.max(300,Math.min(1500,t-ani.t1)):1000;ani.from=ani.cur?ani.cur.slice():pos.slice();ani.to=pos.slice();ani.t0=t;ani.t1=t;
   var a=me.getElement()&&me.getElement().querySelector('b');
   if(fahrt&&brg>=0&&kmh>=12){var dh=((brg-ani.hdg+540)%360)-180;ani.hdg=(ani.hdg+dh*(Math.abs(dh)>60?1:kmh<60?.6:.35)+360)%360;}   // 2.54: smooth the GPS heading (it jumps a few degrees each second)
-  if(a){var mv=fahrt&&brg>=0;var mr=me.getElement().firstChild;if(mv){ani.brgT=brg;if(ani.icn==null)ani.icn=brg;}mr.classList.toggle('mv',mv||ani.icn!=null);}   // 2.68: the car stays when standing (last direction)
+  if(a){var mv=fahrt&&brg>=0;var mr=me.getElement().firstChild;if(mv){ani.brgT=brg;if(ani.icn==null)ani.icn=brg;}var mt=espS&&espS.st=='connected'&&espS.pps>0;mr.classList.toggle('mv',!mt);}   // 2.69: always the car (blue dot only while the MT12 / Mojave link is active)
   ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#60a5fa';
