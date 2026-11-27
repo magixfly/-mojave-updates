@@ -130,6 +130,7 @@ public class MainActivity extends Activity {
     /** jede Sekunde: Kartendownload-Status (mit Prozent für den Balken) an die Seite */
     void tick() {
         try { updatePill(); if ((++ticks % 30) == 0) tiles.saveTotal(); } catch (Throwable t) { }
+        if (ticks % 60 == 5) new Thread() { public void run() { Track.check(MainActivity.this); } }.start();   // V2.55: finish drives, upload GPX
         ui.postDelayed(new Runnable() { public void run() { tick(); } }, 1000);
     }
 

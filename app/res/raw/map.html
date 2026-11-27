@@ -193,6 +193,7 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 .b.tap,.pill.tap,#cmp.tap,#menu button.tap,#spw button.tap{transform:none!important;box-shadow:inset 0 0 0 3px var(--acc)!important;background:rgba(59,156,255,.35)!important}
 #cmp{touch-action:none}   /* 2.52: the browser must not take over the compass drag (it broke off) */
 #net{width:auto!important;min-width:0;max-width:420px}#net svg{width:22px!important;height:22px!important}   /* 2.52: connection pill only as wide as its text, smaller icons */
+#tw.rdrw{border-color:#ff4d4d!important;color:#fff}#tw.rdrw #twT{color:#ff6b6b}   /* 2.55 speed camera banner */
 </style></head><body>
 <div id="top">
   <div id="title">CORE DASH<small><span id="ver"></span> · <span id="uhr"></span></small></div>
@@ -445,14 +446,34 @@ function setTrk(on,hint){trkOn=on;lw('trk',on?'1':'0');if(on){trkC.addTo(map);tr
 function trkAdd(lat,lon,acc,gps){if(!gps||!fahrt||(acc>0&&acc>30))return;var q=[Math.round(lat*1e5)/1e5,Math.round(lon*1e5)/1e5],l=trkP[trkP.length-1];
  if(l&&L.latLng(l).distanceTo(L.latLng(q))<8)return;trkP.push(q);trkCut();if(trkOn)trkDraw();if(++trkN%15==0)trkSave();}
 $('mTrk').onclick=function(){setTrk(!trkOn);};
-$('mTrkL').onclick=function(){var i=TRKL.indexOf(trkLen);trkLen=TRKL[(i+1)%TRKL.length];lw('trkL',String(trkLen));trkCut();trkDraw();trkSave();trkUi();};
+function trkLenNext(h){var i=TRKL.indexOf(trkLen);trkLen=TRKL[(i+1)%TRKL.length];lw('trkL',String(trkLen));trkCut();trkDraw();trkSave();trkUi();if(!trkOn)setTrk(true);
+ if(h){var e=$('azh');e.textContent='LINE '+(trkLen?trkLen+' KM':'ALL');e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(function(){e.classList.remove('on')},1500);}}
+$('mTrkL').onclick=function(){trkLenNext();};
 $('mTrkC').onclick=function(){trkP=[];trkDraw();trkSave();};
 setTrk(trkOn);window.addEventListener('pagehide',trkSave);setInterval(trkSave,60000);
+/* 2.55: speed camera warning - fixed camera ahead (max 600 m, within 25 deg of the driving direction) -> banner + tone, once per camera */
+var rdrDone={};
+function rdrWarn(la,lo,kmh){if(!trfOn||!fahrt||!rdrAll.length||kmh<20)return;var k=Math.cos(la*Math.PI/180),best=null,bd=1e9,h=ani.hdg;
+ for(var i=0;i<rdrAll.length;i++){var r=rdrAll[i],dy=(r[0]-la)*111320,dx=(r[1]-lo)*111320*k;if(Math.abs(dy)>700||Math.abs(dx)>700)continue;var d=Math.sqrt(dx*dx+dy*dy);if(d>600||d<30)continue;
+  var b=(Math.atan2(dx,dy)*180/Math.PI+360)%360,db=Math.abs(((b-h+540)%360)-180);if(db>25)continue;var key=r[0]+','+r[1];if(rdrDone[key])continue;if(d<bd){bd=d;best=r;}}
+ if(!best)return;rdrDone[best[0]+','+best[1]]=Date.now();
+ var e=$('tw');e.className='on rdrw';$('twT').textContent='SPEED CAMERA'+(best[2]?' · '+best[2]+' km/h':'');$('twC').textContent='';$('twD').textContent='ahead in '+Math.round(bd/10)*10+' m';
+ clearTimeout(twTimer);twTimer=setTimeout(function(){e.className='';},12000);warnTon();}
+setInterval(function(){var t=Date.now();for(var k in rdrDone)if(t-rdrDone[k]>900000)delete rdrDone[k];},60000);
+/* 2.55: every drive is recorded on the box (GPX) and uploaded to GitHub tracks/, the PC map program fetches it */
+var recB=[],recL=null,recT=0;
+function recAdd(la,lo,acc,gps,kmh){if(!gps||(acc>0&&acc>40))return;var t=Date.now();
+ if(recL&&(L.latLng(recL).distanceTo(L.latLng([la,lo]))<15||kmh<3)&&t-recT<60000)return;
+ recL=[la,lo];recT=t;recB.push(la.toFixed(6)+','+lo.toFixed(6)+','+Math.round(kmh||0)+','+Math.round(t/1000));if(recB.length>=40)recFlush();}
+function recFlush(){if(!recB.length)return;var d=recB.join(';');recB=[];fetch('/__ctbox/trk?d='+encodeURIComponent(d)).catch(function(){});}
+setInterval(recFlush,30000);window.addEventListener('pagehide',recFlush);
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   if(kmh>=0){if(fahrt?kmh<4:kmh<7){fahrt=false;kmh=0;}else fahrt=true;}
   if(!fahrt&&pos&&ani.cur){var dm=L.latLng(lat,lon).distanceTo(L.latLng(ani.cur[0],ani.cur[1]));if(dm<Math.max(8,acc>0?acc:8)){lat=ani.cur[0];lon=ani.cur[1];}}   // parked: dot stays still
   pos=[lat,lon];$('nopos').style.display='none';
-  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i><u><svg viewBox="-22 -22 44 44" width="44" height="44"><path d="M0,-19 L14,15 L0,7 L-14,15Z" fill="#3b82f6" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></u></div>',iconSize:[0,0]}),interactive:true,bubblingMouseEvents:false}).addTo(map);me.on('click',function(){setTrk(!trkOn,1);});ani.cur=pos.slice();}
+  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i><u><svg viewBox="-22 -22 44 44" width="44" height="44"><path d="M0,-19 L14,15 L0,7 L-14,15Z" fill="#3b82f6" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></u></div>',iconSize:[0,0]}),interactive:true,bubblingMouseEvents:false}).addTo(map);me.on('click',function(){if(me._lp){me._lp=0;return;}setTrk(!trkOn,1);});
+  (function(el){var tm=0;el.addEventListener('pointerdown',function(){me._lp=0;clearTimeout(tm);tm=setTimeout(function(){me._lp=1;trkLenNext(1);},650);});
+   ['pointerup','pointercancel','pointerleave'].forEach(function(ev){el.addEventListener(ev,function(){clearTimeout(tm);});});})(me.getElement());ani.cur=pos.slice();}   // 2.55: hold the dot = next line length
   // 2.15: smooth - glide from where the dot is now to the new fix over the time between fixes
   var t=performance.now();ani.dur=ani.t1?Math.max(300,Math.min(1500,t-ani.t1)):1000;ani.from=ani.cur?ani.cur.slice():pos.slice();ani.to=pos.slice();ani.t0=t;ani.t1=t;
   var a=me.getElement()&&me.getElement().querySelector('b');
@@ -461,7 +482,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
   $('gps').style.color=age>30?'#f5b13d':'#60a5fa';
-  trkAdd(lat,lon,acc,gps);
+  trkAdd(lat,lon,acc,gps);rdrWarn(lat,lon,kmh);recAdd(lat,lon,acc,gps,kmh);
   spdSet(kmh>0?kmh:0,acc,gps);
   spwTick([lat,lon],kmh>0?kmh:0,brg>=0?brg:null);
   trfTick([lat,lon],fahrt&&brg>=0?brg:null);
