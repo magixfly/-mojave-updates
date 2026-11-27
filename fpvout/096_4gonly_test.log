@@ -1,0 +1,23 @@
+== 096_4gonly_test on mojave-fpv, 2026-11-28 00:30:21, FPV V1.9.26 ==
+--- before ---
+  routes: wlan0/600 eth1/700 
+  net: {"kind": "wifi", "name": "Optimus Prime", "sig": -44, "dev": "wlan0", "other": "lte", "wifi_on": true, "lte_up": true}
+--- switch to 4G only ---
+{"ok": true, "error": "", "kind": "lte", "name": "", "sig": null, "dev": "eth1", "other": "", "wifi_on": false, "lte_up": true}
+  routes: eth1/700 
+  net: {"kind": "lte", "name": "", "sig": null, "dev": "eth1", "other": "", "wifi_on": false, "lte_up": true}
+  radio: disabled
+  ping 1.1.1.1: rtt min/avg/max/mdev = 23.457/32.312/40.761/6.475 ms
+  github: 200 1.009112s
+  tailscale: 100.64.69.54  mojave-fpv  thorsten@  linux  -  
+  tailscale netcheck: 	* UDP: true 	* Nearest DERP: Nuremberg 
+  services: active active active 
+--- back to Auto (Wi-Fi first) ---
+{"ok": true, "error": "", "kind": "lte", "name": "", "sig": null, "dev": "eth1", "other": "", "wifi_on": true, "lte_up": true}
+  Wi-Fi back after about 2 s
+  routes: wlan0/600 eth1/700 
+  net: {"kind": "wifi", "name": "Optimus Prime", "sig": -45, "dev": "wlan0", "other": "lte", "wifi_on": true, "lte_up": true}
+  ping 1.1.1.1: rtt min/avg/max/mdev = 13.817/15.845/17.623/1.563 ms
+[100%] done
+
+== exit code 0, 34.3 s ==
