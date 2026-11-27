@@ -285,7 +285,7 @@ sizeRot();
 function fitMap(){sizeRot();var w=document.getElementById('rot'),m=document.getElementById('mapi');if(!MS)return;var r0=document.getElementById('map').getBoundingClientRect(),r={left:r0.left+parseFloat(w.style.left||0),top:r0.top+parseFloat(w.style.top||0)},fx=(r.left*DPR)%1,fy=(r.top*DPR)%1;   // 2.12: start on a whole screen pixel
  m.style.left=(-fx/DPR)+'px';m.style.top=(-fy/DPR)+'px';m.style.width=(w.clientWidth*DPR+2)+'px';m.style.height=(w.clientHeight*DPR+2)+'px';m.style.transform='scale('+(1/DPR)+')'}
 fitMap();
-var map=L.map('mapi',{renderer:L.svg({padding:.6}),zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,
+var map=L.map('mapi',{renderer:L.svg({padding:.6}),zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:0,zoomDelta:1,inertia:true,
   maxBounds:[[46.3,13.0],[49.6,18.3]]});
 map.attributionControl.setPrefix(false);
 L.tileLayer('/tile/{z}/{x}/{y}.jpg',{maxNativeZoom:19,maxZoom:20,minZoom:7,attribution:'basemap.at',keepBuffer:1,updateWhenZooming:false,updateWhenIdle:false}).addTo(map);
@@ -342,7 +342,7 @@ function areasDraw(j){areasL.clearLayers();(j.areas||[]).forEach(function(a){
 // 2.13: fill only when the area is smaller than the screen - inside a big area the map stayed tinted (looked pale)
 function areasFill(){var sz=map.getSize();areasL.eachLayer(function(l){if(!l.getBounds||!l.setStyle||l instanceof L.Polyline&&!(l instanceof L.Polygon)&&!(l instanceof L.Circle))return;var b=l.getBounds(),p1=map.latLngToContainerPoint(b.getNorthWest()),p2=map.latLngToContainerPoint(b.getSouthEast());var big=Math.abs(p2.x-p1.x)>sz.x*.6||Math.abs(p2.y-p1.y)>sz.y*.6;l.setStyle({fillOpacity:big?.06:.25});});}
 map.on('zoomend',areasFill);
-function zlv(){$('zlv').textContent='Zoom '+map.getZoom();}map.on('zoomend',zlv);zlv();
+function zlv(){$('zlv').textContent='Zoom '+Math.round(map.getZoom());}map.on('zoomend',zlv);zlv();
 function areasLoad(){fetch('/__ctbox/areas?t='+Date.now()).then(function(r){return r.json();}).then(function(j){var v=JSON.stringify(j.areas||[]);if(v!==areasVer||!areasL.getLayers().length){areasVer=v;areasDraw(j);}}).catch(function(){});}
 function setAreas(on){areasOn=on;lw('areas',on?'1':'0');$('areasB').classList.toggle('act',on);if(on){areasLoad();areasL.addTo(map);}else map.removeLayer(areasL);}
 $('areasB').onclick=function(){setAreas(!areasOn);};
@@ -547,7 +547,7 @@ function hint(t){var h=$('azh');h.textContent=t;h.classList.add('on');clearTimeo
 })();
 document.documentElement.classList.add('th-carbon');   // 2.34: only Carbon (Iced glass removed)
 /* 2.60: lighter map - follow by shifting the map pane (no full view reset per frame); tiles, lines and areas update at most 4x per second */
-var feT=0;function folgen(px,py){if(Math.abs(px)+Math.abs(py)>400){map.setView(ani.cur,map.getZoom(),{animate:false});return;}
+var feT=0;function folgen(px,py){if(zg)return;if(Math.abs(px)+Math.abs(py)>400){map.setView(ani.cur,map.getZoom(),{animate:false});return;}
  map._rawPanBy(L.point(px,py));map.fire('move');if(!feT)feT=setTimeout(function(){feT=0;map.fire('moveend');},250);}
 function tick(){var t=performance.now();
  if(ani.to&&me){var k=Math.min(1,(t-ani.t0)/ani.dur),la=ani.from[0]+(ani.to[0]-ani.from[0])*k,lo=ani.from[1]+(ani.to[1]-ani.from[1])*k;
@@ -567,8 +567,14 @@ function setAz(v){az=v;lw('az',v?'1':'0');$('mAz').textContent='Auto zoom: '+(v?
 setAz(az);$('mAz').onclick=function(){setAz(!az);};
 var azOff=+ls('azOff','0')||0;   // 2.37: auto zoom offset, long press on + / -
 function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;return Math.max(7,Math.min(19,z+azOff));}   // standing: zoom 19
+/* 2.67: auto zoom glides smoothly (about 1.2 s, ease in/out, in-between zoom levels) instead of jumping */
+var zg=null;function zoomGlide(z){var z0=map.getZoom(),t0=performance.now(),D=Math.min(1600,700+Math.abs(z-z0)*250),last=0;zg=1;
+ (function st(t){var k=Math.min(1,(t-t0)/D),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2,zz=z0+(z-z0)*e;
+  if(t-last>55||k>=1){last=t;map.setView(follow&&ani.cur?ani.cur:map.getCenter(),k>=1?z:zz,{animate:false});}
+  if(k<1)requestAnimationFrame(st);else zg=null;})(t0);}
+map.on('zoomend',function(){if(zg||map._animatingZoom)return;var z=map.getZoom();if(Math.abs(z-Math.round(z))>.01)map.setZoom(Math.round(z));});   // pinch ends on a whole level
 setInterval(function(){if(!az||!follow||!ani.to||Date.now()<azPause||map._animatingZoom)return;var z=azZiel(ani.kmh||0),n=Date.now();
- if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>2500&&map.getZoom()!==z)map.setZoom(z);},500);
+ if(z!==azWant){azWant=z;azSeit=n;return;}if(n-azSeit>2500&&!zg&&Math.round(map.getZoom())!==z)zoomGlide(z);},500);
 window.ctUpd=function(t,p){if($('menu').classList.contains('open')&&menuT)menuAuto(8000);var u=$('upd');if(!t){return;}var m=t.match(/online (V[\d.]+)/);if(m)$('mUpd').textContent='Check for update · online '+m[1];u.style.display='block';$('updT').textContent=t+(p>=0&&p<100?' '+p+' %':'');$('updBar').style.width=(p<0?0:p)+'%';};
 window.ctFpvSet=function(fps,mbit,buf,dec){var e=$('fpvs');e.style.display='flex';e.textContent='FPV '+Math.round(fps)+' fps'+(mbit!=null?' · '+(+mbit).toFixed(1)+' Mbit/s':'');clearTimeout(window.ctFpvT);window.ctFpvT=setTimeout(function(){e.style.display='none';},6000);};
 if(HU||manRot)setTimeout(rotMode,300);   // 2.51
