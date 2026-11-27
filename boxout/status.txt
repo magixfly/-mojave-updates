@@ -1,6 +1,6 @@
-Stand: 2026-11-27 23:36:43
+Stand: 2026-11-27 23:47:51
 App: 2.72
-IP: 192.168.54.187
+IP: 192.168.87.180
 WLAN: kein WLAN → Hotspot
 Wifi is connected to "Media"
     wlan1 - TetheredState - lastError = 0
