@@ -1,9 +1,9 @@
-Stand: 2026-11-27 12:37:05
-App: 2.54
+Stand: 2026-11-27 12:39:45
+App: 2.55
 IP: 192.168.15.227
-WLAN: Hotspot an
+WLAN: 
 wlan1 - TetheredState - lastError = 0
 Failed to write while dumping service tethering: Broken pipe
 
 ### Exit-Code: 0
-Fernwartung: zuletzt 088_rdr.sh
+Fernwartung: 
