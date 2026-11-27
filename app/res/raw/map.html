@@ -54,7 +54,7 @@ html.ms #mapi .leaflet-marker-icon>*{scale:1.2625}html.ms #mapi .leaflet-tooltip
 .me{position:relative;width:0;height:0}
 .me i{position:absolute;left:-13px;top:-13px;width:20px;height:20px;border-radius:50%;background:#3b82f6;border:3px solid #fff;box-shadow:0 0 8px rgba(0,0,0,.6)}
 .me b{position:absolute;left:-12px;top:-38px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:22px solid #3b82f6;transform-origin:12px 38px;display:none}
-.me.mv i,.me.mv b{display:none!important}.me u{display:none;position:absolute;left:-22px;top:-22px;width:44px;height:44px}.me.mv u{display:block}   /* 2.19: moving -> one navigation arrow */
+.me.mv i,.me.mv b{display:none!important}.me u{display:none;position:absolute;left:-17px;top:-31px;width:34px;height:62px}.me.mv u{display:block}   /* 2.19: moving -> one navigation arrow */
 #nopos{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:900;background:rgba(11,15,20,.8);border-radius:10px;padding:8px 16px;color:#9ca3af;font-size:16px;font-weight:400}
 html.ctsplit #car{display:none!important}html.ctsplit #net{width:220px}html.ctsplit #gps,html.ctsplit #title small{display:none}html.ctsplit #maps{width:240px}
 
@@ -216,6 +216,13 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 #net{position:fixed!important;top:calc(var(--h) + var(--e) + 22px)!important;right:var(--e)!important;width:134px!important;max-width:none!important;justify-content:center!important;gap:10px!important;padding:0!important;z-index:1001}
 #net span{display:none!important}#net svg{width:22px!important;height:22px!important}
 #menu{top:calc(var(--h)*2 + var(--e) + 32px)!important}#btns{margin-top:28px!important}
+/* 2.66: allowed speed as a round road sign right of the speed, in the same panel */
+#spd{position:absolute!important}
+#limB{position:absolute!important;right:14px;top:36px;margin:0!important;width:62px;height:62px;box-sizing:border-box;border-radius:50%!important;background:#fff!important;border:7px solid #e11d2a!important;color:#111!important;padding:0!important;font-size:0!important;letter-spacing:0!important;display:none!important;align-items:center;justify-content:center}
+#limB.on{display:flex!important}#limB b{font:800 25px/1 var(--num)!important;font-style:normal!important;color:#111;letter-spacing:-.02em}
+#limB.est{border-style:dashed!important;opacity:.85}
+#limB.over{animation:limp .7s infinite}
+#spd.haslim .num{align-self:flex-start;margin-left:18px}
 </style></head><body>
 <div id="top">
   <div id="title"><span class="t1">CORE</span><span class="t2">DASH</span><small><span id="uhr"></span><span id="ver"></span></small></div>
@@ -459,7 +466,7 @@ function spwTick(p,kmh,hdg){if(!p)return;
  // 2.62: load the roads around a point 300 m ahead (radius 550 m) and reload when that point is passed - at 150 km/h the old area ran out
  if(fahrt&&(!rdAt||L.latLng(p).distanceTo(L.latLng(rdAt))>260)&&Date.now()-rdT>5000){var q=p;if(hdg!=null){var k=Math.cos(p[0]*Math.PI/180);q=[p[0]+300*Math.cos(hdg*Math.PI/180)/111320,p[1]+300*Math.sin(hdg*Math.PI/180)/(111320*k)];}rdLoad(q);}
  var w=rdWays.length?limFind(p,fahrt?hdg:null):null;if(w){var r=limOf(w.tags||{});limNow=r[0];limEst=r[1];curRef=refN((w.tags||{}).ref);limSeen=Date.now();}else{curRef='';if(limNow&&Date.now()-limSeen>40000)limNow=0;}
- var e=$('lim');e.classList.toggle('on',!!limNow);e.classList.toggle('est',limEst);$('limV').textContent=limNow||'–';var lb=$('limB');lb.classList.toggle('on',!!limNow);lb.classList.toggle('est',limEst);$('limBV').textContent=limNow||'–';
+ var e=$('lim');e.classList.toggle('on',!!limNow);e.classList.toggle('est',limEst);$('limV').textContent=limNow||'–';var lb=$('limB');lb.classList.toggle('on',!!limNow);$('spd').classList.toggle('haslim',!!limNow);lb.classList.toggle('est',limEst);$('limBV').textContent=limNow||'–';
  var tol=limNow?(spwT[limNow]!=null?spwT[limNow]:spwT.x):0,over=spwOn&&limNow&&fahrt&&kmh>limNow*(1+tol/100);
  e.classList.toggle('over',!!over);$('spd').classList.toggle('over',!!over);lb.classList.toggle('over',!!over);
  if(over&&(!spwOver||Date.now()-spwLast>12000)){ton();spwLast=Date.now();var sp=$('spd');sp.classList.remove('pump');void sp.offsetWidth;sp.classList.add('pump');}spwOver=!!over;}
@@ -502,7 +509,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   if(kmh>=0){if(fahrt?kmh<4:kmh<7){fahrt=false;kmh=0;}else fahrt=true;}
   if(!fahrt&&pos&&ani.cur){var dm=L.latLng(lat,lon).distanceTo(L.latLng(ani.cur[0],ani.cur[1]));if(dm<Math.max(8,acc>0?acc:8)){lat=ani.cur[0];lon=ani.cur[1];}}   // parked: dot stays still
   pos=[lat,lon];$('nopos').style.display='none';
-  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i><u><svg viewBox="-22 -22 44 44" width="44" height="44"><path d="M0,-19 L14,15 L0,7 L-14,15Z" fill="#3b82f6" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></u></div>',iconSize:[0,0]}),interactive:true,bubblingMouseEvents:false}).addTo(map);me.on('click',function(){if(me._lp){me._lp=0;return;}setTrk(!trkOn,1);});
+  if(!me){me=L.marker(pos,{icon:L.divIcon({className:'',html:'<div class="me"><b></b><i></i><u><svg viewBox="-24 -44 48 88" width="34" height="62"><defs><linearGradient id="cb" x1="0" x2="1"><stop offset="0" stop-color="#9aa3ad"/><stop offset=".5" stop-color="#eef1f4"/><stop offset="1" stop-color="#9aa3ad"/></linearGradient></defs><ellipse cx="0" cy="2" rx="22" ry="42" fill="#000" opacity=".35"/><path d="M-17,-34 Q-18,-41 -9,-42 L9,-42 Q18,-41 17,-34 L19,-6 L18,30 Q17,40 8,41 L-8,41 Q-17,40 -18,30 L-19,-6Z" fill="url(#cb)" stroke="#5b636c" stroke-width="1.2"/><path d="M-14,-22 Q0,-27 14,-22 L12,-12 Q0,-15 -12,-12Z" fill="#1d252e"/><path d="M-12,-10 Q0,-13 12,-10 L12,18 Q0,20 -12,18Z" fill="#2a333d"/><path d="M-11,22 Q0,24 11,22 L10,31 Q0,33 -10,31Z" fill="#1d252e"/><path d="M-13,-39 L-5,-40 M13,-39 L5,-40" stroke="#e8f6ff" stroke-width="2.4" stroke-linecap="round"/><path d="M-15,38 L15,38" stroke="#ff2d3a" stroke-width="2.6" stroke-linecap="round"/><path d="M-19,-18 l-4,-2 M19,-18 l4,-2" stroke="#5b636c" stroke-width="2.4" stroke-linecap="round"/></svg></u></div>',iconSize:[0,0]}),interactive:true,bubblingMouseEvents:false}).addTo(map);me.on('click',function(){if(me._lp){me._lp=0;return;}setTrk(!trkOn,1);});
   (function(el){var tm=0;el.addEventListener('pointerdown',function(){me._lp=0;clearTimeout(tm);tm=setTimeout(function(){me._lp=1;trkLenNext(1);},650);});
    ['pointerup','pointercancel','pointerleave'].forEach(function(ev){el.addEventListener(ev,function(){clearTimeout(tm);});});})(me.getElement());ani.cur=pos.slice();}   // 2.55: hold the dot = next line length
   // 2.15: smooth - glide from where the dot is now to the new fix over the time between fixes
