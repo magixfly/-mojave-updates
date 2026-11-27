@@ -1,0 +1,22 @@
+### 088_rdr  –  2026-11-27 12:36:31
+### Box direkt (App 2.54, 192.168.15.227)
+
+total 300
+drwxrwxrwx  4 u0_a210 u0_a210   4096 2026-11-27 12:27 .
+drwx------  9 u0_a210 u0_a210   4096 2026-11-13 08:16 ..
+-rw-------  1 u0_a210 u0_a210  21472 2026-11-25 15:45 gebiete.json
+drwx------ 15 u0_a210 u0_a210   4096 2026-11-25 21:46 ovl
+-rw-------  1 u0_a210 u0_a210 241442 2026-11-27 12:27 radars.json
+drwx------ 15 u0_a210 u0_a210   4096 2026-11-25 21:46 tiles
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-27T11:25:49Z",
+    "timestamp_areas_base": "2026-11-27T06:44:59Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available unde
+1434
+
+### Exit-Code: 0
+
+### Dauer 0 s
