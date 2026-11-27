@@ -1,0 +1,12 @@
+== 093_stickgw on mojave-fpv, 2026-11-28 00:04:04, FPV V1.9.23 ==
+default via 172.20.10.1 dev wlan0 proto dhcp src 172.20.10.4 metric 600 
+default via 192.168.100.33 dev eth1 proto dhcp src 192.168.100.100 metric 700 
+127.0.0.1:8081 http 502 58 bytes
+192.168.100.1 http 000 0 bytes
+192.168.100.33 http 200 18898 bytes
+192.168.100.33 lladdr 00:8e:8e:8e:8e:8e DELAY 
+192.168.100.1 FAILED 
+fe80::1234 lladdr 00:8e:8e:8e:8e:8e router STALE 
+[100%] done
+
+== exit code 0, 6.2 s ==
