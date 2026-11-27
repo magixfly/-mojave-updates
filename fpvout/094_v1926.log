@@ -1,0 +1,11 @@
+== 094_v1926 on mojave-fpv, 2026-11-28 00:05:14, FPV V1.9.23 ==
+VERSION = "V1.9.26"
+active
+active
+active
+Nov 28 00:05:15 mojave-fpv python3[2251]: [stickpage] port 8081 -> auto (now 192.168.100.33)
+stick page through the Pi: http 200 18898 bytes
+{"kind": "wifi", "name": "XVII", "sig": -59, "dev": "wlan0", "other": "lte", "wifi_on": true, "lte_up": true}
+[100%] done
+
+== exit code 0, 7.8 s ==
