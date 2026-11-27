@@ -212,6 +212,10 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 #net svg{width:18px!important;height:18px!important}
 #muteB,#menuB{width:62px!important}#muteB svg,#menuB svg{width:24px!important;height:24px!important}
 #top{padding-top:14px!important}
+/* 2.61: connection only as icons, in a small field under the speaker and ... buttons */
+#net{position:fixed!important;top:calc(var(--h) + var(--e) + 22px)!important;right:var(--e)!important;width:134px!important;max-width:none!important;justify-content:center!important;gap:10px!important;padding:0!important;z-index:1001}
+#net span{display:none!important}#net svg{width:22px!important;height:22px!important}
+#menu{top:calc(var(--h)*2 + var(--e) + 32px)!important}#btns{margin-top:28px!important}
 </style></head><body>
 <div id="top">
   <div id="title"><span class="t1">CORE</span><span class="t2">DASH</span><small><span id="uhr"></span><span id="ver"></span></small></div>
@@ -412,7 +416,7 @@ function nIco(k){return '<svg viewBox="0 0 24 24" width="26" height="26" fill="n
 window.ctNet=function(t){t=t||'';var k='',p=t.indexOf('|');if(p>0&&p<12){k=t.slice(0,p);t=t.slice(p+1);}var e=$('net');
  if(!k){e.textContent=t||'…';}
  else{var lte=k.indexOf('lte')>=0,ap=k.indexOf('ap')==0,txt=k=='lte'?'LTE · SIM':ap?(t.replace(/^no Wi-Fi$/i,'Hotspot')+(lte?' · LTE':'')):k=='none'?'Offline':t;
-  e.innerHTML=(ap?nIco('ap')+(lte?nIco('lte'):''):nIco(k=='none'?'none':k))+'<span style="overflow:hidden;text-overflow:ellipsis">'+txt.replace(/</g,'&lt;')+'</span>';}
+  e.title=txt;e.innerHTML=(ap?nIco('ap')+(lte?nIco('lte'):''):nIco(k=='none'?'none':k))+'<span style="overflow:hidden;text-overflow:ellipsis">'+txt.replace(/</g,'&lt;')+'</span>';}
  var m=t.match(/(-\d+) dBm/),r=m?+m[1]:0;e.style.color=k=='none'?'#f87171':!m?'#60a5fa':r>=-60?'#60a5fa':r>=-72?'#f5b13d':'#f87171';};
 window.ctMaps=function(pct,mb,st,on){$('maps').style.display=(pct>=100||st=='complete')?'none':'';   // 2.35: hidden when all maps are loaded
  $('mapsBar').style.width=pct+'%';$('mapsT').textContent='Maps '+pct+' % · '+(st=='complete'?'✓':st);$('maps').classList.toggle('on',!!on);$('maps').title=mb+' · tap: start / stop';};
