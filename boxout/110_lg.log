@@ -1,0 +1,11 @@
+### 110_lg  –  2026-11-27 14:54:10
+### Box direkt (App 2.69, 192.168.145.74)
+
+11-27 14:53:11.258  9505  9648 D CTLIVE  : roads https://maps.mail.ru/osm/tools/overpass/api/interpreter -> 63819 B BAD 13138 ms
+11-27 14:53:26.326  9505  9648 D CTLIVE  : roads https://overpass.private.coffee/api/interpreter -> null BAD 15067 ms
+11-27 14:53:42.000  9505  9648 D CTLIVE  : roads https://overpass-api.de/api/interpreter -> null BAD 15093 ms
+11-27 14:53:57.371  9505  9648 D CTLIVE  : roads https://maps.mail.ru/osm/tools/overpass/api/interpreter -> null BAD 15370 ms
+
+### Exit-Code: 0
+
+### Dauer 0 s
