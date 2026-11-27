@@ -1,0 +1,11 @@
+### 097_ovp  –  2026-11-27 13:28:50
+### Box direkt (App 2.61, 192.168.130.246)
+
+overpass-api.de http=406 289 ms size=156 maxspeed=
+lz4.overpass-api.de http=406 519 ms size=156 maxspeed=
+overpass.kumi.systems http=000 -1418 ms size=156 maxspeed=
+maps.mail.ru/osm/tools/overpass http=200 -262 ms size=2811 maxspeed=      1 "maxspeed": "100" 
+
+### Exit-Code: 0
+
+### Dauer 33 s
