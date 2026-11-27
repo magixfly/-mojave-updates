@@ -1,6 +1,9 @@
-Stand: 2026-11-27 14:13:33
-App: 2.63
-IP: 100.98.59.36
+Stand: 2026-11-27 14:16:11
+App: 2.64
+IP: 192.168.88.127
 WLAN: 
+wlan1 - TetheredState - lastError = 0
+Failed to write while dumping service tethering: Broken pipe
+
 ### Exit-Code: 0
 Fernwartung: 
