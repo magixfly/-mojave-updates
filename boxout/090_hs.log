@@ -1,0 +1,24 @@
+### 090_hs  –  2026-11-27 12:52:49
+### Box direkt (App 2.56, 192.168.130.246)
+
+    tetherableWifiRegexs: [wlan\d, softap\d, ap_br_wlan\d, ap_br_softap\d]
+  Tether state:
+    wlan1 - TetheredState - lastError = 0
+        [wlan1]: iif(iface) oif(iface) v6addr [srcmac] [dstmac]
+    2025-12-25T17:16:14.539837 - [config] TetheringConfiguration{activeDataSubId:-1 tetherableUsbRegexs:[usb\d,rndis\d] tetherableWifiRegexs:[wlan\d,softap\d,ap_br_wlan\d,ap_br_softap\d] tetherableWifiP2pRegexs:[p2p-p2p\d-.*,p2p\d] tetherableBluetoothRegexs:[bt-pan] isDunRequired:false chooseUpstreamAutomatically:true offloadPollInterval:5000 preferredUpstreamIfaceTypes:[I@8f0dd9a provisioningApp:[] provisioningAppNoUi: isCarrierSupportTethering:true isCarrierConfigAffirmsEntitlementCheckRequired:true enableBpfOffload:true enableLegacyDhcpServer:false enableWearTethering:false}
+    2026-11-27T12:48:04.247206 - [config] TetheringConfiguration{activeDataSubId:-1 tetherableUsbRegexs:[usb\d,rndis\d] tetherableWifiRegexs:[wlan\d,softap\d,ap_br_wlan\d,ap_br_softap\d] tetherableWifiP2pRegexs:[p2p-p2p\d-.*,p2p\d] tetherableBluetoothRegexs:[bt-pan] isDunRequired:false chooseUpstreamAutomatically:true offloadPollInterval:5000 preferredUpstreamIfaceTypes:[I@33bc7dc provisioningApp:[] provisioningAppNoUi: isCarrierSupportTethering:true isCarrierConfigAffirmsEntitlementCheckRequired:true enableBpfOffload:true enableLegacyDhcpServer:false enableWearTethering:false}
+    2026-11-27T12:48:04.509310 - [config] TetheringConfiguration{activeDataSubId:2 tetherableUsbRegexs:[usb\d,rndis\d] tetherableWifiRegexs:[wlan\d,softap\d,ap_br_wlan\d,ap_br_softap\d] tetherableWifiP2pRegexs:[p2p-p2p\d-.*,p2p\d] tetherableBluetoothRegexs:[bt-pan] isDunRequired:false chooseUpstreamAutomatically:true offloadPollInterval:5000 preferredUpstreamIfaceTypes:[I@ed367ba provisioningApp:[] provisioningAppNoUi: isCarrierSupportTethering:true isCarrierConfigAffirmsEntitlementCheckRequired:true enableBpfOffload:true enableLegacyDhcpServer:false enableWearTethering:false}
+    2026-11-27T12:48:06.726897 - InitialState got EVENT_UPSTREAM_CALLBACK
+    2026-11-27T12:48:06.727254 - InitialState got EVENT_UPSTREAM_CALLBACK
+    2026-11-27T12:48:06.757881 - InitialState got EVENT_UPSTREAM_CALLBACK
+Wifi is enabled
+Wifi scanning is always available
+==== ClientModeManager instance: ConcreteClientModeManager{id=23204 iface=wlan0 role=ROLE_CLIENT_PRIMARY} ====
+Wifi is not connected
+  mCurrentFocus=Window{1cc04d0 u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher}
+Failed to write while dumping service window: Broken pipe
+11-27 12:52:28.765  1908  2724 D LOWI-9.0.0.79: [LOWI-Scan] BSS 04:c4:61:25:f2:27 (wlan0) ASSO: NO AddInfo: 0x0, TSF 0, 00:04:52.333, RSSI: -158, CPL: 127, AGE: 1992,  SSID MB Hotspot 55554, TSFDelta: 0x275f12b5, TXRate: 0
+
+### Exit-Code: 0
+
+### Dauer 0 s
