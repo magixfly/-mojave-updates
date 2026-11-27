@@ -1,0 +1,33 @@
+== 088_lte on mojave-fpv, 2026-11-26 19:27:40, FPV V1.9.23 ==
+== usb
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 002: ID 2109:3431 VIA Labs, Inc. Hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+== net
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             DOWN           
+wlan0            UP             192.168.178.169/24 fe80::da3a:ddff:fe1e:e6bc/64 
+tailscale0       UNKNOWN        100.64.69.54/32 fd7a:115c:a1e0::c531:4537/128 fe80::4c4e:d51b:ae34:7df2/64 
+== routes
+default via 192.168.178.1 dev wlan0 proto dhcp src 192.168.178.169 metric 600 
+192.168.178.0/24 dev wlan0 proto kernel scope link src 192.168.178.169 metric 600 
+== kernel
+[    1.105914] usbcore: registered new interface driver usb-storage
+[    1.353522] usb 1-1: new high-speed USB device number 2 using xhci_hcd
+[    1.492112] usb 1-1: New USB device found, idVendor=2109, idProduct=3431, bcdDevice= 4.21
+[    1.492144] usb 1-1: New USB device strings: Mfr=0, Product=1, SerialNumber=0
+[    1.492152] usb 1-1: Product: USB2.0 Hub
+== nm
+wlan0:wifi:connected:netplan-wlan0-Optimus Prime
+tailscale0:tun:connected (externally):tailscale0
+lo:loopback:connected (externally):lo
+p2p-dev-wlan0:wifi-p2p:disconnected:
+eth0:ethernet:unavailable:
+== fpv
+VERSION = "V1.9.23"
+active
+active
+100.64.69.54  mojave-fpv  userid:4596753005376487  linux  offline  
+[100%] done
+
+== exit code 0, 0.7 s ==
