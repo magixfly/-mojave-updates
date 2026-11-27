@@ -447,9 +447,11 @@ function limFind(p,hdg){var best=null,bd=1e9;rdWays.forEach(function(w){var g=w.
   if(hdg!=null){var dd=Math.abs(((r[1]-hdg)%180+270)%180-90);d+=Math.max(0,90-dd)*.25;}   // prefer the road going in the driving direction
   if(d<bd){bd=d;best=w;}}});return bd<40?best:null;}
 function rdLoad(p){if(rdBusy)return;rdBusy=true;rdT=Date.now();fetch('/__ctbox/roads?lat='+p[0].toFixed(5)+'&lon='+p[1].toFixed(5)).then(function(r){return r.json();}).then(function(j){rdWays=(j.elements||[]).filter(function(e){return e.geometry;});rdAt=p.slice();}).catch(function(){}).then(function(){rdBusy=false;});}
+var limSeen=0;
 function spwTick(p,kmh,hdg){if(!p)return;
- if(fahrt&&(!rdAt||L.latLng(p).distanceTo(L.latLng(rdAt))>220)&&Date.now()-rdT>8000)rdLoad(p);
- var w=rdWays.length?limFind(p,fahrt?hdg:null):null;if(w){var r=limOf(w.tags||{});limNow=r[0];limEst=r[1];curRef=refN((w.tags||{}).ref);}else curRef='';
+ // 2.62: load the roads around a point 300 m ahead (radius 550 m) and reload when that point is passed - at 150 km/h the old area ran out
+ if(fahrt&&(!rdAt||L.latLng(p).distanceTo(L.latLng(rdAt))>260)&&Date.now()-rdT>5000){var q=p;if(hdg!=null){var k=Math.cos(p[0]*Math.PI/180);q=[p[0]+300*Math.cos(hdg*Math.PI/180)/111320,p[1]+300*Math.sin(hdg*Math.PI/180)/(111320*k)];}rdLoad(q);}
+ var w=rdWays.length?limFind(p,fahrt?hdg:null):null;if(w){var r=limOf(w.tags||{});limNow=r[0];limEst=r[1];curRef=refN((w.tags||{}).ref);limSeen=Date.now();}else{curRef='';if(limNow&&Date.now()-limSeen>40000)limNow=0;}
  var e=$('lim');e.classList.toggle('on',!!limNow);e.classList.toggle('est',limEst);$('limV').textContent=limNow||'–';var lb=$('limB');lb.classList.toggle('on',!!limNow);lb.classList.toggle('est',limEst);$('limBV').textContent=limNow||'–';
  var tol=limNow?(spwT[limNow]!=null?spwT[limNow]:spwT.x):0,over=spwOn&&limNow&&fahrt&&kmh>limNow*(1+tol/100);
  e.classList.toggle('over',!!over);$('spd').classList.toggle('over',!!over);lb.classList.toggle('over',!!over);
