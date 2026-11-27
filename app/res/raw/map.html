@@ -194,9 +194,20 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 #cmp{touch-action:none}   /* 2.52: the browser must not take over the compass drag (it broke off) */
 #net{width:auto!important;min-width:0;max-width:420px}#net svg{width:22px!important;height:22px!important}   /* 2.52: connection pill only as wide as its text, smaller icons */
 #tw.rdrw{border-color:#ff4d4d!important;color:#fff}#tw.rdrw #twT{color:#ff6b6b}   /* 2.55 speed camera banner */
+/* 2.58: title - CORE white, DASH blue, big clock with the version as a small tag; smaller speed panel, km/h lower case, no GPS line */
+#title{display:flex!important;flex-wrap:wrap;align-items:baseline;gap:0 8px;font:italic 800 24px/1 var(--num)!important;letter-spacing:.16em!important;max-width:260px}
+#title .t1{color:#fff}#title .t2{color:var(--acc)}
+#title small{flex-basis:100%;display:flex!important;align-items:center;gap:10px;margin-top:6px!important;font:italic 700 30px/1 var(--num)!important;letter-spacing:.04em!important;color:#fff!important;font-variant-numeric:tabular-nums}
+#title #ver{font:600 13px/1 var(--num);letter-spacing:.12em;color:var(--dim);border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:4px 6px;font-style:normal}
+#spd{width:250px!important;top:92px!important;padding:10px 14px 10px!important}
+#leds{height:16px!important;gap:3px!important}
+#spd .num{font-size:58px!important;margin-top:4px}
+#spd .num small{font:italic 600 15px var(--num)!important;letter-spacing:.08em!important;text-transform:none!important}
+#spd em,#spdg{display:none!important}
+#mjf{width:250px!important}
 </style></head><body>
 <div id="top">
-  <div id="title">CORE DASH<small><span id="ver"></span> · <span id="uhr"></span></small></div>
+  <div id="title"><span class="t1">CORE</span><span class="t2">DASH</span><small><span id="uhr"></span><span id="ver"></span></small></div>
   <div class="pill" id="net" title="Box Wi-Fi">…</div>
   <div class="pill" id="maps" title="Tap: start / stop the map download"><div id="mapsBar"></div><span id="mapsT">Maps</span></div>
   <div class="pill" id="gps">No GPS</div>
@@ -231,7 +242,7 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 <div id="mjf"><div class="h">MOJAVE <span id="mjfLq"></span></div><div class="sp"><span id="mjfKmh">0</span><small>km/h</small></div>
 <div class="bat"><i id="mjfBar"></i><span id="mjfBat">–</span></div><div class="ft" id="mjfFt"></div></div>
 <div id="btns"><div id="zrow"><div class="b" id="zout">&minus;</div><div class="b" id="zin">+</div></div><div id="zlv">Zoom –</div><div id="azh"></div><div class="b" id="ctr" title="Center on own position"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path d="M12 1.5v4M12 18.5v4M1.5 12h4M18.5 12h4"/></svg>CENTER</div><div class="b" id="areasB" title="Show the shared map areas" >AREAS</div><div class="b" id="trfB" title="Traffic messages and fixed speed cameras" >TRAFFIC</div></div>
-<div id="spd"><div id="leds"></div><div class="num"><span id="spdv">0</span><small>KM/H</small></div><div id="limB">LIMIT <b id="limBV">–</b></div><em id="spdg"></em></div>
+<div id="spd"><div id="leds"></div><div class="num"><span id="spdv">0</span><small>km/h</small></div><div id="limB">LIMIT <b id="limBV">–</b></div><em id="spdg"></em></div>
 <div id="lim"><b id="limV">–</b></div>
 <div id="spw"><div class="h">SPEED WARNING · tolerance before the tone</div>
  <div id="spwRows"></div>
