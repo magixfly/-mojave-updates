@@ -1,0 +1,24 @@
+== 095_netprio on mojave-fpv, 2026-11-28 00:27:50, FPV V1.9.23 ==
+--- before: Wi-Fi profiles (name, autoconnect priority) ---
+Optimus Prime:802-11-wireless:10
+fpv-lte:802-3-ethernet:50
+netplan-eth0:802-3-ethernet:0
+XVII:802-11-wireless:5
+--- set priorities: Optimus Prime 30, Media 20, XVII 10 (fpv-lte stays 50, but metric 700) ---
+Optimus Prime -> 30
+Media: no profile
+XVII -> 10
+--- after ---
+Optimus Prime:802-11-wireless:30:yes
+fpv-lte:802-3-ethernet:50:yes
+netplan-eth0:802-3-ethernet:0:no
+XVII:802-11-wireless:10:no
+--- routes ---
+default via 192.168.178.1 dev wlan0 proto dhcp src 192.168.178.169 metric 600 
+default via 192.168.100.33 dev eth1 proto dhcp src 192.168.100.100 metric 700 
+{"kind": "wifi", "name": "Optimus Prime", "sig": -48, "dev": "wlan0", "other": "lte", "wifi_on": true, "lte_up": true}
+--- restart remote maintenance in 20 s (so status.txt shows V1.9.26) ---
+scheduled
+[100%] done
+
+== exit code 0, 0.4 s ==
