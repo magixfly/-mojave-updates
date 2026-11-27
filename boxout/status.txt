@@ -1,7 +1,7 @@
-Stand: 2026-11-27 18:12:12
+Stand: 2026-11-27 18:22:16
 App: 2.72
 IP: 192.168.232.194
-WLAN: kein WLAN → Hotspot
+WLAN: Hotspot an
 Wifi is connected to "Optimus Prime"
     wlan1 - TetheredState - lastError = 0
 Failed to write while dumping service tethering: Broken pipe
