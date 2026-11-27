@@ -274,10 +274,10 @@ sizeRot();
 function fitMap(){sizeRot();var w=document.getElementById('rot'),m=document.getElementById('mapi');if(!MS)return;var r0=document.getElementById('map').getBoundingClientRect(),r={left:r0.left+parseFloat(w.style.left||0),top:r0.top+parseFloat(w.style.top||0)},fx=(r.left*DPR)%1,fy=(r.top*DPR)%1;   // 2.12: start on a whole screen pixel
  m.style.left=(-fx/DPR)+'px';m.style.top=(-fy/DPR)+'px';m.style.width=(w.clientWidth*DPR+2)+'px';m.style.height=(w.clientHeight*DPR+2)+'px';m.style.transform='scale('+(1/DPR)+')'}
 fitMap();
-var map=L.map('mapi',{zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,
+var map=L.map('mapi',{renderer:L.svg({padding:.6}),zoomControl:false,attributionControl:true,maxZoom:20,minZoom:7,zoomSnap:1,inertia:true,
   maxBounds:[[46.3,13.0],[49.6,18.3]]});
 map.attributionControl.setPrefix(false);
-L.tileLayer('/tile/{z}/{x}/{y}.jpg',{maxNativeZoom:19,maxZoom:20,minZoom:7,attribution:'basemap.at',keepBuffer:2,updateWhenZooming:false,updateWhenIdle:false}).addTo(map);
+L.tileLayer('/tile/{z}/{x}/{y}.jpg',{maxNativeZoom:19,maxZoom:20,minZoom:7,attribution:'basemap.at',keepBuffer:1,updateWhenZooming:false,updateWhenIdle:false}).addTo(map);
 var ovl=L.tileLayer('/ovl/{z}/{x}/{y}.png',{maxNativeZoom:19,maxZoom:20,minZoom:7,keepBuffer:1,updateWhenZooming:false,updateWhenIdle:false});   // 2.22: load tiles only for the zoom you stop at, not for every step in between
 var ovlOn=ls('ovl','1')=='1';if(ovlOn)ovl.addTo(map);
 var v0=JSON.parse(ls('view','null')||'null');
@@ -526,10 +526,13 @@ function hint(t){var h=$('azh');h.textContent=t;h.classList.add('on');clearTimeo
   if(manRot){setMan(0);}else setHU(!HU);});
 })();
 document.documentElement.classList.add('th-carbon');   // 2.34: only Carbon (Iced glass removed)
+/* 2.60: lighter map - follow by shifting the map pane (no full view reset per frame); tiles, lines and areas update at most 4x per second */
+var feT=0;function folgen(px,py){if(Math.abs(px)+Math.abs(py)>400){map.setView(ani.cur,map.getZoom(),{animate:false});return;}
+ map._rawPanBy(L.point(px,py));map.fire('move');if(!feT)feT=setTimeout(function(){feT=0;map.fire('moveend');},250);}
 function tick(){var t=performance.now();
  if(ani.to&&me){var k=Math.min(1,(t-ani.t0)/ani.dur),la=ani.from[0]+(ani.to[0]-ani.from[0])*k,lo=ani.from[1]+(ani.to[1]-ani.from[1])*k;
   if(!ani.cur||Math.abs(la-ani.cur[0])>1e-8||Math.abs(lo-ani.cur[1])>1e-8){ani.cur=[la,lo];me.setLatLng(ani.cur);}
-  if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();if(Math.abs(cp.x-sz.x/2)+Math.abs(cp.y-sz.y/2)>.6)map.setView(ani.cur,map.getZoom(),{animate:false});}}
+  if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();var px=Math.round(cp.x-sz.x/2),py=Math.round(cp.y-sz.y/2);if(px||py)folgen(px,py);}}
  var goal=HU?-ani.hdg:manRot,d=((goal-ani.rot+540)%360)-180;
  // 2.54: heading up turns only for changes over 4 deg (no constant wobble), and the map is redrawn at most every 0.5 deg - the box GPU is slow at turning the map
  if(HU&&!ani.turn&&Math.abs(d)>4)ani.turn=1;
