@@ -1,0 +1,34 @@
+### 109_ap2  –  2026-11-27 14:53:05
+### Box direkt (App 2.69, 192.168.145.74)
+
+    Start softap with provided params
+    Note that the shell command doesn't activate internet tethering. In some devices, internet sharing is possible when Wi-Fi STA is also enabled and isassociated to another AP with internet access.
+    <ssid> - SSID of the network
+    open|wpa2|wpa3|wpa3_transition|owe|owe_transition - Security type of the network.
+==
+Connectivity service commands:
+  help
+    Print this help text.
+  airplane-mode [enable|disable]
+    Turn airplane mode on or off.
+  airplane-mode
+    Get airplane mode.
+  set-chain3-enabled [true|false]
+    Enable or disable FIREWALL_CHAIN_OEM_DENY_3 for debugging.
+  get-chain3-enabled
+    Returns whether FIREWALL_CHAIN_OEM_DENY_3 is enabled.
+  set-package-networking-enabled [true|false] [package name]
+    Set the deny bit in FIREWALL_CHAIN_OEM_DENY_3 to package. This has
+    no effect if the chain is disabled.
+  get-package-networking-enabled [package name]
+    Get the deny bit in FIREWALL_CHAIN_OEM_DENY_3 for package.
+  set-background-networking-enabled-for-uid [uid] [true|false]
+    Set the allow bit in FIREWALL_CHAIN_BACKGROUND for the given uid.
+  get-background-networking-enabled-for-uid [uid]
+    Get the allow bit in FIREWALL_CHAIN_BACKGROUND for the given uid.
+==
+224	tethering: [android.net.ITetheringConnector]
+
+### Exit-Code: 0
+
+### Dauer 0 s
