@@ -1,0 +1,59 @@
+== 089_lte2 on mojave-fpv, 2026-11-27 23:35:49, FPV V1.9.23 ==
+== usb
+Bus 001 Device 002: ID 2109:3431 VIA Labs, Inc. Hub
+Bus 001 Device 004: ID 1286:4e31 Marvell Semiconductor, Inc. Mobile Composite Device Bus
+== net
+eth0             DOWN           
+wlan0            DOWN           2001:4bc9:a079:57ce:9010:cdfc:2df0:8680/64 fe80::d034:a0f5:158f:f80e/64 
+tailscale0       UNKNOWN        100.64.69.54/32 fd7a:115c:a1e0::c531:4537/128 fe80::c6e7:17d0:378b:871a/64 
+eth1             UNKNOWN        192.168.100.100/24 2001:4bc9:a01e:5ca0:ae00:33ff:feaa:9633/64 fe80::ae00:33ff:feaa:9633/64 
+== routes
+default via 192.168.100.1 dev eth1 proto dhcp src 192.168.100.100 metric 100 
+192.168.100.0/24 dev eth1 proto kernel scope link src 192.168.100.100 metric 100 
+== driver
+eth0 bcmgenet d8:3a:dd:1e:e6:ba
+eth1 rndis_host ac:00:33:aa:96:33
+wlan0 brcmfmac d8:3a:dd:1e:e6:bc
+== nm
+eth1:ethernet:connected:netplan-eth0
+wlan0:wifi:connected:XVII
+tailscale0:tun:connected (externally):tailscale0
+p2p-dev-wlan0:wifi-p2p:disconnected:
+eth0:ethernet:unavailable:
+== wifi seen
+HOCO HI43-6319:100
+Media:84
+Optimus Prime:75
+:35
+shelly:32
+
+== ping
+8 packets transmitted, 8 received, 0% packet loss, time 2104ms
+rtt min/avg/max/mdev = 29.935/43.921/74.506/13.603 ms
+== public
+46.124.167.82
+== stick page
+gw 192.168.100.1
+http 200 18898 bytes
+== upload 4 MB
+up 1429702 B/s in 2.797930 s
+== download 5 MB
+down 1876614 B/s
+== tailscale
+100.64.69.54    mojave-fpv      thorsten@  linux    offline                                                      
+100.79.194.65   gamerpro        thorsten@  windows  -                                                            
+100.76.27.53    iphone-xii      thorsten@  iOS      -                                                            
+100.98.59.36    lito-for-arm64  thorsten@  android  offline, last seen 4h ago                                    
+100.101.199.46  nbl             thorsten@  windows  active; direct 81.217.204.231:61632, tx 157483912 rx 471016  
+
+	* UDP: true
+	* IPv4: yes, 46.124.167.82:52469
+	* IPv6: no, but OS has support
+	* MappingVariesByDestIP: false
+	* Nearest DERP: Nuremberg
+== power
+throttled=0x0
+temp=51.6'C
+[100%] done
+
+== exit code 0, 9.4 s ==
