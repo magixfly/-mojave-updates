@@ -1,10 +1,10 @@
 mojave-fpv remote maintenance, FPV V1.9.23
-time      2026-11-27 23:42:58 CET
-uptime    up 56 minutes
+time      2026-11-27 23:53:07 CET
+uptime    up 1 hour, 6 minutes
 addresses 172.20.10.4 100.64.69.54 192.168.100.100 2001:4bc9:a079:57ce:9010:cdfc:2df0:8680 fd7a:115c:a1e0::c531:4537 2001:4bc9:a01e:5ca0:ae00:33ff:feaa:9633
 wifi      XVII
 tailscale 100.64.69.54
-temp      55.0 C
+temp      53.1 C
 throttled throttled=0x0
 services  video=active bridge=active
-last      090_stickpage at 2026-11-27 23:42:49
+last      091_v1924 at 2026-11-27 23:45:43
