@@ -31,7 +31,7 @@ class HotspotBoot {
         new Thread(new Runnable() { public void run() {
             try {
                 Thread.sleep(20000);
-                if (apOn(c)) { Log.d("CTAP", "Hotspot schon an"); A11y.startBand(c); return; }   // V1.57: 5 GHz festlegen
+                if (apOn(c)) { Log.d("CTAP", "Hotspot schon an"); return; }   // V2.57: hotspot already on -> do not open its settings page (it covered the navi)
                 if (c.getSharedPreferences("ct", 0).getBoolean("wlanAuto", true)) { WlanOrder.boot(c); return; }   // V1.88: Media → XVII → Optimus Prime, sonst Hotspot
                 if (wifiConnected(c)) { Log.d("CTAP", "WLAN verbunden (z. B. Heim-WLAN) -> kein Hotspot"); return; }   // V1.82: zu Hause nicht aus dem WLAN werfen
                 A11y.want("ap");

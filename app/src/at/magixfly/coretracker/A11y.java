@@ -70,7 +70,7 @@ public class A11y extends AccessibilityService {
             Log.d("CTAP", "Hotspot-Schalter angetippt: " + ok);
         } else Log.d("CTAP", "Hotspot war schon an");
         task = null;
-        final boolean band = getSharedPreferences("ct", 0).getBoolean("ap5", true) && (!bandDone || Autostart.forceBand);
+        final boolean band = Autostart.forceBand;   // V2.57: band only when asked in the settings (it stays set), not after every start
         new android.os.Handler(getMainLooper()).postDelayed(new Runnable() { public void run() {
             if (band) startBand(A11y.this, true);           // V1.57/59: gleich weiter zum 5-GHz-Band
             else goBack();
