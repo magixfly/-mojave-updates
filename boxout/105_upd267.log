@@ -1,0 +1,10 @@
+### 105_upd267  –  2026-11-27 14:29:12
+### Box direkt (App 2.66, 192.168.88.127)
+
+Failure [INSTALL_FAILED_VERSION_DOWNGRADE: Downgrade detected: Update version code 167 is older than current 168]
+Starting: Intent { cmp=at.magixfly.coretracker/.MainActivity }
+Warning: Activity not started, intent has been delivered to currently running top-most instance.
+
+### Exit-Code: 0
+
+### Dauer 25 s
