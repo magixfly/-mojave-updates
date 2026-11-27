@@ -210,7 +210,7 @@ class TileStore {
     void produce(Areas ar) throws InterruptedException {
         finished = false;
         ArrayList<long[]> jobs = new ArrayList<long[]>(ar.want.size());
-        for (Long k : ar.want) jobs.add(new long[]{k >>> 56, (k >>> 28) & 0xFFFFFFFL, k & 0xFFFFFFFL});
+        for (Long k : ar.want) jobs.add(new long[]{k >>> 56, (k >>> 28) & 0xFFFFFFFL, k & 0xFFFFFFFL, ar.prio.containsKey(k) ? 1 : 0});   // V2.65: [3] = 1 for "load first" areas (also loaded over LTE)
         final long[][] c = new long[20][];
         for (int z = 0; z < 20; z++) c[z] = new long[]{lonX(C_LON, z), latY(C_LAT, z)};
         final java.util.HashMap<Long, Long> pr = ar.prio;

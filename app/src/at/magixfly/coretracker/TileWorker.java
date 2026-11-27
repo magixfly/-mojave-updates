@@ -4,12 +4,19 @@ import java.io.File;
 class TileWorker implements Runnable {
     final TileStore s;
     TileWorker(TileStore s) { this.s = s; }
+    /** V2.65: Wi-Fi always; over the SIM (LTE) only tiles of "load first" areas */
+    boolean netOk(long[] t) {
+        String n = s.netType();
+        if ("Wi-Fi".equals(n)) return true;
+        return n != null && t.length > 3 && t[3] == 1 && s.a.prefs.getBoolean("ltePrio", true);
+    }
+
     public void run() {
         while (true) {
             try {
                 long[] t = s.q.take();
                 if (t[0] < 0) { if (s.q.isEmpty()) s.finished = true; continue; }
-                while (s.stopped || !"Wi-Fi".equals(s.netType()) || s.full) {
+                while (s.stopped || s.full || !netOk(t)) {
                     s.paused = true;
                     s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE;
                     Thread.sleep(2000);
