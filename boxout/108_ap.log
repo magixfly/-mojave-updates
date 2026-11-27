@@ -1,0 +1,19 @@
+### 108_ap  –  2026-11-27 14:52:32
+### Box direkt (App 2.69, 192.168.145.74)
+
+==
+  start-softap <ssid> (open|wpa2|wpa3|wpa3_transition|owe|owe_transition) <passphrase> [-b 2|5|6|any|bridged|bridged_2_5|bridged_2_6|bridged_5_6] [-x] [-w 20|40|80|160|320] [-f <int> [<int>]]
+    Start softap with provided params
+    Note that the shell command doesn't activate internet tethering. In some devices, internet sharing is possible when Wi-Fi STA is also enabled and isassociated to another AP with internet access.
+    <ssid> - SSID of the network
+==
+    wlan1 - TetheredState - lastError = 0
+    2026-11-27T14:51:25.151268 - [wlan1] InitialState got CMD_TETHER_REQUESTED
+    2026-11-27T14:51:25.304061 - [wlan1] TetheredState got CMD_TETHER_CONNECTION_CHANGED
+==
+null
+wifi_softap_wpa3_sae_supported
+
+### Exit-Code: 0
+
+### Dauer 0 s
