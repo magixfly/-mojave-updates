@@ -225,6 +225,7 @@ html,body,#menu button,#menu .info,#tw span,#trfL,#spw .i,#nopos,.atip,#updT{fon
 #spd.haslim .num{align-self:flex-start;margin-left:18px}
 #road{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:950;display:none;max-width:46%;padding:8px 18px;border-radius:12px;background:rgba(10,13,18,.94);border:1px solid rgba(255,255,255,.16);color:#fff;font:italic 700 20px var(--num);letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
 #road.on{display:block}   /* 2.68: current street name like a car navi */
+#limB.unk{border-color:#6b7280!important;background:#d1d5db!important}#limB.unk b{color:#4b5563!important}   /* 2.70: limit not known yet */
 </style></head><body>
 <div id="top">
   <div id="title"><span class="t1">CORE</span><span class="t2">DASH</span><small><span id="uhr"></span><span id="ver"></span></small></div>
@@ -469,7 +470,7 @@ function spwTick(p,kmh,hdg){if(!p)return;
  // 2.62: load the roads around a point 300 m ahead (radius 550 m) and reload when that point is passed - at 150 km/h the old area ran out
  if(fahrt&&(!rdAt||L.latLng(p).distanceTo(L.latLng(rdAt))>260)&&Date.now()-rdT>5000){var q=p;if(hdg!=null){var k=Math.cos(p[0]*Math.PI/180);q=[p[0]+300*Math.cos(hdg*Math.PI/180)/111320,p[1]+300*Math.sin(hdg*Math.PI/180)/(111320*k)];}rdLoad(q);}
  var w=rdWays.length?limFind(p,fahrt?hdg:null):null;if(w){var r=limOf(w.tags||{});limNow=r[0];limEst=r[1];curRef=refN((w.tags||{}).ref);limSeen=Date.now();curW=w;curHw=(w.tags||{}).highway||'';var tg=w.tags||{},nm=tg.name||tg.ref||'';$('road').textContent=nm;$('road').classList.toggle('on',!!nm&&fahrt);}else{curRef='';if(limNow&&Date.now()-limSeen>40000){limNow=0;curW=null;curHw='';$('road').classList.remove('on');}}
- var e=$('lim');e.classList.toggle('on',!!limNow);e.classList.toggle('est',limEst);$('limV').textContent=limNow||'–';var lb=$('limB');lb.classList.toggle('on',!!limNow);$('spd').classList.toggle('haslim',!!limNow);lb.classList.toggle('est',limEst);$('limBV').textContent=limNow||'–';
+ var e=$('lim');e.classList.toggle('on',!!limNow);e.classList.toggle('est',limEst);$('limV').textContent=limNow||'–';var lb=$('limB');lb.classList.toggle('on',!!limNow||fahrt);lb.classList.toggle('unk',!limNow);$('spd').classList.toggle('haslim',!!limNow||fahrt);lb.classList.toggle('est',limEst);$('limBV').textContent=limNow||'–';
  var tol=limNow?(spwT[limNow]!=null?spwT[limNow]:spwT.x):0,over=spwOn&&limNow&&fahrt&&kmh>limNow*(1+tol/100);
  e.classList.toggle('over',!!over);$('spd').classList.toggle('over',!!over);lb.classList.toggle('over',!!over);
  if(over&&(!spwOver||Date.now()-spwLast>12000)){ton();spwLast=Date.now();var sp=$('spd');sp.classList.remove('pump');void sp.offsetWidth;sp.classList.add('pump');}spwOver=!!over;}
@@ -579,7 +580,7 @@ var az=ls('az','1')=='1',azPause=0,azWant=0,azSeit=0;
 function setAz(v){az=v;lw('az',v?'1':'0');$('mAz').textContent='Auto zoom: '+(v?'on':'off');}
 setAz(az);$('mAz').onclick=function(){setAz(!az);};
 var azOff=2.5;   // 2.68: auto zoom offset +2.5 at every start (car), long press on + / - changes it in 0.5 steps
-function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;if(fahrt){var j=jAhead();if(j==2)z=Math.max(z,17);else if(j==1&&k<85)z=Math.min(18,z+1);azJ=j;}return Math.max(7,Math.min(19,z+azOff));}
+function azZiel(k){var z=!fahrt?19:k<15?18:k<35?17:k<60?16:k<95?15:14;if(fahrt){var j=jAhead();if(j==2)z=Math.max(z,17);else if(j==1&&k<85)z=Math.min(18,z+1);azJ=j;}return Math.max(7,Math.min(19,Math.round(z+azOff)));}   // 2.70: whole zoom levels only - in-between levels made the box redraw scaled tiles all the time (flicker)
 /* 2.68: roundabout (2) or junction (1) ahead on the loaded OSM roads -> zoom in earlier */
 var azJ=0;function jAhead(){if(!rdWays.length||!pos)return 0;var la=pos[0],lo=pos[1],k=Math.cos(la*Math.PI/180),h=ani.hdg,best=0;
  for(var n=0;n<rdWays.length;n++){var w=rdWays[n],g=w.geometry||[],t=w.tags||{},ro=t.junction==='roundabout';if(w===curW&&!ro)continue;if(/^(service|track|footway|path|cycleway)$/.test(t.highway||''))continue;

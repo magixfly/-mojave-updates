@@ -119,10 +119,10 @@ class WlanOrder {
 
     /** Beim Start: WLANs der Reihe nach probieren (bis ~1 min), sonst Hotspot. */
     static void boot(Context c) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {   // V2.70: 2 tries 5 s apart (was 3 x 10 s) - hotspot comes about 40 s earlier
             if (HotspotBoot.apOn(c)) return;
             if (pick(c)) return;
-            SystemClock.sleep(10000);
+            SystemClock.sleep(5000);
         }
         if (c.getSharedPreferences("ct", 0).getBoolean("apAuto", true) && !HotspotBoot.apOn(c)) startAp(c);
     }

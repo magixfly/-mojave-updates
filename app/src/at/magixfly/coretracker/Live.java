@@ -16,14 +16,14 @@ class Live {
 
     /** V2.62: Overpass with fallback servers (overpass-api.de answered 406 from the box) + log for diagnosis */
     static final String[] OVP = {"https://overpass-api.de/api/interpreter", "https://maps.mail.ru/osm/tools/overpass/api/interpreter", "https://overpass.private.coffee/api/interpreter"};
-    static int ovpGood = 0;
+    static int ovpGood = 1;   // V2.70: mail.ru first (overpass-api.de refuses the box)
     static byte[] overpass(String q, int to, String what) throws Exception {
         String e = java.net.URLEncoder.encode(q, "UTF-8");
         for (int k = 0; k < OVP.length; k++) {
             int i = (ovpGood + k) % OVP.length;
             long t0 = System.currentTimeMillis();
             byte[] d = TileStore.http(OVP[i] + "?data=" + e, to);
-            boolean ok = d != null && d.length > 50 && new String(d, 0, Math.min(d.length, 200), "UTF-8").contains("elements");
+            boolean ok = d != null && d.length > 50 && new String(d, 0, Math.min(d.length, 3000), "UTF-8").contains("\"elements\"");   // V2.70: the header is longer than 200 B
             android.util.Log.d("CTLIVE", what + " " + OVP[i] + " -> " + (d == null ? "null" : d.length + " B") + (ok ? " ok" : " BAD") + " " + (System.currentTimeMillis() - t0) + " ms");
             if (ok) { ovpGood = i; return d; }
         }

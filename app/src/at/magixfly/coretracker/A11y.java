@@ -114,7 +114,7 @@ public class A11y extends AccessibilityService {
         Class<?> back = Autostart.backTo;
         Autostart.backTo = null;
         if (back != null) startActivity(new Intent(this, back).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
-        else performGlobalAction(GLOBAL_ACTION_HOME);   // V1.87: nach dem Hotspot immer zur Startseite der Box (Wunsch Thorsten)
+        else performGlobalAction(GLOBAL_ACTION_BACK);   // V2.70: back to the app that was open before (e.g. the navi), not to the home screen
     }
 
     void bandFinish(String why) {
