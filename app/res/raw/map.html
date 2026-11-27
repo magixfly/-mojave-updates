@@ -464,9 +464,9 @@ setInterval(function(){var t=Date.now();for(var k in rdrDone)if(t-rdrDone[k]>900
 var recB=[],recL=null,recT=0;
 function recAdd(la,lo,acc,gps,kmh){if(!gps||(acc>0&&acc>40))return;var t=Date.now();
  if(recL&&(L.latLng(recL).distanceTo(L.latLng([la,lo]))<15||kmh<3)&&t-recT<60000)return;
- recL=[la,lo];recT=t;recB.push(la.toFixed(6)+','+lo.toFixed(6)+','+Math.round(kmh||0)+','+Math.round(t/1000));if(recB.length>=40)recFlush();}
+ recL=[la,lo];recT=t;recB.push(la.toFixed(6)+','+lo.toFixed(6)+','+Math.round(kmh||0)+','+Math.round(t/1000));if(recB.length>=10)recFlush();}
 function recFlush(){if(!recB.length)return;var d=recB.join(';');recB=[];fetch('/__ctbox/trk?d='+encodeURIComponent(d)).catch(function(){});}
-setInterval(recFlush,30000);window.addEventListener('pagehide',recFlush);
+setInterval(recFlush,10000);window.addEventListener('pagehide',recFlush);
 window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   if(kmh>=0){if(fahrt?kmh<4:kmh<7){fahrt=false;kmh=0;}else fahrt=true;}
   if(!fahrt&&pos&&ani.cur){var dm=L.latLng(lat,lon).distanceTo(L.latLng(ani.cur[0],ani.cur[1]));if(dm<Math.max(8,acc>0?acc:8)){lat=ani.cur[0];lon=ani.cur[1];}}   // parked: dot stays still
