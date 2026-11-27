@@ -288,9 +288,16 @@ var v0=JSON.parse(ls('view','null')||'null');
 if(v0)map.setView([v0[0],v0[1]],v0[2]);else map.setView(home,13);
 var vT=0;map.on('moveend',function(){var n=Date.now();if(n-vT<3000)return;vT=n;var c=map.getCenter();lw('view',JSON.stringify([c.lat,c.lng,map.getZoom()]));});   // 2.15: at most every 3 s (map moves every frame now)
 var follow=ls('follow','1')=='1',me=null,pos=null;
-function setFollow(f){follow=f;lw('follow',f?'1':'0');$('ctr').classList.toggle('act',f);$('mFollow').textContent='Follow position: '+(f?'on':'off');if(f&&pos)map.panTo(pos);}
+function setFollow(f){if(f){handPan=false;clearTimeout(typeof backT!=='undefined'?backT:0);}follow=f;lw('follow',f?'1':'0');$('ctr').classList.toggle('act',f);$('mFollow').textContent='Follow position: '+(f?'on':'off');if(f&&pos)map.panTo(pos);}
 setFollow(follow);
-map.on('dragstart',function(){if(follow)setFollow(false);});
+/* 2.63: moving the map by hand pauses CENTER; 10 s after the last touch it jumps back. With a turned map Leaflet's drag is off, so a own drag turns the finger movement back by the map angle */
+var backT=0,handPan=false;function panHand(){if(follow){setFollow(false);handPan=true;}if(handPan){clearTimeout(backT);backT=setTimeout(function(){if(handPan){handPan=false;setFollow(true);}},10000);}}
+map.on('dragstart drag zoomstart',function(e){if(e.type!=='zoomstart'||handPan)panHand();});
+(function(){var el=document.getElementById('map'),st=null;
+ el.addEventListener('pointerdown',function(e){if(!document.documentElement.classList.contains('hu')||!e.isPrimary)return;if(e.target.closest&&e.target.closest('.b,.pill,#cmp,#menu,#spd,#mjf,#tw,.me,#spw'))return;st={x:e.clientX,y:e.clientY,on:false};});
+ el.addEventListener('pointermove',function(e){if(!st||!e.isPrimary)return;var dx=e.clientX-st.x,dy=e.clientY-st.y;if(!st.on&&Math.abs(dx)+Math.abs(dy)<8)return;st.on=true;st.x=e.clientX;st.y=e.clientY;panHand();
+  var a=-ani.rot*Math.PI/180,mx=dx*Math.cos(a)-dy*Math.sin(a),my=dx*Math.sin(a)+dy*Math.cos(a);map.panBy([-mx,-my],{animate:false});});
+ ['pointerup','pointercancel'].forEach(function(t){el.addEventListener(t,function(){st=null;});});})();
 /* 2.37: short tap = zoom (auto zoom pauses 30 s); hold 0.7 s = auto zoom closer / further for good (like the tracker) */
 function azHint(t){var e=$('azh');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(function(){e.classList.remove('on');},2200);}
 function zKnopf(id,d){var el=$(id),tm=null,lang=false;
@@ -516,7 +523,7 @@ var ani={cur:null,from:null,to:null,t0:0,t1:0,dur:1000,hdg:0,rot:0};
 HU=ls('hu','0')=='1';
 var manRot=+ls('manRot','0')||0;   // 2.51: map turned by hand (drag the compass)
 function rotMode(){var r=HU||manRot!=0;document.documentElement.classList.toggle('hu',r);$('cmp').classList.toggle('act',r);$('cmpT').textContent=HU?'▲':manRot?'↻':'N';
- if(!r){ani.rot=0;$('rot').style.transform='';}if(r)map.dragging.disable();else map.dragging.enable();fitMap();map.invalidateSize();if(r&&!follow)setFollow(true);}
+ if(!r){ani.rot=0;$('rot').style.transform='';}if(r)map.dragging.disable();else map.dragging.enable();fitMap();map.invalidateSize();if(r&&!follow&&!handPan)setFollow(true);}
 function setHU(h){HU=h;lw('hu',h?'1':'0');if(h){manRot=0;lw('manRot','0');}rotMode();
  if(h&&!fahrt)hint('HEADING UP WHILE DRIVING · DRAG THE COMPASS TO TURN');}
 function setMan(r){manRot=((r%360)+360)%360;if(manRot>180)manRot-=360;if(Math.abs(manRot)<2)manRot=0;lw('manRot',String(manRot));if(HU){HU=false;lw('hu','0');}rotMode();}
