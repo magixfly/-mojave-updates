@@ -1,0 +1,10 @@
+== 091_v1924 on mojave-fpv, 2026-11-27 23:45:43, FPV V1.9.23 ==
+VERSION = "V1.9.24"
+active
+active
+active
+1
+stick page through the Pi: http 200
+[100%] done
+
+== exit code 0, 9.9 s ==
