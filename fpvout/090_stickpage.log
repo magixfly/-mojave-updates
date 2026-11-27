@@ -1,0 +1,25 @@
+== 090_stickpage on mojave-fpv, 2026-11-27 23:42:49, FPV V1.9.23 ==
+script ok
+Created symlink '/etc/systemd/system/multi-user.target.wants/fpv-stickpage.service' → '/etc/systemd/system/fpv-stickpage.service'.
+active
+Nov 27 23:42:53 mojave-fpv systemd[1]: Started fpv-stickpage.service - FPV: settings page of the LTE stick, passed through the Pi (port 8081).
+Nov 27 23:42:54 mojave-fpv python3[1662]: [stickpage] port 8081 -> 192.168.100.1:80
+== through the Pi
+http 200 18898 bytes
+<title> Wireless Router
+src="js/jquery/jquery.js"
+src="js/jquery/jquery.i18n.properties-1.0.4.js"
+src="js/library/jquery.form.js"
+src="js/library/download.jQuery.js"
+src="js/library/md5.js"
+src="js/library/table.js"
+src="js/library/modaldbox.js"
+src="js/base/ajax_calls.js"
+0
+== addresses
+wlan0            UP             172.20.10.4/28 2001:4bc9:a079:57ce:9010:cdfc:2df0:8680/64 fe80::d034:a0f5:158f:f80e/64 
+tailscale0       UNKNOWN        100.64.69.54/32 fd7a:115c:a1e0::c531:4537/128 fe80::c6e7:17d0:378b:871a/64 
+eth1             UNKNOWN        192.168.100.100/24 2001:4bc9:a01e:5ca0:ae00:33ff:feaa:9633/64 fe80::ae00:33ff:feaa:9633/64 
+[100%] done
+
+== exit code 0, 7.4 s ==
