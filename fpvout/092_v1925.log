@@ -1,0 +1,28 @@
+== 092_v1925 on mojave-fpv, 2026-11-28 00:03:03, FPV V1.9.23 ==
+VERSION = "V1.9.25"
+active
+active
+active
+[40%] network order: Wi-Fi first, LTE stick second
+== before
+default via 192.168.100.33 dev eth1 proto dhcp src 192.168.100.100 metric 100 
+default via 172.20.10.1 dev wlan0 proto dhcp src 172.20.10.4 metric 600 
+eth1:connected:netplan-eth0
+wlan0:connected:XVII
+eth0:unavailable:
+stick interface: eth1
+Connection 'fpv-lte' (b16b6875-5089-46d4-b6b9-dfce761ae91a) successfully added.
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/6)
+stick profile fpv-lte active, internet through eth1 works
+== after
+default via 172.20.10.1 dev wlan0 proto dhcp src 172.20.10.4 metric 600 
+default via 192.168.100.33 dev eth1 proto dhcp src 192.168.100.100 metric 700 
+wlan0:connected:XVII
+eth1:connected:fpv-lte
+eth0:unavailable:
+== cockpit sees
+{"kind": "wifi", "name": "XVII", "sig": -57, "dev": "wlan0", "other": "lte", "wifi_on": true, "lte_up": true}
+rtt min/avg/max/mdev = 17.389/20.154/23.026/2.302 ms
+[100%] done
+
+== exit code 0, 25.4 s ==
