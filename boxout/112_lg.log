@@ -1,0 +1,10 @@
+### 112_lg  –  2026-11-27 14:56:56
+### Box direkt (App 2.70, 192.168.145.74)
+
+11-27 14:55:29.506 13730 13848 D CTLIVE  : roads https://maps.mail.ru/osm/tools/overpass/api/interpreter -> 83639 B ok 11425 ms
+11-27 14:55:38.537 13730 13848 D CTLIVE  : roads https://maps.mail.ru/osm/tools/overpass/api/interpreter -> 83639 B ok 8530 ms
+11-27 14:55:51.280 13730 13848 D CTLIVE  : roads https://maps.mail.ru/osm/tools/overpass/api/interpreter -> 82951 B ok 12277 ms
+
+### Exit-Code: 0
+
+### Dauer 0 s
