@@ -456,7 +456,7 @@ window.ctPos=function(lat,lon,acc,kmh,brg,age,gps){
   // 2.15: smooth - glide from where the dot is now to the new fix over the time between fixes
   var t=performance.now();ani.dur=ani.t1?Math.max(300,Math.min(1500,t-ani.t1)):1000;ani.from=ani.cur?ani.cur.slice():pos.slice();ani.to=pos.slice();ani.t0=t;ani.t1=t;
   var a=me.getElement()&&me.getElement().querySelector('b');
-  if(fahrt&&brg>=0)ani.hdg=brg;
+  if(fahrt&&brg>=0&&kmh>=12){var dh=((brg-ani.hdg+540)%360)-180;ani.hdg=(ani.hdg+dh*(Math.abs(dh)>60?1:.35)+360)%360;}   // 2.54: smooth the GPS heading (it jumps a few degrees each second)
   if(a){var mv=fahrt&&brg>=0;var mr=me.getElement().firstChild;mr.classList.toggle('mv',mv);if(mv)mr.querySelector('u').style.transform='rotate('+brg+'deg)';}
   ani.kmh=kmh>=0?kmh:0;   // 2.19: for auto zoom
   $('gps').textContent=(gps?'GPS':'Pos. via Wi-Fi')+(acc>0?' ±'+Math.round(acc)+' m':'')+(kmh>=0&&gps?' · '+Math.round(kmh)+' km/h':'')+(age>30?' · old':'');
@@ -492,8 +492,11 @@ function tick(){var t=performance.now();
   if(!ani.cur||Math.abs(la-ani.cur[0])>1e-8||Math.abs(lo-ani.cur[1])>1e-8){ani.cur=[la,lo];me.setLatLng(ani.cur);}
   if(follow&&!map._animatingZoom&&!(map._panAnim&&map._panAnim._inProgress)){var cp=map.latLngToContainerPoint(ani.cur),sz=map.getSize();if(Math.abs(cp.x-sz.x/2)+Math.abs(cp.y-sz.y/2)>.6)map.setView(ani.cur,map.getZoom(),{animate:false});}}
  var goal=HU?-ani.hdg:manRot,d=((goal-ani.rot+540)%360)-180;
- if(Math.abs(d)>.05){ani.rot+=d*.12;if(!HU&&!manRot&&Math.abs(ani.rot)<.1)ani.rot=0;$('rot').style.transform=ani.rot?'rotate('+ani.rot.toFixed(2)+'deg)':'';}
- var cr=ani.rot.toFixed(1);if(cr!==ani.cr){ani.cr=cr;$('cmpS').style.transform='rotate('+cr+'deg)';}
+ // 2.54: heading up turns only for changes over 4 deg (no constant wobble), and the map is redrawn at most every 0.5 deg - the box GPU is slow at turning the map
+ if(HU&&!ani.turn&&Math.abs(d)>4)ani.turn=1;
+ if((!HU||ani.turn)&&Math.abs(d)>.05){ani.rot+=d*.12;if(!HU&&!manRot&&Math.abs(ani.rot)<.1)ani.rot=0;if(Math.abs(d)<.3)ani.turn=0;
+  if(ani.rw==null||Math.abs(ani.rot-ani.rw)>=.5||Math.abs(d)<.3){ani.rw=ani.rot;$('rot').style.transform=ani.rot?'rotate('+ani.rot.toFixed(1)+'deg)':'';$('cmpS').style.transform='rotate('+ani.rot.toFixed(1)+'deg)';}}
+ else if(HU&&!ani.turn)ani.turn=0;
  requestAnimationFrame(tick);}
 requestAnimationFrame(tick);
 // 2.19: auto zoom by speed (only while following); + / - pause it for 30 s
