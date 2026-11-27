@@ -15,7 +15,7 @@ class TileWorker implements Runnable {
         while (true) {
             try {
                 long[] t = s.q.take();
-                if (t[0] < 0) { if (s.q.isEmpty()) s.finished = true; continue; }
+                if (t[0] < 0) { if (s.q.isEmpty() && !s.finished) { s.finished = true; s.a.prefs.edit().putString("mapsDone", s.curTag).apply(); } continue; }   // V2.71: remember "complete" for this list
                 while (s.stopped || s.full || !netOk(t)) {
                     s.paused = true;
                     s.full = s.dir.getUsableSpace() < TileStore.KEEP_FREE;

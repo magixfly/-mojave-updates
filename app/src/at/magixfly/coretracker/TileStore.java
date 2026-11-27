@@ -36,6 +36,7 @@ class TileStore {
     static final class A { final android.content.Context c; final android.content.SharedPreferences prefs; A(android.content.Context c) { this.c = c.getApplicationContext(); prefs = this.c.getSharedPreferences("ct", 0); }
         java.io.File getFilesDir() { return c.getFilesDir(); } Object getSystemService(String n) { return c.getSystemService(n); } }
     static TileStore one;
+    volatile String curTag = "";
     /** V2.64: one shared instance - started by the boot receiver at power-on or by the app, whichever comes first */
     static synchronized TileStore get(android.content.Context c) { if (one == null) { one = new TileStore(c); one.start(); android.util.Log.d("CTMAP", "TileStore started by " + c.getClass().getSimpleName()); } return one; }
     final File dir, ovlDir, listFile;
@@ -190,6 +191,11 @@ class TileStore {
                     if (!tag.equals(a.prefs.getString("areasCleaned", ""))) {
                         clean(ar);
                         a.prefs.edit().putString("areasCleaned", tag).apply();
+                    }
+                    curTag = tag + "/" + ar.want.size();
+                    if (lastVer < 0 && curTag.equals(a.prefs.getString("mapsDone", ""))) {   // V2.71: same list already complete before the restart -> no new check from 0 %
+                        lastVer = ar.ver; finished = true; total = ar.want.size(); done.set(total);
+                        android.util.Log.d("CTMAP", "list " + curTag + " already complete");
                     }
                     if (ar.ver != lastVer || !finished) {
                         lastVer = ar.ver;
