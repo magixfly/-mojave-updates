@@ -1,0 +1,15 @@
+### 142_d3  –  2026-11-28 18:30:46
+### Box direkt (App 2.72, 192.168.74.150)
+
+11-28 18:29:50.649 31725 31725 D DNC-0   : addDataDisallowedReasonWhenInSecureMode: mIsInSecureMode = false
+11-28 18:29:50.652 31725 31725 D DNC-0   : Data evaluation: evaluation reason:PREFERRED_TRANSPORT_CHANGED, Data allowed reason: NORMAL, candidate profile=[DataProfile=[ApnSetting] Planet3, 294, 23210, drei.at, , http://mmsc, 213.94.78.133, 8799, null, 0, mms |
+11-28 18:29:50.678 31725 32082 D RILJ    : [0620]> SETUP_DATA_CALL,reason=NORMAL,accessNetworkType=EUTRAN,dataProfile=[DataProfile=[ApnSetting] Planet3, 294, 23210, drei.at, , http://mmsc, 213.94.78.133, 8799, null, 0, mms | supl | hipri | default, IP, IP, tru
+11-28 18:29:50.689 31725 31744 D RILJ    : [0620]< SETUP_DATA_CALL DataCallResponse: { cause=OEM_DCFAILCAUSE_4(0x1004) retry=-1 cid=-1 linkStatus=0 protocolType=-1 ifname= addresses=[] dnses=[] gateways=[] pcscf=[] mtu=0 mtuV4=0 mtuV6=0 handoverFailureMode=leg
+11-28 18:29:50.700 31725 31725 D DNC-0   : onDataNetworkSetupDataFailed: [DataNetwork: DN-134-C, drei.at, state=null], cause=OEM_DCFAILCAUSE_4(0x1004), retryDelayMillis=-1ms.
+11-28 18:29:50.702 31725 31725 D DRM-0   : onEvaluateDataSetupRetry: [DataProfile=[ApnSetting] Planet3, 294, 23210, drei.at, , http://mmsc, 213.94.78.133, 8799, null, 0, mms | supl | hipri | default, IP, IP, true, 0, false, 0, 0, 0, 0, 0, null, , false, UNKNOW
+11-28 18:29:50.703 31725 31725 D DRM-0   : [NetworkRequest [ BACKGROUND_REQUEST id=2, [ Transports: CELLULAR Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED RequestorUid: 1000 RequestorPkg: android UnderlyingNetw
+11-28 18:30:15.125 31725 31725 D DNC-0   : addDataDisallowedReasonWhenInSecureMode: mIsInSecureMode = false
+
+### Exit-Code: 0
+
+### Dauer 4 s
