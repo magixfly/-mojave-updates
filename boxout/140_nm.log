@@ -1,0 +1,12 @@
+### 140_nm  –  2026-11-28 18:28:03
+### Box direkt (App 2.72, 192.168.74.150)
+
+netmgrd not running
+radio         8976  8973   11857448  13060 __skb_wait_for_more_packets 0 S netmgrd
+    mDataConnectionState=0
+22: r_rmnet_data0    inet6 fe80::411:462a:d91e:92a1/64 scope link \       valid_lft forever preferred_lft forever
+23: r_rmnet_data1    inet6 fe80::cb4a:10ed:8f0:650d/64 scope link \       valid_lft forever preferred_lft forever
+
+### Exit-Code: 0
+
+### Dauer 30 s
