@@ -1,0 +1,13 @@
+### 133_lte2  –  2026-11-28 18:22:58
+### Box direkt (App 2.72, 192.168.74.150)
+
+simnum=23210 netnum=23205,
+always_on=1 mobile_data=1 mobile_data1=null
+    mDataConnectionState=0
+    mDataConnectionState=-1
+  NetworkAgentInfo{network{102}  handle{441492361229}  ni{VPN CONNECTED extra: VPN:com.tailscale.ipn} created=2026-11-28T16:54:37.106Z Score(Policies : EVER_EVA
+  NetworkAgentInfo{network{104}  handle{450082295821}  ni{WIFI CONNECTED extra: } created=2026-11-28T17:10:47.575Z Score(Policies : TRANSPORT_PRIMARY&EVER_EVALU
+
+### Exit-Code: 0
+
+### Dauer 0 s
