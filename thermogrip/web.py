@@ -53,6 +53,7 @@ class Web:
         self.man = None                 # gefundenes neueres Update (version.json)
         self.want = False               # Installation angefordert (Webseite oder automatisch)
         self._feed = None
+        self.buf = bytearray(1024)      # V8.7: fester Puffer zum Senden der Webseite
         self.force = False              # von der Webseite: auch waehrend des Heizens (Heizung wird ausgeschaltet)
         status["update"] = "off" if not self.url else "not checked"
         try:
@@ -173,7 +174,8 @@ class Web:
         if isinstance(body, str):
             body = body.encode()
         self._all(c, ("HTTP/1.0 %s\r\nContent-Type: %s\r\nContent-Length: %d\r\nCache-Control: no-store\r\nConnection: close\r\n\r\n"
-                      % (code, ctype, len(body))).encode() + body)
+                      % (code, ctype, len(body))).encode())
+        self._all(c, body)
 
     def _handle(self, c, feed):
         req = c.readline().decode().split()
@@ -192,11 +194,15 @@ class Web:
             path, q = path.split("?", 1)
 
         if meth == "GET" and path == "/":
+            n = os.stat("web.html")[6]                   # V8.7: in kleinen Stuecken senden (kein grosser Speicherblock)
+            self._all(c, b"HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: %d\r\nCache-Control: no-store\r\nConnection: close\r\n\r\n" % n)
+            mv = memoryview(self.buf)
             with open("web.html", "rb") as fh:
-                html = fh.read()
-            self._all(c, b"HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: %d\r\nCache-Control: no-store\r\nConnection: close\r\n\r\n" % len(html))
-            self._all(c, html)
-            html = None
+                while True:
+                    k = fh.readinto(self.buf)
+                    if not k:
+                        break
+                    self._all(c, mv[:k])
         elif meth == "GET" and path == "/api/status":
             self._send(c, "200 OK", "application/json", json.dumps(self.status))
         elif meth == "GET" and path == "/api/error":           # V8.3: letzter Absturz
