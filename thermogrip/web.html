@@ -45,7 +45,7 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 
 <div class="card"><h2>Update from the internet</h2>
 <div class="msg">Status: <b id="upd">…</b></div>
-<button onclick="ucheck()">Check now</button><button class="sec" onclick="uinst()">Install update</button>
+<button onclick="ucheck()">Check now</button><button class="sec" onclick="uinst()">Install update</button><button class="sec" onclick="rst()">Restart</button>
 <div class="msg" id="imsg">Installing switches the heater off. The display shows the progress, then the Pico restarts.</div></div>
 
 <div class="card"><h2>Settings (config.txt)</h2>
@@ -76,6 +76,7 @@ $("cm").textContent="Pad limit now: "+Math.round(s.plim)+" °C";
 if(!busy){$("pmax").value=s.pmax;$("vmax").textContent=s.pmax+" °C";$("phold").value=s.phold;$("vhold").textContent=s.phold+" °C"}}
 async function key(k){try{await fetch("/api/key?k="+k,{method:"POST"});setTimeout(status,400)}catch(e){}}
 async function pad(){busy=1;try{await fetch("/api/pad",{method:"POST",body:JSON.stringify({pad_temp_max:$("pmax").value,pad_temp_hold:$("phold").value})})}catch(e){}busy=0;setTimeout(status,400)}
+async function rst(){$("imsg").textContent="Restarting … page reloads in 20 s";try{await fetch("/api/restart",{method:"POST"})}catch(e){}setTimeout(()=>location.reload(),20000)}
 async function ucheck(){$("imsg").textContent="Checking …";try{const r=await (await fetch("/api/update/check",{method:"POST"})).json();$("imsg").textContent=r.update;$("upd").textContent=r.update}catch(e){$("imsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
 async function uinst(){try{const r=await (await fetch("/api/update/install",{method:"POST"})).json();
 $("imsg").innerHTML=r.ok?'<span class="ok">Installing – watch the display, page reloads in 60 s</span>':'No update available – press “Check now” first.';if(r.ok)setTimeout(()=>location.reload(),60000)}catch(e){$("imsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
