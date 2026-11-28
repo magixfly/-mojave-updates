@@ -1,0 +1,70 @@
+### 129_cm  –  2026-11-28 18:19:05
+### Box direkt (App 2.72, 192.168.74.150)
+
+/vendor/bin/init.class_main.sh
+--- /vendor/bin/init.class_main.sh
+33-baseband=`getprop ro.baseband`
+34-sgltecsfb=`getprop persist.vendor.radio.sglte_csfb`
+35-datamode=`getprop persist.vendor.data.mode`
+36-low_ram=`getprop ro.config.low_ram`
+37:qcrild_status=true
+38-
+39-case "$baseband" in
+40-    "apq" | "sda" | "qcs" )
+41-    setprop ro.vendor.radio.noril yes
+42-    stop vendor.ril-daemon
+43:    stop vendor.qcrild
+44-esac
+45-
+46-case "$baseband" in
+47-    "msm" | "csfb" | "svlte2a" | "mdm" | "mdm2" | "sglte" | "sglte2" | "dsda2" | "unknown" | "dsda3" | "sdm" | "sdx" | "sm6")
+--
+56-                    sed -n 's/^[^:]*modem[^:]*:[[:blank:]]*//p' |
+57-                    sed 's/.*AT.\(.*\)/\1/g' | cut -d \- -f 1`
+58-            if [ ! -z $version ]; then
+59-                if [ "$version" \< "3.1" ]; then
+60:                    qcrild_status=false
+61-                fi
+62-            fi
+63-        elif [ "$modem" = "TA" ]; then
+64-            version=`cat /vendor/firmware_mnt/verinfo/ver_info.txt |
+65-                    sed -n 's/^[^:]*modem[^:]*:[[:blank:]]*//p' |
+66-                    sed 's/.*TA.\(.*\)/\1/g' | cut -d \- -f 1`
+67-            if [ ! -z $version ]; then
+68-                if [ "$version" \< "3.0" ]; then
+69:                    qcrild_status=false
+70-                fi
+71-            fi
+72-        elif [ "$modem" = "JO" ]; then
+73-            version=`cat /vendor/firmware_mnt/verinfo/ver_info.txt |
+74-                    sed -n 's/^[^:]*modem[^:]*:[[:blank:]]*//p' |
+75-                    sed 's/.*JO.\(.*\)/\1/g' | cut -d \- -f 1`
+76-            if [ ! -z $version ]; then
+77-                if [ "$version" \< "3.2" ]; then
+78:                    qcrild_status=false
+79-                fi
+80-            fi
+81-        elif [ "$modem" = "TH" ]; then
+82:            qcrild_status=false
+83-        fi
+84-    fi
+85-
+86:    if [ "$qcrild_status" = "true" ]; then
+87:        # Make sure both rild, qcrild are not running at same time.
+88-        # This is possible with vanilla aosp system image.
+89-        stop vendor.ril-daemon
+90-
+91:        start vendor.qcrild
+92-    else
+93-        start vendor.ril-daemon
+94-    fi
+95-
+--
+108-
+109-    multisim=`getprop persist.radio.multisim.config`
+110-
+==
+
+### Exit-Code: 0
+
+### Dauer 0 s
