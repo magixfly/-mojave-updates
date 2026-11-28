@@ -1,0 +1,19 @@
+### 134_apn  –  2026-11-28 18:23:31
+### Box direkt (App 2.72, 192.168.74.150)
+
+set294
+Row: 0 _id=294, name=Planet3, numeric=23210, mcc=232, mnc=10, carrier_id=-1, apn=drei.at, user=, ser
+    mDataConnectionState=0
+Failed to write while dumping service telephony.registry: Broken pipe
+  NetworkAgentInfo{network{102}  handle{441492361229}  ni{VPN CONNECTED extra: VPN:com.tailscale.ipn} created=2026-11-28
+  NetworkAgentInfo{network{104}  handle{450082295821}  ni{WIFI CONNECTED extra: } created=2026-11-28T17:10:47.575Z Score
+11-28 18:23:53.456  4034  4034 D TelephonyInfoManager: getApnInfo cursor=android.content.ContentResolver$CursorWrapperInner@4584465
+11-28 18:23:53.462  4034  4034 D TelephonyInfoManager: getApnInfo mSelectedKey=294
+11-28 18:23:53.463  4034  4034 D TelephonyInfoManager: getApnInfo mApnData=null
+11-28 18:23:53.960  4034  4034 D TelephonyInfoManager: getApnInfo cursor=android.content.ContentResolver$CursorWrapperInner@98a153a
+11-28 18:23:53.968  4034  4034 D TelephonyInfoManager: getApnInfo mSelectedKey=294
+11-28 18:23:53.971  4034  4034 D TelephonyInfoManager: getApnInfo mApnData=null
+
+### Exit-Code: 0
+
+### Dauer 24 s
