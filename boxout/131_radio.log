@@ -1,0 +1,19 @@
+### 131_radio  –  2026-11-28 18:20:56
+### Box direkt (App 2.72, 192.168.74.150)
+
+    mServiceState={mVoiceRegState=0(IN_SERVICE), mDataRegState=0(IN_SERVICE), mChannelNumber=500, duplexMode()=0, mCellB
+Failed to write while dumping service telephony.registry: Broken pipe
+  radio
+    Radio Commands.
+    Type: 1 - MESSAGE_CALL_RADIO_ACCESS_TYPE
+Radio Commands:
+  radio set-modem-service [-s SERVICE_NAME]
+Unknown command: radio-power
+sim=LOADED,ABSENT op=Drei net=Hoerbi, type=IWLAN,Unknown
+    mServiceState={mVoiceRegState=0(IN_SERVICE), mDataRegState=0(IN_SERVICE), mChannelNumber=500, duplexMode()=0, mCellBandwidths=[20000], mOperatorAlphaLong=Hoerbi, mOperatorAlphaShort=Hoerbi, isManualNetworkSelection=false(automatic), getRilVoiceRadioTechnology=14(LTE), getRilDataRadioTechnology=1
+    mSignalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 
+No result found.
+
+### Exit-Code: 0
+
+### Dauer 31 s
