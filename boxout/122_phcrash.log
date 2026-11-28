@@ -1,0 +1,27 @@
+### 122_phcrash  –  2026-11-28 18:14:00
+### Box direkt (App 2.72, 192.168.74.150)
+
+==
+11-28 18:13:43.212  1578 26736 D ActivityManager: Completed ANR of com.android.phone in 318ms, latency 2ms
+11-28 18:13:43.237  1578  4824 I ActivityManager: Process com.android.phone (pid 26535) has died: pers PER 
+11-28 18:13:43.238  1578  4824 W ActivityManager: Re-adding persistent process ProcessRecord{6760a47 26535:com.android.phone/1001}
+11-28 18:13:43.255  1578  1989 I ActivityManager: Start proc 26747:com.android.phone/1001 for restart com.android.phone
+11-28 18:13:58.293  1578  1988 I ActivityManager: Extending process start timeout by 24ms for ProcessRecord{6760a47 26747:com.android.phone/1001}
+==
+2026-11-28 18:11:54 system_app_crash (text, 6050 bytes)
+SystemUptimeMs: 1127879
+Process: com.android.settings
+PID: 2946
+UID: 1000
+Frozen: false
+Flags: 0x38cbbe45
+Package: com.android.settings v35 (15)
+Foreground: Yes
+Process-Runtime: 1103714
+Timestamp: 2026-11-28 18:11:54.613+0100
+Build: qti/lito/lito:15/AQ3A.241126.002/eng.zhangz.00000000.000000:user/release-keys
+Crash-Handler: com.android.internal.os.RuntimeInit$KillApplicationHandler
+
+### Exit-Code: 0
+
+### Dauer 1 s
