@@ -333,6 +333,7 @@ class Web:
         self.chk_at = time.ticks_add(time.ticks_ms(), int(self.every))
         if not self.url or not self.ok:
             return
+        gc.collect()
         try:
             s, n = self._get(self.url + "version.json?t=%d" % time.ticks_ms())
             raw = b""

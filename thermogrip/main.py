@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V8.7"
+VERSION = "V8.8"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -308,6 +308,11 @@ class LCD(framebuf.FrameBuffer):
         self.cs(0); self.dc(0); self.spi.write(b"\x2C"); self.dc(1); self.spi.write(self.buf); self.cs(1)
 
 ST = {"version": VERSION}            # Status fuer die Webseite
+try:                                     # V8.8: MicroPython-Version fuer Diagnose
+    import sys as _sys
+    ST["mpy"] = "%s / mpy %s" % (".".join(str(x) for x in _sys.implementation.version[:3]), getattr(_sys.implementation, "_mpy", "?"))
+except Exception:
+    pass
 LOCKUI = {"on": False, "hint": "", "f": None}
 def lock_icon(fb, x, y):
     c = c565(*ORANGE)
@@ -837,7 +842,7 @@ def main():
                       heater=int(duty), battery=akku_pct if zellen else None, volts=v_disp if zellen else None, cell=round(vz_s, 2) if zellen else None,
                       cells=zellen or None, left=rest_min if zellen else None,
                       on=s["on"], boost=bool(s["boost_bis"]), tmin=cfg["target_temp_min"], tmax=cfg["target_temp_max"],
-                      pmax=cfg["pad_temp_max"], phold=cfg["pad_temp_hold"], plim=int(round(s.get("pad_lim", cfg["pad_temp_max"]))),
+                      pmax=cfg["pad_temp_max"], phold=cfg["pad_temp_hold"], plim=int(round(s.get("pad_lim", cfg["pad_temp_max"]))), mem=gc.mem_free() // 1024,
                       state=(s["err"] or ("Battery empty" if s["leer"] else ("Heating" if s["on"] else "Standby")) + (" (demo)" if demo else "")))
         if time.ticks_diff(now, draw_t) > 250:
             draw_t = now
