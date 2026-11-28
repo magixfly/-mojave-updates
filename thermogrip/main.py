@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V7.6"
+VERSION = "V7.7"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -183,6 +183,7 @@ def load_cfg():
                     cfg[k] = v                                  # Text (z. B. WLAN-Name)
     cfg["target_temp_max"] = min(cfg["target_temp_max"], 45)
     cfg["pad_temp_max"] = min(cfg["pad_temp_max"], 65)          # V7.3: bis 65 erlaubt
+    cfg["pad_temp_hold"] = min(cfg["pad_temp_hold"], cfg["pad_temp_max"])   # V7.7: hold nie ueber max
     global SOC
     if cfg.get("battery_liion", 0) == 1:
         SOC = SOC_LIION
