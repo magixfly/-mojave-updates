@@ -1,0 +1,6 @@
+== 115_ltedebug2 on mojave-fpv, 2026-11-28 18:42:18, FPV V1.9.29 ==
+login answer: 200 '' {'WWW-Authenticate': 'Digest realm="Highwmg", nonce="249276", qop="auth"'}
+status1: UNAUTHORIZED 1
+[100%] done
+
+== exit code 0, 0.4 s ==
