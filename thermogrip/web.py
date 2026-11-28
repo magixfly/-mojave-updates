@@ -195,6 +195,13 @@ class Web:
             html = None
         elif meth == "GET" and path == "/api/status":
             self._send(c, "200 OK", "application/json", json.dumps(self.status))
+        elif meth == "GET" and path == "/api/error":           # V8.3: letzter Absturz
+            try:
+                with open("error.txt") as fh:
+                    e = fh.read()
+            except OSError:
+                e = ""
+            self._send(c, "200 OK", "text/plain", e)
         elif meth == "GET" and path == "/api/config":
             self._send(c, "200 OK", "application/json", json.dumps(_cfg_lines()))
         elif meth == "POST" and path == "/api/config":

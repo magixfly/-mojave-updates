@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V8.2"
+VERSION = "V8.3"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -889,6 +889,9 @@ if __name__ == "__main__":
         try:
             lcd = LCD()
             lcd.fill(c565(150, 20, 20)); lcd.text("ERROR - see error.txt", 8, 100, 0xFFFF)
-            lcd.text(str(e)[:28], 8, 120, 0xFFFF); lcd.show()
+            lcd.text(str(e)[:28], 8, 120, 0xFFFF); lcd.text("restart in 8 s", 8, 140, 0xFFFF); lcd.show()
         except Exception:
             pass
+        time.sleep(8)                                       # V8.3: nach Absturz automatisch neu starten
+        import machine
+        machine.reset()

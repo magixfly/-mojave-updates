@@ -41,6 +41,8 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 
 <div class="card"><h2>Status</h2><div class="grid" id="st"><div class="tile"><b>…</b><span>loading</span></div></div></div>
 
+<div class="card" id="errc" style="display:none;border-color:#e03131"><h2>Last crash (error.txt)</h2><pre id="err" style="white-space:pre-wrap;font-size:12px;color:#ffc9c9"></pre></div>
+
 <div class="card"><h2>Update from the internet</h2>
 <div class="msg">Status: <b id="upd">…</b></div>
 <button onclick="ucheck()">Check now</button><button class="sec" onclick="uinst()">Install update</button>
@@ -110,6 +112,6 @@ try{for(const f of fs){$("umsg").textContent="Uploading "+f.name+" …";await pu
 $("pb").style.width="100%";$("pt").textContent="100 %";$("umsg").innerHTML='<span class="ok">Done ✓</span> – restarting …';
 await fetch("/api/restart",{method:"POST"});setTimeout(()=>location.reload(),10000)}catch(e){$("umsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
 async function boot(){for(let i=0;i<5;i++){try{await loadCfg();break}catch(e){await new Promise(r=>setTimeout(r,800))}}
-status();setInterval(status,2000)}
+status();setInterval(status,2000);try{const e=await (await fetch("/api/error")).text();if(e.trim()){$("err").textContent=e;$("errc").style.display=""}}catch(e){}}
 boot();
 </script></body></html>
