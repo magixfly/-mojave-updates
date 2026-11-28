@@ -26,8 +26,8 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 .on{background:#2f9e44!important}.bst{background:#e8590c!important}
 .sl{margin-top:14px}.sl label{display:flex;justify-content:space-between;font-size:14px;color:var(--mut,#9fb3d9)}.sl input{width:100%}
 .ring{display:flex;flex-direction:column;align-items:center;justify-content:center}.ring svg{width:64px;height:64px}
-*{box-sizing:border-box}.grp{min-width:0;border:1px solid #33456e;border-radius:12px;padding:6px 12px 4px;margin:0 0 12px;background:#101c38}
-.grp legend{padding:0 6px;color:#ffa94d;font-weight:700;font-size:14px;letter-spacing:.04em}
+*{box-sizing:border-box}.grp{min-width:0;border:1px solid #33456e;border-radius:12px;padding:4px 12px 4px;margin:0 0 12px;background:#101c38}
+.grp .gt{color:#ffa94d;font-weight:700;font-size:14px;letter-spacing:.04em;padding:8px 0 4px;border-bottom:1px solid #33456e}
 .grp .row:last-child{border-bottom:none}details.grp summary{cursor:pointer;color:#9fb3d9;padding:8px 0;font-weight:600}
 </style></head><body>
 <header><h1>THERMOGRIP<small id="ver"></small></h1></header>
@@ -97,7 +97,7 @@ const HIDE=["pad_temp_max","pad_temp_hold"];
 function row(k,v,lab,hint){return `<div class="row"><label>${lab}<small>${hint}</small></label><input type="text" data-k="${k}" value="${String(v).replace(/"/g,"&quot;")}" oninput="this.classList.toggle('chg',this.value!=orig['${k}'])"></div>`}
 async function loadCfg(){const c=await (await fetch("/api/config")).json();const m={},com={};for(const [k,v,cm] of c){orig[k]=v;m[k]=v;com[k]=cm}
 let h="",used=new Set(HIDE);for(const [title,items] of G){let r="";for(const [k,lab,hint] of items){if(!(k in m))continue;used.add(k);r+=row(k,m[k],lab,hint)}
-if(r)h+=`<fieldset class="grp"><legend>${title}</legend>${r}</fieldset>`}
+if(r)h+=`<div class="grp"><div class="gt">${title}</div>${r}</div>`}
 let r="";for(const k in m){if(used.has(k))continue;r+=row(k,m[k],k,(com[k]||"").replace(/</g,"&lt;"))}
 if(r)h+=`<details class="grp"><summary>Advanced (all other settings)</summary>${r}</details>`;
 h+=`<div class="msg">Pad max / Pad hold: use the sliders in Control above.</div>`;
