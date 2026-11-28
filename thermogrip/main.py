@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V7.4"
+VERSION = "V7.5"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -820,8 +820,8 @@ def main():
         rest_min = int(s["rest"] / 5 + 0.5) * 5 if zellen else 0          # V7.1: in 5-min-Schritten
 
         if web:
-            ST.update(temp=round(th if th is not None else (tf or 0), 1), target=s["ziel"], pad=None if tf is None else round(tf, 1),
-                      heater=int(duty), battery=akku_pct if zellen else None, volts=round(v, 1) if zellen else None,
+            ST.update(temp=None if th is None else round(th, 1), target=s["ziel"], pad=None if tf is None else round(tf, 1),
+                      heater=int(duty), battery=akku_pct if zellen else None, volts=v_disp if zellen else None, cell=round(vz_s, 2) if zellen else None,
                       cells=zellen or None, left=rest_min if zellen else None,
                       state=(s["err"] or ("Battery empty" if s["leer"] else ("Heating" if s["on"] else "Standby")) + (" (demo)" if demo else "")))
         if time.ticks_diff(now, draw_t) > 250:

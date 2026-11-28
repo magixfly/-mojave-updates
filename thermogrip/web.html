@@ -44,9 +44,9 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 </main>
 <script>
 const $=id=>document.getElementById(id);
-const L={temp:["Temperature","°C"],target:["Target","°C"],pad:["Pad","°C"],heater:["Heater","%"],battery:["Battery","%"],volts:["Battery","V"],cells:["Cells","S"],left:["Time left","min"],state:["State",""],wifi:["WiFi",""]};
+const L={temp:["Temperature","°C"],target:["Target","°C"],pad:["Pad","°C"],heater:["Heater","%"],battery:["Battery","%"],volts:["Battery","V"],cell:["Cell","V"],cells:["Cells","S"],left:["Time left","h"],state:["State",""],wifi:["WiFi",""]};
 async function status(){try{const s=await (await fetch("/api/status")).json();$("ver").textContent=s.version||"";
-let h="";for(const k in L){if(s[k]===undefined||s[k]===null)continue;h+=`<div class="tile"><b>${s[k]}${L[k][1]?" "+L[k][1]:""}</b><span>${L[k][0]}</span></div>`}
+let h="";for(const k in L){if(s[k]===undefined||s[k]===null)continue;let v=s[k];if(k=="left")v=Math.floor(v/60)+":"+String(v%60).padStart(2,"0");h+=`<div class="tile"><b>${v}${L[k][1]?" "+L[k][1]:""}</b><span>${L[k][0]}</span></div>`}
 $("st").innerHTML=h;$("upd").textContent=s.update||"-"}catch(e){}}
 async function ucheck(){$("imsg").textContent="Checking …";try{const r=await (await fetch("/api/update/check",{method:"POST"})).json();$("imsg").textContent=r.update;$("upd").textContent=r.update}catch(e){$("imsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
 async function uinst(){try{const r=await (await fetch("/api/update/install",{method:"POST"})).json();
