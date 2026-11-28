@@ -1,10 +1,10 @@
-Stand: 2026-11-28 17:51:17
+Stand: 2026-11-28 17:54:44
 App: 2.72
-IP: 192.168.244.124
+IP: 192.168.74.150
 WLAN: Hotspot an
-Wifi is connected to "Media"
+Wifi is connected to "Optimus Prime"
     wlan1 - TetheredState - lastError = 0
 Failed to write while dumping service tethering: Broken pipe
 
 ### Exit-Code: 0
-Fernwartung: zuletzt 120_sim5.sh
+Fernwartung: Fehler: Unable to resolve host "api.github.com": No address associated with hostname
