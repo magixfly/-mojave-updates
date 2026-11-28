@@ -1,0 +1,52 @@
+### 116_sim2  –  2026-11-28 13:42:45
+### Box direkt (App 2.72, 192.168.87.180)
+
+[bluetooth.profile.pbap.sim.enabled]: [true]
+[keyguard.no_require_sim]: [true]
+[persist.radio.multisim.config]: [dsds]
+[persist.rild.nitz_long_ons_0]: []
+[persist.rild.nitz_long_ons_1]: []
+[persist.rild.nitz_long_ons_2]: []
+[persist.rild.nitz_long_ons_3]: []
+[persist.rild.nitz_plmn]: []
+[persist.rild.nitz_short_ons_0]: []
+[persist.rild.nitz_short_ons_1]: []
+[persist.rild.nitz_short_ons_2]: []
+[persist.rild.nitz_short_ons_3]: []
+[persist.vendor.bluetooth.modem_nv_support]: [true]
+[persist.vendor.radio.adb_log_on]: [0]
+[persist.vendor.radio.apm_sim_not_pwdn]: [1]
+[persist.vendor.radio.atfwd.start]: [true]
+[persist.vendor.radio.clir0]: [0]
+[persist.vendor.radio.custom_ecc]: [1]
+[persist.vendor.radio.enableadvancedscan]: [true]
+[persist.vendor.radio.msim.stackid_0]: [0]
+[persist.vendor.radio.msim.stackid_1]: [1]
+[persist.vendor.radio.procedure_bytes]: [SKIP]
+[persist.vendor.radio.rat_on]: [combine]
+[persist.vendor.radio.ril_payload_on]: [0]
+[persist.vendor.radio.sglte_target]: [0]
+[persist.vendor.radio.sib16_support]: [1]
+[persist.vendor.radio.stack_id_0]: [0]
+[persist.vendor.radio.stack_id_1]: [1]
+[ril.subscription.types]: [NV,RUIM]
+[rild.libpath]: [/vendor/lib64/libril-qc-hal-qmi.so]
+== flight
+0
+== subs
+== phone
+    mServiceState={mVoiceRegState=1(OUT_OF_SERVICE), mDataRegState=1(OUT_OF_SERVICE), mChannelNumber=0, duplexMode()=0, mCellBandwidths=[], mOperatorAlphaLong=null, mOperatorAlphaShort=null, isManualN
+    mServiceState={mVoiceRegState=1(OUT_OF_SERVICE), mDataRegState=1(OUT_OF_SERVICE), mChannelNumber=0, duplexMode()=0, mCellBandwidths=[], mOperatorAlphaLong=null, mOperatorAlphaShort=null, isManualN
+  mPhoneCapability=null
+== usb/modem
+adsprpc-smd
+adsprpc-smd-secure
+smd11
+smd7
+smd8
+smdcntl8
+ 13:42:45 up 13:55,  0 users,  load average: 0.00, 0.00, 0.00
+
+### Exit-Code: 0
+
+### Dauer 0 s
