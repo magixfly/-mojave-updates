@@ -1,0 +1,11 @@
+### 143_ph  –  2026-11-28 18:31:25
+### Box direkt (App 2.72, 192.168.74.150)
+
+sim=LOADED,ABSENT net=Hoerbi, type=LTE,Unknown
+    mDataConnectionState=2
+Failed to write while dumping service telephony.registry: Broken pipe
+17: rmnet_data1    inet 10.60.19.6/30 scope global rmnet_data1\       valid_lft forever preferred_lft forever
+
+### Exit-Code: 0
+
+### Dauer 49 s
