@@ -1,0 +1,251 @@
+== 105_sticklogin on mojave-fpv, 2026-11-28 02:33:32, FPV V1.9.27 ==
+stick: 192.168.100.33
+=== utils.js 1-132 ===
+
+/*
+ *Login Variables
+ */
+var AuthQop,username="",passwd="",GnCount=1,Authrealm,Gnonce,nonce;
+var _resetTimeOut=600000;
+var authHeaderIntervalID = 0;
+var usernamenum = 0;
+/*
+ * Check the login responce as the 200 OK or not.
+ */
+function login_done(urlData) {
+    if(urlData.indexOf("200 OK") != -1 ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function getValue(authstr) {
+    var arr=authstr.split("=");
+    return arr[1].substring(1,arr[1].indexOf('\"',2) );
+}
+/*
+ * as name suggest it is function which does the authentication
+ * and put the AuthHeader in the Cookies. Uses Digest Auth method
+ */
+function doLogin(username1,passwd1) {
+    var url = window.location.protocol + "//" + window.location.host + "/login.cgi";
+    var loginParam =  getAuthType(url);
+    //alert(loginParam);
+    if(loginParam!=null) {
+        var loginParamArray = loginParam.split(" ");
+        if(loginParamArray[0] =="Digest") {
+//nonce="718337c309eacc5dc1d2558936225417", qop="auth"
+            Authrealm   = getValue(loginParamArray[1]);
+            nonce = getValue(loginParamArray[2]);
+            AuthQop = getValue(loginParamArray[3]);
+
+//    alert("nonce :" + nonce);
+//    alert("AuthQop :" + AuthQop);
+//    alert("Authrealm :" + Authrealm);
+
+            username = username1;
+            passwd = passwd1;
+            var rand, date, salt, strResponse;
+
+            Gnonce = nonce;
+            var tmp, DigestRes;
+            var HA1, HA2;
+
+
+
+
+
+            HA1 = hex_md5(username+ ":" + Authrealm + ":" + passwd);
+            HA2 = hex_md5("GET" + ":" + "/cgi/protected.cgi");
+
+            rand = Math.floor(Math.random()*100001)
+                   date = new Date().getTime();
+
+            salt = rand+""+date;
+            tmp = hex_md5(salt);
+            AuthCnonce = tmp.substring(0,16);
+
+
+            DigestRes = hex_md5(HA1 + ":" + nonce + ":" + "00000001" + ":" + AuthCnonce + ":" + AuthQop + ":" + HA2);
+
+            url = window.location.protocol + "//" + window.location.host + "/login.cgi?Action=Digest&username="+username+"&realm="+Authrealm+"&nonce="+nonce+"&response="+DigestRes+"&qop="+AuthQop+"&cnonce="+AuthCnonce + "&temp=asr";
+            if(login_done(authentication(url))) {
+                strResponse = "Digest username=\"" + username + "\", realm=\"" + Authrealm + "\", nonce=\"" + nonce + "\", uri=\"" + "/cgi/protected.cgi" + "\", response=\"" + DigestRes + "\", qop=" + AuthQop + ", nc=00000001" + ", cnonce=\"" + AuthCnonce + "\"" ;
+                if (username == "sysadmin"){
+                    usernamenum = 1;
+                }
+                return 1;
+            } else {
+                // show error message...
+                usernamenum = 0;
+                return 0;
+            }
+
+            return strResponse;
+        }
+    }
+    return -1;
+}
+/*
+ * return the cookie parameter is Coockie name
+ */
+function getCookie(c_name) {
+    if (document.cookie.length>0) {
+        c_start=document.cookie.indexOf(c_name + "=");
+        if (c_start!=-1) {
+            c_start=c_start + c_name.length+1;
+            c_end=document.cookie.indexOf(";",c_start);
+            if (c_end==-1) c_end=document.cookie.length;
+            return unescape(document.cookie.substring(c_start,c_end));
+        }
+    }
+    return "";
+}
+/*
+ * set cookie of browser it has expiry days after which it expires
+ */
+function setCookie(c_name,value,expiredays) {
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate()+expiredays);
+    document.cookie=c_name+ "=" +escape(value)+
+                    ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
+}
+/*
+ * clear the Authheader from the coockies
+ */
+function clearAuthheader() {
+    //clearing coockies
+    Authheader = "";
+    AuthQop = "";
+    username = "";
+    passwd = "";
+    GnCount = "";
+    Authrealm = "";
+    //window.location.reload();
+   window.location="index.html";
+}
+/*
+* Reset the authHeader
+*/
+function resetInterval() {
+    if(authHeaderIntervalID > 0)
+        clearInterval(authHeaderIntervalID);
+    authHeaderIntervalID = setInterval( "clearAuthheader()", _resetTimeOut);
+
+}
+=== ajax_calls.js authentication / getAuthType 530-600 ===
+        var fileref=document.createElement('script');
+        fileref.setAttribute("type","text/javascript");
+        fileref.setAttribute("src", 'js/jquery/jquery.i18n.properties-1.0.4.js');
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+        setLocalization(locale);
+    }
+}
+/*
+ * API used for url authentication digest checking.. it send url to server and
+ * give responce to caller
+ */
+function authentication(url) {
+    if(devEnv=='1') {
+        return "200 OK";
+    }
+    var content = $.ajax( {
+    url: url,
+    dataType: "text/html",
+    async:false,
+    cache:false,
+    beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization",getAuthHeader("GET"));
+            xhr.setRequestHeader("Expires", "-1");
+            xhr.setRequestHeader("Cache-Control","no-store, no-cache, must-revalidate");
+            xhr.setRequestHeader("Pragma", "no-cache");
+        }
+    }).responseText;
+    return content;
+}
+function getAuthType(url) {
+    if(devEnv=='1') {
+        return 'Digest realm="Highwmg", nonce="718337c309eacc5dc1d2558936225417", qop="auth" Content-Type: text/html Server: Lighttpd/1.4.19 Content-Length: 0 Date: Tue, 11 Oct 2005 10:44:32 GMT ';
+    }
+    var content = $.ajax( {
+    url: url,
+    type: "GET",
+    dataType: "text/html",
+    async:false,
+    cache:false,
+    beforeSend: function(xhr) {
+            xhr.setRequestHeader("Expires", "-1");
+            xhr.setRequestHeader("Cache-Control","no-store, no-cache, must-revalidate");
+            xhr.setRequestHeader("Pragma", "no-cache");
+        }
+    }).getResponseHeader('WWW-Authenticate');
+    return content;
+}
+
+function getVersionXML(xmlName) {
+    var url = "";
+    var content;
+    var host = window.location.protocol + "//" + window.location.host + "/";
+    url = host+xmlName;
+    if(devEnv=='1') {
+        xmlName="xml/"+xmlName;
+
+        content = $.ajax( {
+        url: xmlName,
+        dataType: "text/html",
+        async:false
+        }).responseText;
+    } else {
+        content = $.ajax( {
+        url: url,
+        dataType: "text/html",
+        async:false
+        }).responseText;
+    }
+    return content;
+}
+function getLastLoginXML(xmlName) {
+=== index.html: login form and calls ===
+9:            .password-container {
+157:            var username=encodeURIComponent(document.getElementById("tbarouter_username").value);
+158:            var password=encodeURIComponent(document.getElementById("tbarouter_password").value);
+159:	    var login_done;
+162:            if(username=="" ||password=="")
+163:            	login_done = 0;
+165:            	login_done = doLogin(username,password)
+166:	    if(login_done == 1){
+180:               document.getElementById('lloginfailed').style.display = 'block';
+181:               if(login_done == 0)
+182:                    document.getElementById("lloginfailed").innerHTML = jQuery.i18n.prop("lloginfailed");
+183:	       else if(login_done == -1)
+184:		    document.getElementById("lloginfailed").innerHTML = jQuery.i18n.prop("lnoconn");
+203:            document.getElementById('lloginfailed').style.display = 'none';
+226:       var Last_loginString = "Last Login Time: ";
+227:       var lastLoginXMLData = getLastLoginXML("last_login.txt");
+228:       var lastlogindateXML = objXML.getXMLDOCVersion(lastLoginXMLData);
+229:        var Last_loginTime = $(lastlogindateXML).find("last_login").text();
+230:	if(Last_loginTime != '')
+231:	        Last_loginString = Last_loginString + Last_loginTime
+233:		Last_loginString = ""
+234:       document.getElementById("last_login").innerHTML=Last_loginString;
+321:            const passwordInput = document.getElementById('tbarouter_password');
+325:            if (passwordInput.type === 'password') {
+326:                passwordInput.type = 'text';
+330:                passwordInput.type = 'password';
+338:    <body onload="initIndex()" class="loginBody">
+358:                    <!-- <input type='password' value='' id='tbarouter_password' maxlength="32" class='textfield' onkeydown="checkEnter(event)"> -->
+359:                    <div class="password-container">
+360:                        <input type='password' value='admin' id='tbarouter_password' maxlength="32" class='textfield' onkeypress='checkEnter(event)'>
+365:                    <label class='error' id='lloginfailed'  style='display: none'>Invalid username or password </label>
+375:	<label id="last_login" class="copy" style="align:left" ></label>
+=== lte journal ===
+Nov 28 01:29:25 mojave-fpv python3[5427]: [lte] no_login
+Nov 28 02:31:27 mojave-fpv python3[5427]: [lte] login stored
+Nov 28 02:31:28 mojave-fpv python3[5427]: [lte] login_failed
+Nov 28 02:31:43 mojave-fpv python3[5427]: [lte] login stored
+Nov 28 02:31:52 mojave-fpv python3[5427]: [lte] login stored
+Nov 28 02:32:32 mojave-fpv python3[5427]: [lte] login stored
+Nov 28 02:32:38 mojave-fpv python3[5427]: [lte] ok
+[100%] done
+
+== exit code 0, 1.7 s ==
