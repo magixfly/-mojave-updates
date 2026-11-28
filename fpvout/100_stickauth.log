@@ -1,0 +1,221 @@
+== 100_stickauth on mojave-fpv, 2026-11-28 01:12:37, FPV V1.9.26 ==
+=== where getAuthHeader / login are defined ===
+ajax_calls.js:541:function authentication(url) {
+ajax_calls.js:559:function getAuthType(url) {
+utils.js:5:var AuthQop,username="",passwd="",GnCount=1,Authrealm,Gnonce,nonce;
+utils.js:12:function login_done(urlData) {
+utils.js:19:function getValue(authstr) {
+utils.js:27:function doLogin(username1,passwd1) {
+utils.js:37:            AuthQop = getValue(loginParamArray[3]);
+utils.js:40://    alert("AuthQop :" + AuthQop);
+utils.js:55:            HA1 = hex_md5(username+ ":" + Authrealm + ":" + passwd);
+utils.js:56:            HA2 = hex_md5("GET" + ":" + "/cgi/protected.cgi");
+utils.js:62:            tmp = hex_md5(salt);
+utils.js:63:            AuthCnonce = tmp.substring(0,16);
+utils.js:66:            DigestRes = hex_md5(HA1 + ":" + nonce + ":" + "00000001" + ":" + AuthCnonce + ":" + AuthQop + ":" + HA2);
+utils.js:68:            url = window.location.protocol + "//" + window.location.host + "/login.cgi?Action=Digest&username="+username+"&realm="+Authrealm+"&nonce="+nonce+"&response="+DigestRes+"&qop="+
+utils.js:70:                strResponse = "Digest username=\"" + username + "\", realm=\"" + Authrealm + "\", nonce=\"" + nonce + "\", uri=\"" + "/cgi/protected.cgi" + "\", response=\"" + DigestRes + 
+utils.js:116:    AuthQop = "";
+utils.js:133:function getAuthHeader(requestType,file) {
+utils.js:136:    var  tmp, DigestRes,AuthCnonce_f;
+utils.js:141:    HA1 = hex_md5(username+ ":" + Authrealm + ":" + passwd);
+utils.js:142:    HA2 = hex_md5( requestType + ":" + "/cgi/xml_action.cgi");
+utils.js:148:    tmp = hex_md5(salt);
+utils.js:149:    AuthCnonce_f = tmp.substring(0,16);
+utils.js:150:    //AuthCnonce_f = tmp;
+utils.js:155:    DigestRes =hex_md5(HA1 + ":" + nonce + ":" + Authcount + ":" + AuthCnonce_f  + ":" + AuthQop + ":"+ HA2);
+utils.js:159:    strAuthHeader = "Digest " + "username=\"" + username + "\", realm=\"" + Authrealm + "\", nonce=\"" + nonce + "\", uri=\"" + "/cgi/xml_action.cgi" + "\", response=\"" + DigestRes + "\"
+utils.js:165:function getAuthHeaderEx(requestType,file) {
+utils.js:168:    var  tmp, DigestRes,AuthCnonce_f;
+utils.js:173:    HA1 = hex_md5(username+ ":" + Authrealm + ":" + passwd);
+utils.js:174:    HA2 = hex_md5( requestType + ":" + "/cgi/xml_action.cgi");
+utils.js:180:    tmp = hex_md5(salt);
+=== getAuthHeader in utils.js from line 133 ===
+function getAuthHeader(requestType,file) {
+    // return getCookie("Authheader");
+    var rand, date, salt, strAuthHeader;
+    var  tmp, DigestRes,AuthCnonce_f;
+    var HA1, HA2;
+
+
+
+    HA1 = hex_md5(username+ ":" + Authrealm + ":" + passwd);
+    HA2 = hex_md5( requestType + ":" + "/cgi/xml_action.cgi");
+
+    rand = Math.floor(Math.random()*100001)
+           date = new Date().getTime();
+
+    salt = rand+""+date;
+    tmp = hex_md5(salt);
+    AuthCnonce_f = tmp.substring(0,16);
+    //AuthCnonce_f = tmp;
+
+    var strhex = hex(GnCount);
+    var temp = "0000000000" + strhex;
+    var  Authcount = temp.substring(temp.length-8);
+    DigestRes =hex_md5(HA1 + ":" + nonce + ":" + Authcount + ":" + AuthCnonce_f  + ":" + AuthQop + ":"+ HA2);
+
+
+    GnCount++;
+    strAuthHeader = "Digest " + "username=\"" + username + "\", realm=\"" + Authrealm + "\", nonce=\"" + nonce + "\", uri=\"" + "/cgi/xml_action.cgi" + "\", response=\"" + DigestRes + "\", qop=" + AuthQop + ", nc=" + Authcount + ", cnonce=\"" + AuthCnonce_f  + "\"" ;
+    DigestHeader = strAuthHeader ;
+    return strAuthHeader;
+}
+
+
+function getAuthHeaderEx(requestType,file) {
+    // return getCookie("Authheader");
+    var rand, date, salt, strAuthHeader;
+    var  tmp, DigestRes,AuthCnonce_f;
+    var HA1, HA2;
+
+
+
+    HA1 = hex_md5(username+ ":" + Authrealm + ":" + passwd);
+=== login call: utils.js:68:            url = window.location.protocol + "//" + window.location.host + "/login.cgi?Action=Digest&username="+username+"&realm="+Authrealm+"&nonce="+nonce+"&response="+DigestRes+"&qop="+AuthQop+"&cnonce="+AuthCnonce + "&temp=asr";
+ ===
+            username = username1;
+            passwd = passwd1;
+            var rand, date, salt, strResponse;
+
+            Gnonce = nonce;
+            var tmp, DigestRes;
+            var HA1, HA2;
+
+
+
+
+
+            HA1 = hex_md5(username+ ":" + Authrealm + ":" + passwd);
+            HA2 = hex_md5("GET" + ":" + "/cgi/protected.cgi");
+
+            rand = Math.floor(Math.random()*100001)
+                   date = new Date().getTime();
+
+            salt = rand+""+date;
+            tmp = hex_md5(salt);
+            AuthCnonce = tmp.substring(0,16);
+
+
+            DigestRes = hex_md5(HA1 + ":" + nonce + ":" + "00000001" + ":" + AuthCnonce + ":" + AuthQop + ":" + HA2);
+
+            url = window.location.protocol + "//" + window.location.host + "/login.cgi?Action=Digest&username="+username+"&realm="+Authrealm+"&nonce="+nonce+"&response="+DigestRes+"&qop="+AuthQop+"&cnonce="+AuthCnonce + "&temp=asr";
+            if(login_done(authentication(url))) {
+                strResponse = "Digest username=\"" + username + "\", realm=\"" + Authrealm + "\", nonce=\"" + nonce + "\", uri=\"" + "/cgi/protected.cgi" + "\", response=\"" + DigestRes + "\", qop=" + AuthQop + ", nc=00000001" + ", cnonce=\"" + AuthCnonce + "\"" ;
+                if (username == "sysadmin"){
+                    usernamenum = 1;
+                }
+                return 1;
+            } else {
+                // show error message...
+                usernamenum = 0;
+                return 0;
+            }
+
+            return strResponse;
+        }
+    }
+    return -1;
+}
+/*
+ * return the cookie parameter is Coockie name
+ */
+function getCookie(c_name) {
+    if (document.cookie.length>0) {
+        c_start=document.cookie.indexOf(c_name + "=");
+        if (c_start!=-1) {
+            c_start=c_start + c_name.length+1;
+=== dashboard.js 80-160 ===
+                            bLastSelPdpExist = true;
+                    })
+                })
+
+                if (!bLastSelPdpExist)
+                    document.getElementById("pdpRuleNameDropdown").value = pdpruleName;
+                else
+                    document.getElementById("pdpRuleNameDropdown").value = lastSelPdpName;
+                setDetailPDPInfo();
+
+                wan_link_status = $(this).find("wan_link_status").text();
+                wan_conn_status = $(this).find("wan_conn_status").text();
+                rssis = $(this).find("rssi").text();
+                sim_status = $(this).find("sim_status").text();
+                if(0 == sim_status) {
+                    g_bSimCardExist = true;
+                } else {
+                    g_bSimCardExist = false;
+                }
+                sim_slot_value = $(this).find("version_flag").text();
+                auto_apn = $(this).find("auto_apn").text();
+                pin_status = $(this).find("pin_status").text();
+                roaming = $(this).find("roaming").text();
+                wssid = UniDecode($(this).find("ssid").text());
+                enc = $(this).find("enc").text();
+                cipher = $(this).find("cipher").text();
+                sys_mode = $(this).find("sys_mode").text();
+                Battery_charging = $(this).find("Battery_charging").text();
+				        setLabelValue("Band", Battery_charging);
+                Battery_charge = $(this).find("Battery_charge").text();
+                Battery_voltage = $(this).find("Battery_voltage").text();
+                Battery_connect = $(this).find("Battery_connect").text();
+                data_conn_mode = $(this).find("sys_submode").text();
+                ISPName = $(this).find("network_name").text();
+                roamingNetworkName = $(this).find("roaming_network_name").text();
+                setLabelValue("lDashRouterImeiValue", $(this).find("IMEI").text());
+                setLabelValue("lDashRouterSnValue", $(this).find("SN").text());
+                //iccid-5:
+                //setLabelValue("lDashRouterIccidValue", $(this).find("ICCID").text().slice(-5));
+                setLabelValue("lDashRouterIccidValue", $(this).find("ICCID").text().toUpperCase());
+                IccidValue = $(this).find("ICCID").text().slice(0,6);
+
+                if (wan_conn_status.indexOf("ppp", 0) != -1) {
+                    wan_conn_status = wan_conn_status.substr(4);
+                }
+
+                if (wan_conn_status.indexOf("wifi", 0) != -1) {
+                    wan_conn_status = wan_conn_status.substr(5);
+                }
+
+                conn_type = $(this).find("ConnType").text();
+                proto_type = $(this).find("proto").text();
+                connect_disconnect = $(this).find("connect_disconnect").text();
+                if ("cellular" == connect_disconnect) {
+                    g_bNetworkConnected = true;
+                } else {
+                    g_bNetworkConnected = false;
+                }
+
+            });
+
+            $(xml).find("lan").each(function() {
+                lanip = $(this).find("ip").text();
+            });
+
+            if("1" == auto_apn && "cellular" == proto_type) {
+                $("#divAutoApn").show();
+                $(xml).find("wan").each(function() {
+                    setLabelValue("pDashAutoApn_mmcValue", $(this).find("mmc").text());
+                    setLabelValue("pDashAutoApn_mncValue", $(this).find("mnc").text());
+                    setLabelValue("pDashAutoApn_OperatorNameValue", $(this).find("operator_name").text());
+                    setLabelValue("pDashAutoApn_ApnValue", $(this).find("apn").text());
+                    setLabelValue("pDashAutoApn_LteApnValue", $(this).find("lte_apn").text());
+                    setLabelValue("pDashAutoApn_NetworkTypeValue", $(this).find("network_type").text());
+                    setLabelValue("pDashAutoApn_authtype2g3gValue", $(this).find("authtype2g3g").text());
+                    setLabelValue("pDashAutoApn_username2g3gValue", $(this).find("username2g3g").text());
+                    setLabelValue("pDashAutoApn_password2g3gValue", $(this).find("password2g3g").text());
+                    setLabelValue("pDashAutoApn_authtype4gValue", $(this).find("authtype4g").text());
+                    setLabelValue("pDashAutoApn_username4gValue", $(this).find("username4g").text());
+                    setLabelValue("pDashAutoApn_password4gValue", $(this).find("password4g").text());
+                    var iptype = $(this).find("iptype").text();
+=== USB interfaces of the stick (AT port?) ===
+ls: cannot access '/dev/ttyACM*': No such file or directory
+ls: cannot access '/dev/ttyUSB*': No such file or directory
+/sys/bus/usb/devices/1-1.1 4e31 Mobile Composite Device Bus
+  1-1.1:1.0 class=e0 sub=01 proto=03 driver=rndis_host
+  1-1.1:1.1 class=0a sub=00 proto=00 driver=rndis_host
+  1-1.1:1.2 class=ff sub=00 proto=00 driver=
+  1-1.1:1.4 class=ff sub=00 proto=00 driver=
+  1-1.1:1.6 class=ff sub=00 proto=00 driver=
+[100%] done
+
+== exit code 0, 0.4 s ==
