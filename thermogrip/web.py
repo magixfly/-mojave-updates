@@ -113,7 +113,7 @@ class Web:
                 s = socket.socket()
                 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 s.bind(("0.0.0.0", 80))
-                s.listen(2)
+                s.listen(5)
                 s.setblocking(False)
                 self.srv, self.ok = s, True
                 self.status["wifi"] = self.ssid
@@ -132,29 +132,42 @@ class Web:
             return
         if self.url and self.chk_at and not busy and time.ticks_diff(time.ticks_ms(), self.chk_at) > 0:
             self.check()
-        try:
-            c, _ = self.srv.accept()
-        except OSError:
-            return
-        try:
-            c.settimeout(5)
-            self._handle(c, feed)
-        except Exception as e:
+        for _ in range(4):              # V7.4: bis zu 4 wartende Anfragen pro Durchlauf (Browser fragt parallel)
             try:
-                self._send(c, "500 Error", "text/plain", str(e))
-            except Exception:
-                pass
-        finally:
-            c.close()
-            gc.collect()
+                c, _a = self.srv.accept()
+            except OSError:
+                return
+            try:
+                c.setblocking(True)
+                c.settimeout(5)
+                self._handle(c, feed)
+            except Exception as e:
+                try:
+                    self._send(c, "500 Error", "text/plain", str(e))
+                except Exception:
+                    pass
+            finally:
+                try:
+                    c.close()
+                except Exception:
+                    pass
+                gc.collect()
+
+    @staticmethod
+    def _all(c, data):                  # V7.4: alles senden (send() schickt manchmal nur einen Teil)
+        mv = memoryview(data)
+        while len(mv):
+            n = c.send(mv)
+            if n is None or n <= 0:
+                raise OSError("send")
+            mv = mv[n:]
 
     # ------------------------------------------------------------------ HTTP
     def _send(self, c, code, ctype, body):
         if isinstance(body, str):
             body = body.encode()
-        c.send(("HTTP/1.0 %s\r\nContent-Type: %s\r\nContent-Length: %d\r\nCache-Control: no-store\r\nConnection: close\r\n\r\n"
-                % (code, ctype, len(body))).encode())
-        c.send(body)
+        self._all(c, ("HTTP/1.0 %s\r\nContent-Type: %s\r\nContent-Length: %d\r\nCache-Control: no-store\r\nConnection: close\r\n\r\n"
+                      % (code, ctype, len(body))).encode() + body)
 
     def _handle(self, c, feed):
         req = c.readline().decode().split()
@@ -173,13 +186,11 @@ class Web:
             path, q = path.split("?", 1)
 
         if meth == "GET" and path == "/":
-            c.send(b"HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\nConnection: close\r\n\r\n")
             with open("web.html", "rb") as fh:
-                while True:
-                    b = fh.read(1024)
-                    if not b:
-                        break
-                    c.send(b)
+                html = fh.read()
+            self._all(c, b"HTTP/1.0 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: %d\r\nCache-Control: no-store\r\nConnection: close\r\n\r\n" % len(html))
+            self._all(c, html)
+            html = None
         elif meth == "GET" and path == "/api/status":
             self._send(c, "200 OK", "application/json", json.dumps(self.status))
         elif meth == "GET" and path == "/api/config":

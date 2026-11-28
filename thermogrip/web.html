@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,">
 <title>THERMOGRIP</title>
 <style>
 :root{--bg:#0d1b33;--card:#16294a;--line:#24406e;--txt:#e8f0ff;--mut:#9fb4d9;--acc:#4dabf7;--ok:#51cf66;--warn:#ffa94d;--err:#ff6b6b}
@@ -70,5 +70,7 @@ const all=fs.reduce((a,f)=>a+f.size,0);let done=0;
 try{for(const f of fs){$("umsg").textContent="Uploading "+f.name+" …";await put(f,done,f.size,all);done+=f.size}
 $("pb").style.width="100%";$("pt").textContent="100 %";$("umsg").innerHTML='<span class="ok">Done ✓</span> – restarting …';
 await fetch("/api/restart",{method:"POST"});setTimeout(()=>location.reload(),10000)}catch(e){$("umsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
-status();loadCfg();setInterval(status,2000);
+async function boot(){for(let i=0;i<5;i++){try{await loadCfg();break}catch(e){await new Promise(r=>setTimeout(r,800))}}
+status();setInterval(status,2000)}
+boot();
 </script></body></html>
