@@ -1,0 +1,33 @@
+== 107_stickeng on mojave-fpv, 2026-11-28 02:34:39, FPV V1.9.27 ==
+=== files mentioning rsrp / sinr / Engineering ===
+js_panel_internet_internet_connection.js
+=== lines ===
+128:	    gEngineerModel = $(xml).find("Engineering_mode").text();
+129:            gEngineerQueryTimeInterval = $(xml).find("query_time_interval").text();
+1014:                PDPMapExisting[pdp_number] = g_objXML.putMapElement(PDPMapExisting[pdp_number], indexLoad++, "RGW/wan/Engineering_mode", $("#EngineeringModelSel").val());
+1017:					 PDPMapExisting[pdp_number] = g_objXML.putMapElement(PDPMapExisting[pdp_number], indexLoad++, "RGW/wan/query_time_interval", $("#txtqueryTimeInterval").val());
+1023:					PDPMapExisting[pdp_number] = g_objXML.putMapElement(PDPMapExisting[pdp_number], indexLoad++, "RGW/wan/query_time_interval", $("#txtqueryTimeInterval").val());
+=== signal bar on dashboard (rssi use) ===
+js_panel_dashboard.js:16:            var rssis;
+js_panel_dashboard.js:92:                rssis = $(this).find("rssi").text();
+js_panel_dashboard.js:210:                                var rssi = rssis * 1;
+js_panel_dashboard.js:211:								setLabelValue("RSSI", rssi);
+js_panel_dashboard.js:213:									setLabelValue("DBM", rssi-140);
+js_panel_dashboard.js:215:								    setLabelValue("DBM", (rssi*2)-113);
+js_panel_dashboard.js:217:								    setLabelValue("DBM", rssi-140);
+js_panel_dashboard.js:224:                                        if (rssi < 7)
+js_panel_dashboard.js:226:                                        else if (rssi >= 7 && rssi < 14)
+js_panel_dashboard.js:228:                                        else if (rssi >= 14 && rssi < 19)
+js_panel_dashboard.js:230:                                        else if (rssi >= 19 && rssi < 24)
+js_panel_dashboard.js:232:                                        else if (rssi >= 24 && rssi <= 63)
+js_panel_dashboard.js:236:                                        if (rssi < 17)
+js_panel_dashboard.js:238:                                        else if (rssi >= 17 && rssi < 22)
+js_panel_dashboard.js:240:                                        else if (rssi >= 22 && rssi < 27)
+js_panel_dashboard.js:242:                                        else if (rssi >= 27 && rssi < 31)
+js_panel_dashboard.js:244:                                        else if (rssi >= 31 && rssi <= 96)
+js_panel_dashboard.js:250:                                        if (rssi < 17)
+js_panel_dashboard.js:252:                                        else if (rssi >= 17 && rssi < 22)
+js_panel_dashboard.js:254:                                        else if (rssi >= 22 && rssi < 27)
+[100%] done
+
+== exit code 0, 4.1 s ==
