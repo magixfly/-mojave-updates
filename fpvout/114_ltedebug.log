@@ -1,0 +1,10 @@
+== 114_ltedebug on mojave-fpv, 2026-11-28 18:40:04, FPV V1.9.29 ==
+host 192.168.100.33
+challenge 200 Digest realm="Highwmg", nonce="222510", qop="auth"
+user length 5 pass length 8 special chars in pass: False
+login http ok: True
+status1 login_status: 'UNAUTHORIZED' values: 1 rssi None
+without auth: 200 <?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+[100%] done
+
+== exit code 0, 0.5 s ==
