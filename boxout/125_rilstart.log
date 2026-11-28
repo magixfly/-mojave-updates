@@ -1,0 +1,19 @@
+### 125_rilstart  –  2026-11-28 18:15:50
+### Box direkt (App 2.72, 192.168.74.150)
+
+service vendor.qcrild /vendor/bin/hw/qcrild
+    class main
+    user radio
+    disabled
+    group radio cache inet misc audio log readproc wakelock oem_2901
+    capabilities BLOCK_SUSPEND NET_ADMIN NET_RAW
+
+svc=running
+radio        28617     1   12523296  39680 binder_ioctl_write_read 0 S qcrild
+sim= op= net= type=
+    mServiceState={mVoiceRegState=1(OUT_OF_SERVICE), mDataRegState=1(OUT_OF_SERVICE), mChannelNumber=0, duplexMode()=0, mCellBandwidths=[], mOperatorAlphaLong=null, mOperatorAlphaShort=null, isManualN
+11-28 18:16:06.560  1578 28902 E ActivityManager:   5% 28617/qcrild: 3% user + 2% kernel / faults: 3738 minor 132 major
+
+### Exit-Code: 0
+
+### Dauer 20 s
