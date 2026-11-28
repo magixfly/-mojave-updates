@@ -1,0 +1,13 @@
+### 151_speed  –  2026-11-28 18:45:15
+### Box direkt (App 2.73, 192.168.74.150)
+
+if=rmnet_data1
+rtt min/avg/max/mdev = 15.790/50.045/167.414/58.827 ms
+down 2828631 B/s 3.535279s
+up 1198556 B/s 3.337348s
+mLte=CellSignalStrengthLte: rssi=-73 rsrp=-103 rsrq=-20 rssnr=-1
+Failed to write while dumping service telephony.registry: Broken pipe
+
+### Exit-Code: 0
+
+### Dauer 11 s
