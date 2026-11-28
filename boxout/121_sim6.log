@@ -1,0 +1,19 @@
+### 121_sim6  –  2026-11-28 18:13:25
+### Box direkt (App 2.72, 192.168.74.150)
+
+ 18:13:26 up 20 min,  0 users,  load average: 3.89, 4.41, 4.54
+== SIM
+
+
+
+
+    mServiceState={mVoiceRegState=1(OUT_OF_SERVICE), mDataRegState=1(OUT_OF_SERVICE), mChannelNumber=0, duplexMode()=0, mCellBandwidths=[], mOperatorAlphaLong=null, mOperatorAlphaShort=null, isManualNetworkSelection=false(automatic), getRilVoiceRadioTechnology=0(Unknown), getRilDataRadioTechnology=0(Unknown), mCssIndicator=unsup
+    mSignalStrength=null
+No result found.
+26271 18:13:11 com.android.phone
+11-28 18:12:57.245 26057 26057 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 18:13:12.624 26271 26271 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+
+### Exit-Code: 0
+
+### Dauer 1 s
