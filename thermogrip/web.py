@@ -35,6 +35,8 @@ def _cfg_write(new):
 class Web:
     def __init__(self, cfg, status):
         self.status = status            # dict, wird von main.py laufend aktualisiert
+        self.cfg = cfg                  # V7.6: fuer Live-Aenderungen (Steuerung)
+        self.keys = []                  # V7.6: Tasten von der Webseite (UP, DOWN, A, Y)
         self.nets = []                  # V6.5: bis zu 4 WLANs (wifi_ssid/_pass, wifi_ssid2/_pass2 ...)
         for n in ("", "2", "3", "4"):
             ss = str(cfg.get("wifi_ssid" + n, "")).strip()
@@ -232,6 +234,23 @@ class Web:
             if self.man:
                 self.want = self.force = True
             self._send(c, "200 OK", "application/json", json.dumps({"ok": bool(self.man)}))
+        elif meth == "POST" and path == "/api/key":           # V7.6: Steuerung von der Webseite
+            k = q.replace("k=", "").strip().upper()
+            if k in ("UP", "DOWN", "A", "Y"):
+                self.keys.append(k)
+            self._send(c, "200 OK", "application/json", '{"ok":true}')
+        elif meth == "POST" and path == "/api/pad":
+            data = json.loads(c.read(clen)) if clen else {}
+            ch = {}
+            for k, lo, hi in (("pad_temp_max", 35, 65), ("pad_temp_hold", 30, 65)):
+                if k in data:
+                    v = max(lo, min(hi, int(float(data[k]))))
+                    self.cfg[k] = v; ch[k] = v
+            if self.cfg["pad_temp_hold"] > self.cfg["pad_temp_max"]:
+                self.cfg["pad_temp_hold"] = self.cfg["pad_temp_max"]; ch["pad_temp_hold"] = self.cfg["pad_temp_max"]
+            if ch:
+                _cfg_write(ch)
+            self._send(c, "200 OK", "application/json", json.dumps(ch))
         elif meth == "POST" and path == "/api/restart":
             self._send(c, "200 OK", "application/json", '{"ok":true}')
             self.reboot = time.ticks_add(time.ticks_ms(), 500)

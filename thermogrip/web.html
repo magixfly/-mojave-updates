@@ -20,6 +20,11 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#339af0,#51cf66);transition:width .2s}
 .bar em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:700;font-size:13px}
 .msg{color:var(--mut);font-size:14px;min-height:20px}.ok{color:var(--ok)}.er{color:var(--err)}
+.ctl{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;text-align:center}
+.ctl .big{font-size:44px;font-weight:700}.ctl button{font-size:30px;padding:10px 0;width:100%}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.row2 button{font-size:16px;padding:12px}
+.on{background:#2f9e44!important}.bst{background:#e8590c!important}
+.sl{margin-top:14px}.sl label{display:flex;justify-content:space-between;font-size:14px;color:var(--mut,#9fb3d9)}.sl input{width:100%}
 </style></head><body>
 <header><h1>THERMOGRIP<small id="ver"></small></h1></header>
 <main>
@@ -29,6 +34,13 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 <div id="cfg"></div>
 <button onclick="save(false)">Save</button><button class="sec" onclick="save(true)">Save &amp; restart</button>
 <div class="msg" id="cmsg">Changes are used after a restart.</div></div>
+
+<div class="card"><h2>Control</h2>
+<div class="ctl"><button onclick="key('DOWN')">−</button><div><div class="big" id="ct">--°</div><div class="msg" id="cs">Target</div></div><button onclick="key('UP')">+</button></div>
+<div class="row2"><button id="bon" onclick="key('A')">Heater</button><button id="bbo" onclick="key('Y')">Boost</button></div>
+<div class="sl"><label><span>Pad max (heating up)</span><b id="vmax">--</b></label><input type="range" id="pmax" min="35" max="65" oninput="$('vmax').textContent=this.value+' °C'" onchange="pad()"></div>
+<div class="sl"><label><span>Pad hold (target reached)</span><b id="vhold">--</b></label><input type="range" id="phold" min="30" max="65" oninput="$('vhold').textContent=this.value+' °C'" onchange="pad()"></div>
+<div class="msg" id="cm">Pad limit now: –</div></div>
 
 <div class="card"><h2>Update from the internet</h2>
 <div class="msg">Status: <b id="upd">…</b></div>
@@ -47,7 +59,14 @@ const $=id=>document.getElementById(id);
 const L={temp:["Temperature","°C"],target:["Target","°C"],pad:["Pad","°C"],heater:["Heater","%"],battery:["Battery","%"],volts:["Battery","V"],cell:["Cell","V"],cells:["Cells","S"],left:["Time left","h"],state:["State",""],wifi:["WiFi",""]};
 async function status(){try{const s=await (await fetch("/api/status")).json();$("ver").textContent=s.version||"";
 let h="";for(const k in L){if(s[k]===undefined||s[k]===null)continue;let v=s[k];if(k=="left")v=Math.floor(v/60)+":"+String(v%60).padStart(2,"0");h+=`<div class="tile"><b>${v}${L[k][1]?" "+L[k][1]:""}</b><span>${L[k][0]}</span></div>`}
-$("st").innerHTML=h;$("upd").textContent=s.update||"-"}catch(e){}}
+$("st").innerHTML=h;$("upd").textContent=s.update||"-";ctl(s)}catch(e){}}
+let busy=0;function ctl(s){$("ct").textContent=s.target+"°";$("cs").textContent=s.boost?"Boost":"Target";
+$("bon").textContent=s.on?"Heater ON – tap to switch off":"Heater OFF – tap to switch on";$("bon").className=s.on?"on":"sec";
+$("bbo").textContent=s.boost?"Boost running – stop":"Boost";$("bbo").className=s.boost?"bst":"sec";
+$("cm").textContent="Pad limit now: "+s.plim+" °C";
+if(!busy){$("pmax").value=s.pmax;$("vmax").textContent=s.pmax+" °C";$("phold").value=s.phold;$("vhold").textContent=s.phold+" °C"}}
+async function key(k){try{await fetch("/api/key?k="+k,{method:"POST"});setTimeout(status,400)}catch(e){}}
+async function pad(){busy=1;try{await fetch("/api/pad",{method:"POST",body:JSON.stringify({pad_temp_max:$("pmax").value,pad_temp_hold:$("phold").value})})}catch(e){}busy=0;setTimeout(status,400)}
 async function ucheck(){$("imsg").textContent="Checking …";try{const r=await (await fetch("/api/update/check",{method:"POST"})).json();$("imsg").textContent=r.update;$("upd").textContent=r.update}catch(e){$("imsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
 async function uinst(){try{const r=await (await fetch("/api/update/install",{method:"POST"})).json();
 $("imsg").innerHTML=r.ok?'<span class="ok">Installing – watch the display, page reloads in 60 s</span>':'No update available – press “Check now” first.';if(r.ok)setTimeout(()=>location.reload(),60000)}catch(e){$("imsg").innerHTML='<span class="er">Error: '+e+'</span>'}}

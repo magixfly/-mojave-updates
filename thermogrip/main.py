@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V7.5"
+VERSION = "V7.6"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -667,6 +667,9 @@ def main():
             if pk: key_t = now
             if cfg["key_lock_seconds"] > 0 and time.ticks_diff(now, key_t) > cfg["key_lock_seconds"] * 1000:
                 LOCKUI["on"] = True; draw_t = 0; s["page"] = 0     # V5.5: beim Sperren Startseite
+        if web and web.keys:                                  # V7.6: Tasten von der Webseite (ohne Tastensperre)
+            pk = list(pk) + web.keys; web.keys = []
+            if s["page"] == 1: s["page"] = 0
         if pk or s["on"]:
             idle_t = now
         for k in pk:
@@ -823,6 +826,8 @@ def main():
             ST.update(temp=None if th is None else round(th, 1), target=s["ziel"], pad=None if tf is None else round(tf, 1),
                       heater=int(duty), battery=akku_pct if zellen else None, volts=v_disp if zellen else None, cell=round(vz_s, 2) if zellen else None,
                       cells=zellen or None, left=rest_min if zellen else None,
+                      on=s["on"], boost=bool(s["boost_bis"]), tmin=cfg["target_temp_min"], tmax=cfg["target_temp_max"],
+                      pmax=cfg["pad_temp_max"], phold=cfg["pad_temp_hold"], plim=s.get("pad_lim", cfg["pad_temp_max"]),
                       state=(s["err"] or ("Battery empty" if s["leer"] else ("Heating" if s["on"] else "Standby")) + (" (demo)" if demo else "")))
         if time.ticks_diff(now, draw_t) > 250:
             draw_t = now
