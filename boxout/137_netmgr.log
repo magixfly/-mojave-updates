@@ -1,0 +1,65 @@
+### 137_netmgr  –  2026-11-28 18:26:11
+### Box direkt (App 2.72, 192.168.74.150)
+
+service pasr-hal-1-0 /vendor/bin/hw/vendor.qti.power.pasrmanager@1.0-service
+service vendor-factory-hal-1-0 /vendor/bin/hw/vendor.qti.hardware.factory@1.0-service
+service qspmhal /vendor/bin/vendor.qti.qspmhal@1.0-service
+service vendor.qti.hardware.display.allocator /vendor/bin/hw/vendor.qti.hardware.display.allocator-s
+service vendor.qti-chg-policy-sh /vendor/bin/init.qti.chg_policy.sh
+service vendor.qti.hardware.display.composer /vendor/bin/hw/vendor.qti.hardware.display.composer-ser
+service tui_comm-1-0 /vendor/bin/hw/vendor.qti.hardware.tui_comm@1.0-service-qti
+service soter-1-0 /vendor/bin/hw/vendor.qti.hardware.soter@1.0-service
+service vendor.wigig_hostapd /vendor/bin/hw/hostapd -dd  -j wigighostapd -g /data/vendor/wifi/wigig_
+service vendor.sensors.qti /vendor/bin/sensors.qti
+service iop-hal-2-0 /vendor/bin/hw/vendor.qti.hardware.iop@2.0-service
+service vendor.servicetracker-1-2 /vendor/bin/hw/vendor.qti.hardware.servicetracker@1.2-service
+service vendor.cnd /system/vendor/bin/cnd
+service vendor.keymaster-4-1 /vendor/bin/hw/android.hardware.keymaster@4.1-service-qti
+service vendor.usb-hal-1-2 /vendor/bin/hw/android.hardware.usb@1.2-service-qti
+==
+[init.svc.dpmQmiMgr]: [running]
+[init.svc.dpmd]: [running]
+[init.svc.perfetto_persistent_sysui_tracing_for_bugreport]: [stopped]
+[init.svc.qti-media]: [stopped]
+[init.svc.qti_esepowermanager_service_1_1]: [running]
+[init.svc.vendor-qti-media-c2-hal-1-0]: [running]
+[init.svc.vendor.bluetooth-1-0-qti]: [running]
+[init.svc.vendor.cnd]: [running]
+[init.svc.vendor.dataadpl]: [running]
+[init.svc.vendor.dataqti]: [running]
+[init.svc.vendor.imsdatadaemon]: [running]
+[init.svc.vendor.ipacm]: [running]
+[init.svc.vendor.ipacm-diag]: [running]
+[init.svc.vendor.light-qti]: [running]
+[init.svc.vendor.port-bridge]: [running]
+[init.svc.vendor.qti-chg-policy-sh]: [stopped]
+[init.svc.vendor.qti.hardware.display.allocator]: [running]
+[init.svc.vendor.qti.hardware.display.composer]: [running]
+[init.svc.vendor.qti.vibrator]: [running]
+[init.svc.vendor.sensors.qti]: [running]
+[init.svc.vendor_sys_qti_display]: [stopped]
+[init.svc_debug_pid.dpmQmiMgr]: [1590]
+[init.svc_debug_pid.dpmd]: [1586]
+[init.svc_debug_pid.perfetto_persistent_sysui_tracing_for_bugreport]: []
+[init.svc_debug_pid.qti-media]: []
+[init.svc_debug_pid.qti_esepowermanager_service_1_1]: [1284]
+[init.svc_debug_pid.vendor-qti-media-c2-hal-1-0]: [1313]
+[init.svc_debug_pid.vendor.bluetooth-1-0-qti]: [1248]
+[init.svc_debug_pid.vendor.cnd]: [1712]
+[init.svc_debug_pid.vendor.dataadpl]: [31852]
+[init.svc_debug_pid.vendor.dataqti]: [31850]
+[init.svc_debug_pid.vendor.imsdatadaemon]: [1974]
+[init.svc_debug_pid.vendor.ipacm]: [621]
+[init.svc_debug_pid.vendor.ipacm-diag]: [1734]
+[init.svc_debug_pid.vendor.light-qti]: [1263]
+[init.svc_debug_pid.vendor.port-bridge]: [1737]
+[init.svc_debug_pid.vendor.qti-chg-policy-sh]: []
+[init.svc_debug_pid.vendor.qti.hardware.display.allocator]: [1286]
+[init.svc_debug_pid.vendor.qti.hardware.display.composer]: [1287]
+[init.svc_debug_pid.vendor.qti.vibrator]: [1312]
+[init.svc_debug_pid.vendor.sensors.qti]: [1406]
+[init.svc_debug_pid.vendor_sys_qti_display]: []
+
+### Exit-Code: 0
+
+### Dauer 0 s
