@@ -1,0 +1,16 @@
+### 135_sub  –  2026-11-28 18:24:31
+### Box direkt (App 2.72, 192.168.74.150)
+
+Row: 0 _id=1, sim_id=-1, display_name=China Unicom, mcc_string=460, mnc_string=09, data_roaming=1
+Row: 1 _id=2, sim_id=-1, display_name=Magenta-T-, mcc_string=232, mnc_string=03, data_roaming=1
+Row: 2 _id=3, sim_id=0, display_name=Drei, mcc_string=232, mnc_string=10, data_roaming=1
+dds=3 md=1 
+sub=3
+dds set
+    mDataConnectionState=0
+  NetworkAgentInfo{network{102}  handle{441492361229}  ni{VPN CONNECTED extra: VPN:com.tailscale.ipn} created=
+  NetworkAgentInfo{network{104}  handle{450082295821}  ni{WIFI CONNECTED extra: } created=2026-11-28T17:10:47.
+
+### Exit-Code: 0
+
+### Dauer 24 s
