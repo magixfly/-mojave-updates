@@ -52,6 +52,7 @@ class Web:
         self.chk_at = 0                 # wann pruefen (ticks), 0 = sobald verbunden
         self.man = None                 # gefundenes neueres Update (version.json)
         self.want = False               # Installation angefordert (Webseite oder automatisch)
+        self._feed = None
         self.force = False              # von der Webseite: auch waehrend des Heizens (Heizung wird ausgeschaltet)
         status["update"] = "off" if not self.url else "not checked"
         try:
@@ -106,6 +107,7 @@ class Web:
         return ("connecting " if time.ticks_diff(time.ticks_ms(), self.t) < 20000 else "not found ") + self.ssid
 
     def poll(self, feed=None, busy=False):
+        self._feed = feed
         if self.reboot and time.ticks_diff(time.ticks_ms(), self.reboot) > 0:
             import machine
             machine.reset()
@@ -139,9 +141,11 @@ class Web:
                 c, _a = self.srv.accept()
             except OSError:
                 return
+            if feed:
+                feed()                  # V8.5: Watchdog vor jeder Anfrage fuettern
             try:
                 c.setblocking(True)
-                c.settimeout(5)
+                c.settimeout(2)         # V8.5: kurz, damit langsame Anfragen den Watchdog nicht ausloesen
                 self._handle(c, feed)
             except Exception as e:
                 try:
@@ -215,6 +219,7 @@ class Web:
                 return
             tmp = name + ".tmp"
             got = 0
+            c.settimeout(5)
             with open(tmp, "wb") as fh:
                 while got < clen:
                     b = c.recv(min(1024, clen - got))
@@ -274,6 +279,8 @@ class Web:
         s = socket.socket()
         s.settimeout(5)
         s.connect(ai)
+        if self._feed:
+            self._feed()
         if proto == "https:":
             import ssl
             try:
@@ -282,6 +289,8 @@ class Web:
                 s = ctx.wrap_socket(s, server_hostname=host)
             except AttributeError:
                 s = ssl.wrap_socket(s, server_hostname=host)
+        if self._feed:
+            self._feed()
         s.write(("GET /%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: thermogrip\r\nConnection: close\r\n\r\n" % (path, host)).encode())
         def line():
             b = b""
