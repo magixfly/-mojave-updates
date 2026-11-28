@@ -1,0 +1,10 @@
+### 141_d2  –  2026-11-28 18:29:42
+### Box direkt (App 2.72, 192.168.74.150)
+
+    mDataConnectionState=0
+  NetworkAgentInfo{network{102}  handle{441492361229}  ni{VPN CONNECTED extra: VPN:com.tailscale.ipn} created=
+  NetworkAgentInfo{network{104}  handle{450082295821}  ni{WIFI CONNECTED extra: } created=2026-11-28T17:10:47.
+
+### Exit-Code: 0
+
+### Dauer 27 s
