@@ -1,0 +1,21 @@
+== 097_after_reboot on mojave-fpv, 2026-11-28 01:05:20, FPV V1.9.26 ==
+boot: 2026-11-28 00:44:06
+services: active active active active active 
+radio wifi: enabled
+Optimus Prime:30:yes
+fpv-lte:50:yes
+netplan-eth0:0:no
+XVII:10:no
+default via 192.168.178.1 dev wlan0 proto dhcp src 192.168.178.169 metric 600 
+default via 192.168.100.33 dev eth1 proto dhcp src 192.168.100.100 metric 700 
+net: {"kind": "wifi", "name": "Optimus Prime", "sig": -53, "dev": "wlan0", "other": "lte", "wifi_on": true, "lte_up": true}
+stick page: 200
+video: 200
+ping: rtt min/avg/max/mdev = 14.339/17.218/19.819/2.245 ms
+Nov 28 00:39:02 mojave-fpv systemd-udevd[333]: /usr/lib/udev/rules.d/90-alsa-restore.rules:18 GOTO="alsa_restore_std" has no matching label, ignoring.
+Nov 28 00:39:02 mojave-fpv systemd-udevd[333]: /usr/lib/udev/rules.d/90-alsa-restore.rules:22 GOTO="alsa_restore_std" has no matching label, ignoring.
+Nov 28 00:39:12 mojave-fpv wpa_supplicant[641]: nl80211: kernel reports: Registration to specific type not supported
+Nov 28 00:39:15 mojave-fpv wpa_supplicant[641]: bgscan simple: Failed to enable signal strength monitoring
+[100%] done
+
+== exit code 0, 2.3 s ==
