@@ -1,0 +1,115 @@
+== 098_stickapi on mojave-fpv, 2026-11-28 01:08:06, FPV V1.9.26 ==
+stick gateway: 192.168.100.33
+index: 18898 bytes
+--- title / scripts / links ---
+<title> Wireless Router
+src="js/jquery/jquery.js"
+src="js/jquery/jquery.i18n.properties-1.0.4.js"
+src="js/library/jquery.form.js"
+src="js/library/download.jQuery.js"
+src="js/library/md5.js"
+src="js/library/table.js"
+src="js/library/modaldbox.js"
+src="js/base/ajax_calls.js"
+src="js/base/utils.js"
+src="js/base/xml_helper.js"
+src="js/base/layout_manager.js"
+src="js/base/validator.js"
+src="js/controls/enabled_disabled.js"
+src="js/controls/ip_address.js"
+src="js/controls/visible_invisible.js"
+src="js/controls/allow_deny.js"
+src="js/controls/always_ondemand.js"
+src="js/controls/ascii_hex.js"
+src="js/panel/dashboard.js"
+src="js/panel/quick_setup.js"
+src="js/panel/wireless/primary_network.js"
+src="js/panel/internet/internet_connection.js"
+src="js/panel/router/user_management.js"
+src="js/panel/router/poweroff_router.js"
+src="js/panel/router/software_upgrade.js"
+src="js/panel/router/conf_management.js"
+src="js/panel/router/reboot_router.js"
+src="js/panel/router/time_setting.js"
+src="js/panel/router/acs_management.js"
+total 332
+drwx------ 2 root root    360 Nov 28 01:08 .
+drwxrwxrwt 8 root root    160 Nov 28 01:08 ..
+-rw-r--r-- 1 root root  18898 Nov 28 01:08 index.html
+-rw-r--r-- 1 root root  31955 Nov 28 01:08 js_ajax_calls.js
+-rw-r--r-- 1 root root   1345 Nov 28 01:08 js_download.jQuery.js
+-rw-r--r-- 1 root root   1167 Nov 28 01:08 js_enabled_disabled.js
+-rw-r--r-- 1 root root   3004 Nov 28 01:08 js_ip_address.js
+-rw-r--r-- 1 root root  21508 Nov 28 01:08 js_jquery.form.js
+-rw-r--r-- 1 root root   8791 Nov 28 01:08 js_jquery.i18n.properties-1.0.4.js
+-rw-r--r-- 1 root root 125902 Nov 28 01:08 js_jquery.js
+-rw-r--r-- 1 root root   6345 Nov 28 01:08 js_layout_manager.js
+-rw-r--r-- 1 root root  10423 Nov 28 01:08 js_md5.js
+-rw-r--r-- 1 root root   4945 Nov 28 01:08 js_modaldbox.js
+-rw-r--r-- 1 root root  32317 Nov 28 01:08 js_table.js
+-rw-r--r-- 1 root root  27213 Nov 28 01:08 js_utils.js
+-rw-r--r-- 1 root root   5128 Nov 28 01:08 js_validator.js
+-rw-r--r-- 1 root root    893 Nov 28 01:08 js_visible_invisible.js
+-rw-r--r-- 1 root root   6405 Nov 28 01:08 js_xml_helper.js
+--- endpoints mentioned in page and scripts ---
+     34 "xml"
+      9 'xml_action.cgi?method=set&module=duster&file='
+      6 "xml/"
+      6 "text/xml;charset=UTF-8"
+      4 'xml_action.cgi?method=get&module=duster&file='
+      4 ".xml"
+      4 "/cgi/xml_action.cgi"
+      4 "ajaxStop"
+      2 "xmlName"
+      2 'xml_action.cgi?method=get&file='
+      2 'xml'
+      2 "text/xml"
+      2 "/login.cgi?Action=Upload&file="
+      2 "/cgi/protected.cgi"
+      2 "ajaxSuccess"
+      2 "ajaxStart"
+      2 "ajaxSend"
+      2 "ajaxComplete"
+      1 "xml/ui_"
+      1 "/xml_action.cgi?method=get&module=duster&file=wan"
+      1 "/xml_action.cgi?Action=Upload&file=upgrade&command="
+      1 "/xml_action.cgi?Action=Upload&file=backfile&config_backup="
+      1 'xml_action.cgi?Action=logout'
+      1 "&uri=/cgi/xml_action.cgi"
+      1 'text/xml'
+      1 "/login.cgi?Action=Download&file="
+      1 "/login.cgi?Action=Digest&username="
+      1 "/login.cgi"
+      1 "js/base/xml_helper.js"
+      1 "js/base/ajax_calls.js"
+      1 "application/rss+xml"
+      1 "ajaxStart,ajaxStop,ajaxComplete,ajaxError,ajaxSuccess,ajaxSend"
+      1 "ajaxError"
+--- signal words ---
+--- common API tries ---
+== /goform/goform_get_cmd_process?multi_data=1&cmd=signalbar,network_type,lte_rsrp,lte_rsrq,lte_snr,lte_rssi,network_provider,lte_band,cell_id
+Error 404: Not Found
+File not found
+== /api/device/signal
+Error 404: Not Found
+File not found
+== /api/monitoring/status
+Error 404: Not Found
+File not found
+== /reqproc/proc_get?cmd=signal
+Error 404: Not Found
+File not found
+== /cgi-bin/info.cgi
+Error 404: Not Found
+File not found
+== /xml_action.cgi?method=get&module=duster&file=status1
+<?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+== /status.json
+Error 404: Not Found
+File not found
+== /api/status
+Error 404: Not Found
+File not found
+[100%] done
+
+== exit code 0, 1.7 s ==
