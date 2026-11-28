@@ -26,6 +26,9 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 .on{background:#2f9e44!important}.bst{background:#e8590c!important}
 .sl{margin-top:14px}.sl label{display:flex;justify-content:space-between;font-size:14px;color:var(--mut,#9fb3d9)}.sl input{width:100%}
 .ring{display:flex;flex-direction:column;align-items:center;justify-content:center}.ring svg{width:64px;height:64px}
+.grp{border:1px solid #33456e;border-radius:12px;padding:6px 12px 4px;margin:0 0 12px;background:#101c38}
+.grp legend{padding:0 6px;color:#ffa94d;font-weight:700;font-size:14px;letter-spacing:.04em}
+.grp .row:last-child{border-bottom:none}details.grp summary{cursor:pointer;color:#9fb3d9;padding:8px 0;font-weight:600}
 </style></head><body>
 <header><h1>THERMOGRIP<small id="ver"></small></h1></header>
 <main>
@@ -75,8 +78,21 @@ async function ucheck(){$("imsg").textContent="Checking …";try{const r=await (
 async function uinst(){try{const r=await (await fetch("/api/update/install",{method:"POST"})).json();
 $("imsg").innerHTML=r.ok?'<span class="ok">Installing – watch the display, page reloads in 60 s</span>':'No update available – press “Check now” first.';if(r.ok)setTimeout(()=>location.reload(),60000)}catch(e){$("imsg").innerHTML='<span class="er">Error: '+e+'</span>'}}
 let orig={};
-async function loadCfg(){const c=await (await fetch("/api/config")).json();let h="";
-for(const [k,v,com] of c){orig[k]=v;h+=`<div class="row"><label>${k}<small>${com.replace(/</g,"&lt;")}</small></label><input type="text" data-k="${k}" value="${v.replace(/"/g,"&quot;")}" oninput="this.classList.toggle('chg',this.value!=orig['${k}'])"></div>`}
+const G=[
+["Temperature",[["target_temp_start","Start temperature","°C"],["remember_target","Remember last temperature","1 = yes"],["target_temp_min","Lowest selectable","°C"],["target_temp_max","Highest selectable","°C, max 45"],["boost_minutes","Boost duration","min"]]],
+["Heating pads",[["pad_full_below","Full pad limit when hand is this far below target","°C"],["no_hand_offset","Without hand sensor: pad = target +","°C"],["pad_volts","Power limit voltage","12 = rated, 14 ≈ 16 W/pad"],["power_auto","Power limit on","1 = yes"],["heater_watts_12v","Pad power at 12 V (all pads)","W"]]],
+["Battery",[["battery_liion","Li-Ion cells","1 = Li-Ion, 0 = LiPo"],["battery_mah","Capacity","mAh"],["warn_cell_volts","Warning below","V per cell"],["off_cell_volts","Heater off below","V per cell (3.5 = auto 3.3 for Li-Ion)"]]],
+["Buttons & display",[["key_lock_seconds","Key lock after","s, 0 = off"],["auto_off_minutes","Switch off in standby after","min, 0 = never"],["brightness","Display brightness","%"]]],
+["WiFi",[["wifi_ssid","WiFi 1 name",""],["wifi_pass","WiFi 1 password",""],["wifi_ssid2","WiFi 2 name",""],["wifi_pass2","WiFi 2 password",""],["wifi_ssid3","WiFi 3 name",""],["wifi_pass3","WiFi 3 password",""],["wifi_ssid4","WiFi 4 name",""],["wifi_pass4","WiFi 4 password",""]]],
+["Updates",[["update_auto","Install updates automatically","1 = yes (heater off)"],["update_check_hours","Check every","h"]]]];
+const HIDE=["pad_temp_max","pad_temp_hold"];
+function row(k,v,lab,hint){return `<div class="row"><label>${lab}<small>${hint}</small></label><input type="text" data-k="${k}" value="${String(v).replace(/"/g,"&quot;")}" oninput="this.classList.toggle('chg',this.value!=orig['${k}'])"></div>`}
+async function loadCfg(){const c=await (await fetch("/api/config")).json();const m={},com={};for(const [k,v,cm] of c){orig[k]=v;m[k]=v;com[k]=cm}
+let h="",used=new Set(HIDE);for(const [title,items] of G){let r="";for(const [k,lab,hint] of items){if(!(k in m))continue;used.add(k);r+=row(k,m[k],lab,hint)}
+if(r)h+=`<fieldset class="grp"><legend>${title}</legend>${r}</fieldset>`}
+let r="";for(const k in m){if(used.has(k))continue;r+=row(k,m[k],k,(com[k]||"").replace(/</g,"&lt;"))}
+if(r)h+=`<details class="grp"><summary>Advanced (all other settings)</summary>${r}</details>`;
+h+=`<div class="msg">Pad max / Pad hold: use the sliders in Control above.</div>`;
 $("cfg").innerHTML=h}
 async function save(rst){const d={};document.querySelectorAll("#cfg input").forEach(i=>{if(i.value!=orig[i.dataset.k])d[i.dataset.k]=i.value});
 if(!Object.keys(d).length&&!rst){$("cmsg").textContent="Nothing changed.";return}
