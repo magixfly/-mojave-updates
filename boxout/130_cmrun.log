@@ -1,0 +1,17 @@
+### 130_cmrun  –  2026-11-28 18:19:38
+### Box direkt (App 2.72, 192.168.74.150)
+
+Unable to stop service 'vendor.ril-daemon'
+See dmesg for error reason.
+[init.svc.vendor.qcrild]: [running]
+[init.svc.vendor.qcrild2]: [running]
+sim=LOADED,ABSENT op=Drei net=Hoerbi, type=IWLAN,Unknown
+28617 18:15:52 qcrild
+31725 18:19:32 com.android.phone
+31848 18:19:40 qcrild
+    mServiceState={mVoiceRegState=3(POWER_OFF), mDataRegState=0(IN_SERVICE), mChannelNumber=-1, duplexMode()=0, mCellBandwidths=[], mOperatorAlphaLong=Hoerbi, mOperatorAlphaShort=null, isManualNetworkSelection=false(automatic), getRilVoiceRadioTechnology=0(Unk
+    mSignalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 mLevel=0,mWcdma
+
+### Exit-Code: 0
+
+### Dauer 42 s
