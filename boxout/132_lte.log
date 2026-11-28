@@ -1,0 +1,15 @@
+### 132_lte  –  2026-11-28 18:22:02
+### Box direkt (App 2.72, 192.168.74.150)
+
+mLte=CellSignalStrengthLte: rssi=-75 rsrp=-102 rsrq=-15 rssnr=-3 cqiTableIndex=2147483647 cqi=2147483647 ta=2147483647 level=3
+grep: bad regex 'PreciseDataConnectionState[^}]{0,300}': invalid repetition count(s)
+Failed to write while dumping service telephony.registry: Broken pipe
+Row: 0 _id=290, name=Planet 3, numeric=23205
+Row: 1 _id=294, name=Planet3, numeric=23210
+preferapn set 290
+Row: 0 _id=290, name=Planet 3, numeric=23205, mcc=232, mnc=05, carrier_id=-1, apn=drei.at, user=, server=, password=, pr
+ping_ok
+
+### Exit-Code: 0
+
+### Dauer 13 s
