@@ -1,0 +1,78 @@
+== 108_rssi on mojave-fpv, 2026-11-28 02:35:15, FPV V1.9.27 ==
+										setLabelValue("lISPName", "中国联通"); 
+									} else{
+										setLabelValue("lISPName", roamingNetworkName);
+									}									
+                                } else {
+                                    document.getElementById("Cellular").innerHTML = "<span class=\"heading1\" id=\"h3CellularConnection\"></span></span><strong 
+									if(IccidValue == "898606" || IccidValue == "898609" || IccidValue == "898601"){
+										setLabelValue("lISPName", "中国联通"); 
+									} else{
+										setLabelValue("lISPName", ISPName);
+									}
+                                }
+                                //  setLabelValue("lISPName", ISPName);
+                                //document.getElementById("cellED").innerHTML = "disable";
+                                var rssi = rssis * 1;
+								setLabelValue("RSSI", rssi);
+								if(sys_mode == 17){
+									setLabelValue("DBM", rssi-140);
+								}else if(sys_mode == 3||sys_mode == 5){
+								    setLabelValue("DBM", (rssi*2)-113);
+								}else{
+								    setLabelValue("DBM", rssi-140);
+								}
+								
+								setLabelValue("ASU", "asu");
+                                setLabelValue("DB", "dbm");
+                                if (sys_mode == 3) { //GSM
+                                    //if (IsLWGFlag) {
+                                        if (rssi < 7)
+                                            document.getElementById("imgSignalStrength").src = "images/signal0.png";
+                                        else if (rssi >= 7 && rssi < 14)
+                                            document.getElementById("imgSignalStrength").src = "images/signal1.png";
+                                        else if (rssi >= 14 && rssi < 19)
+                                            document.getElementById("imgSignalStrength").src = "images/signal2.png";
+                                        else if (rssi >= 19 && rssi < 24)
+                                            document.getElementById("imgSignalStrength").src = "images/signal3.png";
+                                        else if (rssi >= 24 && rssi <= 63)
+                                            document.getElementById("imgSignalStrength").src = "images/signal4.png";                                   
+                                } else if (sys_mode == 5) { //WCDMA
+                                   // if (IsLWGFlag) {
+                                        if (rssi < 17)
+                                            document.getElementById("imgSignalStrength").src = "images/signal0.png";
+                                        else if (rssi >= 17 && rssi < 22)
+                                            document.getElementById("imgSignalStrength").src = "images/signal1.png";
+                                        else if (rssi >= 22 && rssi < 27)
+                                            document.getElementById("imgSignalStrength").src = "images/signal2.png";
+                                        else if (rssi >= 27 && rssi < 31)
+                                            document.getElementById("imgSignalStrength").src = "images/signal3.png";
+                                        else if (rssi >= 31 && rssi <= 96)
+                                            document.getElementById("imgSignalStrength").src = "images/signal4.png";
+                                   
+                                    setLabelValue("lcconnectivitymode", "WCDMA");
+                                } else if (sys_mode == 15) { //TD
+                                    //if (IsLWGFlag) {
+                                        if (rssi < 17)
+                                            document.getElementById("imgSignalStrength").src = "images/signal0.png";
+                                        else if (rssi >= 17 && rssi < 22)
+                                            document.getElementById("imgSignalStrength").src = "images/signal1.png";
+                                        else if (rssi >= 22 && rssi < 27)
+                                            document.getElementById("imgSignalStrength").src = "images/signal2.png";
+                                        else if (rssi >= 27 && rssi < 31)
+                                            document.getElementById("imgSignalStrength").src = "images/signal3.png";
+                                        else if (rssi >= 31 && rssi <= 96)
+                                            document.getElementById("imgSignalStrength").src = "images/signal4.png";                                  
+                                    setLabelValue("lcconnectivitymode", "TD-SCDMA");
+                                } else if (sys_mode == 17) { //LTE
+
+=== engineering settings in wan.xml (names only above) ===
+02:35:15 ok {'rssi': '0', 'rsrp': '0', 'sinr': '0', 'sys_mode': '17', 'sys_submode': '17', 'cellid': '0', 'network_type': '0'}
+02:35:19 ok {'rssi': '0', 'rsrp': '0', 'sinr': '0', 'sys_mode': '17', 'sys_submode': '17', 'cellid': '0', 'network_type': '0'}
+02:35:24 ok {'rssi': '0', 'rsrp': '0', 'sinr': '0', 'sys_mode': '17', 'sys_submode': '17', 'cellid': '0', 'network_type': '0'}
+02:35:28 ok {'rssi': '0', 'rsrp': '0', 'sinr': '0', 'sys_mode': '17', 'sys_submode': '17', 'cellid': '0', 'network_type': '0'}
+02:35:32 ok {'rssi': '0', 'rsrp': '0', 'sinr': '0', 'sys_mode': '17', 'sys_submode': '17', 'cellid': '0', 'network_type': '0'}
+02:35:36 ok {'rssi': '0', 'rsrp': '0', 'sinr': '0', 'sys_mode': '17', 'sys_submode': '17', 'cellid': '0', 'network_type': '0'}
+[100%] done
+
+== exit code 0, 24.7 s ==
