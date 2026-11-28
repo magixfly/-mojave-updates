@@ -69,17 +69,24 @@ class Web:
         if not self.nets:
             return
         pick = None
-        try:                            # bekanntes WLAN mit dem besten Empfang suchen
-            seen = {}
-            for r in self.w.scan():
-                n = r[0].decode() if isinstance(r[0], bytes) else r[0]
-                seen[n] = max(seen.get(n, -999), r[3])
-            best = -999
-            for ss, pw in self.nets:
-                if ss in seen and seen[ss] > best:
-                    best, pick = seen[ss], (ss, pw)
+        try:
+            self.w.disconnect()         # V6.7: alten Verbindungsversuch sauber beenden
         except Exception:
             pass
+        if len(self.nets) == 1:         # V6.7: nur ein WLAN -> ohne Suche direkt verbinden (wie bis V6.4)
+            pick = self.nets[0]
+        else:
+          try:                          # bekanntes WLAN mit dem besten Empfang suchen
+              seen = {}
+              for r in self.w.scan():
+                  n = r[0].decode() if isinstance(r[0], bytes) else r[0]
+                  seen[n] = max(seen.get(n, -999), r[3])
+              best = -999
+              for ss, pw in self.nets:
+                  if ss in seen and seen[ss] > best:
+                      best, pick = seen[ss], (ss, pw)
+          except Exception:
+              pass
         if pick is None:                # nichts gesehen -> der Reihe nach probieren
             pick = self.nets[self.ni % len(self.nets)]
             self.ni += 1
@@ -92,7 +99,9 @@ class Web:
     def text(self):
         if self.ok:
             return self.ip
-        return "connecting ..." if time.ticks_diff(time.ticks_ms(), self.t) < 20000 else "no hotspot"
+        if not self.nets:
+            return "no WiFi set"
+        return ("connecting " if time.ticks_diff(time.ticks_ms(), self.t) < 20000 else "not found ") + self.ssid
 
     def poll(self, feed=None, busy=False):
         if self.reboot and time.ticks_diff(time.ticks_ms(), self.reboot) > 0:
