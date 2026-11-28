@@ -281,22 +281,35 @@ class Web:
         port = 443 if proto == "https:" else 80
         if ":" in host:
             host, port = host.split(":")[0], int(host.split(":")[1])
+        gc.collect()
+        stage = "dns"
         ai = socket.getaddrinfo(host, port, 0, socket.SOCK_STREAM)[0][-1]
-        s = socket.socket()
-        s.settimeout(5)
-        s.connect(ai)
-        if self._feed:
-            self._feed()
-        if proto == "https:":
-            import ssl
+        raw = socket.socket()
+        s = raw
+        try:                            # V8.9: bei Fehler Socket immer schliessen (sonst geht der Netzwerkspeicher aus)
+            stage = "connect"
+            raw.settimeout(7)
+            raw.connect(ai)
+            if self._feed:
+                self._feed()
+            if proto == "https:":
+                stage = "tls"
+                import ssl
+                gc.collect()
+                try:
+                    ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+                    ctx.verify_mode = ssl.CERT_NONE
+                    s = ctx.wrap_socket(raw, server_hostname=host)
+                except AttributeError:
+                    s = ssl.wrap_socket(raw, server_hostname=host)
+            if self._feed:
+                self._feed()
+        except Exception as e:
             try:
-                ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-                ctx.verify_mode = ssl.CERT_NONE
-                s = ctx.wrap_socket(s, server_hostname=host)
-            except AttributeError:
-                s = ssl.wrap_socket(s, server_hostname=host)
-        if self._feed:
-            self._feed()
+                raw.close()
+            except Exception:
+                pass
+            raise OSError("%s: %s (free %d KB)" % (stage, e, gc.mem_free() // 1024))
         s.write(("GET /%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: thermogrip\r\nConnection: close\r\n\r\n" % (path, host)).encode())
         def line():
             b = b""
@@ -306,7 +319,11 @@ class Web:
                     break
                 b += ch
             return b
-        code = int(line().split()[1])
+        try:
+            code = int(line().split()[1])
+        except Exception as e:
+            s.close()
+            raise OSError("reply: %s" % e)
         clen = -1
         while True:
             h = line()
