@@ -1,0 +1,31 @@
+### 124_ril2  –  2026-11-28 18:15:13
+### Box direkt (App 2.72, 192.168.74.150)
+
+service vendor.qcrild /vendor/bin/hw/qcrild
+service vendor.qcrild2 /vendor/bin/hw/qcrild -c 2
+service vendor.qcrild3 /vendor/bin/hw/qcrild -c 3
+service qmiproxy /system/bin/qmiproxy
+service ssgqmigd /vendor/bin/ssgqmigd
+service vendor.ril-daemon2 /vendor/bin/hw/rild -c 2
+service vendor.ril-daemon3 /vendor/bin/hw/rild -c 3
+service vendor.qmipriod /system/vendor/bin/qmipriod
+service dpmQmiMgr /system/vendor/bin/dpmQmiMgr
+service vendor.imsqmidaemon /vendor/bin/imsqmidaemon
+==
+
+
+
+==
+subsys0  subsys1  subsys2  subsys3  subsys4  subsys5  subsys6
+/sys/bus/msm_subsys/devices/subsys0 adsp ONLINE
+/sys/bus/msm_subsys/devices/subsys1 cdsp ONLINE
+/sys/bus/msm_subsys/devices/subsys2 modem ONLINE
+/sys/bus/msm_subsys/devices/subsys3 venus ONLINE
+/sys/bus/msm_subsys/devices/subsys4 lagoon_ipa_fws ONLINE
+/sys/bus/msm_subsys/devices/subsys5 a615_zap ONLINE
+/sys/bus/msm_subsys/devices/subsys6 npu ONLINE
+==
+
+### Exit-Code: 0
+
+### Dauer 1 s
