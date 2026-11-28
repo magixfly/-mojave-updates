@@ -1,0 +1,29 @@
+### 115_sim  –  2026-11-28 13:42:09
+### Box direkt (App 2.72, 192.168.87.180)
+
+== SIM/Netz
+
+
+
+
+
+
+== Registrierung
+    mServiceState={mVoiceRegState=1(OUT_OF_SERVICE), mDataRegState=1(OUT_OF_SERVICE), mChannelNumber=0, duplexMode()=0, mCellBandwidths=[], mOperatorAlphaLong=null, mOperatorAlphaShort=null, isManualNetworkSelection=false(automatic), getRilVoiceRadioTechnology=0(Unknown), getRilDataRadioTechnology=0(Unknown), mCssIndicator=unsupported, mNetworkId=0, mSystemId=0, mCdmaRoamingIndicator=0, mCdmaDefau
+    mSignalStrength=null
+    mDataConnectionState=-1
+    mServiceState={mVoiceRegState=1(OUT_OF_SERVICE), mDataRegState=1(OUT_OF_SERVICE), mChannelNumber=0, duplexMode()=0, mCellBandwidths=[], mOperatorAlphaLong=null, mOperatorAlphaShort=null, isManualNetworkSelection=false(automatic), getRilVoiceRadioTechnology=0(Unknown), getRilDataRadioTechnology=0(Unknown), mCssIndicator=unsupported, mNetworkId=0, mSystemId=0, mCdmaRoamingIndicator=0, mCdmaDefau
+    mSignalStrength=null
+    mDataConnectionState=-1
+== APN
+No result found.
+Row: 0 name=Planet 3, apn=drei.at, user=, type=default,supl,mms, current=NULL
+Row: 1 name=Planet 3 ims, apn=ims, user=, type=ims, current=NULL
+Row: 2 name=Planet3, apn=drei.at, user=, type=default,supl,mms, current=NULL
+== Daten
+1
+ping: SO_BINDTODEVICE: No such device
+
+### Exit-Code: 0
+
+### Dauer 3 s
