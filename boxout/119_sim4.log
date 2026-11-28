@@ -1,0 +1,21 @@
+### 119_sim4  –  2026-11-28 13:46:19
+### Box direkt (App 2.72, 192.168.244.124)
+
+==
+==
+11-28 13:44:04.742  4660  4660 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:44:18.688  6255  6255 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:44:19.750  6309  6309 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:44:34.607  8393  8393 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:44:35.425  8512  8512 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:44:49.818  9787  9787 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:44:57.788  9980  9980 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:45:07.907 10203 10203 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:45:12.987 10288 10288 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:45:33.268 10577 10577 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:45:58.649 10974 10974 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+11-28 13:46:14.010 11222 11222 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+
+### Exit-Code: 0
+
+### Dauer 0 s
