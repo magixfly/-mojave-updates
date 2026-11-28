@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V7.0"
+VERSION = "V7.1"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -598,7 +598,7 @@ def main():
     ziel0 = min(cfg["target_temp_max"], max(cfg["target_temp_min"], ziel0))
     s = dict(on=zellen > 0, ziel=ziel0, fan=cfg["fan_percent"], fan_on=True,
              page=0, boost_bis=0, ziel_vor=0, integ=0.0, duty=0.0, err="", leer=False,
-             wh=0.0, start=time.ticks_ms(), low_t=0, pavg=5.0)
+             wh=0.0, start=time.ticks_ms(), low_t=0, pavg=12.0)
     pmax = cfg["power_4s_max"] if zellen == 4 else cfg["power_3s_max"]
     r_heiz = 144 / max(1, cfg["heater_watts_12v"])
     last = time.ticks_ms(); draw_t = 0; idle_t = time.ticks_ms()
@@ -804,7 +804,7 @@ def main():
 
         p = duty / 100 * v * v / r_heiz if zellen else 0
         s["wh"] += p * dt / 3600
-        s["pavg"] += (max(p, 1.0) - s["pavg"]) * min(1, dt / 120)
+        s["pavg"] += (max(p, 1.0) - s["pavg"]) * min(1, dt / 600)     # V7.1: Leistung ueber ~10 min mitteln
         vz_s = smooth("v", vz, dt, cfg["battery_smooth_s"]) if zellen else 0     # Spannung glaetten (springt unter Last)
         if zellen and (v_disp == 0 or abs(vz_s * zellen - v_disp) >= 0.1):         # V6.6: Anzeige ruhig (geglaettet + 0,1 V Hysterese)
             v_disp = round(vz_s * zellen, 1)
@@ -816,8 +816,8 @@ def main():
             s["pct"] = pct_now
         akku_pct = int(s["pct"] + 0.5)
         rest_now = s["pct"] / 100 * cfg["battery_mah"] / 1000 * 3.7 * zellen / s["pavg"] * 60 if zellen else 0
-        s["rest"] = rest_now if "rest" not in s else s["rest"] + (rest_now - s["rest"]) * min(1, dt / 30)
-        rest_min = int(s["rest"]) if zellen else 0
+        s["rest"] = rest_now if "rest" not in s else s["rest"] + (rest_now - s["rest"]) * min(1, dt / 120)
+        rest_min = int(s["rest"] / 5 + 0.5) * 5 if zellen else 0          # V7.1: in 5-min-Schritten
 
         if web:
             ST.update(temp=round(th if th is not None else (tf or 0), 1), target=s["ziel"], pad=None if tf is None else round(tf, 1),
