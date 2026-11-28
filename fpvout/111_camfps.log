@@ -1,0 +1,33 @@
+== 111_camfps on mojave-fpv, 2026-11-28 18:28:58, FPV V1.9.28 ==
+=== config.txt camera lines ===
+6:#dtparam=i2c_arm=on
+17:camera_auto_detect=0
+26:dtoverlay=vc4-kms-v3d
+49:dtoverlay=dwc2,dr_mode=host
+52:dtoverlay=nospi10
+59:dtoverlay=imx290,clock-frequency=74250000
+62:dtoverlay=disable-bt
+=== dmesg imx290 ===
+[    0.023867] /soc/csi@7e801000: Fixed dependency cycle(s) with /soc/i2c0mux/i2c@1/imx290@1a
+[    0.023966] /soc/i2c0mux/i2c@1/imx290@1a: Fixed dependency cycle(s) with /soc/csi@7e801000
+[    0.025079] /soc/csi@7e801000: Fixed dependency cycle(s) with /soc/i2c0mux/i2c@1/imx290@1a
+[    0.040734] /soc/i2c0mux/i2c@1/imx290@1a: Fixed dependency cycle(s) with /soc/csi@7e801000
+[    1.506146] /soc/csi@7e801000: Fixed dependency cycle(s) with /soc/i2c0mux/i2c@1/imx290@1a
+[    1.506211] /soc/i2c0mux/i2c@1/imx290@1a: Fixed dependency cycle(s) with /soc/csi@7e801000
+=== real frame rate of path cam (10 s) ===
+width=1280
+height=720
+r_frame_rate=60/1
+avg_frame_rate=60/1
+nb_read_packets=601
+=== mediamtx log about camera ===
+Nov 28 02:42:57 mojave-fpv mediamtx[961]: 2026/11/28 02:42:57 INF [path cam] [RPI Camera source] started
+Nov 28 02:42:58 mojave-fpv mediamtx[1087]: [0:00:18.825017710] [1087]  INFO Camera camera_manager.cpp:340 libcamera v0.7.2-mediamtx
+Nov 28 02:42:58 mojave-fpv mediamtx[1087]: [0:00:18.840698413] [1119]  INFO Camera camera_manager.cpp:223 Adding camera '/base/soc/i2c0mux/i2c@1/imx290@1a' for pipeline handler rpi/vc4
+Nov 28 02:42:58 mojave-fpv mediamtx[1087]: [0:00:18.840763358] [1119]  INFO RPI vc4.cpp:445 Registered camera /base/soc/i2c0mux/i2c@1/imx290@1a to Unicam device /dev/media0 and ISP device /dev/media2
+Nov 28 02:42:58 mojave-fpv mediamtx[1087]: [0:00:18.841197691] [1087]  INFO Camera camera.cpp:1216 configuring streams: (0) 1280x720-YUV420/Rec709
+=== options in mediamtx docs inside binary ===
+rpiCameraAfMode rpiCameraAfRange rpiCameraAfSpeed rpiCameraAfWindow rpiCameraAWB rpiCameraAWBGains rpiCameraBitrate rpiCameraBrightness rpiCameraCamID rpiCameraCodec rpiCameraContrast rpiCameraDenoise rpiCameraEV rpiCameraExposure rpiCameraFlickerPeriod rpiCameraFPS rpiCameraGain rpiCameraH264Level rpiCameraH264Profile rpiCameraHardwareH264Level rpiCameraHardwareH264Profile rpiCameraHDR rpiCameraHeight rpiCameraHFlip rpiCameraIDRPeriod rpiCameraJPEGQuality rpiCameraLensPosition rpiCameraLevel rpiCameraMetering rpiCameraMJPEGQuality rpiCameraMode rpiCameraProfile rpiCameraROI rpiCameraSaturation rpiCameraSecondary rpiCameraSharpness rpiCameraShutter rpiCameraSoftwareH264Level rpiCameraSoftwareH264Profile rpiCameraSourceinvalid rpiCameraTextOverlay rpiCameraTextOverlayEnable rpiCameraTuningFile rpiCameraVFlip rpiCameraWidth 
+[100%] done
+
+== exit code 0, 13.3 s ==
