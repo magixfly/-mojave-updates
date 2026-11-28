@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V8.3"
+VERSION = "V8.4"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -561,9 +561,10 @@ def main():
     heiz = PWM(Pin(P_HEIZ)); heiz.freq(1000); heiz.duty_u16(0)
     luef = PWM(Pin(P_LUEFTER)); luef.freq(1000); luef.duty_u16(0)
 
+    f = load_fonts()                                        # V8.4: grosse Bloecke zuerst laden (sonst MemoryError durch zerstueckelten Speicher)
     cfg = load_cfg()
+    gc.collect()
     lcd = LCD(int(cfg["display_rotate"]), cfg["brightness"])
-    f = load_fonts()
     ring_init(198, 62, 27, 35)
     pa, py_ = Pin(KEYS["A"], Pin.IN, Pin.PULL_UP), Pin(KEYS["Y"], Pin.IN, Pin.PULL_UP)
     held = 0
