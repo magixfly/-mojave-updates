@@ -1,0 +1,7 @@
+== 113_ltecheck on mojave-fpv, 2026-11-28 18:37:04, FPV V1.9.29 ==
+Nov 28 18:34:35 mojave-fpv python3[2737]: [lte] login_failed
+now: login_failed None None True
+-rw------- 1 root root 37 Nov 28 02:32 /etc/fpv/stick-login
+[100%] done
+
+== exit code 0, 45.1 s ==
