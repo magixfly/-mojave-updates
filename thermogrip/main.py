@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V6.7"
+VERSION = "V6.8"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -95,6 +95,27 @@ def load_cfg():
         if old in t:
             with open("config.txt", "w") as fh:
                 fh.write(t.replace(old, "key_lock_seconds  = 60    # lock buttons after this many seconds without input (0 = never); unlock: press A 3x"))
+        try:                                                # V6.8: WLAN-Daten aus wifi.txt (nur vom USB-Updater) uebernehmen
+            w = open("wifi.txt").read()
+            vals = {}
+            for l in w.split("\n"):
+                if "=" in l:
+                    k, v = l.split("=", 1)
+                    vals[k.strip()] = v.strip()
+            lines = open("config.txt").read().split("\n"); have = set()
+            for i, l in enumerate(lines):
+                k = l.split("=")[0].strip()
+                if "=" in l and k in vals and not l.strip().startswith("#"):
+                    lines[i] = "%-17s = %s" % (k, vals[k]); have.add(k)
+            for k in vals:
+                if k not in have:
+                    lines.append("%-17s = %s" % (k, vals[k]))
+            with open("config.txt", "w") as fh:
+                fh.write("\n".join(lines))
+            import os
+            os.remove("wifi.txt")
+        except OSError:
+            pass
         t = open("config.txt").read()                       # V5.6: neue Zeile remember_target ergaenzen
         if "pad_volts         = 12    # rated voltage of the heating pads (power_auto)" in t:                       # V6.3: pad_volts 12 -> 14
             t = t.replace("pad_volts         = 12    # rated voltage of the heating pads (power_auto)", "pad_volts         = 14    # voltage used for the power limit (pads are 12 V; 14 = approx. 16 W per pad on a full 4S)")
