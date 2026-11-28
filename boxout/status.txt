@@ -1,7 +1,7 @@
-Stand: 2026-11-28 13:38:32
+Stand: 2026-11-28 13:44:41
 App: 2.72
-IP: 192.168.87.180
-WLAN: Hotspot an
+IP: 192.168.244.124
+WLAN: kein WLAN → Hotspot
 Wifi is connected to "Media"
     wlan1 - TetheredState - lastError = 0
 Failed to write while dumping service tethering: Broken pipe
