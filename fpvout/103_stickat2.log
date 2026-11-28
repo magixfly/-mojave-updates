@@ -1,0 +1,13 @@
+== 103_stickat2 on mojave-fpv, 2026-11-28 01:19:23, FPV V1.9.26 ==
+=== /dev/ttyUSB1
+  'AT': ''
+/dev/ttyUSB1 no AT answer
+/dev/ttyUSB2 gone - stop
+ls: cannot access '/dev/ttyUSB*': No such file or directory
+[ 2117.483429] option1 ttyUSB1: GSM modem (1-port) converter now disconnected from ttyUSB1
+[ 2117.483487] option 1-1.1:1.4: device disconnected
+[ 2117.496387] option1 ttyUSB2: GSM modem (1-port) converter now disconnected from ttyUSB2
+[ 2117.498061] option 1-1.1:1.6: device disconnected
+[100%] done
+
+== exit code 0, 4.6 s ==
