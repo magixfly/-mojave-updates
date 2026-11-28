@@ -1,0 +1,51 @@
+### 123_ril  –  2026-11-28 18:14:35
+### Box direkt (App 2.72, 192.168.74.150)
+
+[init.svc.cnss-daemon]: [running]
+[init.svc.dpmQmiMgr]: [running]
+[init.svc.ssgqmigd]: [running]
+[init.svc.vendor.cnss_diag]: [running]
+[init.svc.vendor.imsqmidaemon]: [running]
+[init.svc.vendor.qmipriod]: [running]
+[init.svc.vendor.rmt_storage]: [running]
+[init.svc_debug_pid.cnss-daemon]: [1809]
+[init.svc_debug_pid.dpmQmiMgr]: [1590]
+[init.svc_debug_pid.ssgqmigd]: [1820]
+[init.svc_debug_pid.vendor.cnss_diag]: [1666]
+[init.svc_debug_pid.vendor.imsqmidaemon]: [1725]
+[init.svc_debug_pid.vendor.qmipriod]: [1659]
+[init.svc_debug_pid.vendor.rmt_storage]: [1402]
+==
+[ro.baseband]: [msm]
+[ro.boot.baseband]: [msm]
+[ro.vendor.ril.mbn_copy_completed]: [1]
+==
+Process: com.android.se
+Process: com.android.se
+Process: com.android.se
+Process: com.android.se
+Process: com.android.phone
+Process: com.android.phone
+Process: com.android.phone
+Process: com.android.phone
+Process: com.android.phone
+Process: com.android.phone
+Process: com.android.se
+Process: com.android.se
+Process: com.android.se
+Process: com.android.se
+Process: com.android.se
+Process: com.android.phone
+==
+java.lang.RuntimeException: Unable to start activity ComponentInfo{com.android.settings/com.android.settings.Settings$NetworkDashboardActivity}: java.lang.IllegalStateException: telephony service is n
+Caused by: java.lang.IllegalStateException: telephony service is null.
+	at com.android.settings.network.CellularSecurityPreferenceController.areNotificationsEnabled(CellularSecurityPreferenceController.java:160)
+	at com.android.settings.network.CellularSecurityPreferenceController.getAvailabilityStatus(CellularSecurityPreferenceController.java:100)
+	at com.android.settings.core.BasePreferenceController.isAvailable(BasePreferenceController.java:260)
+	at com.android.settingslib.core.AbstractPreferenceController.displayPreference(AbstractPreferenceController.java:59)
+	at com.android.settings.core.BasePreferenceController.displayPreference(BasePreferenceController.java:282)
+	at com.android.settings.network.CellularSecurityPreferenceController.displayPreference(CellularSecurityPreferenceController.java:64)
+
+### Exit-Code: 0
+
+### Dauer 0 s
