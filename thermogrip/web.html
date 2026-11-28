@@ -31,8 +31,8 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 <div class="card"><h2>Control</h2>
 <div class="ctl"><button onclick="key('DOWN')">−</button><div><div class="big" id="ct">--°</div><div class="msg" id="cs">Target</div></div><button onclick="key('UP')">+</button></div>
 <div class="row2"><button id="bon" onclick="key('A')">Heater</button><button id="bbo" onclick="key('Y')">Boost</button></div>
-<div class="sl"><label><span>Pad max (heating up)</span><b id="vmax">--</b></label><input type="range" id="pmax" min="35" max="65" oninput="$('vmax').textContent=this.value+' °C'" onchange="pad()"></div>
-<div class="sl"><label><span>Pad hold (target reached)</span><b id="vhold">--</b></label><input type="range" id="phold" min="30" max="65" oninput="$('vhold').textContent=this.value+' °C'" onchange="pad()"></div>
+<div class="sl"><label><span>Pad max (heating up)</span><b id="vmax">--</b></label><input type="range" id="pmax" min="35" max="75" oninput="$('vmax').textContent=this.value+' °C'" onchange="pad()"></div>
+<div class="sl"><label><span>Pad hold (target reached)</span><b id="vhold">--</b></label><input type="range" id="phold" min="30" max="75" oninput="$('vhold').textContent=this.value+' °C'" onchange="pad()"></div>
 <div class="msg" id="cm">Pad limit now: –</div></div>
 
 <div class="card"><h2>Status</h2><div class="grid" id="st"><div class="tile"><b>…</b><span>loading</span></div></div></div>

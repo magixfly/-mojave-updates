@@ -242,7 +242,7 @@ class Web:
         elif meth == "POST" and path == "/api/pad":
             data = json.loads(c.read(clen)) if clen else {}
             ch = {}
-            for k, lo, hi in (("pad_temp_max", 35, 65), ("pad_temp_hold", 30, 65)):
+            for k, lo, hi in (("pad_temp_max", 35, 75), ("pad_temp_hold", 30, 75)):
                 if k in data:
                     v = max(lo, min(hi, int(float(data[k]))))
                     self.cfg[k] = v; ch[k] = v
