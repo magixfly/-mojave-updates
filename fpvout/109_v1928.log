@@ -1,0 +1,17 @@
+== 109_v1928 on mojave-fpv, 2026-11-28 02:39:16, FPV V1.9.27 ==
+VERSION = "V1.9.28"
+active
+active
+active
+Nov 28 02:39:17 mojave-fpv systemd[1]: Started fpv-bridge.service - Mojave FPV LTE - telemetry and control bridge.
+Nov 28 02:39:17 mojave-fpv python3[13583]: [fpv-bridge] Mojave FPV LTE V1.9.28
+Nov 28 02:39:18 mojave-fpv python3[13583]: [fpv-bridge] cockpit on port 8080
+Nov 28 02:39:23 mojave-fpv python3[13583]: [lte] ok
+cockpit: http 200
+lte: {'asu': 53, 'dbm': -87, 'rsrp': None, 'rsrq': None, 'sinr': None, 'band': '8', 'mode': 'LTE', 'op': 'Magenta-T-', 'roam': False, 'rx': 183319, 'tx': 5085, 'state': 'ok', 'at': 1795829966, 'login': True}
+lte: {'asu': 53, 'dbm': -87, 'rsrp': None, 'rsrq': None, 'sinr': None, 'band': '8', 'mode': 'LTE', 'op': 'Magenta-T-', 'roam': False, 'rx': 84, 'tx': 104, 'state': 'ok', 'at': 1795829970, 'login': True}
+lte: {'asu': 53, 'dbm': -87, 'rsrp': None, 'rsrq': None, 'sinr': None, 'band': '8', 'mode': 'LTE', 'op': 'Magenta-T-', 'roam': False, 'rx': 0, 'tx': 0, 'state': 'ok', 'at': 1795829977, 'login': True}
+remote restart scheduled
+[100%] done
+
+== exit code 0, 25.0 s ==
