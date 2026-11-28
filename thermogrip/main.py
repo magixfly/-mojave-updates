@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V6.9"
+VERSION = "V7.0"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -149,6 +149,24 @@ def load_cfg():
             for i, l in enumerate(lines):
                 if l.startswith("target_temp_start"): pos = i + 1
             lines.insert(pos, line)
+            with open("config.txt", "w") as fh:
+                fh.write("\n".join(lines))
+        lines = open("config.txt").read().split("\n")         # V7.0: alle fehlenden Einstellungen ergaenzen (fuer Webseite)
+        have = set(l.split("=")[0].strip() for l in lines if "=" in l and not l.strip().startswith("#"))
+        add, prev = False, None
+        for dl in DEFAULT_CFG.split("\n"):
+            if "=" not in dl or dl.strip().startswith("#"):
+                continue
+            k = dl.split("=")[0].strip()
+            if k not in have:
+                pos = len(lines)
+                if prev is not None:
+                    for i, l in enumerate(lines):
+                        if "=" in l and l.split("=")[0].strip() == prev:
+                            pos = i + 1
+                lines.insert(pos, dl); have.add(k); add = True
+            prev = k
+        if add:
             with open("config.txt", "w") as fh:
                 fh.write("\n".join(lines))
     except OSError:
