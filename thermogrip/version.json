@@ -1,5 +1,5 @@
 {
- "version": "V8.9",
+ "version": "V9.0",
  "files": [
   {
    "name": "fonts.bin",
@@ -8,18 +8,18 @@
   },
   {
    "name": "main.py",
-   "size": 48946,
-   "crc": 2879811332
+   "size": 49229,
+   "crc": 3634555937
   },
   {
    "name": "web.py",
-   "size": 17509,
-   "crc": 1698833779
+   "size": 18501,
+   "crc": 488985443
   },
   {
    "name": "web.html",
-   "size": 12931,
-   "crc": 262301776
+   "size": 12976,
+   "crc": 2346489073
   }
  ]
 }

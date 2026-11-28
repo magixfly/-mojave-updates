@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V8.9"
+VERSION = "V9.0"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -307,6 +307,7 @@ class LCD(framebuf.FrameBuffer):
         self.cmd(0x2A, [0, 0, 0, 239]); self.cmd(0x2B, [0, 0, 0, 239])
         self.cs(0); self.dc(0); self.spi.write(b"\x2C"); self.dc(1); self.spi.write(self.buf); self.cs(1)
 
+TLS_RESERVE = None
 ST = {"version": VERSION}            # Status fuer die Webseite
 try:                                     # V8.8: MicroPython-Version fuer Diagnose
     import sys as _sys
@@ -567,6 +568,11 @@ def main():
     luef = PWM(Pin(P_LUEFTER)); luef.freq(1000); luef.duty_u16(0)
 
     f = load_fonts()                                        # V8.4: grosse Bloecke zuerst laden (sonst MemoryError durch zerstueckelten Speicher)
+    global TLS_RESERVE
+    try:
+        TLS_RESERVE = bytearray(48 * 1024)                  # V9.0: zusammenhaengender Block fuer HTTPS (Update), wird dafuer freigegeben
+    except MemoryError:
+        TLS_RESERVE = None
     cfg = load_cfg()
     gc.collect()
     lcd = LCD(int(cfg["display_rotate"]), cfg["brightness"])
@@ -599,6 +605,7 @@ def main():
         try:
             import web as webmod
             web = webmod.Web(cfg, ST)
+            web.reserve_holder = globals()
         except Exception as e:
             print("WiFi off:", e)
     if demo:

@@ -32,6 +32,21 @@ def _cfg_write(new):
         fh.write("\n".join(lines))
 
 
+def _maxblock():                        # V9.0: groesster zusammenhaengender freier Block in KB (Diagnose)
+    gc.collect()
+    lo, hi = 0, 256
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        try:
+            b = bytearray(mid * 1024)
+            del b
+            lo = mid
+        except MemoryError:
+            hi = mid - 1
+    gc.collect()
+    return lo
+
+
 class Web:
     def __init__(self, cfg, status):
         self.status = status            # dict, wird von main.py laufend aktualisiert
@@ -295,6 +310,7 @@ class Web:
             if proto == "https:":
                 stage = "tls"
                 import ssl
+                self._free_reserve()
                 gc.collect()
                 try:
                     ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
@@ -309,7 +325,7 @@ class Web:
                 raw.close()
             except Exception:
                 pass
-            raise OSError("%s: %s (free %d KB)" % (stage, e, gc.mem_free() // 1024))
+            raise OSError("%s: %s (free %d KB, block %d KB)" % (stage, e, gc.mem_free() // 1024, _maxblock()))
         s.write(("GET /%s HTTP/1.0\r\nHost: %s\r\nUser-Agent: thermogrip\r\nConnection: close\r\n\r\n" % (path, host)).encode())
         def line():
             b = b""
@@ -335,6 +351,21 @@ class Web:
             s.close()
             raise OSError("HTTP %d" % code)
         return s, clen
+
+    def _free_reserve(self):
+        h = getattr(self, "reserve_holder", None)
+        if h is not None and h.get("TLS_RESERVE") is not None:
+            h["TLS_RESERVE"] = None
+            gc.collect()
+
+    def _take_reserve(self):
+        h = getattr(self, "reserve_holder", None)
+        if h is not None and h.get("TLS_RESERVE") is None:
+            try:
+                gc.collect()
+                h["TLS_RESERVE"] = bytearray(48 * 1024)
+            except MemoryError:
+                pass
 
     @staticmethod
     def _vt(v):
@@ -372,6 +403,8 @@ class Web:
         except Exception as e:
             self.status["update"] = "check failed: " + str(e)
         gc.collect()
+        if not self.want:
+            self._take_reserve()
 
     def install(self, progress, feed=None):
         """Laedt alle Dateien aus version.json, prueft Groesse + CRC, ersetzt sie und startet neu."""
