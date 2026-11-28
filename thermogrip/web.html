@@ -41,15 +41,15 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 
 <div class="card"><h2>Status</h2><div class="grid" id="st"><div class="tile"><b>…</b><span>loading</span></div></div></div>
 
-<div class="card"><h2>Settings (config.txt)</h2>
-<div id="cfg"></div>
-<button onclick="save(false)">Save</button><button class="sec" onclick="save(true)">Save &amp; restart</button>
-<div class="msg" id="cmsg">Changes are used after a restart.</div></div>
-
 <div class="card"><h2>Update from the internet</h2>
 <div class="msg">Status: <b id="upd">…</b></div>
 <button onclick="ucheck()">Check now</button><button class="sec" onclick="uinst()">Install update</button>
 <div class="msg" id="imsg">Installing switches the heater off. The display shows the progress, then the Pico restarts.</div></div>
+
+<div class="card"><h2>Settings (config.txt)</h2>
+<div id="cfg"></div>
+<button onclick="save(false)">Save</button><button class="sec" onclick="save(true)">Save &amp; restart</button>
+<div class="msg" id="cmsg">Changes are used after a restart.</div></div>
 
 <div class="card"><h2>Firmware update (files from this phone/PC)</h2>
 <div class="msg">Choose the new files (main.py, fonts.bin, web.py, web.html). config.txt is kept.</div>
