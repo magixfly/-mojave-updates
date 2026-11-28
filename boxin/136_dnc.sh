@@ -1,0 +1,1 @@
+logcat -d -b all -t 15000 2>/dev/null | grep -iE "DNC-|DataNetworkController|DataEvaluation|DataNetwork-|setupDataCall|SETUP_DATA|DataProfileManager|fail cause|DisallowedReason" | tail -20 | cut -c1-240
