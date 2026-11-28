@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V9.2"
+VERSION = "V9.3"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -793,7 +793,9 @@ def main():
             if s.get("chk_base") is None or duty < 25:
                 s["chk_base"] = s["chk_peak"] = tf; s["chk_t"] = 0
             s["chk_peak"] = max(s["chk_peak"], tf)
-            bad = (s["chk_peak"] - s["chk_base"] < cfg["heater_check_rise"]) or (tf < s["chk_peak"] - 3)
+            # V9.3: nur Alarm, wenn die Matte kalt bleibt (warme Matte = Heizung arbeitet; Plateau/Waermeverlust ist kein Fehler)
+            cold = tf < max(40, (th if th is not None else 20) + 10)
+            bad = cold and (s["chk_peak"] - s["chk_base"] < cfg["heater_check_rise"])
             if cfg["heater_check_minutes"] > 0 and duty >= 40 and bad:
                 if not s.get("chk_t"):
                     s["chk_t"] = now
