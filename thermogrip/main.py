@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V7.1"
+VERSION = "V7.2"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -402,7 +402,7 @@ def scr_main(lcd, f, d):
     f["mid"].draw(lcd, "%d%%" % d["duty"], 198, 49, WHITE, bgcol(60), 1)
     f["small"].draw(lcd, "Heater", 198, 98, MUTED, bgcol(106), 1)
     # Kacheln
-    card(lcd, f, 8, 126, "fan", TEAL, d["fan"], "Fan", d["fan_u"])
+    card(lcd, f, 8, 126, "bat", TEAL, d["cell"], "Cell", "V" if d["cell"] != "--" else "")   # V7.2: Einzelzelle statt Luefter
     card(lcd, f, 122, 126, "bat", d["akku_col"], d["akku"], "Battery", d["akku_u"])
     card(lcd, f, 8, 182, "temp", RED, d["matte"], "Pad", d["matte_u"])
     card(lcd, f, 122, 182, "clock", BLUE, d["rest"], "Left", d["rest_u"])
@@ -850,7 +850,7 @@ def main():
                 scr_main(lcd, f, dict(
                     status=status, akku_txt=(("%dS · %.1f V" % (zellen, v_disp)) ) if zellen else "USB only",
                     temp=fmt_t(th), nohand=th is None, ziel=ziel, boost=bool(s["boost_bis"]),
-                    duty=duty, fan=("%d" % s["fan"]) if s["fan_on"] else "off", fan_u="%" if s["fan_on"] else "",
+                    duty=duty, cell=("%.2f" % vz_s) if zellen else "--", fan=("%d" % s["fan"]) if s["fan_on"] else "off", fan_u="%" if s["fan_on"] else "",
                     akku=("%d" % akku_pct) if zellen else "--", akku_u="%" if zellen else "", akku_col=RED if low else GREEN,
                     matte=(("%d" % tf) if tf is not None else "--"), matte_u="°C" if tf is not None else "",
                     rest=("%d:%02d" % (rest_min // 60, rest_min % 60)) if zellen else "--", rest_u="h" if zellen else "", err=err, err2=err2))
