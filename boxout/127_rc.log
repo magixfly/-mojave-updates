@@ -1,0 +1,15 @@
+### 127_rc  –  2026-11-28 18:17:58
+### Box direkt (App 2.72, 192.168.74.150)
+
+grep: bad regex '^\s*#|^\s*$': trailing backslash (\)
+==
+
+
+
+33,33
+
+
+
+### Exit-Code: 0
+
+### Dauer 0 s
