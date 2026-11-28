@@ -227,6 +227,12 @@ class Web:
             except OSError:
                 e = ""
             self._send(c, "200 OK", "text/plain", e)
+        elif meth == "POST" and path == "/api/error/clear":
+            try:
+                os.remove("error.txt")
+            except OSError:
+                pass
+            self._send(c, "200 OK", "application/json", '{"ok":true}')
         elif meth == "GET" and path == "/api/config":
             self._send(c, "200 OK", "application/json", json.dumps(_cfg_lines()))
         elif meth == "POST" and path == "/api/config":
