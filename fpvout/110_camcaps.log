@@ -1,0 +1,47 @@
+== 110_camcaps on mojave-fpv, 2026-11-28 18:24:07, FPV V1.9.28 ==
+mediamtx: mediamtx
+binary: /opt/fpv/mediamtx
+v1.21.4
+=== current rpiCamera config ===
+    rpiCameraBitrate: 4000000
+    rpiCameraFPS: 60
+    rpiCameraHeight: 720
+    rpiCameraHFlip: false
+    rpiCameraIDRPeriod: 60
+    rpiCameraVFlip: false
+    rpiCameraWidth: 1280
+    source: rpiCamera
+=== rpiCamera options the binary knows ===
+
+=== sensor modes ===
+Available cameras
+-----------------
+0 : imx290 [1920x1080 12-bit RGGB] (/base/soc/i2c0mux/i2c@1/imx290@1a)
+    Modes: 'SRGGB10_CSI2P' : 1280x720 [30.00 fps - (65535, 65535)/65535x65535 crop]
+                             1920x1080 [30.00 fps - (65535, 65535)/65535x65535 crop]
+           'SRGGB12_CSI2P' : 1280x720 [30.00 fps - (65535, 65535)/65535x65535 crop]
+                             1920x1080 [30.00 fps - (65535, 65535)/65535x65535 crop]
+
+=== H.264 encoder controls (video11) ===
+
+Codec Controls
+
+                 video_b_frames 0x009909ca (int)    : min=0 max=0 step=1 default=0 value=0 flags=update, has-min-max
+                 video_gop_size 0x009909cb (int)    : min=0 max=2147483647 step=1 default=60 value=60 flags=has-min-max
+             video_bitrate_mode 0x009909ce (menu)   : min=0 max=1 default=0 value=0 (Variable Bitrate) flags=update, has-min-max
+                  video_bitrate 0x009909cf (int)    : min=25000 max=25000000 step=25000 default=10000000 value=10000000 flags=has-min-max
+           sequence_header_mode 0x009909d8 (menu)   : min=0 max=1 default=1 value=1 (Joined With 1st Frame) flags=has-min-max
+         repeat_sequence_header 0x009909e2 (bool)   : default=0 value=0 flags=has-min-max
+                force_key_frame 0x009909e5 (button) : value=0 flags=write-only, execute-on-write
+          h264_minimum_qp_value 0x00990a61 (int)    : min=0 max=51 step=1 default=20 value=20 flags=has-min-max
+          h264_maximum_qp_value 0x00990a62 (int)    : min=0 max=51 step=1 default=51 value=51 flags=has-min-max
+            h264_i_frame_period 0x00990a66 (int)    : min=0 max=2147483647 step=1 default=60 value=60 flags=has-min-max
+                     h264_level 0x00990a67 (menu)   : min=0 max=15 default=11 value=11 (4) flags=has-min-max
+                   h264_profile 0x00990a6b (menu)   : min=0 max=4 default=4 value=4 (High) flags=has-min-max
+=== kernel / firmware ===
+6.18.50+rpt-rpi-v8
+Sep 14 2026 14:49:30 
+Copyright (c) 2012 Broadcom
+[100%] done
+
+== exit code 0, 2.0 s ==
