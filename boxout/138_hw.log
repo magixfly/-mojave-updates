@@ -1,0 +1,12 @@
+### 138_hw  –  2026-11-28 18:26:44
+### Box direkt (App 2.72, 192.168.74.150)
+
+grep: bad regex '^\S*-\s*$': trailing backslash (\)
+==
+init.class_main.sh
+netmgrd
+==
+
+### Exit-Code: 0
+
+### Dauer 0 s
