@@ -1,0 +1,42 @@
+== 102_stickcheck on mojave-fpv, 2026-11-28 01:17:09, FPV V1.9.26 ==
+crw-rw---- 1 root dialout 188, 0 Nov 28 01:15 /dev/ttyUSB0
+crw-rw---- 1 root dialout 188, 1 Nov 28 01:15 /dev/ttyUSB1
+crw-rw---- 1 root dialout 188, 2 Nov 28 01:15 /dev/ttyUSB2
+/sys/bus/usb/devices/1-1.1 4e31
+  1-1.1:1.0 class=e0 driver=rndis_host
+  1-1.1:1.1 class=0a driver=rndis_host
+  1-1.1:1.2 class=ff driver=option
+  1-1.1:1.4 class=ff driver=option
+  1-1.1:1.6 class=ff driver=option
+[ 1849.372363] option1 ttyUSB1: GSM modem (1-port) converter now disconnected from ttyUSB1
+[ 1849.372556] option 1-1.1:1.4: device disconnected
+[ 1849.373260] option1 ttyUSB2: GSM modem (1-port) converter now disconnected from ttyUSB2
+[ 1849.373391] option 1-1.1:1.6: device disconnected
+[ 1854.716460] usb 1-1.1: new high-speed USB device number 4 using xhci_hcd
+[ 1854.809549] usb 1-1.1: New USB device found, idVendor=2ecc, idProduct=3001, bcdDevice= 0.00
+[ 1854.809568] usb 1-1.1: New USB device strings: Mfr=3, Product=2, SerialNumber=0
+[ 1854.809572] usb 1-1.1: Product: WUKONG
+[ 1854.809577] usb 1-1.1: Manufacturer: MARVELL
+[ 1859.254683] usb 1-1.1: USB disconnect, device number 4
+[ 1864.040462] usb 1-1.1: new high-speed USB device number 5 using xhci_hcd
+[ 1864.128764] usb 1-1.1: config 1 has an invalid interface number: 6 but max is 4
+[ 1864.128783] usb 1-1.1: config 1 has no interface number 3
+[ 1864.129246] usb 1-1.1: New USB device found, idVendor=1286, idProduct=4e31, bcdDevice= 1.00
+[ 1864.129253] usb 1-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[ 1864.129258] usb 1-1.1: Product: Mobile Composite Device Bus
+[ 1864.129261] usb 1-1.1: Manufacturer: Marvell
+[ 1864.129265] usb 1-1.1: SerialNumber: 200806006809080000
+[ 1864.140306] rndis_host 1-1.1:1.0 eth1: register 'rndis_host' at usb-0000:01:00.0-1.1, RNDIS device, ac:00:33:aa:96:33
+[ 1864.144924] option 1-1.1:1.2: GSM modem (1-port) converter detected
+[ 1864.145188] usb 1-1.1: GSM modem (1-port) converter now attached to ttyUSB0
+[ 1864.145553] option 1-1.1:1.4: GSM modem (1-port) converter detected
+[ 1864.145725] usb 1-1.1: GSM modem (1-port) converter now attached to ttyUSB1
+[ 1864.146047] option 1-1.1:1.6: GSM modem (1-port) converter detected
+[ 1864.146205] usb 1-1.1: GSM modem (1-port) converter now attached to ttyUSB2
+    inet 192.168.100.100/24 brd 192.168.100.255 scope global dynamic noprefixroute eth1
+default via 192.168.178.1 dev wlan0 proto dhcp src 192.168.178.169 metric 600 
+default via 192.168.100.33 dev eth1 proto dhcp src 192.168.100.100 metric 700 
+net: {"kind": "wifi", "name": "Optimus Prime", "sig": -53, "dev": "wlan0", "other": "lte", "wifi_on": true, "lte_up": true}
+[100%] done
+
+== exit code 0, 0.1 s ==
