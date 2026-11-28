@@ -1,0 +1,27 @@
+### 136_dnc  –  2026-11-28 18:25:29
+### Box direkt (App 2.72, 192.168.74.150)
+
+11-28 18:24:36.499  1578  4899 D TelephonyRegistry: notifyDataConnectionForSubscriber: phoneId=0 subId=3  state: DISCONNECTED, transport: WWAN, id: -1, netId: 128, network type: LTE, APN Setting: [ApnSetting] Planet3, 294, 23210, drei.at, ,
+11-28 18:24:36.502 31725 31725 D DNC-0   : onDataNetworkSetupDataFailed: [DataNetwork: DN-128-C, drei.at, state=null], cause=OEM_DCFAILCAUSE_4(0x1004), retryDelayMillis=-1ms.
+11-28 18:24:36.504 31725 31725 D DNC-0   : handleMessage, msg.what = 14
+11-28 18:25:08.586 31725 31725 D DNC-0   : onDataNetworkSetupRetry: Request list:[NetworkRequestList: size=1, leading by [NetworkRequest [ BACKGROUND_REQUEST id=2, [ Transports: CELLULAR Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN
+11-28 18:25:08.587 31725 31725 D DNC-0   : addDataDisallowedReasonWhenInSecureMode: mIsInSecureMode = false
+11-28 18:25:08.591 31725 31725 D DNC-0   : Data evaluation: evaluation reason:DATA_RETRY, Data allowed reason: NORMAL, candidate profile=[DataProfile=[ApnSetting] Planet3, 294, 23210, drei.at, , http://mmsc, 213.94.78.133, 8799, null, 0, mm
+11-28 18:25:08.594 31725 31725 D DNC-0   : onSetupDataNetwork: dataProfile=[DataProfile=[ApnSetting] Planet3, 294, 23210, drei.at, , http://mmsc, 213.94.78.133, 8799, null, 0, mms | supl | hipri | default, IP, IP, true, 0, false, 0, 0, 0, 0
+11-28 18:25:08.595 31725 31725 D DNC-0   : Creating data network on WWAN with [DataProfile=[ApnSetting] Planet3, 294, 23210, drei.at, , http://mmsc, 213.94.78.133, 8799, null, 0, mms | supl | hipri | default, IP, IP, true, 0, false, 0, 0, 0
+11-28 18:25:08.627  1578  3210 D TelephonyRegistry: notifyDataConnectionForSubscriber: phoneId=0 subId=3  state: CONNECTING, transport: WWAN, id: -1, netId: 129, network type: LTE, APN Setting: [ApnSetting] Planet3, 294, 23210, drei.at, , h
+11-28 18:25:08.631 31725 31725 D QtiDSM-C-0: setupDataCall from QtiDataServiceManager
+11-28 18:25:08.636 31725 31725 D DNC-0   : handleMessage, msg.what = 13
+11-28 18:25:08.637 31725 32082 D RILJ    : [0574]> SETUP_DATA_CALL,reason=NORMAL,accessNetworkType=EUTRAN,dataProfile=[DataProfile=[ApnSetting] Planet3, 294, 23210, drei.at, , http://mmsc, 213.94.78.133, 8799, null, 0, mms | supl | hipri | 
+11-28 18:25:08.640 31725 32082 D DataServiceCallback: onSetupDataCallComplete
+11-28 18:25:08.640 31725 31744 D RILJ    : [0574]< SETUP_DATA_CALL DataCallResponse: { cause=OEM_DCFAILCAUSE_4(0x1004) retry=-1 cid=-1 linkStatus=0 protocolType=-1 ifname= addresses=[] dnses=[] gateways=[] pcscf=[] mtu=0 mtuV4=0 mtuV6=0 han
+11-28 18:25:08.640 31725 32082 D QtiDSM-C-0: QtiDataServiceManager: onSetupDataCallComplete, resultCode = 0, response = DataCallResponse: { cause=OEM_DCFAILCAUSE_4(0x1004) retry=-1 cid=-1 linkStatus=0 protocolType=-1 ifname= addresses=[] dn
+11-28 18:25:08.651  1578  4806 D TelephonyRegistry: notifyDataConnectionForSubscriber: phoneId=0 subId=3  state: DISCONNECTED, transport: WWAN, id: -1, netId: 129, network type: LTE, APN Setting: [ApnSetting] Planet3, 294, 23210, drei.at, ,
+11-28 18:25:08.656 31725 31725 D DNC-0   : onDataNetworkSetupDataFailed: [DataNetwork: DN-129-C, drei.at, state=null], cause=OEM_DCFAILCAUSE_4(0x1004), retryDelayMillis=-1ms.
+11-28 18:25:08.657 31725 31725 D DNC-0   : handleMessage, msg.what = 14
+11-28 18:25:08.660 31725 31725 D DRM-0   : For capability INTERNET, found matching rule [DataSetupRetryRule: Network capabilities:[DUN|PRIORITIZE_LATENCY|FOTA|PRIORITIZE_BANDWIDTH|IMS|MCX|XCAP|INTERNET|ENTERPRISE], Fail causes={}, Retry int
+11-28 18:25:08.661 31725 31725 D DRM-0   : Scheduled data retry [DataSetupRetryEntry: delay=60000ms, retry time:18:26:08.660, null, transport=WWAN, retry type=BY_NETWORK_REQUESTS, retry requests=[NetworkRequestList: size=1, leading by [Netw
+
+### Exit-Code: 0
+
+### Dauer 4 s
