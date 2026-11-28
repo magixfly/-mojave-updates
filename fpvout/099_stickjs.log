@@ -1,0 +1,78 @@
+== 099_stickjs on mojave-fpv, 2026-11-28 01:10:21, FPV V1.9.26 ==
+=== ajax_calls.js: login / digest / authorization ===
+28:            xhr.setRequestHeader("Authorization",getAuthHeader("POST"))
+41:            if($(data).find("login_status").text() == "UNAUTHORIZED") {
+77:            xhr.setRequestHeader("Authorization", getAuthHeader("POST"))
+110:            xhr.setRequestHeader("Authorization",getAuthHeader("POST"))
+151:            xhr.setRequestHeader("Authorization", getAuthHeader("POST"))
+160:            if($(data).find("login_status").text() == "UNAUTHORIZED") {
+196:            xhr.setRequestHeader("Authorization", getAuthHeader("POST"))
+234:            xhr.setRequestHeader("Authorization",getAuthHeader("POST"))
+243:            if($(data).find("login_status").text() == "UNAUTHORIZED") {
+294:                xhr.setRequestHeader("Authorization",getAuthHeader("GET"))
+347:            xhr.setRequestHeader("Authorization",getAuthHeader("GET"))
+360:    if($(content).find("login_status").text() == "UNAUTHORIZED") {
+386:                xhr.setRequestHeader("Authorization",getAuthHeader("GET"))
+402:    var login_text  = $(content).find("login_status").text();
+403:    if(login_text == "UNAUTHORIZED") {
+408:	if("KICKOFF" == $(content).find("login_status").text()){
+429:                xhr.setRequestHeader("Authorization",getAuthHeader("GET"))
+445:    var login_text  = $(content).find("login_status").text();
+459:            xhr.setRequestHeader("Authorization", getAuthHeader("POST"))
+467:            if($(data).find("login_status").text() == "UNAUTHORIZED") {
+493:            xhr.setRequestHeader("Authorization", getAuthHeader("GET"))
+501:    if($(content).find("login_status").text() == "UNAUTHORIZED") {
+551:            xhr.setRequestHeader("Authorization",getAuthHeader("GET"));
+559:function getAuthType(url) {
+561:        return 'Digest realm="Highwmg", nonce="718337c309eacc5dc1d2558936225417", qop="auth" Content-Type: text/html Server: Lighttpd/1.4.19 Content-Length: 0 Date: Tue, 11 Oct 2005 10:44:32 GMT ';
+633:                xhr.setRequestHeader("Authorization",getAuthHeader("GET"))
+664:                xhr.setRequestHeader("Authorization",getAuthHeader("GET"))
+675:                xhr.setRequestHeader("Authorization",getAuthHeader("GET"))
+696:                xhr.setRequestHeader("Authorization",getAuthHeader("GET"))
+716:            xhr.setRequestHeader("Authorization", getAuthHeader("POST"))
+736:            xhr.setRequestHeader("Authorization", getAuthHeader("GET"))
+745:    if($(content).find("login_status").text() == "UNAUTHORIZED") {
+763:        xhr.setRequestHeader("Authorization",webdav_getAuthHeader("PROPFIND"));
+774:	//var login_text  = $(content).find("login_status").text();
+787:        xhr.setRequestHeader("Authorization",webdav_getAuthHeader("OPTIONS"));
+797:	//var login_text  = $(content).find("login_status").text();
+819:	//var login_text  = $(content).find("login_status").text();
+838:		xhr.setRequestHeader("Authorization",webdav_getAuthHeader("GET"));
+857:	//var login_text  = $(content).find("login_status").text();
+894:	//var login_text  = $(content).find("login_status").text();
+910:        xhr.setRequestHeader("Authorization",webdav_getAuthHeader("DELETE"));
+919:	//var login_text  = $(content).find("login_status").text();
+942:	//var login_text  = $(content).find("login_status").text();
+957:        xhr.setRequestHeader("Authorization",webdav_getAuthHeader("MKCOL"));
+966:	//var login_text  = $(content).find("login_status").text();
+981:        //xhr.setRequestHeader("Authorization",getAuthHeader("MKCOL"));
+990:	//var login_text  = $(content).find("login_status").text();
+1021:		xhr.setRequestHeader("Authorization",webdav_getAuthHeader("PUT"));
+1074:		//xhr.setRequestHeader("Authorization",getAuthHeader("PUT"));
+1111:        xhr.setRequestHeader("Authorization",getAuthHeader("POST"));
+=== dashboard.js: files and fields ===
+133:"cellular"
+180:'cellular'
+113:"network_name"
+153:"network_type"
+150:"operator_name"
+102:"roaming"
+114:"roaming_network_name"
+92:"rssi"
+106:"sys_mode"
+=== utils.js: signal/network helpers ===
+=== xml files that answer without login ===
+status1: <?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+wan: <?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+ui_status: <?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+statistics: <?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+device_management: <?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+wan_status: <?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+lte_status: <?xml version="1.0" encoding="US-ASCII" ?><RGW><login_status>UNAUTHORIZED</login_status></RGW>
+=== login.cgi headers ===
+HTTP/1.1 200 OK
+WWW-Authenticate: Digest realm="Highwmg", nonce="314808", qop="auth"
+
+[100%] done
+
+== exit code 0, 0.8 s ==
