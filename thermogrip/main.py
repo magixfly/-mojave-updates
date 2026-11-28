@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V9.0"
+VERSION = "V9.1"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -846,7 +846,7 @@ def main():
 
         if web:
             ST.update(temp=None if th is None else round(th, 1), target=s["ziel"], pad=None if tf is None else round(tf, 1),
-                      heater=int(duty), battery=akku_pct if zellen else None, volts=v_disp if zellen else None, cell=round(vz_s, 2) if zellen else None,
+                      heater=int(duty), battery=akku_pct if zellen else None, volts=round(vz_s * zellen, 2) if zellen else None, cell=round(vz_s, 2) if zellen else None,
                       cells=zellen or None, left=rest_min if zellen else None,
                       on=s["on"], boost=bool(s["boost_bis"]), tmin=cfg["target_temp_min"], tmax=cfg["target_temp_max"],
                       pmax=cfg["pad_temp_max"], phold=cfg["pad_temp_hold"], plim=int(round(s.get("pad_lim", cfg["pad_temp_max"]))), mem=gc.mem_free() // 1024,

@@ -64,7 +64,7 @@ button.sec{background:#2b4a7d;color:var(--txt)}
 const $=id=>document.getElementById(id);
 const L={temp:["Temperature","°C"],target:["Target","°C"],pad:["Pad","°C"],heater:["Heater","%"],battery:["Battery","%"],volts:["Battery","V"],cell:["Cell","V"],cells:["Cells","S"],left:["Time left","h"],state:["State",""],wifi:["WiFi",""],mem:["Free memory","KB"],mpy:["MicroPython",""]};
 async function status(){try{const s=await (await fetch("/api/status")).json();$("ver").textContent=s.version||"";
-let h="";for(const k in L){if(s[k]===undefined||s[k]===null)continue;let v=s[k];if(k=="left")v=Math.floor(v/60)+":"+String(v%60).padStart(2,"0");
+let h="";for(const k in L){if(s[k]===undefined||s[k]===null)continue;let v=s[k];if(["temp","target","pad"].includes(k))v=Number(v).toFixed(1);if(["volts","cell"].includes(k))v=Number(v).toFixed(2);if(k=="left")v=Math.floor(v/60)+":"+String(v%60).padStart(2,"0");
 if(k=="heater"){const p=Math.max(0,Math.min(100,v)),C=2*Math.PI*26,d=C*p/100;
 h+=`<div class="tile ring"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="#24345a" stroke-width="7"/><circle cx="32" cy="32" r="26" fill="none" stroke="#ff922b" stroke-width="7" stroke-linecap="round" stroke-dasharray="${d} ${C}" transform="rotate(-90 32 32)"/><text x="32" y="37" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">${p}%</text></svg><span>Heater</span></div>`;continue}
 h+=`<div class="tile"><b>${v}${L[k][1]?" "+L[k][1]:""}</b><span>${L[k][0]}</span></div>`}
