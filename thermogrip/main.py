@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V6.5"
+VERSION = "V6.6"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -563,7 +563,7 @@ def main():
     pmax = cfg["power_4s_max"] if zellen == 4 else cfg["power_3s_max"]
     r_heiz = 144 / max(1, cfg["heater_watts_12v"])
     last = time.ticks_ms(); draw_t = 0; idle_t = time.ticks_ms()
-    LOCKUI["f"] = f; key_t = time.ticks_ms(); save_t = 0; saved_ziel = ziel0; a_n = 0; a_t = 0; hint_until = 0
+    LOCKUI["f"] = f; key_t = time.ticks_ms(); v_disp = 0; save_t = 0; saved_ziel = ziel0; a_n = 0; a_t = 0; hint_until = 0
     bp = None
     if int(cfg["beeper_pin"]) >= 0:
         if int(cfg["beeper_type"]) == 1:
@@ -767,6 +767,8 @@ def main():
         s["wh"] += p * dt / 3600
         s["pavg"] += (max(p, 1.0) - s["pavg"]) * min(1, dt / 120)
         vz_s = smooth("v", vz, dt, cfg["battery_smooth_s"]) if zellen else 0     # Spannung glaetten (springt unter Last)
+        if zellen and (v_disp == 0 or abs(vz_s * zellen - v_disp) >= 0.1):         # V6.6: Anzeige ruhig (geglaettet + 0,1 V Hysterese)
+            v_disp = round(vz_s * zellen, 1)
         s["pct_v"] = vz_s
         pct_now = soc(vz_s) if zellen else 0
         if "pct" not in s or not zellen:
@@ -786,7 +788,7 @@ def main():
         if time.ticks_diff(now, draw_t) > 250:
             draw_t = now
             if s["page"] == 0 and not s["on"] and not s["err"] and not s["leer"] and zellen:
-                scr_standby(lcd, f, dict(akku_txt=("DEMO · " if demo else "") + "%dS · %.1f V" % (zellen, v),
+                scr_standby(lcd, f, dict(akku_txt=("DEMO · " if demo else "") + "%dS · %.1f V" % (zellen, v_disp),
                                          temp=fmt_t(th if th is not None else tf), ziel_n="%d°" % s["ziel"],
                                          akku_n="%d%%" % akku_pct))
             elif s["page"] == 0:
@@ -797,7 +799,7 @@ def main():
                 else: status = ("HEATING", ORANGE)
                 if s["boost_bis"]:
                     rs = max(0, time.ticks_diff(s["boost_bis"], now) // 1000)
-                    ziel = "Boost %d °C · %d:%02d" % (s["ziel"], rs // 60, rs % 60)
+                    ziel = "Boost %d° %d:%02d" % (s["ziel"], rs // 60, rs % 60)
                 else:
                     ziel = "Target %d °C" % s["ziel"]
                 err, err2 = "", ""
@@ -807,7 +809,7 @@ def main():
                     err, err2 = "Battery empty", "Heater is off"
                 low = zellen and vz < cfg["warn_cell_volts"]
                 scr_main(lcd, f, dict(
-                    status=status, akku_txt=(("%dS · %.1f V" % (zellen, v)) ) if zellen else "USB only",
+                    status=status, akku_txt=(("%dS · %.1f V" % (zellen, v_disp)) ) if zellen else "USB only",
                     temp=fmt_t(th), nohand=th is None, ziel=ziel, boost=bool(s["boost_bis"]),
                     duty=duty, fan=("%d" % s["fan"]) if s["fan_on"] else "off", fan_u="%" if s["fan_on"] else "",
                     akku=("%d" % akku_pct) if zellen else "--", akku_u="%" if zellen else "", akku_col=RED if low else GREEN,
