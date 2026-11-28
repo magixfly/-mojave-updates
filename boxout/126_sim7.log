@@ -1,0 +1,13 @@
+### 126_sim7  –  2026-11-28 18:17:19
+### Box direkt (App 2.72, 192.168.74.150)
+
+svc=running sim= op= net= type=
+28617 18:15:49 qcrild
+29782 18:17:06 com.android.phone
+    mServiceState={mVoiceRegState=1(OUT_OF_SERVICE), mDataRegState=1(OUT_OF_SERVICE), mChannelNumber=0, duplexMode()=0, mCellBandwidths=[], mOperatorAlphaLong=null, mOperatorAlphaShort=null, isManualNetworkSelection=false(automatic), getRilVoiceRadioTechnology
+    mSignalStrength=null
+/vendor/etc/init/qcrild.rc
+
+### Exit-Code: 0
+
+### Dauer 0 s
