@@ -1,9 +1,10 @@
-Stand: 2026-11-28 13:55:04
+Stand: 2026-11-28 14:05:19
 App: 2.72
 IP: 192.168.244.124
 WLAN: Hotspot an
 Wifi is connected to "Media"
     wlan1 - TetheredState - lastError = 0
+Failed to write while dumping service tethering: Broken pipe
 
 ### Exit-Code: 0
 Fernwartung: zuletzt 120_sim5.sh
