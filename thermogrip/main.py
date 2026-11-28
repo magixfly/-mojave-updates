@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V6.8"
+VERSION = "V6.9"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -835,7 +835,7 @@ def main():
                     duty=duty, fan=("%d" % s["fan"]) if s["fan_on"] else "off", fan_u="%" if s["fan_on"] else "",
                     akku=("%d" % akku_pct) if zellen else "--", akku_u="%" if zellen else "", akku_col=RED if low else GREEN,
                     matte=(("%d" % tf) if tf is not None else "--"), matte_u="°C" if tf is not None else "",
-                    rest=("%d" % rest_min) if zellen else "--", rest_u="min" if zellen else "", err=err, err2=err2))
+                    rest=("%d:%02d" % (rest_min // 60, rest_min % 60)) if zellen else "--", rest_u="h" if zellen else "", err=err, err2=err2))
             else:
                 mins = time.ticks_diff(now, s["start"]) // 60000
                 scr_stats(lcd, f, [("Time", "%d min · %.1f Wh" % (mins, s["wh"])),
