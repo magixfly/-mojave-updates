@@ -70,7 +70,7 @@ $("st").innerHTML=h;$("upd").textContent=s.update||"-";ctl(s)}catch(e){}}
 let busy=0;function ctl(s){$("ct").textContent=s.target+"°";$("cs").textContent=s.boost?"Boost":"Target";
 $("bon").textContent=s.on?"Heater ON – tap to switch off":"Heater OFF – tap to switch on";$("bon").className=s.on?"on":"sec";
 $("bbo").textContent=s.boost?"Boost running – stop":"Boost";$("bbo").className=s.boost?"bst":"sec";
-$("cm").textContent="Pad limit now: "+s.plim+" °C";
+$("cm").textContent="Pad limit now: "+Math.round(s.plim)+" °C";
 if(!busy){$("pmax").value=s.pmax;$("vmax").textContent=s.pmax+" °C";$("phold").value=s.phold;$("vhold").textContent=s.phold+" °C"}}
 async function key(k){try{await fetch("/api/key?k="+k,{method:"POST"});setTimeout(status,400)}catch(e){}}
 async function pad(){busy=1;try{await fetch("/api/pad",{method:"POST",body:JSON.stringify({pad_temp_max:$("pmax").value,pad_temp_hold:$("phold").value})})}catch(e){}busy=0;setTimeout(status,400)}
@@ -80,7 +80,7 @@ $("imsg").innerHTML=r.ok?'<span class="ok">Installing – watch the display, pag
 let orig={};
 const G=[
 ["Temperature",[["target_temp_start","Start temperature","°C"],["remember_target","Remember last temperature","1 = yes"],["target_temp_min","Lowest selectable","°C"],["target_temp_max","Highest selectable","°C, max 45"],["boost_minutes","Boost duration","min"]]],
-["Heating pads",[["pad_full_below","Full pad limit when hand is this far below target","°C"],["no_hand_offset","Without hand sensor: pad = target +","°C"],["pad_volts","Power limit voltage","12 = rated, 14 ≈ 16 W/pad"],["power_auto","Power limit on","1 = yes"],["heater_watts_12v","Pad power at 12 V (all pads)","W"]]],
+["Heating pads",[["pad_full_below","Full Pad max until hand is this close to target","°C"],["no_hand_offset","Without hand sensor: pad = target +","°C"],["pad_volts","Power limit voltage","12 = rated, 14 ≈ 16 W/pad"],["power_auto","Power limit on","1 = yes"],["heater_watts_12v","Pad power at 12 V (all pads)","W"]]],
 ["Battery",[["battery_liion","Li-Ion cells","1 = Li-Ion, 0 = LiPo"],["battery_mah","Capacity","mAh"],["warn_cell_volts","Warning below","V per cell"],["off_cell_volts","Heater off below","V per cell (3.5 = auto 3.3 for Li-Ion)"]]],
 ["Buttons & display",[["key_lock_seconds","Key lock after","s, 0 = off"],["auto_off_minutes","Switch off in standby after","min, 0 = never"],["brightness","Display brightness","%"]]],
 ["WiFi",[["wifi_ssid","WiFi 1 name",""],["wifi_pass","WiFi 1 password",""],["wifi_ssid2","WiFi 2 name",""],["wifi_pass2","WiFi 2 password",""],["wifi_ssid3","WiFi 3 name",""],["wifi_pass3","WiFi 3 password",""],["wifi_ssid4","WiFi 4 name",""],["wifi_pass4","WiFi 4 password",""]]],

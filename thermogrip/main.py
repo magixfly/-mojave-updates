@@ -8,7 +8,7 @@ import time, framebuf, gc, math, struct
 from array import array
 from machine import Pin, SPI, PWM, ADC, WDT
 
-VERSION = "V8.1"
+VERSION = "V8.2"
 
 # ---------------------------------------------------------------- Pins
 P_DC, P_CS, P_SCK, P_MOSI, P_RST, P_BL = 8, 9, 10, 11, 12, 13
@@ -26,7 +26,7 @@ target_temp_min   = 30    # lowest selectable temperature
 target_temp_max   = 42    # highest selectable temperature (max 45)
 pad_temp_max      = 60    # heating pad must never get hotter (max 60)
 pad_temp_hold     = 50    # pad limit once the hand temperature has reached the target (0 = off)
-pad_full_below    = 10    # hand this many deg C below target -> pad may use pad_temp_max (60); in between it slides
+pad_full_below    = 5     # hand this many deg C (or more) below target -> full pad_temp_max; closer to target it slides down to pad_temp_hold
 pad_over_target   = 0     # pad may be this much warmer than the target (0 = only pad_temp_max limits)
 no_hand_offset    = 18    # without hand sensor: pad is held at target + this (max pad_temp_max), e.g. 42 + 18 = 60
 boost_minutes     = 5     # button Y: this long at target_temp_max
@@ -132,6 +132,14 @@ def load_cfg():
             for i, l in enumerate(lines):
                 if l.startswith("wifi_pass"): pos = i + 1
             lines[pos:pos] = new
+            t = "\n".join(lines)
+            with open("config.txt", "w") as fh:
+                fh.write(t)
+        lines = t.split("\n"); chg = False                   # V8.2: pad_full_below 10 -> 5 (volle Mattengrenze bis 5 grad unter Ziel)
+        for i, l in enumerate(lines):
+            if l.startswith("pad_full_below") and l.split("#")[0].split("=")[1].strip() == "10":
+                lines[i] = "pad_full_below    = 5     # hand this many deg C (or more) below target -> full pad_temp_max; closer to target it slides down to pad_temp_hold"; chg = True
+        if chg:
             t = "\n".join(lines)
             with open("config.txt", "w") as fh:
                 fh.write(t)
@@ -828,7 +836,7 @@ def main():
                       heater=int(duty), battery=akku_pct if zellen else None, volts=v_disp if zellen else None, cell=round(vz_s, 2) if zellen else None,
                       cells=zellen or None, left=rest_min if zellen else None,
                       on=s["on"], boost=bool(s["boost_bis"]), tmin=cfg["target_temp_min"], tmax=cfg["target_temp_max"],
-                      pmax=cfg["pad_temp_max"], phold=cfg["pad_temp_hold"], plim=s.get("pad_lim", cfg["pad_temp_max"]),
+                      pmax=cfg["pad_temp_max"], phold=cfg["pad_temp_hold"], plim=int(round(s.get("pad_lim", cfg["pad_temp_max"]))),
                       state=(s["err"] or ("Battery empty" if s["leer"] else ("Heating" if s["on"] else "Standby")) + (" (demo)" if demo else "")))
         if time.ticks_diff(now, draw_t) > 250:
             draw_t = now
